@@ -1,6 +1,5 @@
 <?php
 namespace config;
-
 class autoload {
         
     public static function Start() {
