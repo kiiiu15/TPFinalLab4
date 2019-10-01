@@ -4,13 +4,15 @@ namespace model;
 class Cine{
     
     //Atributos Cine, Posiblemente tengamos que agregar algun atributo mas 
+    private $idCine;
     private $nombre;
     private $direccion;
     private $capacidad;
     private $valorEntrada;
 
     //Constructor
-    public function __construct($nombre,$direccion,$capacidad,$valorEntrada){
+    public function __construct($idCine,$nombre,$direccion,$capacidad,$valorEntrada){
+        $this->idCine=$idCine;
         $this->nombre=$nombre;
         $this->direccion=$direccion;
         $this->capacidad=$capacidad;
@@ -18,6 +20,11 @@ class Cine{
     }
     
     //Getters
+    
+    public function getIdCine(){
+        return $this->idCine;
+    }
+    
     public function getNombre(){
         return $this->nombre;
     }
@@ -50,7 +57,13 @@ class Cine{
     public function setValorEntrada($valorEntrada){
         $this->valorEntrada = $valorEntrada;
     }
+    
+    public function setIdCine($idCine){
+        $this->idCine = $idCine;
+    }
 
+
+    
 }
 
 ?>
