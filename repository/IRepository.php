@@ -1,5 +1,5 @@
 <?php
-namespace reposiroty;
+namespace repository;
 
 interface IRepository {
 

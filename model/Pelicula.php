@@ -9,11 +9,17 @@ class Pelicula{
     private $nombre;
     private $duracion;
     private $idioma;
-    
-    public function __construct($nombre,$duracion,$idioma){
+    //
+    private $descripcion;
+    private $fechaEstreno;
+
+    public function __construct($nombre = "",$duracion ="",$idioma ="",$descripcion="",$fechaEstreno=""){
         $this->nombre=$nombre;
         $this->duracion=$duracion;
         $this->idioma=$idioma;
+        $this->descripcion=$descripcion;
+        $this->fechaEstreno=$fechaEstreno;
+    
     }
 
     //Getters
@@ -28,7 +34,15 @@ class Pelicula{
     public function getIdioma(){
         return $this->idioma;
     }
+    
+    public function getDescripcion(){
+        return $this->descripcion;
+    }
 
+    public function getFechaEstreno(){
+        return $this->fechaEstreno;
+    }
+    
     //Setters
     public function setNombre($nombre){
         $this->nombre = $nombre;
@@ -42,6 +56,16 @@ class Pelicula{
         $this->idioma = $idioma;
     }
     
+    public function setFechaEstreno($fechaEstreno){
+        $this->fechaEstreno = $fechaEstreno;
+    }
+    
+    public function setDescripcion($descripcion){
+        $this->descripcion = $descripcion;
+    }
+
+
+   
 }
 
 

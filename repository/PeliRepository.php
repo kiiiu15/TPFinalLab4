@@ -1,11 +1,14 @@
 <?php
 namespace repository;
+include_once("config/autoload.php");
+use config\autoload as autoload;
+autoload::Start();
 
 use repository\IRepository as IRepository;
 use model\Pelicula as Pelicula;
 
-class PeliRepository extends IRepository{
-    private $movieList;
+class PeliRepository implements IRepository{
+    private $movieList=array();
 
     public function GetAll(){
         $this->RetrieveData();
@@ -32,11 +35,14 @@ class PeliRepository extends IRepository{
 
     public function SaveData(){
         $arrayToEncode =array();
-
-        foreach($this->cineList as $movie){
+        
+        foreach($this->movieList as $movie){
+            $valuesArray = array();
             $valuesArray["nombre"]=$movie->getNombre();
             $valuesArray["duracion"]=$movie->getDuracion();
             $valuesArray["idioma"]=$movie->getIdioma();
+            $valuesArray["descripcion"]=$movie->getIdioma();
+            $valuesArray["fecha"]=$movie->getIdioma();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -44,18 +50,42 @@ class PeliRepository extends IRepository{
     }
 
     public function RetrieveData(){
-        $this->cineList=array();
+        $this->movieList=array();
+        
+        //Si existe el archivo
         if(file_exists(dirname(__DIR__) ."data/movie.json")){
             $jsonContent =file_get_contents(dirname(__DIR__) . "data/movie.json");
-            $arrayToDecode=($jsonContent) ? json_decode($jsonContent,true) :array();
+            
+            //Si tiene datos el archivo
+            if ($jsonContent) {
+                //Lo decodifica
+                echo "esta ok el json";
+                $arrayToDecode=json_decode($jsonContent,true);
+            }
+            else{
+                //Sino llama a la API y le devuelve el JSON que se aloja en variable
+                $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+                if ($variable){
+                    //Si variable tiene datos, se decodifica
+                    $arrayToDecode = json_decode($variable,true);
+                }else{
+                    echo "hola";
+                    //Sino tiene datos, le pasamos un array vacio, para que no se rompa nada 
+                    $arrayToDecode = array();
+                }
+            }  
 
             foreach($arrayToDecode as $valuesArray)
             {
-                $movie = new Pelicula($valuesArray["nombre"], $valuesArray["duracion"],$valuesArray["idioma"]);
+                $movie = new Pelicula($valuesArray["title"], $valuesArray["duracion"],$valuesArray["idioma"]);
                 array_push($this->movieList, $movie);
             }
         }
         
+    };
+
+    public function getMovieList(){
+        return $this->movieList;
     }
 }
 
