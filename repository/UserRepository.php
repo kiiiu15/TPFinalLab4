@@ -3,7 +3,7 @@ namespace repository;
 use repository\IRepository as IRepository;
 use model\Usuario as Usuario;
 
-class UserRepository extends IRepository{
+class UserRepository implements IRepository{
     
     private $userList=array();
 

@@ -9,17 +9,17 @@ class Pelicula{
     private $nombre;
     private $duracion;
     private $idioma;
-    //
     private $descripcion;
     private $fechaEstreno;
+    private $poster;
 
-    public function __construct($nombre = "",$duracion ="",$idioma ="",$descripcion="",$fechaEstreno=""){
+    public function __construct($nombre = "",$duracion ="",$idioma ="",$descripcion="",$fechaEstreno="",$poster=""){
         $this->nombre=$nombre;
         $this->duracion=$duracion;
         $this->idioma=$idioma;
         $this->descripcion=$descripcion;
         $this->fechaEstreno=$fechaEstreno;
-    
+        $this->poster= "https://image.tmdb.org/t/p/w200/" . $poster;
     }
 
     //Getters
@@ -41,6 +41,10 @@ class Pelicula{
 
     public function getFechaEstreno(){
         return $this->fechaEstreno;
+    }
+
+    public function getPoster(){
+        return $this->poster;
     }
     
     //Setters
@@ -64,8 +68,12 @@ class Pelicula{
         $this->descripcion = $descripcion;
     }
 
+    public function setPoster($poster)
+    {
+        $this->poster = $poster;
 
-   
+        return $this;
+    }
 }
 
 

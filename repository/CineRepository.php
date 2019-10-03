@@ -3,7 +3,7 @@ namespace repository;
 use repository\IRepository as IRepository;
 use model\Cine as Cine;
 
-class CineRepository extends IRepository{
+class CineRepository implements IRepository{
     private $cineList=array();
     
     public function GetAll(){

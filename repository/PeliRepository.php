@@ -38,11 +38,13 @@ class PeliRepository implements IRepository{
         
         foreach($this->movieList as $movie){
             $valuesArray = array();
-            $valuesArray["nombre"]=$movie->getNombre();
+            $valuesArray["title"]=$movie->getNombre();
             $valuesArray["duracion"]=$movie->getDuracion();
-            $valuesArray["idioma"]=$movie->getIdioma();
-            $valuesArray["descripcion"]=$movie->getIdioma();
-            $valuesArray["fecha"]=$movie->getIdioma();
+            $valuesArray["original_language"]=$movie->getIdioma();
+            $valuesArray["overview"]=$movie->getDescripcion();
+            $valuesArray["release_date"]=$movie->getFechaEstreno();
+            $valuesArray["poster_path"]=$movie->getPoster();
+            
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -61,20 +63,22 @@ class PeliRepository implements IRepository{
             }
             foreach($arrayToDecode["results"] as $pelicula)
             {
-                $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"]);
+                $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"],$pelicula["poster_path"]);
                 array_push($this->movieList, $movie);   
             }
         }else{
             //Sino llama a la API y le devuelve el JSON que se aloja en variable
             $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+            
             if ($variable){
                 //Si variable tiene datos, se decodifica
                 $arrayToDecode = json_decode($variable,true);    
                 foreach($arrayToDecode["results"] as $pelicula){
-                    $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"]);
-                    array_push($this->movieList, $movie);   
+                    $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"],$pelicula["poster_path"]);
+                    array_push($this->movieList, $pelicula);   
                 }
             }
+            $this->SaveData();
         }  
         
     }

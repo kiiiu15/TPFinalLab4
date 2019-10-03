@@ -1,6 +1,5 @@
 <?php
 
-
 include_once("config/autoload.php");
 use config\autoload as autoload;
 autoload::Start();
@@ -11,7 +10,6 @@ $repositorioPelis=new PeliRepository();
 
 $array=$repositorioPelis->GetAll();
 
-var_dump($array);
 
 
 ?>
