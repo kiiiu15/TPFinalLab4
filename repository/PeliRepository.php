@@ -51,38 +51,33 @@ class PeliRepository implements IRepository{
 
     public function RetrieveData(){
         $this->movieList=array();
-        
         //Si existe el archivo
-        if(file_exists(dirname(__DIR__) ."data/movie.json")){
-            $jsonContent =file_get_contents(dirname(__DIR__) . "data/movie.json");
-            
+        if(file_exists(dirname(__DIR__) ."/data/movie.json")){
+            $jsonContent =file_get_contents(dirname(__DIR__) . "/data/movie.json");
             //Si tiene datos el archivo
             if ($jsonContent) {
                 //Lo decodifica
-                echo "esta ok el json";
                 $arrayToDecode=json_decode($jsonContent,true);
             }
-            else{
-                //Sino llama a la API y le devuelve el JSON que se aloja en variable
-                $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
-                if ($variable){
-                    //Si variable tiene datos, se decodifica
-                    $arrayToDecode = json_decode($variable,true);
-                }else{
-                    echo "hola";
-                    //Sino tiene datos, le pasamos un array vacio, para que no se rompa nada 
-                    $arrayToDecode = array();
-                }
-            }  
-
-            foreach($arrayToDecode as $valuesArray)
+            foreach($arrayToDecode["results"] as $pelicula)
             {
-                $movie = new Pelicula($valuesArray["title"], $valuesArray["duracion"],$valuesArray["idioma"]);
-                array_push($this->movieList, $movie);
+                $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"]);
+                array_push($this->movieList, $movie);   
             }
-        }
+        }else{
+            //Sino llama a la API y le devuelve el JSON que se aloja en variable
+            $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+            if ($variable){
+                //Si variable tiene datos, se decodifica
+                $arrayToDecode = json_decode($variable,true);    
+                foreach($arrayToDecode["results"] as $pelicula){
+                    $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"]);
+                    array_push($this->movieList, $movie);   
+                }
+            }
+        }  
         
-    };
+    }
 
     public function getMovieList(){
         return $this->movieList;
