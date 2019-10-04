@@ -39,7 +39,6 @@ class PeliRepository implements IRepository{
         foreach($this->movieList as $movie){
             $valuesArray = array();
             $valuesArray["title"]=$movie->getNombre();
-            $valuesArray["duracion"]=$movie->getDuracion();
             $valuesArray["original_language"]=$movie->getIdioma();
             $valuesArray["overview"]=$movie->getDescripcion();
             $valuesArray["release_date"]=$movie->getFechaEstreno();
@@ -51,36 +50,58 @@ class PeliRepository implements IRepository{
         file_put_contents(dirname(__DIR__) . '/data/movie.json',$jsonContent);
     } 
 
+
+    public function traerApi(){
+        $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+            
+            if ($variable){
+                //Si variable tiene datos, se decodifica
+                $arrayToDecode  = json_decode($variable,true);    
+
+                $arrayToEncode =array();
+
+                foreach ($arrayToDecode["results"] as $peli) {
+                    $valuesArray = array();
+                    $valuesArray["title"]               =  $peli["title"];
+                    $valuesArray["original_language"]   =  $peli["original_language"];
+                    $valuesArray["overview"]            =  $peli["overview"];
+                    $valuesArray["release_date"]        =  $peli["release_date"];
+                    $valuesArray["poster_path"]         =  $peli["poster_path"];
+
+                    $movie = new Pelicula($peli["title"],$peli["original_language"],$peli["overview"],$peli["release_date"],$peli["poster_path"]);
+                    array_push($this->movieList, $movie); 
+
+                    array_push($arrayToEncode,$valuesArray);
+                }
+                //creamos el json con toda la info de la api
+                $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
+                file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
+            }
+    }
+
     public function RetrieveData(){
         $this->movieList=array();
         //Si existe el archivo
         if(file_exists(dirname(__DIR__) ."/data/movie.json")){
-            $jsonContent =file_get_contents(dirname(__DIR__) . "/data/movie.json");
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/movie.json");
             //Si tiene datos el archivo
             if ($jsonContent) {
                 //Lo decodifica
-                $arrayToDecode=json_decode($jsonContent,true);
-            }
-            foreach($arrayToDecode["results"] as $pelicula)
-            {
-                $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"],$pelicula["poster_path"]);
-                array_push($this->movieList, $movie);   
-            }
-        }else{
-            //Sino llama a la API y le devuelve el JSON que se aloja en variable
-            $variable = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
-            
-            if ($variable){
-                //Si variable tiene datos, se decodifica
-                $arrayToDecode = json_decode($variable,true);    
-                $newjsonContent =json_encode($arrayToEncode["results"],JSON_PRETTY_PRINT);
-                file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
+                $arrayToDecode = json_decode($jsonContent,true);
 
-                foreach($arrayToDecode["results"] as $pelicula){
+                foreach($arrayToDecode as $pelicula)
+                {
                     $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"],$pelicula["poster_path"]);
-                    array_push($this->movieList, $pelicula);   
+                    array_push($this->movieList, $movie);   
                 }
             }
+            else {
+                $this->traerApi();
+            }
+            
+        }else{
+            //Sino llama a la API y le devuelve el JSON que se aloja en variable
+            $this->traerApi();
         }  
     }
 
