@@ -49,7 +49,7 @@ class PeliRepository implements IRepository{
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
         file_put_contents(dirname(__DIR__) . '/data/movie.json',$jsonContent);
-    }
+    } 
 
     public function RetrieveData(){
         $this->movieList=array();
@@ -73,19 +73,22 @@ class PeliRepository implements IRepository{
             if ($variable){
                 //Si variable tiene datos, se decodifica
                 $arrayToDecode = json_decode($variable,true);    
+                $newjsonContent =json_encode($arrayToEncode["results"],JSON_PRETTY_PRINT);
+                file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
+
                 foreach($arrayToDecode["results"] as $pelicula){
                     $movie = new Pelicula($pelicula["title"],null,$pelicula["original_language"],$pelicula["overview"],$pelicula["release_date"],$pelicula["poster_path"]);
                     array_push($this->movieList, $pelicula);   
                 }
             }
-            $this->SaveData();
         }  
-        
     }
 
     public function getMovieList(){
         return $this->movieList;
     }
+
+
 }
 
 
