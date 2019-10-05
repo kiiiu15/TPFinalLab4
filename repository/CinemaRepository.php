@@ -1,10 +1,10 @@
 <?php
 namespace repository;
 use repository\IRepository as IRepository;
-use model\Cinemama as Cinemama;
+use model\Cinema as Cinema;
 
 class CinemaRepository implements IRepository{
-    private $CinemaList=array();
+    private $CinemaList = array();
     
     public function GetAll(){
         $this->RetrieveData();
@@ -33,11 +33,11 @@ class CinemaRepository implements IRepository{
         $arrayToEncode =array();
 
         foreach($this->CinemaList as $Cinema){
-            $valuesArray["idCinema"]=$Cinema->getIdCinema();
-            $valuesArray["Name"]=$Cinema->getName();
-            $valuesArray["Address"]=$Cinema->getAddress();
-            $valuesArray["Capacity"]=$Cinema->getCapacity();
-            $valuesArray["Price"]=$Cinema->getPrice();
+            $valuesArray["idCinema"]    =  $Cinema->getIdCinema();
+            $valuesArray["Name"]        =  $Cinema->getName();
+            $valuesArray["Address"]     =  $Cinema->getAddress();
+            $valuesArray["Capacity"]    =  $Cinema->getCapacity();
+            $valuesArray["Price"]       =  $Cinema->getPrice();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -45,18 +45,17 @@ class CinemaRepository implements IRepository{
     }
 
     public function RetrieveData(){
-        $this->CinemaList=array();
-        if(file_exists(dirname(__DIR__) ."data/Cinema.json")){
-            $jsonContent =file_get_contents(dirname(__DIR__) . "data/Cinema.json");
-            $arrayToDecode=($jsonContent) ? json_decode($jsonContent,true) :array();
+        $this->CinemaList = array();
+        if(file_exists(dirname(__DIR__) ."/data/Cinema.json")){
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/Cinema.json");
+            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent,true) : array();
 
             foreach($arrayToDecode as $valuesArray)
             {
-                $Cinema = new Cinema($valuesArray["idCinema"], $valuesArray["Name"], $valuesArray["Direction"], $valuesArray["Capacity"], $valuesArray["Price"]);
+                $Cinema = new Cinema($valuesArray["idCinema"], $valuesArray["Name"], $valuesArray["Address"], $valuesArray["Capacity"], $valuesArray["Price"]);
                 array_push($this->CinemaList, $Cinema);
             }
-        }
-        
+        }   
     }
 
     public function cinemaExist($idToSearch){

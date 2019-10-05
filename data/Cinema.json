@@ -1,6 +1,6 @@
 [
     {
-        "idCinema": "1",
+        "idCinema": "id",
         "Name": "nombre",
         "Address": "direccion",
         "Capacity": "capacidad",
