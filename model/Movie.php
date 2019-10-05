@@ -3,33 +3,39 @@ namespace model;
 
 class Movie{
     
-    private $Name;
+    private $title;
     private $Language;
-    private $Description;
+    private $overview;
     private $ReleaseDate;
     private $Poster;//la imagen de la pelicula
     //$Poster es un string con la direccion de donde este alojado la imagen o Poster de la
     //pelicula, ya sea desde internet, o carpeta local
 
-    public function __construct($Name = "",$Language ="",$Description="",$ReleaseDate="",$Poster=""){
-        $this->Name=$Name;
+
+    /*
+    * usar el constructor solo en caso de traer las peliculas por la api
+    * ya que poster se carga con la url de donde busca los posters la api
+    * si se quiere usar un poster local sera necesario hacer un setPoster()
+    */
+    public function __construct($title = "",$Language ="",$overview="",$ReleaseDate="",$Poster=""){
+        $this->title=$title;
         $this->Language=$Language;
-        $this->Description=$Description;
+        $this->overview=$overview;
         $this->ReleaseDate=$ReleaseDate;
-        $this->Poster= "https://image.tmdb.org/t/p/w200/" . $Poster;
+        $this->Poster= "https://image.tmdb.org/t/p/w200" . $Poster;
     }
 
     //Getters
-    public function getName(){
-        return $this->Name;
+    public function getTitle(){
+        return $this->title;
     }
 
     public function getLanguage(){
         return $this->Language;
     }
     
-    public function getDescription(){
-        return $this->Description;
+    public function getOverview(){
+        return $this->overview;
     }
 
     public function getReleaseDate(){
@@ -41,8 +47,8 @@ class Movie{
     }
     
     //Setters
-    public function setName($Name){
-        $this->Name = $Name;
+    public function setTitle($title){
+        $this->title = $title;
     }
 
     public function setLanguage($Language){
@@ -53,8 +59,8 @@ class Movie{
         $this->ReleaseDate = $ReleaseDate;
     }
     
-    public function setDescription($Description){
-        $this->Description = $Description;
+    public function setOverview($overview){
+        $this->overview = $overview;
     }
 
     public function setPoster($Poster)

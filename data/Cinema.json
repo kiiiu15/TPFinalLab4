@@ -1,0 +1,9 @@
+[
+    {
+        "idCinema": "1",
+        "Name": "nombre",
+        "Address": "direccion",
+        "Capacity": "capacidad",
+        "Price": "valor"
+    }
+]

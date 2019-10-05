@@ -35,9 +35,9 @@ class CinemaRepository implements IRepository{
         foreach($this->CinemaList as $Cinema){
             $valuesArray["idCinema"]=$Cinema->getIdCinema();
             $valuesArray["Name"]=$Cinema->getName();
-            $valuesArray["Direction"]=$Cinema->getDirection();
+            $valuesArray["Address"]=$Cinema->getAddress();
             $valuesArray["Capacity"]=$Cinema->getCapacity();
-            $valuesArray["Price"]=$Cinema->getPriceEntrada();
+            $valuesArray["Price"]=$Cinema->getPrice();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -59,6 +59,16 @@ class CinemaRepository implements IRepository{
         
     }
 
+    public function cinemaExist($idToSearch){
+        $exist = false;
+        $list = $this->GetAll();
+        foreach ($list as $cinema) {
+            if($cinema->getIdCinema() == $idToSearch){
+                $exist = true;
+            }
+        }
+        return $exist;
+    }
 }
 
 ?>

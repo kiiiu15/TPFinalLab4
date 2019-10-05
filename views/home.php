@@ -1,8 +1,14 @@
 <?php
 
-include_once "config/autoload.php";
+include_once "../config/autoload.php";
 use config\autoload as autoload;
 autoload::Start();
+
+use repository\MovieRepository as MovieRepository;
+
+$repo = new MovieRepository();
+$list = $repo->GetAll();
+//var_dump($list);
 
 ?>
 
@@ -18,7 +24,7 @@ autoload::Start();
 
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
 
-<link rel="stylesheet" href="style/peliculas.css" class="cp-pen-styles">
+<link rel="stylesheet" href="../style/movieStyle.css" class="cp-pen-styles">
 
 </head>
 <body>
@@ -114,16 +120,27 @@ autoload::Start();
                     <?php
 
                     //yo se q eseto esta mal, despues lo muevo a donde corresponde
-                    use repository\PeliRepository as PeliRepository;
-                    $repo = new PeliRepository();
+  /*                  $repo = new MovieRepository();
                     $list = $repo->GetAll();
-
-                    foreach ($list as $peli) {
-                        
+*/
+                    foreach ($list as $movie) {
+                        //var_dump($movie);
                     ?>
                     <li>
-                        <img src="<?php echo $peli->getPoster(); ?>" alt="" class="cover" />
-                        <p class="title"> <?= $peli->getNombre(); ?></p>
+                        <img src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" />
+						<?php 
+						
+						/*
+
+						POR ALGUNA RAZON A VECES EN LUGAR DE MOSTRAR LA RUTA DEL POSTERT
+						MUESTRA LA FECHA
+
+
+
+						*/
+						
+						?>
+                        <p class="title"> <?= $movie->getTitle(); ?></p>
                     </li>
                     <?php
                     }

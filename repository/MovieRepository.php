@@ -1,6 +1,6 @@
 <?php
 namespace repository;
-include_once("config/autoload.php");
+include_once("../config/autoload.php");
 use config\autoload as autoload;
 autoload::Start();
 
@@ -58,9 +58,9 @@ class MovieRepository implements IRepository{
                 //Si apiContent tiene datos, se decodifica
                 $arrayToDecode  = json_decode($apiContent,true);    
 
-                $arrayToEncode =array();
+                $arrayToEncode = array();
 
-                foreach ($arrayToDecode["results"] as $peli) {
+                foreach ($arrayToDecode["results"] as $movie) {
                     $valuesArray = array();
                     $valuesArray["title"]               =  $movie["title"];
                     $valuesArray["original_language"]   =  $movie["original_language"];
@@ -72,6 +72,7 @@ class MovieRepository implements IRepository{
                     array_push($this->movieList, $movie); 
 
                     array_push($arrayToEncode,$valuesArray);
+
                 }
                 //creamos el json con toda la info de la api
                 $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -90,17 +91,16 @@ class MovieRepository implements IRepository{
                 $arrayToDecode = json_decode($jsonContent,true);
 
                 foreach($arrayToDecode as $movie)
-                {
-                    $movie = new Movie($movie["title"],null,$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
-                    array_push($this->movieList, $movie);   
+                {  
+                    $newMovie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
+                    array_push($this->movieList, $newMovie);   
                 }
-            }
-            else {
+            } else {//si el archivo existe pero esta vacio se trae todo la info de la api
                 $this->retrieveApi();
             }
             
         }else{
-            //Sino llama a la API y le devuelve el JSON que se aloja en apiContent
+            //Sino llama a la API y le devuelve el JSON
             $this->retrieveApi();
         }  
     }
