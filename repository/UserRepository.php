@@ -12,16 +12,16 @@ class UserRepository implements IRepository{
         return $this->userList;
     }
 
-    public function Add($value){
+    public function Add($newUser){
         $this->RetrieveData();
-        array_push($this->userList,$value);
+        array_push($this->userList,$newUser);
         $this->SaveData();
     }
 
-    public function Delete($value){
+    public function Delete($userEmail){
         $this->RetrieveData();
         foreach($this->userList as $key =>$user){
-            if($user->getEmail() == $value){
+            if($user->getEmail() == $userEmail){
                 unset($this->userList[$key]);
                 break;
             }
@@ -34,7 +34,7 @@ class UserRepository implements IRepository{
 
         foreach($this->userList as $user){
             $valuesArray["email"]=$user->getEmail();
-            $valuesArray["contraseña"]=$user->getContraseña();
+            $valuesArray["password"]=$user->getPassword();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -49,7 +49,7 @@ class UserRepository implements IRepository{
 
             foreach($arrayToDecode as $valuesArray)
             {
-                $user = new Usuario($valuesArray["email"], $valuesArray["contraseña"]);
+                $user = new User($valuesArray["email"], $valuesArray["password"]);
 
                 array_push($this->userList, $user);
             }
