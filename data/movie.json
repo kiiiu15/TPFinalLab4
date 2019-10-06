@@ -7,13 +7,6 @@
         "poster_path": "\/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
     },
     {
-        "title": "Joker",
-        "original_language": "en",
-        "overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
-        "release_date": "2019-10-04",
-        "poster_path": "\/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
-    },
-    {
         "title": "It Chapter Two",
         "original_language": "en",
         "overview": "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
@@ -145,5 +138,12 @@
         "overview": "Beneath Anna Poliatova's striking beauty lies a secret that will unleash her indelible strength and skill to become one of the world's most feared government assassins.",
         "release_date": "2019-06-21",
         "poster_path": "\/d8u4jpkDKgEPDJUl4g3vOOP3mDe.jpg"
+    },
+    {
+        "title": "Joker",
+        "original_language": "en",
+        "overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+        "release_date": "2019-10-04",
+        "poster_path": "\/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
     }
 ]

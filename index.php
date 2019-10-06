@@ -8,8 +8,8 @@ autoload::Start();
 use repository\MovieRepository as MovieRepository;
 
 $repo = new MovieRepository();
-//$list = $repo->GetAll();
-$repo->updateJson();
+$list = $repo->GetAll();
+//$repo->updateJson();
 ?>
 <!--
 <html>
