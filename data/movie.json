@@ -1,5 +1,12 @@
 [
     {
+        "title": "esta es mi peli",
+        "original_language": "en",
+        "overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+        "release_date": "2019-10-04",
+        "poster_path": "\/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
+    },
+    {
         "title": "Joker",
         "original_language": "en",
         "overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
@@ -7,18 +14,18 @@
         "poster_path": "\/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
     },
     {
-        "title": "Rambo: Last Blood",
-        "original_language": "en",
-        "overview": "When John Rambo's niece travels to Mexico to find the father that abandoned her and her mother, she finds herself in the grasps of Calle Mexican sex traffickers. When she doesn't return home as expected, John learns she's crossed into Mexico and sets out to get her back and make them pay.",
-        "release_date": "2019-09-20",
-        "poster_path": "\/kTQ3J8oTTKofAVLYnds2cHUz9KO.jpg"
-    },
-    {
         "title": "It Chapter Two",
         "original_language": "en",
         "overview": "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
         "release_date": "2019-09-06",
         "poster_path": "\/zfE0R94v1E8cuKAerbskfD3VfUt.jpg"
+    },
+    {
+        "title": "Rambo: Last Blood",
+        "original_language": "en",
+        "overview": "When John Rambo's niece travels to Mexico to find the father that abandoned her and her mother, she finds herself in the grasps of Calle Mexican sex traffickers. When she doesn't return home as expected, John learns she's crossed into Mexico and sets out to get her back and make them pay.",
+        "release_date": "2019-09-20",
+        "poster_path": "\/kTQ3J8oTTKofAVLYnds2cHUz9KO.jpg"
     },
     {
         "title": "Toy Story 4",
@@ -42,6 +49,13 @@
         "poster_path": "\/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg"
     },
     {
+        "title": "Gemini Man",
+        "original_language": "en",
+        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
+        "release_date": "2019-10-11",
+        "poster_path": "\/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg"
+    },
+    {
         "title": "Hustlers",
         "original_language": "en",
         "overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
@@ -63,14 +77,7 @@
         "poster_path": "\/fpe0eG2TBLJLQiqlhhvaWIfixXz.jpg"
     },
     {
-        "title": "Gemini Man",
-        "original_language": "en",
-        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
-        "release_date": "2019-10-11",
-        "poster_path": "\/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg"
-    },
-    {
-        "title": "Once Upon a time... in Hollywood",
+        "title": "Once Upon a Time... in Hollywood",
         "original_language": "en",
         "overview": "A faded television actor and his stunt double strive to achieve fame and success in the film industry during the final years of Hollywood's Golden Age in 1969 Los Angeles.",
         "release_date": "2019-07-26",
@@ -82,6 +89,13 @@
         "overview": "In 1988, Philadelphia police officer Thomas \"Locke\" Lockhart, hungry to become a detective, begins tracking a serial killer whose crimes defy scientific explanation. When the killer mysteriously resurfaces nine years later, Locke's obsession with finding the truth threatens to destroy his career, his family, and possibly his sanity.",
         "release_date": "2019-09-27",
         "poster_path": "\/5DSVYlKwEzGBxTkS95L73c3oxLs.jpg"
+    },
+    {
+        "title": "Crawl",
+        "original_language": "en",
+        "overview": "While struggling to save her father during a Category 5 hurricane, a young woman finds herself trapped inside a flooding house and fighting for her life against Florida\u2019s most savage and feared predators.",
+        "release_date": "2019-07-12",
+        "poster_path": "\/4WH6AZd473lRZ3hUp8TYiv2LfZW.jpg"
     },
     {
         "title": "Stuber",
@@ -105,18 +119,25 @@
         "poster_path": "\/nYcaCNkB4EgVyvrXxxbklefDrGL.jpg"
     },
     {
-        "title": "Yesterday",
+        "title": "Abominable",
         "original_language": "en",
-        "overview": "Jack Malik is a struggling singer-songwriter in an English seaside town whose dreams of fame are rapidly fading, despite the fierce devotion and support of his childhood best friend, Ellie. After a freak bus accident during a mysterious global blackout, Jack wakes up to discover that he's the only person on Earth who can remember The Beatles.",
-        "release_date": "2019-06-28",
-        "poster_path": "\/1rjaRIAqFPQNnMtqSMLtg0VEABi.jpg"
+        "overview": "Trekking the 3000-mile journey from Shanghai to the Himalayan snowscapes, a group of misfits encounter a young Yeti named Everest, and they set off to reunite the magical creature with his family on the mountain of his namesake.",
+        "release_date": "2019-09-27",
+        "poster_path": "\/iK0Q7VWxHsXU1uMzpkf3VjAd6yE.jpg"
     },
     {
-        "title": "Doom: Annihilation",
-        "original_language": "en",
-        "overview": "Doom: Annihilation follows a group of space marines as they respond to a distress call from a base on a Martian moon, only to discover it\u2019s been overrun by demonic creatures who threaten to create Hell on Earth.",
-        "release_date": "2019-09-30",
-        "poster_path": "\/y0veZvK4Q0NzoAjbFlUrGr1cvZ8.jpg"
+        "title": "One Piece: Stampede",
+        "original_language": "ja",
+        "overview": "One Piece: Stampede is a stand-alone film that celebrates the anime's 20th Anniversary and takes place outside the canon of the \"One Piece\" TV series. Monkey D. Luffy and his Straw Hat pirate crew are invited to a massive Pirate Festival that brings many of the most iconic characters from throughout the franchise to participate in competition with the Straw Hats to find Roger's treasure. It also pits the Straw Hats against a new enemy named Bullet, a former member of Roger's crew.",
+        "release_date": "2019-10-24",
+        "poster_path": "\/4E2lyUGLEr3yH4q6kJxPkQUhX7n.jpg"
+    },
+    {
+        "title": "Sanggano, Sanggago't Sanggwapo",
+        "original_language": "tl",
+        "overview": "The gamols are back!",
+        "release_date": "2019-09-04",
+        "poster_path": "\/1dQfuvS7HMhlIgRZlilcuaoHZxv.jpg"
     },
     {
         "title": "Anna",
@@ -124,19 +145,5 @@
         "overview": "Beneath Anna Poliatova's striking beauty lies a secret that will unleash her indelible strength and skill to become one of the world's most feared government assassins.",
         "release_date": "2019-06-21",
         "poster_path": "\/d8u4jpkDKgEPDJUl4g3vOOP3mDe.jpg"
-    },
-    {
-        "title": "Crawl",
-        "original_language": "en",
-        "overview": "While struggling to save her father during a Category 5 hurricane, a young woman finds herself trapped inside a flooding house and fighting for her life against Florida\u2019s most savage and feared predators.",
-        "release_date": "2019-07-12",
-        "poster_path": "\/4WH6AZd473lRZ3hUp8TYiv2LfZW.jpg"
-    },
-    {
-        "title": "Abominable",
-        "original_language": "en",
-        "overview": "Trekking the 3000-mile journey from Shanghai to the Himalayan snowscapes, a group of misfits encounter a young Yeti named Everest, and they set off to reunite the magical creature with his family on the mountain of his namesake.",
-        "release_date": "2019-09-27",
-        "poster_path": "\/iK0Q7VWxHsXU1uMzpkf3VjAd6yE.jpg"
     }
 ]

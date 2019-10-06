@@ -1,6 +1,6 @@
 <?php
 namespace repository;
-include_once("../config/autoload.php");
+include_once("/config/autoload.php");
 use config\autoload as autoload;
 autoload::Start();
 
@@ -109,8 +109,41 @@ class MovieRepository implements IRepository{
         return $this->movieList;
     }
 
-    //Todo
-    //public function actualizar lista de peliculas <3
+    public function updateJson(){
+        $this->RetrieveData();
+
+        $arrayToEncode = array();
+
+        $jsonContent = file_get_contents(dirname(__DIR__) . "/data/movie.json");
+
+        $arrayToDecode = json_decode($jsonContent,true);
+
+        foreach ($arrayToDecode as $movie) {
+            array_push($arrayToEncode,$movie);    
+        }
+        
+        $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+        
+        if($apiContent){
+            $arrayToDecode = json_decode($apiContent,true);
+
+            foreach ($arrayToDecode["results"] as $movie) {
+
+                $valuesArray = array();
+                $valuesArray["title"]               =  $movie["title"];
+                $valuesArray["original_language"]   =  $movie["original_language"];
+                $valuesArray["overview"]            =  $movie["overview"];
+                $valuesArray["release_date"]        =  $movie["release_date"];
+                $valuesArray["poster_path"]         =  $movie["poster_path"];
+
+                array_push($arrayToEncode,$valuesArray);
+            }
+        }
+
+        $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
+        file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
+
+    }
 
 }
 

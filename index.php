@@ -5,8 +5,13 @@ autoload::Start();
 
 //header("location: views/home.php");
 
-?>
+use repository\MovieRepository as MovieRepository;
 
+$repo = new MovieRepository();
+//$list = $repo->GetAll();
+$repo->updateJson();
+?>
+<!--
 <html>
 
 <body>
@@ -25,3 +30,5 @@ autoload::Start();
 </body>
 
 </html>
+
+-->
