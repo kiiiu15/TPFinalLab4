@@ -11,19 +11,14 @@ $repo = new MovieRepository();
 $list = $repo->GetAll();
 //$repo->updateJson();
 ?>
-<!--
+
 <html>
 
 <body>
-    <form action="altaCine.php" method="post">
-
+    <form action="deleteCinema.php" method="post">
+        <p>Elija el Id del cine a eliminar</p>
         <input type="text" value="id" name="id">
-        <input type="text" value="nombre" name="nombre">
-        <input type="text" value="direccion" name="direccion">
-        <input type="text" value="capacidad" name="capacidad">
-        <input type="text" value="valor" name="valor">
-    
-
+        
         <button type="submit">enviar</button>
     
     </form>
@@ -31,4 +26,3 @@ $list = $repo->GetAll();
 
 </html>
 
--->

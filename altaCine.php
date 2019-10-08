@@ -12,7 +12,7 @@ if(isset($_POST))
     $cineList = $repo->GetAll();
    // var_dump($cineList);
   //  var_dump($_POST);
-    $newCine = new Cinema($_POST["id"],$_POST["nombre"],$_POST["direccion"],$_POST["capacidad"],$_POST["valor"]);
+    $newCine = new Cinema($_POST["id"],$_POST["name"],$_POST["address"],$_POST["capacity"],$_POST["value"]);
     
     if(!$repo->cinemaExist($_POST["id"]))
     {
