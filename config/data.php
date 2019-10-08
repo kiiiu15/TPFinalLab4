@@ -3,7 +3,7 @@
 /* DATABASE */
 if(1 === 1) {
     /* FRONT */
-    define('FRONT_ROOT', 'http://c1590773.ferozo.com');
+    define('FRONT_ROOT', 'localhost/TPFINALLAB4');
 
     /* BACK */
     define('ROOT', dirname(__DIR__));
