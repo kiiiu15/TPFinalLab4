@@ -34,7 +34,7 @@ define('IMG_UPLOADS', ROOT . '/asset/uploads/img');
 
 
 /* FRONT */
-
+define('STYLE', 'http://localhost/TPFinalLab4/style');// esto deberia ser= define('STYLE', FRONT_ROOT . '/style'); pero no entendi que es ese if else de arriba y por que en el 1===1 no tiene http y esta todo en mayuscula
 define('ADMIN_FRONT_ROOT', FRONT_ROOT . '/admin');
 define('CSS_PATH', FRONT_ROOT . '/asset/css');
 define('IMG_PATH', FRONT_ROOT . '/asset/img');

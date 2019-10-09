@@ -20,13 +20,13 @@ $list = $repo->GetAll();
 
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
 
-<link rel="stylesheet" href="../style/movieStyle.css" class="cp-pen-styles">
+<link rel="stylesheet" href= <?= STYLE."/movieStyle.css" ?> class="cp-pen-styles">
 
 </head>
 <body>
 <div class="window-margin">
 	<div class="window">
-
+	<?=VIEWS."/style/movieStyle.css" ?>
 		<aside class="sidebar">
 			<div class="top-bar">
 				<p class="logo">MoviePass</p>
