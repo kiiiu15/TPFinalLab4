@@ -14,7 +14,7 @@ if(1 === 1) {
     define('DB_PASS', 'Asdf1234');
 } else {
     /* FRONT */
-    define('FRONT_ROOT', 'http://localhost/lab4lay');
+    define('FRONT_ROOT', 'http://localhost/TPFinalLab4');
 
     /* BACK */
     define('ROOT', dirname(__DIR__));

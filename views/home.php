@@ -9,24 +9,12 @@ $list = $repo->GetAll();
 ?>
 
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 
-<!DOCTYPE html><html class=''>
-<head><script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script><script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/AyhanALTINOK/pen/Atlva" />
 
-<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
-
-<link rel="stylesheet" href= <?= STYLE."/movieStyle.css" ?> class="cp-pen-styles">
-
-</head>
-<body>
+<?php include(VIEWS."/header.php");?>
 <div class="window-margin">
 	<div class="window">
-	<?=VIEWS."/style/movieStyle.css" ?>
 		<aside class="sidebar">
 			<div class="top-bar">
 				<p class="logo">MoviePass</p>
@@ -83,11 +71,9 @@ $list = $repo->GetAll();
 						<div class="line"></div>
 					</li>
 					<li><a href="#">Ver Listado Peliculas</a></li>
-					<li><a href="#">Articles</a></li>
+					<li><a href="Cinema/getAll">Ver Listado Cines</a></li>
 					<li class="active"><a href="#">Movies & Films</a></li>
 					<li><a href="#">Television</a></li>
-					<li><a href="#">Music</a></li>
-					<li><a href="#">Celebrities</a></li>
 				</ul>
 
 				<div class="profile-box">
@@ -174,4 +160,4 @@ $list = $repo->GetAll();
 });
 //# sourceURL=pen.js
 </script>
-</body></html>
+<?php include(VIEWS."/header.php");?>

@@ -1,9 +1,9 @@
 [
     {
-        "idCinema": "id",
-        "Name": "nombre",
-        "Address": "direccion",
-        "Capacity": "capacidad",
-        "Price": "valor"
+        "idCinema": 1,
+        "Name": "Aldrey",
+        "Address": "Garay 3856",
+        "Capacity": 354,
+        "Price": 65
     }
 ]

@@ -13,6 +13,7 @@ class CinemaRepository implements IRepository{
 
     public function Add($Cinema){
         $this->RetrieveData();
+
         array_push($this->CinemaList,$Cinema);
         $this->SaveData();
     }
@@ -67,6 +68,13 @@ class CinemaRepository implements IRepository{
             }
         }
         return $exist;
+    }
+
+    public function generateIdCinema(){
+
+        $id=count($this->CinemaList);
+        $id++;
+        return $id;
     }
 }
 

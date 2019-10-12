@@ -25,7 +25,7 @@ $objectRouter = new Router ();
 $objectRouter::route($objectRequest);
 
 ?>
-
+<!--
 <html>
 
 <body>
@@ -40,3 +40,4 @@ $objectRouter::route($objectRequest);
 
 </html>
 
+-->
