@@ -3,7 +3,8 @@
 namespace Dao;
 
 use Dao\IDao as IDao;
-use Models\Movie as Movie;
+use Model\Movie as Movie;
+
 class MovieDao implements IDao
 {
     private $movieList=array();
@@ -116,7 +117,9 @@ class MovieDao implements IDao
                     $valuesArray["overview"]            =  $movie["overview"];
                     $valuesArray["release_date"]        =  $movie["release_date"];
                     $valuesArray["poster_path"]         =  $movie["poster_path"];
+
                     $newMovie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
+
                     array_push($this->movieList, $newMovie);   
                     array_push($arrayToEncode,$valuesArray);
                 }
