@@ -101,6 +101,7 @@ $list = $repo->GetAll();
 
 				<div>
 
+					<!-- esto esta mu mal -->
 					<form action="Remove/idToRemove" method="get">
 					
 						<input name = idToRemove type="text" placeholder = "id que decea eliminar">

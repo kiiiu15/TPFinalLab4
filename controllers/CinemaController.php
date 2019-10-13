@@ -17,6 +17,8 @@ class CinemaController implements IControllers{
     }
 
     public function Remove($idCinema){
+        
+
         $cinemaRepo=new CinemaDao();
         $cinemaRepo->Remove($idCinema);
         //include(VIEWS."/"); le ponemos listar sin el cine eliminado
