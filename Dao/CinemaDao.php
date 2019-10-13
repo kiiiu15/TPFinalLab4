@@ -19,7 +19,7 @@ class CinemaDao implements IDao{
     }
 
     //Busca por el id del Cinema y lo elimina
-    public function Delete($IdCinema){
+    public function Remove($IdCinema){
         $this->RetrieveData();
         foreach($this->CinemaList as $key =>$Cinema){
             if($Cinema->getIdCinema() == $IdCinema){

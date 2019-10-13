@@ -4,6 +4,7 @@
         "Name": "Aldrey",
         "Address": "Garay 3856",
         "Capacity": 354,
-        "Price": 65
+        "Price": 65,
+        "active": null
     }
 ]

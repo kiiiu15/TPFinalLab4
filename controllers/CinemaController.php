@@ -1,40 +1,37 @@
 <?php 
-namespace controllers;
+namespace Controllers;
 
-use controllers\Icontrollers as Icontrollers;
-use model\Cinema as Cinema;
-use repository\CinemaRepository as CinemaRepository;
+use Controllers\IControllers as IControllers;
+use Model\Cinema as Cinema;
+use Dao\CinemaDao as CinemaDao;
 
 
-class CinemaController implements Icontrollers{
+class CinemaController implements IControllers{
 
     public function add ($cinemaName = "" , $capacity = 0 , $adress = "" , $entranceValue = 0 ) {
         
-        $cinemaRepo=new CinemaRepository();
+        $cinemaRepo=new CinemaDao();
         $id=$cinemaRepo->generateIdCinema();        
         $cinema=new Cinema($id,$cinemaName,$adress,$capacity,$entranceValue,true);
         $cinemaRepo->Add($cinema);
     }
 
-    public function delete($idCinema){
-        $cinemaRepo=new CinemaRepostory();
-        $cinemaRepo->Delete($idCinema);
+    public function Remove($idCinema){
+        $cinemaRepo=new CinemaDao();
+        $cinemaRepo->Remove($idCinema);
         //include(VIEWS."/"); le ponemos listar sin el cine eliminado
     }
 
     public function modify($idCinema){
-        $cinemaRepo=new CinemaRepostory();
+        $cinemaRepo=new CinemaDao();
         $cinema=$cinemaRepo->toCinema($idCinema);
         
 
     }
 
-
-
-
-
     public function index(){
-        include(VIEWS. "/home.php");
+        include(VIEWS . "/cinemaHome.php");
+        //header('Location: ../Views/cinemaHome.php');
     }
 
 }

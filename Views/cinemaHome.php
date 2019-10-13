@@ -1,8 +1,8 @@
 <?php
 
-use Dao\MovieDao as MovieDao;
+use Dao\CinemaDao as CinemaDao;
 
-$repo = new MovieDao();
+$repo = new CinemaDao();
 $list = $repo->GetAll();
 
 ?>
@@ -21,6 +21,7 @@ $list = $repo->GetAll();
 				<p class="fa fa-search"></p>
 			</div>
 
+<!--
 			<menu class="menu">
 				<p class="menu-name">Movie trailers</p>
 				<ul>
@@ -52,7 +53,7 @@ $list = $repo->GetAll();
 				</ul>
 
 				<div class="separator"></div>
-			</menu>
+			</menu>  -->
 		</aside>
 
 
@@ -65,36 +66,50 @@ $list = $repo->GetAll();
 		?>
 
 
-			<div class="movie-list">
+<!--			<div class="movie-list">
 				<div class="title-bar">
 					<div class="left">
 						<p class="bold">Popular Trailers</p>
 						<p class="grey">Action / Adventure</p>
-					</div> <!-- left -->
+					</div> --> <!-- left --> <!--
 					<div class="right">
 						<a class="blue" href="#">Rating <i class="fa fa-angle-down"></i></a>
-						<a href="#">Newest</a> <!-- esto nos mandaria a la controladora y reordenaria $list segun fecha -->
+						<a href="#">Newest</a> --> <!-- esto nos mandaria a la controladora y reordenaria $list segun fecha --> <!--
 						<a href="#">Oldest</a>
-					</div> <!-- right -->
-                </div> <!-- title-bar -->
-                
+					</div> --> <!-- right --> <!--
+                </div> --> <!-- title-bar --> <!--
+-->                
 
                 <!-- si despues los ordenamos tendria que ser order list ? --->
                 <ul class="list">
                     <?php
 
-                    foreach ($list as $movie) {
+                    foreach ($list as $cinema) {
                       
                     ?>
                     <li>
-                        <img src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" />
-						
-                        <p class="title"> <?= $movie->getTitle(); ?></p>
+						<p> ID: <?= $cinema->getIdCinema() ?></p>
+                        <p class="title"> Cine: <?= $cinema->getName(); ?></p>
+						<p> Direccion: <?= $cinema->getAddress(); ?> </p>
+						<p> Capacidad: <?= $cinema->getCapacity(); ?> </p>
+						<p> Precio unico por entrada: <?= $cinema->getPrice(); ?> </p>
                     </li>
                     <?php
                     }
                     ?>
                 </ul>
+
+				<div>
+
+					<form action="Remove/idToRemove" method="get">
+					
+						<input name = idToRemove type="text" placeholder = "id que decea eliminar">
+
+						<button type = submit> Eliminar </button>
+					
+					</form>
+				
+				</div>
 <!--
 				<ul class="list">
 					<li>
