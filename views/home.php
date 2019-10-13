@@ -1,8 +1,8 @@
 <?php
 
-use repository\MovieRepository as MovieRepository;
+use Dao\MovieDao as MovieDao;
 
-$repo = new MovieRepository();
+$repo = new MovieDao();
 $list = $repo->GetAll();
 
 ?>

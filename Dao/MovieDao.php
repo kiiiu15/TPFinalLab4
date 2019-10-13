@@ -1,31 +1,34 @@
 <?php
-namespace Repository;
-include_once("/Config/Autoload.php");
-use Config\Autoload as Autoload;
-Autoload::Start();
 
-use Repository\IRepository as IRepository;
-use Model\Movie as Movie;
+namespace Dao;
 
-class MovieRepository implements IRepository{
+use Dao\IDao as IDao;
+use Models\Movie as Movie;
+class MovieDao implements IDao
+{
     private $movieList=array();
 
-    public function GetAll(){
+    public function GetAll()
+    {
         $this->RetrieveData();
         return $this->movieList;
     }
 
-    public function Add($movie){
+    public function Add($movie)
+    {
         $this->RetrieveData();
         array_push($this->movieList,$movie);
         $this->SaveData();
     }
 
-    //Se busca por nombre de pelicula
-    public function Delete($movieName){
+    /**
+     * busca el titulo de la pelicula y lo saca de la lista
+     */
+    public function Remove($movieTitle)
+    {
         $this->RetrieveData();
         foreach($this->movieList as $key =>$movie){
-            if($movie->getNombre() == $movieName){
+            if($movie->getNombre() == $movieTitle){
                 unset($this->movieList[$key]);
                 break;
             }
@@ -33,27 +36,29 @@ class MovieRepository implements IRepository{
         $this->SaveData();
     }
 
-    public function SaveData(){
+    public function SaveData()
+    {
         $arrayToEncode =array();
         
         foreach($this->movieList as $movie){
             $valuesArray = array();
-            $valuesArray["title"]=$movie->getNombre();
-            $valuesArray["original_language"]=$movie->getIdioma();
-            $valuesArray["overview"]=$movie->getDescripcion();
-            $valuesArray["release_date"]=$movie->getFechaEstreno();
-            $valuesArray["poster_path"]=$movie->getPoster();
+            $valuesArray["title"]             = $movie->getTitle();
+            $valuesArray["original_language"] = $movie->getLanguage();
+            $valuesArray["overview"]          = $movie->getOverview();
+            $valuesArray["release_date"]      = $movie->getReleaseDate();
+            $valuesArray["poster_path"]       = $movie->getPoster();
             
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/data/Movie.json',$jsonContent);
+        file_put_contents(dirname(__DIR__) . '/Data/Movie.json',$jsonContent);
     } 
-
+    
     /**
      * comprueba si ya existe una pelicula con ese titulo
      */
-    public function checkMovie($title){
+    public function checkMovie($title)
+    {
         $ans = false;
         foreach ($this->movieList as $movie) {
             if($movie->getTitle() == $title)
@@ -64,17 +69,15 @@ class MovieRepository implements IRepository{
         return $ans;
     }
 
-    public function retrieveApi($arrayToEncode){
+    public function retrieveApi($arrayToEncode)
+    {
         $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
             
             if ($apiContent){
                 //Si apiContent tiene datos, se decodifica
                 $arrayToDecode  = json_decode($apiContent,true);    
-
                 //$arrayToEncode = array();
-
                 foreach ($arrayToDecode["results"] as $movie) {
-
                     if(!$this->checkMovie($movie["title"]))
                     {
                         $valuesArray = array();
@@ -83,31 +86,28 @@ class MovieRepository implements IRepository{
                         $valuesArray["overview"]            =  $movie["overview"];
                         $valuesArray["release_date"]        =  $movie["release_date"];
                         $valuesArray["poster_path"]         =  $movie["poster_path"];
-
                         $movie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
                         array_push($this->movieList, $movie); 
-
                         array_push($arrayToEncode,$valuesArray);
                     }
                 }
-
                 //creamos el json con toda la info de la api
                 $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-                file_put_contents(dirname(__DIR__) . '/data/Movie.json',$newjsonContent);
+                file_put_contents(dirname(__DIR__) . '/Data/Movie.json',$newjsonContent);
             }
     }
 
-    public function RetrieveData(){
+    public function RetrieveData()
+    {
         $this->movieList = array();
         $arrayToEncode = array();
         //Si existe el archivo
-        if(file_exists(dirname(__DIR__) ."/data/Movie.json")){
-            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/Movie.json");
+        if(file_exists(dirname(__DIR__) ."/Data/Movie.json")){
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/Data/Movie.json");
             //Si tiene datos el archivo
             if ($jsonContent) {
                 //Lo decodifica
                 $arrayToDecode = json_decode($jsonContent,true);
-
                 foreach($arrayToDecode as $movie)
                 {  
                     $valuesArray = array();
@@ -116,10 +116,8 @@ class MovieRepository implements IRepository{
                     $valuesArray["overview"]            =  $movie["overview"];
                     $valuesArray["release_date"]        =  $movie["release_date"];
                     $valuesArray["poster_path"]         =  $movie["poster_path"];
-
                     $newMovie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
                     array_push($this->movieList, $newMovie);   
-
                     array_push($arrayToEncode,$valuesArray);
                 }
                 $this->retrieveApi($arrayToEncode);
@@ -132,42 +130,6 @@ class MovieRepository implements IRepository{
             $this->retrieveApi($arrayToEncode);
         }  
     }
-
-    /*public function updateJson(){
-        $this->RetrieveData();
-
-        $arrayToEncode = array();
-
-        $jsonContent = file_get_contents(dirname(__DIR__) . "/data/Movie.json");
-
-        $arrayToDecode = json_decode($jsonContent,true);
-
-        foreach ($arrayToDecode as $movie) {
-            array_push($arrayToEncode,$movie);    
-        }
-        
-        $apiContent = file_get_contents("https://api.themoviedb.org/3/Movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
-        
-        if($apiContent){
-            $arrayToDecode = json_decode($apiContent,true);
-
-            foreach ($arrayToDecode["results"] as $movie) {
-
-                $valuesArray = array();
-                $valuesArray["title"]               =  $movie["title"];
-                $valuesArray["original_language"]   =  $movie["original_language"];
-                $valuesArray["overview"]            =  $movie["overview"];
-                $valuesArray["release_date"]        =  $movie["release_date"];
-                $valuesArray["poster_path"]         =  $movie["poster_path"];
-
-                array_push($arrayToEncode,$valuesArray);
-            }
-        }
-        $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/data/Movie.json',$newjsonContent);
-    }*/
-
 }
-
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-namespace model;
+namespace Model;
 
 class CreditCard{
     private $company;

@@ -1,9 +1,9 @@
 <?php
-namespace Repository;
-use Repository\IRepository as IRepository;
+namespace Dao;
+use Dao\IDao as IDao;
 use Model\Cinema as Cinema;
 
-class CinemaRepository implements IRepository{
+class CinemaDao implements IDao{
     private $CinemaList = array();
     
     public function GetAll(){
@@ -39,17 +39,17 @@ class CinemaRepository implements IRepository{
             $valuesArray["Address"]     =  $Cinema->getAddress();
             $valuesArray["Capacity"]    =  $Cinema->getCapacity();
             $valuesArray["Price"]       =  $Cinema->getPrice();
-            $valuesArray["active"]       =  $Cinema->getActive();
+            $valuesArray["active"]      =  $Cinema->getActive();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/data/Cinema.json',$jsonContent);
+        file_put_contents(dirname(__DIR__) . '/Data/Cinema.json',$jsonContent);
     }
 
     public function RetrieveData(){
         $this->CinemaList = array();
-        if(file_exists(dirname(__DIR__) ."/data/Cinema.json")){
-            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/Cinema.json");
+        if(file_exists(dirname(__DIR__) ."/Data/Cinema.json")){
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/Data/Cinema.json");
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent,true) : array();
 
             foreach($arrayToDecode as $valuesArray)
@@ -60,6 +60,12 @@ class CinemaRepository implements IRepository{
         }   
     }
 
+    /**
+     * busca un cine por su id
+     * true si existe
+     * false si no
+     *  @return boolean
+     */
     public function cinemaExist($idToSearch){
         $exist = false;
         $list = $this->GetAll();
@@ -72,19 +78,20 @@ class CinemaRepository implements IRepository{
     }
  
 
-    public function toCinema($idCinema){
+    public function getCinema($idCinema){
         $aux=null;
         $list = $this->GetAll();
         foreach ($list as $cinema) {
-            if($cinema->getIdCinema() == $idToSearch){
+            if($cinema->getIdCinema() == $idCinema){
                 $aux=$cinema;
             }
         }
         return $aux;
     }
 
-    public function generateIdCinema(){
 
+    public function generateIdCinema()
+    {//esta buena pero es peligroso (╯°□°）╯︵ ┻━┻ 
         $id=count($this->CinemaList);
         $id++;
         return $id;

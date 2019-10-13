@@ -1,5 +1,5 @@
 <?php
-namespace model;
+namespace Model;
 
 class MovieFunction{
     //Sera util asignarle un id ? 
