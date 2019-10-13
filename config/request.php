@@ -44,7 +44,7 @@ class Request {
           /**
           * Si la petición es GET y el array aún tiene datos, se guardan en parameters, si no, se guardan lo que viene como $_POST
           */
-          $requestMethod = $this->getMetodoRequest();
+          $requestMethod = $this->getRequestMethod();
 
           if($requestMethod == 'GET') {
                if(!empty($ArregloUrl)) {
@@ -71,7 +71,7 @@ class Request {
      *
      * @return String
      */
-     public static function getMetodoRequest()
+     public static function getRequestMethod()
      {
           return $_SERVER['REQUEST_METHOD'];
      }

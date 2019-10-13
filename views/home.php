@@ -4,12 +4,8 @@ use repository\MovieRepository as MovieRepository;
 
 $repo = new MovieRepository();
 $list = $repo->GetAll();
-//var_dump($list);
 
 ?>
-
-
-
 
 
 <?php include(VIEWS."/header.php");?>

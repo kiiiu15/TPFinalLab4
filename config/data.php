@@ -3,7 +3,7 @@
 /* DATABASE */
 if(1 === 1) {
     /* FRONT */
-    define('FRONT_ROOT', 'localhost/TPFINALLAB4');
+    define('FRONT_ROOT', 'http://localhost/TPFinalLab4');
 
     /* BACK */
     define('ROOT', dirname(__DIR__));
@@ -28,18 +28,19 @@ if(1 === 1) {
 
 
 /* BACK */
-define('VIEWS', ROOT . '/views');
-define('ADMIN_VIEWS', ROOT . '/views/admin');
-define('IMG_UPLOADS', ROOT . '/asset/uploads/img');
+define('VIEWS', ROOT . '/Views');
+//define('ADMIN_VIEWS', ROOT . '/views/admin'); todabia no quedo claro como va a quedar esto
+//define('IMG_UPLOADS', ROOT . '/asset/uploads/img');
 
 
 /* FRONT */
-define('STYLE', 'http://localhost/TPFinalLab4/style');// esto deberia ser= define('STYLE', FRONT_ROOT . '/style'); pero no entendi que es ese if else de arriba y por que en el 1===1 no tiene http y esta todo en mayuscula
-define('ADMIN_FRONT_ROOT', FRONT_ROOT . '/admin');
-define('CSS_PATH', FRONT_ROOT . '/asset/css');
-define('IMG_PATH', FRONT_ROOT . '/asset/img');
+define('STYLE', FRONT_ROOT . '/Views/css');
+//define('ADMIN_FRONT_ROOT', FRONT_ROOT . '/admin');
+//define('CSS_PATH', FRONT_ROOT . '/asset/css');
+//define('IMG_PATH', FRONT_ROOT . '/asset/img');
 
-define('IMG_UPLOADS_PATH', FRONT_ROOT . '/asset/uploads/img');
-define('MOV_UPLOADS_PATH', FRONT_ROOT . '/asset/uploads/movies');
+//define('IMG_UPLOADS_PATH', FRONT_ROOT . '/asset/uploads/img');
+//define('MOV_UPLOADS_PATH', FRONT_ROOT . '/asset/uploads/movies');
 
 
+?>

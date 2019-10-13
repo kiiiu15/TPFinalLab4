@@ -1,18 +1,14 @@
 <?php 
 namespace controllers;
 
-
-
 use controllers\Icontrollers as Icontrollers;
-
-
 
 class HomeController implements Icontrollers {
 
 
 
     public function index (){
-        /*Aca falta el formulario de logeo que vamos a hacer ams adelante */
+        /*Aca falta el formulario de logeo que vamos a hacer mas adelante */
 
         /*por ahora vamos al home */
 

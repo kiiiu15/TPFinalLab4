@@ -1,43 +1,17 @@
 <?php
-require(__dir__."/config/data.php");
-include_once (ROOT."/config/autoload.php");
-use config\autoload as autoload;
-autoload::Start();
-
-use config\request as Request;
-use config\router as Router;
-
-/**Mas les vale que me limpien todo este index hijos de puta!! */
-//header("location: views/home.php");
-/*
-use repository\MovieRepository as MovieRepository;
-
-$repo = new MovieRepository();
-$list = $repo->GetAll();
-//$repo->updateJson();
-
-*/
-
-$objectRequest = new Request(); /* This as the first time we came to the website should direct us to the login (home view for now..)*/
-
-$objectRouter = new Router ();
-
-$objectRouter::route($objectRequest);
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once "Config/Data.php";//aca estan las constantes
+require_once "Config/Autoload.php";
+require_once "Config/Request.php";
+require_once "Config/Router.php";
+//require_once "Daos/daoList/Singleton.php";
+use Config\Autoload as Autoload;
+use Config\Router as Router;
+use Config\Request as Request;
+//use daos\daoList\Singleton as Singleton;
+Autoload::start();
+session_start();
+Router::route(new Request());
 ?>
-<!--
-<html>
-
-<body>
-    <form action="deleteCinema.php" method="post">
-        <p>Elija el Id del cine a eliminar</p>
-        <input type="text" value="id" name="id">
-        
-        <button type="submit">enviar</button>
-    
-    </form>
-</body>
-
-</html>
-
--->

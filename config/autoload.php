@@ -1,6 +1,6 @@
 <?php
 namespace config;
-class autoload {
+class Autoload {
         
     public static function Start() {
         spl_autoload_register(function($classPath)
