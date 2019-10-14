@@ -19,12 +19,24 @@ class CinemaDao implements IDao{
     }
 
     //Busca por el id del Cinema y lo elimina
-    public function Remove($IdCinema)
-    {
+    public function Deactivate($IdCinema){
         $this->RetrieveData();
         foreach($this->CinemaList as $key =>$Cinema){
             if($Cinema->getIdCinema() == $IdCinema){
                 $Cinema->setActive(false);
+                break;
+            }
+        }
+        $this->SaveData();
+    }
+
+
+    public function Delete($IdCinema)
+    {
+        $this->RetrieveData();
+        foreach($this->CinemaList as $key =>$Cinema){
+            if($Cinema->getIdCinema() == $IdCinema){
+                unset($this->CinemaList[$key]);
                 break;
             }
         }
@@ -78,6 +90,9 @@ class CinemaDao implements IDao{
         return $exist;
     }
  
+    public function Remove($idCinema){
+
+    }
 
     public function getCinema($idCinema){
         $aux=null;
@@ -91,11 +106,34 @@ class CinemaDao implements IDao{
     }
 
 
-    public function generateIdCinema()
-    {//esta buena pero es peligroso (╯°□°）╯︵ ┻━┻ 
+    public function generateIdCinema(){
         $id=count($this->CinemaList);
         $id++;
         return $id;
+    }
+
+    public function modify(){
+        //preguntar si esto esta bien
+        //TODO comprobar q exista
+        //comrpobar q este cargado todos los get
+        //hacer que seteee solo los get cargados
+        //trabaja bulzomi
+        $this->RetrieveData();
+
+        //esto esta mu rancio
+        $Cinema = $this->getCinema($_GET["idCinemaToModify"]);
+
+        $Cinema->setName($_GET["nameToModify"]);
+        $Cinema->setAddress($_GET["addressToModify"]);
+        $Cinema->setCapacity($_GET["capacityToModify"]);
+        $Cinema->setPrice($_GET["priceToModify"]);
+
+        $this->Delete($_GET["idCinemaToModify"]);
+
+        array_push($this->CinemaList,$Cinema);
+
+        $this->SaveData();
+        
     }
 }
 

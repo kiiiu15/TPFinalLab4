@@ -67,6 +67,23 @@ $list = $repo->GetAll();
 				
 				</div>
 
+				<div>
+					<!-- esto esta mu mal -->
+					<form action="modify" method="get">
+					
+						<input name = idCinemaToModify type="number" placeholder = "id del cine que quiere modificar">
+						<input name = nameToModify type="text"      placeholder = Cine>
+						<input name = addressToModify type="text"   placeholder = Direccion>
+						<input name = capacityToModify type="text"  placeholder = Capacidad>
+						<input name = priceToModify type="number"   placeholder = "Precio unico por entrada">
+
+						<button type = submit> Modificar </button>
+					
+					</form>
+				
+				</div>
+
+
 			</div> <!-- movie list -->
 
 		</div> <!-- main -->
