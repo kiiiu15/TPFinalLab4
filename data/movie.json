@@ -14,6 +14,13 @@
         "poster_path": "\/zfE0R94v1E8cuKAerbskfD3VfUt.jpg"
     },
     {
+        "title": "Gemini Man",
+        "original_language": "en",
+        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
+        "release_date": "2019-10-11",
+        "poster_path": "\/lRyesi2S9u8gIwcxeuPAFNYAYTy.jpg"
+    },
+    {
         "title": "Toy Story 4",
         "original_language": "en",
         "overview": "Woody has always been confident about his place in the world and that his priority is taking care of his kid, whether that's Andy or Bonnie. But when Bonnie adds a reluctant new toy called \"Forky\" to her room, a road trip adventure alongside old and new friends will show Woody how big the world can be for a toy.",
@@ -21,11 +28,11 @@
         "poster_path": "\/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg"
     },
     {
-        "title": "Gemini Man",
+        "title": "El Camino: A Breaking Bad Movie",
         "original_language": "en",
-        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
+        "overview": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
         "release_date": "2019-10-11",
-        "poster_path": "\/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg"
+        "poster_path": "\/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg"
     },
     {
         "title": "Rambo: Last Blood",
@@ -35,18 +42,18 @@
         "poster_path": "\/kTQ3J8oTTKofAVLYnds2cHUz9KO.jpg"
     },
     {
+        "title": "Fast & Furious Presents: Hobbs & Shaw",
+        "original_language": "en",
+        "overview": "A spinoff of The Fate of the Furious, focusing on Johnson's US Diplomatic Security Agent Luke Hobbs forming an unlikely alliance with Statham's Deckard Shaw.",
+        "release_date": "2019-08-02",
+        "poster_path": "\/keym7MPn1icW1wWfzMnW3HeuzWU.jpg"
+    },
+    {
         "title": "John Wick: Chapter 3 - Parabellum",
         "original_language": "en",
         "overview": "Super-assassin John Wick returns with a $14 million price tag on his head and an army of bounty-hunting killers on his trail. After killing a member of the shadowy international assassin\u2019s guild, the High Table, John Wick is excommunicado, but the world\u2019s most ruthless hit men and women await his every turn.",
         "release_date": "2019-05-17",
         "poster_path": "\/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg"
-    },
-    {
-        "title": "El Camino: A Breaking Bad Movie",
-        "original_language": "en",
-        "overview": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
-        "release_date": "2019-10-11",
-        "poster_path": "\/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg"
     },
     {
         "title": "Once Upon a Time... in Hollywood",
@@ -77,20 +84,6 @@
         "poster_path": "\/4WH6AZd473lRZ3hUp8TYiv2LfZW.jpg"
     },
     {
-        "title": "Ad Astra",
-        "original_language": "en",
-        "overview": "An astronaut travels to the outer edges of the solar system to find his father and unravel a mystery that threatens the survival of our planet. He uncovers secrets which challenge the nature of human existence and our place in the cosmos.",
-        "release_date": "2019-09-20",
-        "poster_path": "\/lNnomQxXpRP9mgUwMuSZhA8LXfA.jpg"
-    },
-    {
-        "title": "Hustlers",
-        "original_language": "en",
-        "overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
-        "release_date": "2019-09-13",
-        "poster_path": "\/zBhv8rsLOfpFW2M5b6wW78Uoojs.jpg"
-    },
-    {
         "title": "The Mystery of the Dragon\u2019s Seal",
         "original_language": "ru",
         "overview": "The Russian Czar Peter the Great commissions Jonathan Green, an English traveller, to map the Far East territories of the Russian Empire. Green sets off on yet another long journey, full of unbelievable adventures, which eventually leads him to China. On his way, the famous cartographer makes breath-taking discoveries, meets mysterious creatures, Chinese princesses, deadly masters of oriental martial arts, and even Lun Van, the King of Dragons, himself. What could be more perilous than looking into the eyes of Viy? Only meeting him again\u2026 What will prevail this time \u2014 the unflinching scepticism of the scientist or ancient black magic, which has already gained influence over the Far East Lands?",
@@ -98,25 +91,11 @@
         "poster_path": "\/vS6TCG4HiUSCyX30f5wDGQDt1k3.jpg"
     },
     {
-        "title": "Zombieland: Double Tap",
+        "title": "Ad Astra",
         "original_language": "en",
-        "overview": "The group will face a new zombie threat as a new breed of zombie has developed. This new super-zombie type is faster, bigger, and stronger than the previous strain of zombies and harder to kill. These super-zombies have started grouping up into a horde going from city to city leaving a path of destruction behind them.",
-        "release_date": "2019-10-18",
-        "poster_path": "\/pIcV8XXIIvJCbtPoxF9qHMKdRr2.jpg"
-    },
-    {
-        "title": "Midsommar",
-        "original_language": "en",
-        "overview": "A young couple travels to Sweden to visit their friend\u2019s rural hometown and attend its mid-summer festival. What begins as an idyllic retreat quickly descends into an increasingly violent and bizarre competition at the hands of a pagan cult.",
-        "release_date": "2019-07-03",
-        "poster_path": "\/rXsh4MI6uyVgZBSSzXCfitJnVPy.jpg"
-    },
-    {
-        "title": "Sanggano, Sanggago't Sanggwapo",
-        "original_language": "tl",
-        "overview": "The gamols are back!",
-        "release_date": "2019-09-04",
-        "poster_path": "\/ygvNtnAYFly9aGZgW0B492gfuke.jpg"
+        "overview": "An astronaut travels to the outer edges of the solar system to find his father and unravel a mystery that threatens the survival of our planet. He uncovers secrets which challenge the nature of human existence and our place in the cosmos.",
+        "release_date": "2019-09-20",
+        "poster_path": "\/lNnomQxXpRP9mgUwMuSZhA8LXfA.jpg"
     },
     {
         "title": "One Piece: Stampede",
@@ -126,17 +105,38 @@
         "poster_path": "\/4E2lyUGLEr3yH4q6kJxPkQUhX7n.jpg"
     },
     {
-        "title": "Maleficent: Mistress of Evil",
+        "title": "Hustlers",
         "original_language": "en",
-        "overview": "Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play.",
-        "release_date": "2019-10-18",
-        "poster_path": "\/tBuabjEqxzoUBHfbyNbd8ulgy5j.jpg"
+        "overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
+        "release_date": "2019-09-13",
+        "poster_path": "\/zBhv8rsLOfpFW2M5b6wW78Uoojs.jpg"
     },
     {
-        "title": "In the Shadow of the Moon",
+        "title": "Zombieland: Double Tap",
         "original_language": "en",
-        "overview": "In 1988, Philadelphia police officer Thomas \"Locke\" Lockhart, hungry to become a detective, begins tracking a serial killer whose crimes defy scientific explanation. When the killer mysteriously resurfaces nine years later, Locke's obsession with finding the truth threatens to destroy his career, his family, and possibly his sanity.",
-        "release_date": "2019-09-27",
-        "poster_path": "\/5DSVYlKwEzGBxTkS95L73c3oxLs.jpg"
+        "overview": "The group will face a new zombie threat as a new breed of zombie has developed. This new super-zombie type is faster, bigger, and stronger than the previous strain of zombies and harder to kill. These super-zombies have started grouping up into a horde going from city to city leaving a path of destruction behind them.",
+        "release_date": "2019-10-18",
+        "poster_path": "\/pIcV8XXIIvJCbtPoxF9qHMKdRr2.jpg"
+    },
+    {
+        "title": "The Angry Birds Movie 2",
+        "original_language": "en",
+        "overview": "Red, Chuck, Bomb and the rest of their feathered friends are surprised when a green pig suggests that they put aside their differences and unite to fight a common threat. Aggressive birds from an island covered in ice are planning to use an elaborate weapon to destroy the fowl and swine.",
+        "release_date": "2019-08-14",
+        "poster_path": "\/ebe8hJRCwdflNQbUjRrfmqtUiNi.jpg"
+    },
+    {
+        "title": "Scary Stories to Tell in the Dark",
+        "original_language": "en",
+        "overview": "The shadow of the Bellows family has loomed large in the small town of Mill Valley for generations. It's in a mansion that young Sarah Bellows turns her tortured life and horrible secrets into a series of scary stories. These terrifying tales soon have a way of becoming all too real for a group of unsuspecting teens who stumble upon Sarah's spooky home.",
+        "release_date": "2019-08-09",
+        "poster_path": "\/d0FWbzrmm99BTfUqf1Lbjl2zu3S.jpg"
+    },
+    {
+        "title": "Sanggano, Sanggago't Sanggwapo",
+        "original_language": "tl",
+        "overview": "The gamols are back!",
+        "release_date": "2019-09-04",
+        "poster_path": "\/ygvNtnAYFly9aGZgW0B492gfuke.jpg"
     }
 ]

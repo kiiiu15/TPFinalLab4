@@ -16,12 +16,14 @@ class CinemaController implements IControllers{
         $cinemaRepo->Add($cinema);
     }
 
-    public function Remove($idCinema){
+    public function Remove(){
         
+        $idCinema = $_GET["idCinemaToRemove"];
 
-        $cinemaRepo=new CinemaDao();
+        $cinemaRepo = new CinemaDao();
         $cinemaRepo->Remove($idCinema);
-        //include(VIEWS."/"); le ponemos listar sin el cine eliminado
+        
+        include(VIEWS."/cinemaHome.php"); 
     }
 
     public function modify($idCinema){

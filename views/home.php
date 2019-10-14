@@ -13,7 +13,7 @@ $list = $repo->GetAll();
 	<div class="window">
 		<aside class="sidebar">
 			<div class="top-bar">
-				<p class="logo">MoviePass</p>
+				<a href=<?=FRONT_ROOT?>  class="logo">MoviePass</a>
 			</div>
 
 			<div class="search-box">
@@ -112,7 +112,7 @@ $list = $repo->GetAll();
 		</div> <!-- main -->
 
 	</div> <!-- window -->
-</div> <!-- window margin -->
+</div> <!-- window margin -->  <!--
 <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script >jQuery(document).ready(function($) {
 
@@ -124,7 +124,7 @@ $list = $repo->GetAll();
 		$('body').toggleClass('sidebar-is-open');
 	});
 
-});
+}); 
 //# sourceURL=pen.js
-</script>
+</script>-->
 <?php include(VIEWS."/header.php");?>
