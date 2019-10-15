@@ -6,7 +6,7 @@
 			<div class="line"></div>
 			<div class="line"></div>
 		</li>
-		<li><a href= "<?= FRONT_ROOT ?>/Home">Ver Listado Peliculas</a></li>
+		<li><a href= "<?= FRONT_ROOT ?>">Ver Listado Peliculas</a></li>
 		<li><a href= "<?= FRONT_ROOT . '/' ?>Cinema/">Ver Listado Cines</a></li> <!-- esto ejecutaria el metodo index de la controladora Cinema -->
 		
 	</ul>

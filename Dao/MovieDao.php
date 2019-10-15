@@ -52,7 +52,7 @@ class MovieDao implements IDao
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/Data/Movie.json',$jsonContent);
+        file_put_contents(dirname(__DIR__) . '/data/movie.json',$jsonContent);
     } 
     
     /**
@@ -70,8 +70,9 @@ class MovieDao implements IDao
         return $ans;
     }
 
-    public function retrieveApi($arrayToEncode)
+    public function retrieveApi()
     {
+        $arrayToEncode=array();
         $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
             
             if ($apiContent){
@@ -103,8 +104,8 @@ class MovieDao implements IDao
         $this->movieList = array();
         $arrayToEncode = array();
         //Si existe el archivo
-        if(file_exists(dirname(__DIR__) ."/Data/Movie.json")){
-            $jsonContent = file_get_contents(dirname(__DIR__) . "/Data/Movie.json");
+        if(file_exists(dirname(__DIR__) ."/data/movie.json")){
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/movie.json");
             //Si tiene datos el archivo
             if ($jsonContent) {
                 //Lo decodifica
@@ -123,14 +124,14 @@ class MovieDao implements IDao
                     array_push($this->movieList, $newMovie);   
                     array_push($arrayToEncode,$valuesArray);
                 }
-                $this->retrieveApi($arrayToEncode);
+                
             } else {//si el archivo existe pero esta vacio se trae todo la info de la api
-                $this->retrieveApi($arrayToEncode);
+                $this->retrieveApi();
             }
             
         }else{
             //Sino llama a la API y le devuelve el JSON
-            $this->retrieveApi($arrayToEncode);
+            $this->retrieveApi();
         }  
     }
 }
