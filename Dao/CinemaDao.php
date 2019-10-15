@@ -107,33 +107,39 @@ class CinemaDao implements IDao{
 
 
     public function generateIdCinema(){
+        $this->RetrieveData();
         $id=count($this->CinemaList);
         $id++;
         return $id;
     }
 
-    public function modify(){
-        //preguntar si esto esta bien
-        //TODO comprobar q exista
-        //comrpobar q este cargado todos los get
-        //hacer que seteee solo los get cargados
-        //trabaja bulzomi
+    public function modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
+
         $this->RetrieveData();
+        foreach($this->GetAll() as $Cinema){
+            if ($Cinema->getIdCinema() == $idCinemaToModify) {
+                $Cinema->setName($changedName);
+                $Cinema->setAddress($changedAddress);
+                $Cinema->setCapacity($changedCapacity);
+                $Cinema->setPrice($changedPrice);
 
-        //esto esta mu rancio
-        $Cinema = $this->getCinema($_GET["idCinemaToModify"]);
-
-        $Cinema->setName($_GET["nameToModify"]);
-        $Cinema->setAddress($_GET["addressToModify"]);
-        $Cinema->setCapacity($_GET["capacityToModify"]);
-        $Cinema->setPrice($_GET["priceToModify"]);
-
-        $this->Delete($_GET["idCinemaToModify"]);
-
-        array_push($this->CinemaList,$Cinema);
+            }
+        }
 
         $this->SaveData();
         
+    }
+
+    public function getIDCinemaActiva (){
+        $this->RetrieveData();
+        $ids = array();
+        foreach($this->GetAll() as $Cinema){
+            if ($Cinema->getActive()){
+                $ids[]=$Cinema->getIdCinema();
+            }
+        }
+
+        return $ids;
     }
 }
 

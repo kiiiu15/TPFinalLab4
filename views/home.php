@@ -13,7 +13,7 @@ $list = $repo->GetAll();
 	<div class="window">
 		<aside class="sidebar">
 			<div class="top-bar">
-				<a href=<?=FRONT_ROOT?>  class="logo">MoviePass</a>
+				<a href="<?php echo FRONT_ROOT ?>"  class="logo">MoviePass</a>
 			</div>
 
 			<div class="search-box">
@@ -58,11 +58,7 @@ $list = $repo->GetAll();
 
 		<div class="main" role="main">
 
-		<?php // esto es el nav
-
-		include_once(VIEWS.'/nav.php');
-
-		?>
+		<?php include_once(VIEWS.'/nav.php'); ?>
 
 
 			<div class="movie-list">
@@ -78,8 +74,6 @@ $list = $repo->GetAll();
 					</div> <!-- right -->
                 </div> <!-- title-bar -->
                 
-
-                <!-- si despues los ordenamos tendria que ser order list ? --->
                 <ul class="list">
                     <?php
 
@@ -127,4 +121,4 @@ $list = $repo->GetAll();
 }); 
 //# sourceURL=pen.js
 </script>-->
-<?php include(VIEWS."/header.php");?>
+<?php include(VIEWS."/footer.php");?>

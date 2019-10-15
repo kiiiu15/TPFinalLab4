@@ -14,33 +14,26 @@ class CinemaController implements IControllers{
         $id=$cinemaRepo->generateIdCinema();        
         $cinema=new Cinema($id,$cinemaName,$adress,$capacity,$entranceValue,true);
         $cinemaRepo->Add($cinema);
+        include(VIEWS."/cinemaHome.php"); 
     }
 
-    public function Deactivate(){
-        
-        $idCinema = $_GET["idCinemaToDeactivate"];
-        //preguntenme por q hice esto
-       // unset($_GET["idCinemaToDeactivate"]);
-
+    public function Deactivate($idCinema = 0){
         $cinemaRepo = new CinemaDao();
         $cinemaRepo->Deactivate($idCinema);
         
         include(VIEWS."/cinemaHome.php"); 
     }
 
-    public function modify(){
+    public function modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
 
         $cinemaDao = new CinemaDao();
-
-        //if($_GET["idCinemaToModify"])
-        $cinemaDao->modify();
+        $cinemaDao->modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice);
         
         include(VIEWS."/cinemaHome.php"); 
     }
 
     public function index(){
         include(VIEWS . "/cinemaHome.php");
-        //header('Location: ../Views/cinemaHome.php');
     }
 
 }

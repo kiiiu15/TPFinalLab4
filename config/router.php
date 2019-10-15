@@ -44,8 +44,7 @@
             $instance = new $class;
 
             
-
-
+            
             /**
              *
              */

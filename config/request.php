@@ -23,6 +23,8 @@ class Request {
            */
           $ArregloUrl = array_filter($urlToArray);
 
+          
+
            /**
             * Si el array tiene elementos, el primero lo guardamos en controller, si no, guardamos Home como controller por defecto
             */
