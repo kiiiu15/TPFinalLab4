@@ -16,7 +16,7 @@
          * @param Request $request
          */
         public static function route(Request $request) {
-
+            var_dump($request);
             /**
              * Concatena el primer dato que obtuvo el request (el que usaremos como controlador) con la palabra Controller
              */
@@ -41,7 +41,7 @@
             /**
              * Crea la instancia controladora
              */
-            $instance = new $class;
+            $instance = new $class; 
 
             
             

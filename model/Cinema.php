@@ -13,12 +13,12 @@ class Cinema{
 
     //Constructor
     public function __construct($idCinema ="",$name="",$Address="",$capacity="",$price="",$active=false){
-        $this->idCinema=$idCinema;
-        $this->name=$name;
-        $this->Address=$Address;
-        $this->capacity=$capacity;
-        $this->price=$price;
-        $this->active=$active;
+        $this->setIdCinema($idCinema);
+        $this->setName($name);
+        $this->setAddress($Address);
+        $this->setCapacity($capacity);
+        $this->setPrice($price);
+        $this->setActive($active);
     }
 
     //Getters
@@ -57,11 +57,21 @@ class Cinema{
     }
 
     public function setCapacity($capacity){
-        $this->capacity = $capacity;
+        if ($capacity > 0){
+            $this->capacity = $capacity;
+        }else{
+            $this->capacity = 1;
+        }
+        
     }
  
     public function setPrice($price){
-        $this->price = $price;
+        if ($price > 0){
+            $this->price = $price;
+        } else {
+            $this->price = 1;
+        }
+        
     }
     
     public function setIdCinema($idCinema){

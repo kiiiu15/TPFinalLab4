@@ -1,26 +1,10 @@
 [
     {
         "idCinema": 1,
-        "Name": "Ambasador",
-        "Address": " Av Siempreviva 123",
-        "Capacity": "156",
-        "Price": "20",
+        "Name": "",
+        "Address": "",
+        "Capacity": 1,
+        "Price": "3",
         "active": false
-    },
-    {
-        "idCinema": 2,
-        "Name": "Aldrey 2",
-        "Address": "Diag Corrientes",
-        "Capacity": "56",
-        "Price": "245",
-        "active": true
-    },
-    {
-        "idCinema": 3,
-        "Name": "Aldrey",
-        "Address": "250",
-        "Capacity": "Garay 2965",
-        "Price": "25",
-        "active": true
     }
 ]

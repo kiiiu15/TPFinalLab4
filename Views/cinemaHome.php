@@ -15,7 +15,7 @@ $ids = $repo->getIDCinemaActiva ();
 	<div class="window">
 		<aside class="sidebar">
 			<div class="top-bar">
-				<a href="<?php echo FRONT_ROOT; ?>" class="logo">MoviePass</a>
+				<a href="<?= FRONT_ROOT ?>/Home" class="logo">MoviePass</a>
 			</div>
 
 			<div class="search-box">

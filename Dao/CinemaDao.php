@@ -141,6 +141,19 @@ class CinemaDao implements IDao{
 
         return $ids;
     }
+    
+    public function getIDCinemaUnActiva (){
+        $this->RetrieveData();
+        $ids = array();
+        foreach($this->GetAll() as $Cinema){
+            if (!$Cinema->getActive()){
+                $ids[]=$Cinema->getIdCinema();
+            }
+        }
+
+        return $ids;
+    }
+
 }
 
 ?>

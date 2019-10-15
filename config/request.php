@@ -14,7 +14,7 @@ class Request {
           $url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_URL);
 
           /**
-           * La descompongo en un array
+           * La descompongo en un array "Cinema/add"
            */
           $urlToArray = explode("/", $url);
 

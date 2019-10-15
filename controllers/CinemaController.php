@@ -8,7 +8,7 @@ use Dao\CinemaDao as CinemaDao;
 
 class CinemaController implements IControllers{
 
-    public function add ($cinemaName = "" , $capacity = 0 , $adress = "" , $entranceValue = 0 ) {
+    public function add ($cinemaName = "" , $adress = "" , $capacity = 0 , $entranceValue = 0 ) {
         
         $cinemaRepo=new CinemaDao();
         $id=$cinemaRepo->generateIdCinema();        
