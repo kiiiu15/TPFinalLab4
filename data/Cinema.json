@@ -1,10 +1,26 @@
 [
     {
-        "idCinema": 1,
+        "idCinema": 2,
+        "Name": "sgf",
+        "Address": "fdsh",
+        "Capacity": "300",
+        "Price": "450",
+        "active": false
+    },
+    {
+        "idCinema": 2,
+        "Name": "sgf",
+        "Address": "fdsh",
+        "Capacity": "300",
+        "Price": "450",
+        "active": true
+    },
+    {
+        "idCinema": 3,
         "Name": "",
         "Address": "",
         "Capacity": 1,
-        "Price": "3",
-        "active": false
+        "Price": 1,
+        "active": true
     }
 ]
