@@ -56,13 +56,13 @@ class CinemaDao implements IDao{
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/Data/Cinema.json',$jsonContent);
+        file_put_contents(dirname(__DIR__) . '/data/Cinema.json',$jsonContent);
     }
 
     public function RetrieveData(){
         $this->CinemaList = array();
-        if(file_exists(dirname(__DIR__) ."/Data/Cinema.json")){
-            $jsonContent = file_get_contents(dirname(__DIR__) . "/Data/Cinema.json");
+        if(file_exists(dirname(__DIR__) ."/data/Cinema.json")){
+            $jsonContent = file_get_contents(dirname(__DIR__) . "/data/Cinema.json");
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent,true) : array();
 
             foreach($arrayToDecode as $valuesArray)

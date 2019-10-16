@@ -89,17 +89,7 @@ $list = $repo->GetAll();
                     }
                     ?>
                 </ul>
-<!--
-				<ul class="list">
-					<li>
-						<img src="https://res.cloudinary.com/dddcqqk0g/image/upload/v1394283880/2014-03-08_140248_fmufrz.png" alt="" class="cover" />
-						<p class="title">Divergent</p>
-						<p class="genre">Action, Sci-Fi</p>
-					</li>
-				</ul>
 
-				<a href="#" class="load-more">Show more movies <span class="fa fa-plus"></span></a>
--->
 			</div> <!-- movie list -->
 
 
@@ -107,18 +97,5 @@ $list = $repo->GetAll();
 
 	</div> <!-- window -->
 </div> <!-- window margin -->  <!--
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
-<script >jQuery(document).ready(function($) {
 
-	$('a').on('click', function(e) {
-		e.preventDefault();
-	});
-
-	$('.trigger-sidebar-toggle').on('click', function() {
-		$('body').toggleClass('sidebar-is-open');
-	});
-
-}); 
-//# sourceURL=pen.js
-</script>-->
 <?php include(VIEWS."/footer.php");?>
