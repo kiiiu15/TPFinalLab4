@@ -4,6 +4,7 @@ namespace Controllers;
 use Controllers\IControllers as IControllers;
 use model\User as User;
 use Dao\UserDao as UserDao;
+use controllers\HomeController as HomeController;
 
 class UserController implements IControllers
 {
@@ -57,7 +58,9 @@ class UserController implements IControllers
         {
             $user = new User($email,$pass);
             $this->setLogIn($user);
-            include(VIEWS."/home.php"); 
+            //  CUIDADO, CUIDADO, CUIDADO CON LA BOMBACHITA !!
+            $asd = new HomeController();
+            $asd->index();
         }else{
             $msg = "Error: usuario o contraseña incorrecto";
             include(VIEWS."/login.php"); 

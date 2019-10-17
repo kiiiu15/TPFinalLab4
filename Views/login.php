@@ -2,7 +2,7 @@
 
 use Dao\UserDao as UserDao;
 
-$repo = new UserDao();
+$repo = new UserDao(); //Cambiar MANU LA CONCHA DE LA LORA TE AVISE QUE TENIAS QUE USAR EL CONTROLLER FORRO 
 $list = $repo->GetAll();
 
 //var_dump($list);
