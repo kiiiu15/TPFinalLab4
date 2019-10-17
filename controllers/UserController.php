@@ -48,13 +48,10 @@ class UserController implements IControllers
         }
     }
 
-    public function logIn(){
+    public function logIn($email,$pass){
         
         $this->userDao = new UserDao();
         $this->userList = $this->userDao->GetAll();
-
-        $email = $_POST["email"];
-        $pass = $_POST["password"];
 
         if($this->userVerify($email,$pass))
         {
