@@ -6,7 +6,7 @@ use Model\User as User;
 
 class UserDao implements IDao{
     
-    private $userList=array();
+    private $userList = array();
 
     public function GetAll()
     {
@@ -43,15 +43,15 @@ class UserDao implements IDao{
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-        file_put_contents(dirname(__DIR__) . '/Data/Users.json',$jsonContent);
+        file_put_contents(dirname(__DIR__) . '/data/Users.json',$jsonContent);
     }
 
     public function RetrieveData()
     {
         $this->userList=array();
-        if(file_exists(dirname(__DIR__) ."/Data/Users.json")){
-            $jsonContent =file_get_contents(dirname(__DIR__) . "Data/Users.json");
-            $arrayToDecode=($jsonContent) ? json_decode($jsonContent,true) :array();
+        if(file_exists(dirname(__DIR__) ."/data/Users.json")){
+            $jsonContent =file_get_contents(dirname(__DIR__) . "/data/Users.json");
+            $arrayToDecode=($jsonContent) ? json_decode($jsonContent,true) : array();
 
             foreach($arrayToDecode as $valuesArray)
             {
@@ -74,6 +74,9 @@ class UserDao implements IDao{
         }
     }
 
+    public function Remove($id){
+
+    }
 
 }
 
