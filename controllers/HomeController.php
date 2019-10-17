@@ -2,16 +2,21 @@
 namespace controllers;
 
 use controllers\Icontrollers as Icontrollers;
-use Dao\MovieDao as MovieDao;
+use controllers\MovieController as MovieController;
+
 
 class HomeController implements Icontrollers {
 
-    //Verificar si funca 
-    public function getMovieForGenre($idGenreToSearch){
-        $movieRepo=new MovieDao();
-        $ListMovieGenre=$movieRepo->getMovieForGenre($idGenreToSearch);
-        //include_once(VIEWS ."/home.php");
-        //return $ListMovieGenre;
+    public function showMoviesByGenre($genre) {
+        $list=array();
+        $controllerMovie=new MovieController();
+        if ($genre == '*'){
+            $list = $controllerMovie->GetAll();
+        } else {
+            $list = $controllerMovie->getMovieForGenre($genre);
+        }
+        
+        include(VIEWS."/home.php");
     }
 
     public function index (){
@@ -23,7 +28,7 @@ class HomeController implements Icontrollers {
         {
             require(VIEWS."/login.php");
         }else{
-            include(VIEWS."/home.php");
+            $this->showMoviesByGenre('*');
         }
 
     }

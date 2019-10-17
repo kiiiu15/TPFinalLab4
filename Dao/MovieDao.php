@@ -69,7 +69,7 @@ class MovieDao implements IDao
     public function retrieveApi()
     {
         $arrayToEncode=array();
-        $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US&page=1");
+        $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
             
             if ($apiContent){
                 //Si apiContent tiene datos, se decodifica
@@ -137,9 +137,11 @@ class MovieDao implements IDao
     public function getMovieForGenre($idGenreToSearch){
         $this->RetrieveData();
         $listMovieGenre=array();
-        foreach($this->movieList as $key=>$movie){
-            if($movie->getGenre_ids() == $idGenreToSearch){
+        foreach($this->movieList as $movie){
+            foreach($movie->getGenre_ids() as $movieGenre){
+                if ($movieGenre == $idGenreToSearch){
                 array_push($listMovieGenre,$movie);
+                }
             }
         }
         return $listMovieGenre;

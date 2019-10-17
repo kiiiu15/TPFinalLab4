@@ -1,10 +1,13 @@
 <?php
 
 use Dao\MovieDao as MovieDao;
+use controllers\GenreController as GenreController;
 
-$repo = new MovieDao();
-$list = $repo->GetAll();
 
+
+//$list = array();
+$repoGenre = new GenreController (); 
+$genres = $repoGenre->GetAll();
 
 
 ?>
@@ -26,22 +29,9 @@ $list = $repo->GetAll();
 			<menu class="menu">
 				<p class="menu-name">Movie trailers</p>
 				<ul>
-					<li class="active">
-						<a href="#">Action / Adventure</a>
-						<ul>
-							<li><a href="#">Latest</a></li>
-							<li class="active"><a href="#">Popular</a></li>
-							<li><a href="#">Coming soon</a></li>
-							<li><a href="#">Staff picks</a></li>
-						</ul>
-					</li>
-					<li><a href="#">Animation</a></li>
-					<li><a href="#">Comedy</a></li>
-					<li><a href="#">Documentaries</a></li>
-					<li><a href="#">Drama</a></li>
-					<li><a href="#">Horror</a></li>
-					<li><a href="#">Sci-Fi  / Fantasy</a></li>
-					<li><a href="#">List A-Z</a></li>
+					<?php foreach($genres as $genre) {?>
+					<li><a href="<?= FRONT_ROOT . "/"?>Home/showMoviesByGenre/<?php echo $genre->getid();?>" ><?php echo $genre->getName();?></a></li>
+					<?php }?>
 				</ul>
 
 				<div class="separator"></div>
@@ -79,6 +69,8 @@ $list = $repo->GetAll();
                 <ul class="list">
                     <?php
 
+					if (empty($list)) {echo 'There are no movies of this genre at this time. See next week.';}
+					
                     foreach ($list as $movie) {
                       
                     ?>
@@ -88,7 +80,11 @@ $list = $repo->GetAll();
                         <p class="title"> <?= $movie->getTitle(); ?></p>
                     </li>
                     <?php
-                    }
+					}
+					
+					for($i=0+count($list);$i<50;$i++){
+						echo "<br/>";
+					}
                     ?>
                 </ul>
 

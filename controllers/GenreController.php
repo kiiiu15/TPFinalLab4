@@ -19,6 +19,7 @@ class GenreController implements IControllers{
     public function GetAll(){
         $genreRepo=new GenreDao();  
         $genreList=$genreRepo->GetAll();
+        $genreRepo->SaveData();
         return $genreList;
     }
 

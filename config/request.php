@@ -12,6 +12,7 @@ class Request {
           * Obtengo url en formato de string
           */
           $url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_URL);
+          
 
           /**
            * La descompongo en un array "Cinema/add"

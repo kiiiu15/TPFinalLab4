@@ -17,6 +17,7 @@
          */
         public static function route(Request $request) {
             
+            
             /**
              * Concatena el primer dato que obtuvo el request (el que usaremos como controlador) con la palabra Controller
              */

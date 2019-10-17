@@ -24,7 +24,12 @@ class MovieController implements IControllers{
         return $MovieList;
     }
 
-    
+    //Verificar si funca 
+    public function getMovieForGenre($idGenreToSearch){
+        $movieRepo=new MovieDao();
+        $ListMovieGenre=$movieRepo->getMovieForGenre($idGenreToSearch);
+        return $ListMovieGenre;
+    }
 
     public function index(){
         include(VIEWS . "/home.php");
