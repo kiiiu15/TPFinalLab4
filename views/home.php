@@ -5,6 +5,8 @@ use Dao\MovieDao as MovieDao;
 $repo = new MovieDao();
 $list = $repo->GetAll();
 
+
+
 ?>
 
 

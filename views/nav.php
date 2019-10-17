@@ -8,6 +8,7 @@
 		</li>
 		<li><a href= "<?= FRONT_ROOT ?>">Ver Listado Peliculas</a></li>
 		<li><a href= "<?= FRONT_ROOT . '/' ?>Cinema/">Ver Listado Cines</a></li> <!-- esto ejecutaria el metodo index de la controladora Cinema -->
+		<li><a href= "<?= FRONT_ROOT . '/' ?>User/logOut">logOut</a></li>
 		
 	</ul>
     

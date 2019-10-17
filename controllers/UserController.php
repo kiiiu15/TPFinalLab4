@@ -76,13 +76,16 @@ class UserController implements IControllers
         if(!$this->userExist($email)){
             $user = new User($email,$pass);
             $this->userDao->Add($user);
-
-            require(VIEWS. "/logIn.php");
-
         }else{
             $msg = "Error, ya existe un usuario con ese nombre";
-            require(VIEWS. "/logIn.php");
         }
+        require(VIEWS. "/logIn.php");
+    }
+
+    public function logOut(){
+        //no estoy del todo seguro si esto esta bien
+        session_destroy();
+        include(VIEWS."/login.php"); 
     }
     
 }

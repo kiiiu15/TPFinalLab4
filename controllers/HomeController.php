@@ -12,7 +12,13 @@ class HomeController implements Icontrollers {
 
         /*por ahora vamos al home */
 
-        include(VIEWS."/home.php");
+        if(!isset($_SESSION["status"]) || $_SESSION["status"] != "on")
+        {
+            require(VIEWS."/login.php");
+        }else{
+            include(VIEWS."/home.php");
+        }
+
     }
 }
 
