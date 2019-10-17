@@ -1,6 +1,10 @@
 [
     {
-        "email" : "manu",
-        "password" : "123"
+        "email": "manu",
+        "password": "123"
+    },
+    {
+        "email": "geremaia",
+        "password": "456"
     }
 ]

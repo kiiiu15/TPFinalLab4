@@ -22,5 +22,14 @@ if(isset($msg)){
 
 </form>
 
+<form action="<?= FRONT_ROOT . '/' ?>User/register" method="post">
+
+    <input name = "email" type="text">
+    <input type="text" name = "password">
+
+    <button type = "submit">Enviar</button>
+
+</form>
+
 
 </html>

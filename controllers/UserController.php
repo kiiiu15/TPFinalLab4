@@ -73,9 +73,9 @@ class UserController implements IControllers
         $this->userDao = new UserDao();
         $this->userList = $this->userDao->GetAll();
 
-        if(!$this->userExist()){
+        if(!$this->userExist($email)){
             $user = new User($email,$pass);
-            $userDao->Add($user);
+            $this->userDao->Add($user);
 
             require(VIEWS. "/logIn.php");
 
