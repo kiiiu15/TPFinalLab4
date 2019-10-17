@@ -9,14 +9,12 @@ class MovieDao implements IDao
 {
     private $movieList=array();
 
-    public function GetAll()
-    {
+    public function GetAll(){
         $this->RetrieveData();
         return $this->movieList;
     }
 
-    public function Add($movie)
-    {
+    public function Add($movie){
         $this->RetrieveData();
         array_push($this->movieList,$movie);
         $this->SaveData();
@@ -25,8 +23,7 @@ class MovieDao implements IDao
     /**
      * busca el titulo de la pelicula y lo saca de la lista
      */
-    public function Remove($movieTitle)
-    {
+    public function Remove($movieTitle){
         $this->RetrieveData();
         foreach($this->movieList as $key =>$movie){
             if($movie->getNombre() == $movieTitle){
@@ -37,8 +34,7 @@ class MovieDao implements IDao
         $this->SaveData();
     }
 
-    public function SaveData()
-    {
+    public function SaveData(){
         $arrayToEncode =array();
         
         foreach($this->movieList as $movie){
@@ -48,6 +44,7 @@ class MovieDao implements IDao
             $valuesArray["overview"]          = $movie->getOverview();
             $valuesArray["release_date"]      = $movie->getReleaseDate();
             $valuesArray["poster_path"]       = $movie->getPoster();
+            $valuesArray["genre_ids"]         =$movie->getGenre_ids();
             
             array_push($arrayToEncode,$valuesArray);
         }
@@ -58,8 +55,7 @@ class MovieDao implements IDao
     /**
      * comprueba si ya existe una pelicula con ese titulo
      */
-    public function checkMovie($title)
-    {
+    public function checkMovie($title){
         $ans = false;
         foreach ($this->movieList as $movie) {
             if($movie->getTitle() == $title)
@@ -88,19 +84,20 @@ class MovieDao implements IDao
                         $valuesArray["overview"]            =  $movie["overview"];
                         $valuesArray["release_date"]        =  $movie["release_date"];
                         $valuesArray["poster_path"]         =  $movie["poster_path"];
-                        $movie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
+                        $valuesArray["genre_ids"]         =  $movie["genre_ids"];
+
+                        $movie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"],$movie["genre_ids"]);
                         array_push($this->movieList, $movie); 
                         array_push($arrayToEncode,$valuesArray);
                     }
                 }
                 //creamos el json con toda la info de la api
                 $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-                file_put_contents(dirname(__DIR__) . '/Data/Movie.json',$newjsonContent);
+                file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
             }
     }
 
-    public function RetrieveData()
-    {
+    public function RetrieveData(){
         $this->movieList = array();
         $arrayToEncode = array();
         //Si existe el archivo
@@ -118,8 +115,10 @@ class MovieDao implements IDao
                     $valuesArray["overview"]            =  $movie["overview"];
                     $valuesArray["release_date"]        =  $movie["release_date"];
                     $valuesArray["poster_path"]         =  $movie["poster_path"];
+                    $valuesArray["genre_ids"]         =  $movie["genre_ids"];
 
-                    $newMovie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"]);
+
+                    $newMovie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"],$movie["genre_ids"]);
 
                     array_push($this->movieList, $newMovie);   
                     array_push($arrayToEncode,$valuesArray);

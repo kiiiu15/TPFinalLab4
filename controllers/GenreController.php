@@ -8,10 +8,10 @@ use Dao\GenreDao as GenreDao;
 
 class GenreController implements IControllers{
 
-    public function add ($idApi = 0,$name = "") {
+    public function add ($id = 0,$name = "") {
         
         $genreRepo=new GenreDao();     
-        $genre=new Genre($idApi,$name);
+        $genre=new Genre($id,$name);
         $genreRepo->Add($genre);
         include(VIEWS."/home.php"); 
     }

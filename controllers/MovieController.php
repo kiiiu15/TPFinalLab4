@@ -8,10 +8,10 @@ use Dao\MovieDao as MovieDao;
 
 class MovieController implements IControllers{
 
-    public function add ($title = "" , $Language = "" , $overview = "" , $ReleaseDate = "" ,$Poster) {
+    public function add ($title = "" , $Language = "" , $overview = "" , $ReleaseDate = "" ,$Poster,$genre_ids) {
         
         $MovieDao=new MovieDao();     
-        $movie=new Movie($title,$Language,$overview,$ReleaseDate,$Poster);
+        $movie=new Movie($title,$Language,$overview,$ReleaseDate,$Poster,$genre_ids);
         $MovieDao->Add($movie);
         include(VIEWS."/home.php"); 
     }

@@ -3,17 +3,17 @@ namespace Model;
 
 class Genre{
 
-    private $idApi;
+    private $id;
     private $name;
 
-    public function __construct($idApi=0,$name=""){
-        $this->setIdApi($idApi);
+    public function __construct($id=0,$name=""){
+        $this->setid($id);
         $this->setName($name);
     }
     
     //Getters
-    public function getIdApi(){
-        return $this->idApi;
+    public function getid(){
+        return $this->id;
     }
 
     public function getName(){
@@ -26,12 +26,12 @@ class Genre{
         $this->name = $name;
     }
 
-    public function setIdApi($idApi){
-        if($idApi == 0){
-            $this->idApi = 1;
+    public function setid($id){
+        if($id == 0){
+            $this->id = 1;
 
         }else{
-            $this->idApi = $idApi;
+            $this->id = $id;
         }
     }
 }

@@ -7,7 +7,7 @@ use model\Genre as Genre;
 class GenreDao implements IDao{
     private $GenreList=array();
 
-    //private $idApi;
+    //private $id;
     //private $name;
     public function GetAll(){
         $this->RetrieveData();
@@ -24,7 +24,7 @@ class GenreDao implements IDao{
         $this->RetrieveData();
 
         foreach($this->GenreList as $key=>$genre){
-            if($id == $genre->getIdApi()){
+            if($id == $genre->getid()){
                 unset($this->GenreList[$id]);
                 break;
             }
@@ -32,11 +32,12 @@ class GenreDao implements IDao{
 
     }
 
-    public function GenreExist($nameGenreToSearch){
+    public function GenreExist($nameToSearch){
         $this->RetrieveData();
+
         $flag=false;
         foreach($this->GenreList as $key=> $genre){
-            if($genre->getName() == $nameGenreToSearch){
+            if($genre->getName() == $nameToSearch){
                 $flag=true;
             }
         }
@@ -48,8 +49,8 @@ class GenreDao implements IDao{
 
         foreach($this->GenreList as $genre){
             $valuesArray=array();
-            $valuesArray["idGenre"]=$genre->getIdApi();
-            $valuesArray["nameGenre"]=$genre->getName();
+            $valuesArray["id"]=$genre->getid();
+            $valuesArray["name"]=$genre->getName();
             array_push($arrayToEncode,$valuesArray);
         }
         $jsonContent =json_encode($arrayToEncode,JSON_PRETTY_PRINT);
@@ -58,32 +59,30 @@ class GenreDao implements IDao{
 
     public function RetrieveApi()
     {
-        $arrayToEncode=array();
         $apiContent = file_get_contents("https://api.themoviedb.org/3/genre/movie/list?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
+        //var_dump($apiContent);
+        
+        if ($apiContent){
+            //Si apiContent tiene datos, se decodifica
+            $arrayToDecode  = json_decode($apiContent,true); 
             
-            if ($apiContent){
-                //Si apiContent tiene datos, se decodifica
-                $arrayToDecode  = json_decode($apiContent,true);    
+            
                
-                foreach ($arrayToDecode as $genre) {
-                    if(!$this->GenreExist($genre["nameGenre"]))
-                    {
-                        $valuesArray = array();
-                        $valuesArray["id"]=$genre["idGenre"];
-                        $valuesArray["name"]=$genre["nameGenre"];
-                        $Newgenre = new Genre($genre["idGenre"],$genre["nameGenre"]);
-                        array_push($this->GenreList, $Newgenre); 
-                        array_push($arrayToEncode,$valuesArray);
-                    }
-                }
-                $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-                file_put_contents(dirname(__DIR__) . '/data/genre.json',$newjsonContent);
-            }
+            foreach ($arrayToDecode['genres'] as $genre) {
+            
+            //$valuesArray = array();
+            
+            $Newgenre = new Genre($genre["id"],$genre["name"]);
+            array_push($this->GenreList, $Newgenre); 
+            
+            
+          }
+            
+        }
     }
 
     public function RetrieveData(){
         $this->GenreList = array();
-        $arrayToEncode = array();
 
         if(file_exists(dirname(__DIR__) ."/data/genre.json")){
             
@@ -95,13 +94,10 @@ class GenreDao implements IDao{
                 foreach($arrayToDecode as $genre)
                 {  
                     $valuesArray = array();
-                    $valuesArray["id"]=$genre["idGenre"];
-                    $valuesArray["name"]=$genre["nameGenre"];
-                    
-                    $Newgenre = new Movie($genre["idGenre"],$genre["nameGenre"]);
+
+                    $Newgenre = new Genre($genre["id"],$genre["name"]);
 
                     array_push($this->GenreList, $Newgenre);   
-                    array_push($arrayToEncode,$valuesArray);
                 }
                 
             } else {
