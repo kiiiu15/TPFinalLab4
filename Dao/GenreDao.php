@@ -60,23 +60,13 @@ class GenreDao implements IDao{
     public function RetrieveApi()
     {
         $apiContent = file_get_contents("https://api.themoviedb.org/3/genre/movie/list?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
-        //var_dump($apiContent);
         
         if ($apiContent){
-            //Si apiContent tiene datos, se decodifica
             $arrayToDecode  = json_decode($apiContent,true); 
-            
-            
-               
-            foreach ($arrayToDecode['genres'] as $genre) {
-            
-            //$valuesArray = array();
-            
-            $Newgenre = new Genre($genre["id"],$genre["name"]);
-            array_push($this->GenreList, $Newgenre); 
-            
-            
-          }
+            foreach ($arrayToDecode['genres'] as $genre){
+                $Newgenre = new Genre($genre["id"],$genre["name"]);
+                array_push($this->GenreList, $Newgenre);             
+            }
             
         }
     }

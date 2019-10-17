@@ -133,6 +133,17 @@ class MovieDao implements IDao
             $this->retrieveApi();
         }  
     }
+
+    public function getMovieForGenre($idGenreToSearch){
+        $this->RetrieveData();
+        $listMovieGenre=array();
+        foreach($this->movieList as $key=>$movie){
+            if($movie->getGenre_ids() == $idGenreToSearch){
+                array_push($listMovieGenre,$movie);
+            }
+        }
+        return $listMovieGenre;
+    }
 }
 
 ?>

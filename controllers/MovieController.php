@@ -24,6 +24,7 @@ class MovieController implements IControllers{
         return $MovieList;
     }
 
+    
 
     public function index(){
         include(VIEWS . "/home.php");

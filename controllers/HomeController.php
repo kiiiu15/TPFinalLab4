@@ -2,10 +2,17 @@
 namespace controllers;
 
 use controllers\Icontrollers as Icontrollers;
+use Dao\MovieDao as MovieDao;
 
 class HomeController implements Icontrollers {
 
-
+    //Verificar si funca 
+    public function getMovieForGenre($idGenreToSearch){
+        $movieRepo=new MovieDao();
+        $ListMovieGenre=$movieRepo->getMovieForGenre($idGenreToSearch);
+        //include_once(VIEWS ."/home.php");
+        //return $ListMovieGenre;
+    }
 
     public function index (){
         /*Aca falta el formulario de logeo que vamos a hacer mas adelante */
