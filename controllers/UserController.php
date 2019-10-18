@@ -58,11 +58,11 @@ class UserController implements IControllers
         {
             $user = new User($email,$pass);
             $this->setLogIn($user);
-            //  CUIDADO, CUIDADO, CUIDADO CON LA BOMBACHITA !!
-            $asd = new HomeController();
-            $asd->index();
+            
+            $homeController = new HomeController();
+            $homeController->index();
         }else{
-            $msg = "Error: usuario o contraseña incorrecto";
+            $errorMje = "Error: usuario o contraseña incorrecto";
             include(VIEWS."/login.php"); 
         }
         
@@ -76,8 +76,9 @@ class UserController implements IControllers
         if(!$this->userExist($email)){
             $user = new User($email,$pass);
             $this->userDao->Add($user);
+            $successMje = "Usuario registrado correctamente";
         }else{
-            $msg = "Error, ya existe un usuario con ese nombre";
+            $errorMje = "Error: ya existe un usuario con ese nombre";
         }
         require(VIEWS. "/logIn.php");
     }
