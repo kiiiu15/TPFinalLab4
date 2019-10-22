@@ -4,6 +4,8 @@ namespace Dao;
 
 use Dao\IDao as IDao;
 use Model\Movie as Movie;
+use Dao\GenreDao as GenreDao;
+
 
 class MovieDao implements IDao
 {
@@ -43,8 +45,8 @@ class MovieDao implements IDao
             $valuesArray["original_language"] = $movie->getLanguage();
             $valuesArray["overview"]          = $movie->getOverview();
             $valuesArray["release_date"]      = $movie->getReleaseDate();
-            $valuesArray["poster_path"]       = $movie->getPoster();
-            $valuesArray["genre_ids"]         =$movie->getGenre_ids();
+            $valuesArray["poster_path"]       = explode("https://image.tmdb.org/t/p/w200", $movie->getPoster())[1];            
+            $valuesArray["genre_ids"]         = $this->extractGenresID($movie->getGenres());
             
             array_push($arrayToEncode,$valuesArray);
         }
@@ -66,35 +68,42 @@ class MovieDao implements IDao
         return $ans;
     }
 
+    public function extractGenresID($ListGenres){
+        $ListId=array();
+        foreach($ListGenres as $genres){
+            array_push($ListId,$genres->getid());
+        }
+        return $ListId;
+    }
+
     public function retrieveApi()
     {
-        $arrayToEncode=array();
         $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
             
             if ($apiContent){
                 //Si apiContent tiene datos, se decodifica
-                $arrayToDecode  = json_decode($apiContent,true);    
-                //$arrayToEncode = array();
+                $arrayToDecode  = json_decode($apiContent,true);
                 foreach ($arrayToDecode["results"] as $movie) {
                     if(!$this->checkMovie($movie["title"]))
                     {
-                        $valuesArray = array();
-                        $valuesArray["title"]               =  $movie["title"];
-                        $valuesArray["original_language"]   =  $movie["original_language"];
-                        $valuesArray["overview"]            =  $movie["overview"];
-                        $valuesArray["release_date"]        =  $movie["release_date"];
-                        $valuesArray["poster_path"]         =  $movie["poster_path"];
-                        $valuesArray["genre_ids"]         =  $movie["genre_ids"];
-
-                        $movie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"],$movie["genre_ids"]);
+                        
+                        $movie = new Movie($movie["title"],$movie["original_language"],$movie["overview"],$movie["release_date"],$movie["poster_path"],$this->extractGenres($movie["genre_ids"]));
                         array_push($this->movieList, $movie); 
-                        array_push($arrayToEncode,$valuesArray);
                     }
                 }
-                //creamos el json con toda la info de la api
-                $newjsonContent = json_encode($arrayToEncode,JSON_PRETTY_PRINT);
-                file_put_contents(dirname(__DIR__) . '/data/movie.json',$newjsonContent);
+                
             }
+
+            $this->SaveData();
+    }
+
+    public function extractGenres($ListId){
+        $genreRepo= new GenreDao();
+        $genreList=array();
+        foreach($ListId as $id){
+            array_push($genreList,$genreRepo->extractGenrebyId($id));
+        }
+        return $genreList;
     }
 
     public function RetrieveData(){

@@ -3,9 +3,6 @@
 use Dao\MovieDao as MovieDao;
 use controllers\GenreController as GenreController;
 
-
-
-//$list = array();
 $repoGenre = new GenreController (); 
 $genres = $repoGenre->GetAll();
 
@@ -75,9 +72,16 @@ $genres = $repoGenre->GetAll();
                       
                     ?>
                     <li>
-                        <img src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" />
 						
-                        <p class="title"> <?= $movie->getTitle(); ?></p>
+						<button>
+							<a href="Home/showMovie/<?= $movie->getTitle(); ?>">
+								<img  src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" /> 		
+								<p class="title"> <?= $movie->getTitle(); ?></p>			
+							</a>
+						</button>
+						
+
+						
                     </li>
                     <?php
 					}

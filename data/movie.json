@@ -12,6 +12,18 @@
         ]
     },
     {
+        "title": "Maleficent: Mistress of Evil",
+        "original_language": "en",
+        "overview": "Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play.",
+        "release_date": "2019-10-18",
+        "poster_path": "\/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg",
+        "genre_ids": [
+            12,
+            14,
+            10751
+        ]
+    },
+    {
         "title": "El Camino: A Breaking Bad Movie",
         "original_language": "en",
         "overview": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
@@ -21,28 +33,6 @@
             80,
             18,
             53
-        ]
-    },
-    {
-        "title": "Gemini Man",
-        "original_language": "en",
-        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
-        "release_date": "2019-10-11",
-        "poster_path": "\/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg",
-        "genre_ids": [
-            28,
-            878,
-            53
-        ]
-    },
-    {
-        "title": "It Chapter Two",
-        "original_language": "en",
-        "overview": "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
-        "release_date": "2019-09-06",
-        "poster_path": "\/zfE0R94v1E8cuKAerbskfD3VfUt.jpg",
-        "genre_ids": [
-            27
         ]
     },
     {
@@ -60,15 +50,48 @@
         ]
     },
     {
-        "title": "Maleficent: Mistress of Evil",
-        "original_language": "en",
-        "overview": "Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play.",
+        "title": "Ip Man 4: The Finale",
+        "original_language": "cn",
+        "overview": "Ip Man 4 is an upcoming Hong Kong biographical martial arts film directed by Wilson Yip and produced by Raymond Wong. It is the fourth in the Ip Man film series based on the life of the Wing Chun grandmaster of the same name and features Donnie Yen reprising the role. The film began production in April 2018 and ended in July the same year.",
         "release_date": "2019-10-18",
-        "poster_path": "\/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg",
+        "poster_path": "\/mAWBfTDAmfpvQGMVFuzuVl49N1P.jpg",
         "genre_ids": [
-            12,
-            14,
-            10751
+            28,
+            18,
+            36
+        ]
+    },
+    {
+        "title": "Gemini Man",
+        "original_language": "en",
+        "overview": "Henry Brogen, an aging assassin tries to get out of the business but finds himself in the ultimate battle: fighting his own clone who is 25 years younger than him and at the peak of his abilities.",
+        "release_date": "2019-10-11",
+        "poster_path": "\/uTALxjQU8e1lhmNjP9nnJ3t2pRU.jpg",
+        "genre_ids": [
+            28,
+            53
+        ]
+    },
+    {
+        "title": "It Chapter Two",
+        "original_language": "en",
+        "overview": "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
+        "release_date": "2019-09-06",
+        "poster_path": "\/zfE0R94v1E8cuKAerbskfD3VfUt.jpg",
+        "genre_ids": [
+            27
+        ]
+    },
+    {
+        "title": "Zombieland: Double Tap",
+        "original_language": "en",
+        "overview": "The group will face a new zombie threat as a new breed of zombie has developed. This new super-zombie type is faster, bigger, and stronger than the previous strain of zombies and harder to kill. These super-zombies have started grouping up into a horde going from city to city leaving a path of destruction behind them.",
+        "release_date": "2019-10-18",
+        "poster_path": "\/pIcV8XXIIvJCbtPoxF9qHMKdRr2.jpg",
+        "genre_ids": [
+            28,
+            35,
+            27
         ]
     },
     {
@@ -92,6 +115,18 @@
             28,
             80,
             53
+        ]
+    },
+    {
+        "title": "One Piece: Stampede",
+        "original_language": "ja",
+        "overview": "One Piece: Stampede is a stand-alone film that celebrates the anime's 20th Anniversary and takes place outside the canon of the \"One Piece\" TV series. Monkey D. Luffy and his Straw Hat pirate crew are invited to a massive Pirate Festival that brings many of the most iconic characters from throughout the franchise to participate in competition with the Straw Hats to find Roger's treasure. It also pits the Straw Hats against a new enemy named Bullet, a former member of Roger's crew.",
+        "release_date": "2019-10-24",
+        "poster_path": "\/4E2lyUGLEr3yH4q6kJxPkQUhX7n.jpg",
+        "genre_ids": [
+            28,
+            12,
+            16
         ]
     },
     {
@@ -120,15 +155,28 @@
         ]
     },
     {
-        "title": "Zombieland: Double Tap",
+        "title": "Hustlers",
         "original_language": "en",
-        "overview": "The group will face a new zombie threat as a new breed of zombie has developed. This new super-zombie type is faster, bigger, and stronger than the previous strain of zombies and harder to kill. These super-zombies have started grouping up into a horde going from city to city leaving a path of destruction behind them.",
-        "release_date": "2019-10-18",
-        "poster_path": "\/pIcV8XXIIvJCbtPoxF9qHMKdRr2.jpg",
+        "overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
+        "release_date": "2019-09-13",
+        "poster_path": "\/zBhv8rsLOfpFW2M5b6wW78Uoojs.jpg",
+        "genre_ids": [
+            35,
+            80,
+            18
+        ]
+    },
+    {
+        "title": "Crawl",
+        "original_language": "en",
+        "overview": "When a huge hurricane hits her hometown in Florida, Haley ignores evacuation orders to look for her father. After finding him badly wounded, both are trapped by the flood. With virtually no time to escape the storm, they discover that rising water levels are the least of their problems.",
+        "release_date": "2019-07-12",
+        "poster_path": "\/9kOtMOUa5HrOiIG2Z9Anv7M8AbY.jpg",
         "genre_ids": [
             28,
-            35,
-            27
+            18,
+            27,
+            53
         ]
     },
     {
@@ -143,79 +191,38 @@
         ]
     },
     {
-        "title": "Stuber",
+        "title": "Annabelle Comes Home",
         "original_language": "en",
-        "overview": "After crashing his car, a cop who's recovering from eye surgery recruits an Uber driver to help him catch a heroin dealer. The mismatched pair soon find themselves in for a wild day of stakeouts and shootouts as they encounter the city's seedy side.",
-        "release_date": "2019-07-12",
-        "poster_path": "\/klkFYDZOetegK8floj6IjvbzzQ2.jpg",
+        "overview": "Determined to keep Annabelle from wreaking more havoc, demonologists Ed and Lorraine Warren bring the possessed doll to the locked artifacts room in their home, placing her \u201csafely\u201d behind sacred glass and enlisting a priest\u2019s holy blessing. But an unholy night of horror awaits as Annabelle awakens the evil spirits in the room, who all set their sights on a new target\u2014the Warrens' ten-year-old daughter, Judy, and her friends.",
+        "release_date": "2019-06-26",
+        "poster_path": "\/qWsHMrbg9DsBY3bCMk9jyYCRVRs.jpg",
         "genre_ids": [
-            28,
-            35,
-            80,
-            53
-        ]
-    },
-    {
-        "title": "Crawl",
-        "original_language": "en",
-        "overview": "When a huge hurricane hits her hometown in Florida, Haley ignores evacuation orders to look for her father. After finding him badly wounded, both are trapped by the flood. With virtually no time to escape the storm, they discover that rising water levels are the least of their problems.",
-        "release_date": "2019-07-12",
-        "poster_path": "\/4WH6AZd473lRZ3hUp8TYiv2LfZW.jpg",
-        "genre_ids": [
-            28,
-            18,
             27,
+            9648,
             53
         ]
     },
     {
-        "title": "Hustlers",
-        "original_language": "en",
-        "overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
-        "release_date": "2019-09-13",
-        "poster_path": "\/zBhv8rsLOfpFW2M5b6wW78Uoojs.jpg",
-        "genre_ids": [
-            35,
-            80,
-            18
-        ]
-    },
-    {
-        "title": "The Angry Birds Movie 2",
-        "original_language": "en",
-        "overview": "Red, Chuck, Bomb and the rest of their feathered friends are surprised when a green pig suggests that they put aside their differences and unite to fight a common threat. Aggressive birds from an island covered in ice are planning to use an elaborate weapon to destroy the fowl and swine.",
-        "release_date": "2019-08-14",
-        "poster_path": "\/ebe8hJRCwdflNQbUjRrfmqtUiNi.jpg",
+        "title": "Anna",
+        "original_language": "fr",
+        "overview": "Beneath Anna Poliatova's striking beauty lies a secret that will unleash her indelible strength and skill to become one of the world's most feared government assassins.",
+        "release_date": "2019-06-21",
+        "poster_path": "\/d8u4jpkDKgEPDJUl4g3vOOP3mDe.jpg",
         "genre_ids": [
             28,
-            12,
-            16,
-            35,
-            10751
+            53
         ]
     },
     {
-        "title": "Ad Astra",
-        "original_language": "en",
-        "overview": "An astronaut travels to the outer edges of the solar system to find his father and unravel a mystery that threatens the survival of our planet. He uncovers secrets which challenge the nature of human existence and our place in the cosmos.",
-        "release_date": "2019-09-20",
-        "poster_path": "\/lNnomQxXpRP9mgUwMuSZhA8LXfA.jpg",
+        "title": "Parasite",
+        "original_language": "ko",
+        "overview": "All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.",
+        "release_date": "2019-10-11",
+        "poster_path": "\/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
         "genre_ids": [
-            12,
+            35,
             18,
-            878
-        ]
-    },
-    {
-        "title": "One Piece: Stampede",
-        "original_language": "ja",
-        "overview": "One Piece: Stampede is a stand-alone film that celebrates the anime's 20th Anniversary and takes place outside the canon of the \"One Piece\" TV series. Monkey D. Luffy and his Straw Hat pirate crew are invited to a massive Pirate Festival that brings many of the most iconic characters from throughout the franchise to participate in competition with the Straw Hats to find Roger's treasure. It also pits the Straw Hats against a new enemy named Bullet, a former member of Roger's crew.",
-        "release_date": "2019-10-24",
-        "poster_path": "\/4E2lyUGLEr3yH4q6kJxPkQUhX7n.jpg",
-        "genre_ids": [
-            28,
-            12,
-            16
+            53
         ]
     },
     {
@@ -229,17 +236,6 @@
             14,
             10402,
             10749
-        ]
-    },
-    {
-        "title": "Anna",
-        "original_language": "fr",
-        "overview": "Beneath Anna Poliatova's striking beauty lies a secret that will unleash her indelible strength and skill to become one of the world's most feared government assassins.",
-        "release_date": "2019-06-21",
-        "poster_path": "\/d8u4jpkDKgEPDJUl4g3vOOP3mDe.jpg",
-        "genre_ids": [
-            28,
-            53
         ]
     }
 ]

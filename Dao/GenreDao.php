@@ -98,6 +98,16 @@ class GenreDao implements IDao{
             $this->RetrieveApi();
         }  
     }
+
+    //ListGenres es la lista de objetos de tipo genero que tiene una pelicula
+    public function extractGenrebyId($Id){
+        $this->RetrieveData();
+        foreach($this->GenreList as $genre){
+            if($genre->getid() == $Id){
+               return $genre; 
+            }
+        }
+    }
 }
 
 

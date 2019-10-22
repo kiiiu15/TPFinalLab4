@@ -3,6 +3,7 @@ namespace Model;
 
 class MovieFunction{
     //Sera util asignarle un id ? 
+    // ID, PELICULA (REFERENCIA) Y CINE (REFERENCIA)
     private $day;
     private $hour;
 

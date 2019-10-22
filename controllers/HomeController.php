@@ -19,6 +19,20 @@ class HomeController implements Icontrollers {
         include(VIEWS."/home.php");
     }
 
+    public function showMovie($title){
+        $movieToSearch=array();
+        $list=array();
+        $controllerMovie=new MovieController();
+        $list=$controllerMovie->GetAll();
+        
+        foreach($list as $movie){
+            if($title == $movie->getTitle()){
+                $movieToSearch=$movie;
+            }
+        }
+        include(VIEWS ."/showMovie.php");
+    }
+
     public function index (){
         /*Aca falta el formulario de logeo que vamos a hacer mas adelante */
 

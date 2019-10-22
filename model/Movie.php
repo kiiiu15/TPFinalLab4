@@ -8,7 +8,7 @@ class Movie{
     private $overview;
     private $ReleaseDate;
     private $Poster;//la imagen de la pelicula
-    private $genre_ids;
+    private $genres;
     //$Poster es un string con la direccion de donde este alojado la imagen o Poster de la
     //pelicula, ya sea desde internet, o carpeta local
 
@@ -18,13 +18,13 @@ class Movie{
     * ya que poster se carga con la url de donde busca los posters la api
     * si se quiere usar un poster local sera necesario hacer un setPoster()
     */
-    public function __construct($title = "",$Language ="",$overview="",$ReleaseDate="",$Poster="",$genre_ids){
+    public function __construct($title = "",$Language ="",$overview="",$ReleaseDate="",$Poster="",$genres=array()){
         $this->title=$title;
         $this->Language=$Language;
         $this->overview=$overview;
         $this->ReleaseDate=$ReleaseDate;
         $this->Poster= "https://image.tmdb.org/t/p/w200" . $Poster;
-        $this->genre_ids=$genre_ids;
+        $this->genres=$genres;
     }
 
     //Getters
@@ -48,8 +48,8 @@ class Movie{
         return $this->Poster;
     }
 
-    public function getGenre_ids(){
-        return $this->genre_ids;
+    public function getGenres(){
+        return $this->genres;
     }
     
     //Setters
@@ -76,8 +76,8 @@ class Movie{
         return $this;
     }
 
-    public function setgenre_ids($genre_ids){
-        $this->genre_ids = $genre_ids;
+    public function setGenres($genres){
+        $this->genres = $genres;
 
     }
 }
