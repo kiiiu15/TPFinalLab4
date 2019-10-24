@@ -20,7 +20,7 @@ class Cinema{
         $this->setPrice($price);
         $this->setActive($active);
     }
-
+     
     //Getters
     
     public function getIdCinema(){
