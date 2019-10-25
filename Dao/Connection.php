@@ -23,14 +23,14 @@
 
         public function connect() {
             try {
-                $this->pdo = new \PDO("mysql:host=" . HOST . "; dbname=" . DB, USER, PASS);
+                $this->pdo = new \PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
             }
             catch(PDOException $e) {
                 echo "Connection failed: " . $e->getMessage();
                 throw $e;
             }
         }
-        
+
         public static function GetInstance()
         {
             if(self::$instance == null)
