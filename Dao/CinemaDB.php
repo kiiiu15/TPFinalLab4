@@ -9,6 +9,9 @@ class CinemaDB{
 
     private $connection;
 
+    public function __construct(){
+    }
+
     public function GetAll(){
         $sql="SELECT *FROM Cinemas";
         try{
@@ -56,6 +59,29 @@ class CinemaDB{
         }
     }
 
+    public function ChangePrice($cinema){
+        $sql="UPDATE Cinemas set Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+        $values['price'] =$cinema->getPrice();
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function ChangeAddress($cinema){
+        $sql="UPDATE Cinemas set Cinemas.address=:address WHERE Cinemas.idCinema=:idCinema";
+        $values['address'] =$cinema->getAddress();
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
 
     public function Delete($cinema){
         $sql="DELETE FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
@@ -75,10 +101,57 @@ class CinemaDB{
         
     }*/
 
-    public function RetrieveData(){
-        $sql="SELECT * FROM Cinemas";
+    public function RetrieveByAddress($address){
+        $sql="SELECT * FROM Cinemas WHERE Cinemas.address=:address";
+        $values['address']=$address;
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->Execute($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
     }
 
+    //puede ser activado o desactivado
+    public function RetrieveByActive($active){
+        $sql="SELECT * FROM Cinemas WHERE Cinemas.active=:active";
+        $values['active']=$active;
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $this->connect->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function RetrieveById($id){
+        $sql="SELECT * FROM Cinemas WHERE Cinemas.idCinema=:id";
+        $values['idCinema']=$id;
+
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function RetrieveByName($name){
+        $sql="SELECT *FROM Cinemas WHERE Cinemas.name=:name";
+        $values['name'] =$name;
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->Execute($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+    }
+
+    //Creo que hay que fletar esta funcion
     public function cinemaExist(){
         
     }
@@ -91,7 +164,7 @@ class CinemaDB{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
             $this->connection->Execute($sql,$values);
-        }catch(\PDOExecute $ex){
+        }catch(\PDOExeption $ex){
             throw $ex;
         }
     }
@@ -120,14 +193,26 @@ class CinemaDB{
         }
     }
 
-    /*
-    public function getIDCinemaActiva (){
-
-       
-    }
     
-    public function getIDCinemaUnActiva(){
-        
+    public function getIDCinemaActiva ($active){
+        $sql="SELECT Cinemas.idCinema FROM Cinemas WHERE Cinemas.active=:active";
+        $values['active']=$active;
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $this->connection->Execute();
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+    }
+  
+    //Ver despues su funcionamiento
+    /*protected function Map($value) {
+        $value = is_array($value) ? $value : [];
+        $resp = array_map(function ($c) {
+            return new Cinema($c['idCinema'], $c['name'], $c['address'], $c['capacity'], $c['price'], $c['active']);
+        }, $value);
+        return count($resp) > 1 ? $resp : $resp['0'];
     }*/
 
 }
