@@ -39,10 +39,15 @@ class CinemaDB{
         try{
             $this->connection= Conection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql, $values);
+            $result=$this->connection->ExecuteNonQuery($sql, $values);
         }
         catch(\PDOException $ex) {
             throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -53,9 +58,14 @@ class CinemaDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -65,9 +75,14 @@ class CinemaDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -77,12 +92,17 @@ class CinemaDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
+    //No creo que la necesitemos
     public function Delete($cinema){
         $sql="DELETE FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $cinema->getIdCinema();
@@ -90,9 +110,13 @@ class CinemaDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -107,9 +131,13 @@ class CinemaDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -120,9 +148,13 @@ class CinemaDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connect->Execute($sql,$values);
+            $result=$this->connect->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -133,9 +165,13 @@ class CinemaDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -145,16 +181,20 @@ class CinemaDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
     //Creo que hay que fletar esta funcion
-    public function cinemaExist(){
+    /*public function cinemaExist(){
         
-    }
+    }*/
  
     public function getCinema($cinema){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
@@ -163,9 +203,13 @@ class CinemaDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
 
@@ -187,9 +231,11 @@ class CinemaDB{
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
         }
     }
 
@@ -200,20 +246,23 @@ class CinemaDB{
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute();
+            $result=$this->connection->Execute();
         }catch(\PDOExeption $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
-  
-    //Ver despues su funcionamiento
-    /*protected function Map($value) {
+    
+    protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
             return new Cinema($c['idCinema'], $c['name'], $c['address'], $c['capacity'], $c['price'], $c['active']);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
-    }*/
+    }
 
 }
 

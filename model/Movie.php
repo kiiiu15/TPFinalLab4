@@ -3,6 +3,7 @@ namespace Model;
 
 class Movie{
     
+    private $id;
     private $title;
     private $Language;
     private $overview;
@@ -18,7 +19,8 @@ class Movie{
     * ya que poster se carga con la url de donde busca los posters la api
     * si se quiere usar un poster local sera necesario hacer un setPoster()
     */
-    public function __construct($title = "",$Language ="",$overview="",$ReleaseDate="",$Poster="",$genres=array()){
+    public function __construct($id="",$title = "",$Language ="",$overview="",$ReleaseDate="",$Poster="",$genres=array()){
+        $this->id=$id;
         $this->title=$title;
         $this->Language=$Language;
         $this->overview=$overview;
@@ -28,6 +30,10 @@ class Movie{
     }
 
     //Getters
+    public function getId(){
+        return $this->id;
+    }
+
     public function getTitle(){
         return $this->title;
     }
@@ -79,6 +85,10 @@ class Movie{
     public function setGenres($genres){
         $this->genres = $genres;
 
+    }
+
+    public function setId($id){
+        $this->id = $id;
     }
 }
 
