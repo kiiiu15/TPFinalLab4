@@ -246,7 +246,7 @@ class CinemaDB{
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $result=$this->connection->Execute();
+            $result=$this->connection->Execute($sql,$value);
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
