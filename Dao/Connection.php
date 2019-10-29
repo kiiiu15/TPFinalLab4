@@ -1,8 +1,8 @@
 <?php
-    namespace DAO;
+    namespace Dao;
     use \PDO as PDO;
     use \Exception as Exception;
-    use DAO\QueryType as QueryType;
+    use Dao\QueryType as QueryType;
     class Connection
     {
         private $pdo = null;
@@ -20,6 +20,17 @@
                 throw $ex;
             }
         }
+
+        public function connect() {
+            try {
+                $this->pdo = new \PDO("mysql:host=" . DB_HOST . "; dbname=" . DB_NAME, DB_USER, DB_PASS);
+            }
+            catch(PDOException $e) {
+                echo "Connection failed: " . $e->getMessage();
+                throw $e;
+            }
+        }
+
         public static function GetInstance()
         {
             if(self::$instance == null)
