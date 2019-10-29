@@ -3,8 +3,13 @@ namespace Controllers;
 
 use Controllers\IControllers as IControllers;
 use model\User as User;
+use model\Role as Role;
+use model\Profile as Profile;
 use Dao\UserDao as UserDao;
 use controllers\HomeController as HomeController;
+
+use Dao\UserDB as UserDB;
+use Dao\ProfileDB as ProfileDB;
 
 class UserController implements IControllers
 {
@@ -14,6 +19,25 @@ class UserController implements IControllers
     public function __construct(){
        // $userDao = new UserDao();
        // $userList = $userDao->GetAll();
+    }
+
+    public function prueba(){
+        $DAO = new UserDB();
+
+        $role = new Role("admin");
+        // esto de la id esta mal.......!!!!!!!
+        $profile = new Profile('perfil1','p1','pepe','epep');
+        $User = new User("u1","1u",$profile,$role);
+
+        $DAO->add($User);
+       
+        $DAOPROFILE = new ProfileDB();
+        $DAOPROFILE->add($profile);
+        
+        var_dump( $DAOPROFILE->getAll() );
+        echo "<br>";
+        //var_dump($DAO->getAll());
+       
     }
 
     public function index(){    
@@ -51,20 +75,24 @@ class UserController implements IControllers
 
     public function logIn($email,$pass){
         
-        $this->userDao = new UserDao();
+        /*$this->userDao = new UserDao();
         $this->userList = $this->userDao->GetAll();
 
         if($this->userVerify($email,$pass))
         {
             $user = new User($email,$pass);
-            $this->setLogIn($user);
-            
+            $this->setLogIn($user);*/
+
+            //esta linea de abajo hay que sacarla, y arreglar el login obviamente....
+            $_SESSION["status"] = "on";
+
+
             $homeController = new HomeController();
             $homeController->index();
-        }else{
+        /*}else{
             $errorMje = "Error: usuario o contraseña incorrecto";
             include(VIEWS."/login.php"); 
-        }
+        }*/
         
     }
 

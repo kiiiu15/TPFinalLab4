@@ -4,12 +4,16 @@ namespace Model;
 class User{
 
     private $Email;
-    private $Password;
+    private $Pass;
+    private $profile;
+    private $role;
 
     //Constructor
-    public function __construct($Email,$Password){
+    public function __construct($Email,$Pass,$profile,$role){
         $this->Email=$Email;
-        $this->Password=$Password;
+        $this->Pass=$Pass;
+        $this->profile = $profile;
+        $this->role = $role;
     }
 
     //Getters
@@ -17,8 +21,18 @@ class User{
         return $this->Email;
     }
  
-    public function getPassword(){
-        return $this->Password;
+    public function getPass(){
+        return $this->Pass;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function getProfile()
+    {
+        return $this->profile;
     }
 
     //Setters
@@ -26,8 +40,22 @@ class User{
         $this->Email = $Email;
     }
 
-    public function setPassword($Password){
-        $this->Password = $Password;
+    public function setPass($Pass){
+        $this->Pass = $Pass;
+    }
+
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
     }
 }
 
