@@ -192,7 +192,7 @@ class MovieFunctionDB{
         }
     }
 
-    //Levanta 
+    //Levanta la cartelera apartir de hoy a 7 dias 
     public function RetrieveBillboard(){
         $sql="SELECT FROM MovieFunctions WHERE MovieFunctions.dayFunction BETWEEN CURDATE() AND CURDATE() +INTERVAL 7 DAY";
         try{
@@ -208,7 +208,7 @@ class MovieFunctionDB{
         }
     }
 
-    //cambiar por moviefunction
+    //agregar los pdo de movie y cinema para agregar al moviefunction los objetos de movie y cinema
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($m) {

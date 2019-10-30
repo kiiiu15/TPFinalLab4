@@ -28,26 +28,22 @@ class CinemaDB{
     }
 
     public function Add($cinema){
-        $sql= "INSERT INTO Cinemas (idCinema,name,address,capacity,price,active) VALUES (:idCinema,:name,:addres,:capacity,:price,:active)";
+        $sql= "INSERT INTO Cinemas (idCinema,nameCinema,address,capacity,price,active) VALUES (:idCinema,:nameCinema,:address,:capacity,:price,:active)";
         $values['idCinema']   = $cinema->getIdCinema();
-        $values['name']       = $cinema->getName();
+        $values['nameCinema']       = $cinema->getName();
         $values['address']    = $cinema->getAddress();
         $values['capacity']   = $cinema->getCapacity();
         $values['price']      = $cinema->getPrice();
         $values['active']     = $cinema->getActive();
 
         try{
-            $this->connection= Conection::getInstance();
+            $this->connection= Connection::getInstance();
             $this->connection->connect();
             $result=$this->connection->ExecuteNonQuery($sql, $values);
+            return $result;
         }
         catch(\PDOException $ex) {
             throw $ex;
-        }
-        if(!empty($result)){
-            return $this->Map($result);
-        }else{
-            return false;
         }
     }
 
@@ -175,9 +171,9 @@ class CinemaDB{
         }
     }
 
-    public function RetrieveByName($name){
-        $sql="SELECT *FROM Cinemas WHERE Cinemas.name=:name";
-        $values['name'] =$name;
+    public function RetrieveByName($nameCinema){
+        $sql="SELECT *FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
+        $values['nameCinema'] =$nameCinema;
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
@@ -222,8 +218,8 @@ class CinemaDB{
     //por ende esta funcion recibe el cine con los datos modificados y conservando el id
     //name,address,capacity,price,active 
     public function modify($cinema){
-        $sql="UPDATE FROM Cinemas SET Cinemas.name=:name,Cinemas.address=:address,Cinemas.capacity=:capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
-        $values['name']     = $cinema->getName();
+        $sql="UPDATE FROM Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.address=:address,Cinemas.capacity=:capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+        $values['nameCinema']     = $cinema->getName();
         $values['address']  = $cinema->getAddress();
         $values['capacity'] = $cinema->getCapacity();
         $values['price']    = $cinema->getPrice();
@@ -259,7 +255,7 @@ class CinemaDB{
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
-            return new Cinema($c['idCinema'], $c['name'], $c['address'], $c['capacity'], $c['price'], $c['active']);
+            return new Cinema($c['idCinema'], $c['nameCinema'], $c['address'], $c['capacity'], $c['price'], $c['active']);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

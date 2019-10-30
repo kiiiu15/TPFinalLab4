@@ -9,9 +9,9 @@ if(1 === 1) {
     define('ROOT', dirname(__DIR__));
     
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'c1590773_web');
-    define('DB_USER', 'c1590773_admin');
-    define('DB_PASS', 'Asdf1234');
+    define('DB_NAME', 'moviepass');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
 } else {
     /* FRONT */
     define('FRONT_ROOT', 'http://localhost/TPFinalLab4');
@@ -20,9 +20,9 @@ if(1 === 1) {
     define('ROOT', dirname(__DIR__));
     
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'lab4lay');
-    define('DB_USER', 'adrian');
-    define('DB_PASS', 'Qwer4321@');
+    define('DB_NAME', 'moviepass');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
 }
 
 
