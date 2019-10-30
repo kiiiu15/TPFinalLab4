@@ -7,8 +7,7 @@ use Dao\QueryType as QueryType;
 use model\User as User;
 use Dao\ProfileDB as ProfileDB;
 
-class UserDB 
-{
+class UserDB{
     private $connection;
 
     function __construct() {
@@ -17,7 +16,7 @@ class UserDB
     /*
     funciona bien pero no me gusta como devuelve el resultado 
     */
-    public function getAll(){
+    public function GetAll(){
 
         $sql="SELECT * FROM Users";
 
@@ -35,7 +34,7 @@ class UserDB
     }
 
     
-    public function add($user){
+    public function Add($user){
         //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
         $sql = "INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES (:email,:pass,:roleName,:usersProfileId)";
 
@@ -43,6 +42,8 @@ class UserDB
         $values["pass"]            = $user->getPass();
         $values["roleName"]        = $user->getRole()->getRoleName();
         //esto esta mal, pero no se bien como resolverlo 
+        //$profile=$user->getProfile();
+        //$values['usersProfileId']=$profile->getName(); //No te funcionaria asi ?  ya que le estas devolviendo un objeto de tipo profile
         $values["usersProfileId"]  = $user->getProfile()->getName();
         
 
@@ -59,7 +60,7 @@ class UserDB
         }
     }
 
-    public function deleteByEmail($email){
+    public function DeleteByEmail($email){
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
@@ -72,7 +73,7 @@ class UserDB
         }
     }
 
-    public function getById($idUser){
+    public function GetById($idUser){
         $sql = "SELECT * FROM Users WHERE Users.idUser = :idUser";
         $values['idUser'] = $idUser;
 
