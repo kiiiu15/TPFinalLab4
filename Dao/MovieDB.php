@@ -69,6 +69,25 @@ class MovieDB{
 
     }
 
+    public function RetrieveById($idMovie){
+        $sql="SELECT * FROM Movies WHERE Movies.idMovie=:idMovie";
+        $values['idMovie']=$idMovie;
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->Execute($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+
+
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
+    }
+
     public function RetrieveByGenre($genreId){
         $sql="SELECT * FROM Movies INNER JOIN GenresPerMovie ON Movies.idMovie = GenresPerMovie.idMovie INNER JOIN Genres ON GenresPerMovie.idGenre = Genres.idGenre WHERE Genres.idGenre = :idGenre";
         $values['idGenre']=$genreId;

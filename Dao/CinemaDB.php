@@ -174,7 +174,7 @@ class CinemaDB{
 
     public function RetrieveById($id){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.idCinema=:id";
-        $values['idCinema']=$id;
+        $values['id']=$id;
 
         try{
             $this->connection=Connection::getInstance();
@@ -246,7 +246,7 @@ class CinemaDB{
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            return = $this->connection->ExecuteNonQuery($sql,$values);
+            return  $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -272,7 +272,7 @@ class CinemaDB{
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
-            return new Cinema($c['idCinema'], $c['nameCinema'], $c['address'], $c['capacity'], $c['price'], $c['active']);
+            return new Cinema($c['idCinema'], $c['nameCinema'], $c['adressCinema'], $c['capacity'], $c['price'], $c['active']);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
