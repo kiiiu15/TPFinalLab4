@@ -52,65 +52,68 @@ class UserController implements IControllers
         
     }
 
-    public function userVerify($email,$pass){
-        if($this->userExist($email))
+    public function UserExist($email){
+        $Dao = new UserDB();
+        
+        if($Dao->GetByEmail($email)){
+            return true;
+        }else
         {
-            if($this->userDao->getByEmail($email)->getPassword() == $pass)
-            {
-                return true;
-            }else{
-                return false;
-            }
-        }else{
             return false;
         }
     }
 
-    public function userExist($email){
-        if ($this->userDao->getByEmail($email) != null){
-            return true;
+    public function logIn($email,$pass){
+
+        $Dao = new UserDB();
+        if($this->UserExist($email))
+        {
+            $user = $Dao->GetByEmail($email);
+            if($user->GetPass() == $pass)
+            {
+                $this->SetLogIn($user);
+                include(VIEWS."/home.php");
+            }else{
+                $errorMje = "Error: Contraseña incorrecta";
+                include(VIEWS."/login.php"); 
+            }
+        }else{
+            $errorMje = "Error: usuario incorrecto";
+            include(VIEWS."/login.php"); 
         }
     }
 
-    public function logIn($email,$pass){
-        
-        /*$this->userDao = new UserDao();
-        $this->userList = $this->userDao->GetAll();
+    public function SignUp($email,$pass,$UserName,$LastName,$Dni,$TelephoneNumber){
 
-        if($this->userVerify($email,$pass))
+        if(!$this->UserExist($email))
         {
-            $user = new User($email,$pass);
-            $this->setLogIn($user);*/
+            $role = new Role("client");
+            $profile = new Profile($UserName,$LastName,$Dni,$TelephoneNumber);
+            $user = new User($email,$pass,$role,$profile);
 
-            //esta linea de abajo hay que sacarla, y arreglar el login obviamente....
-            $_SESSION["status"] = "on";
+            $Dao = new UserDB();
+            $ProfileDao = new ProfileDB();
+            $profileId = $ProfileDao->Add($profile);
 
-
-            $homeController = new HomeController();
-            $homeController->index();
-        /*}else{
-            $errorMje = "Error: usuario o contraseña incorrecto";
-            include(VIEWS."/login.php"); 
-        }*/
-        
-    }
-
-    public function register($email,$pass){
-
-        $this->userDao = new UserDao();
-        $this->userList = $this->userDao->GetAll();
-
-        if(!$this->userExist($email)){
-            $user = new User($email,$pass);
-            $this->userDao->Add($user);
-            $successMje = "Usuario registrado correctamente";
+           
+            if($profileId){
+                if($Dao->Add($user,$profileId)){
+                    $successMje = "Usuario registrado correctamente";
+                }else{
+                    $errorMje = "Error de usuario: intentelo de nuevo mas tarde...";
+                }
+            }else{
+                $errorMje = "Error de Perfil: intentelo de nuevo mas tarde...";
+            }
+            
         }else{
-            $errorMje = "Error: ya existe un usuario con ese nombre";
+            $errorMje = "Ya existe un usuario registrado con esa direccion de correo";
+
         }
         require(VIEWS. "/logIn.php");
     }
 
-    public function logOut(){
+    public function LogOut(){
         //no estoy del todo seguro si esto esta bien
         session_destroy();
         include(VIEWS."/login.php"); 

@@ -31,7 +31,6 @@ class UserDB
         }
         if(!empty($result)){
             return $this->Map($result);
-            //return $result;
         }else{
             return false;
         }
@@ -42,15 +41,15 @@ class UserDB
         //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
         $sql = "INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES (:email,:pass,:roleName,:usersProfileId)";
 
-        $values["email"]           = $user->getEmail();
-        $values["pass"]            = $user->getPass();
-        $values["roleName"]        = $user->getRole()->getRoleName();
+        $values["email"]           = $user->GetEmail();
+        $values["pass"]            = $user->GetPass();
+        $values["roleName"]        = $user->GetRole()->GetRoleName();
         $values["usersProfileId"]  = $profileId;
 
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
         }
@@ -80,6 +79,32 @@ class UserDB
         }catch(\PDOException $ex){
             throw $ex;
         }
+    }
+
+    public function GetByEmail($email){
+        $sql = "SELECT us.email,us.pass,us.roleName,p.UserName,p.UserLastName,p.Dni,p.TelephoneNumber
+                FROM
+                    Users AS us
+                INNER JOIN
+                    UserProfiles AS p
+                ON us.usersProfileId = p.idProfile
+                WHERE 
+                    us.email = :email";
+        $values['email'] = $email;
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $result = $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
+
     }
 
     protected function Map($value) {

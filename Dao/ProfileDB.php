@@ -13,7 +13,7 @@ class ProfileDB
     function __construct() {
     }    
 
-    public function getAll(){
+    public function GetAll(){
 
         $sql="SELECT * FROM UserProfiles";
 
@@ -31,13 +31,13 @@ class ProfileDB
     }
 
     
-    public function add($profile){
+    public function Add($profile){
         $sql = "INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES (:UserName,:UserlastName,:dni,:telephoneNumber)";
 
-        $values["UserName"]        = $profile->getName();
-        $values["UserlastName"]    = $profile->getLastName();
-        $values["dni"]             = $profile->getDni();
-        $values["telephoneNumber"] = $profile->getTelephoneNumber();
+        $values["UserName"]        = $profile->GetName();
+        $values["UserlastName"]    = $profile->GetLastName();
+        $values["dni"]             = $profile->GetDni();
+        $values["telephoneNumber"] = $profile->GetTelephoneNumber();
 
         
         
@@ -47,7 +47,7 @@ class ProfileDB
             $this->connection->ExecuteNonQuery($sql,$values);
 
             //preguntar si esto esta bien
-            $profileId = $this->getLastId();
+            $profileId = $this->GetLastId();
         }catch(\PDOExeption $ex){
             throw $ex;
         }
@@ -55,7 +55,7 @@ class ProfileDB
     }
 
     //supongo que hay una mejor forma de hacerlo....
-    public function getLastId(){
+    public function GetLastId(){
         $sql = "SELECT MAX(idProfile) AS idProfile FROM UserProfiles";
 
         try{
@@ -70,7 +70,7 @@ class ProfileDB
         }
     }
 
-    public function getProfileById($idProfile){
+    public function GetProfileById($idProfile){
         
         $sql = "SELECT * FROM UserProfiles up WHERE up.idProfile = :idProfile";
         $values['idProfile'] = $idProfile;

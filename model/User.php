@@ -17,41 +17,41 @@ class User{
     }
 
     //Getters
-    public function getEmail(){
+    public function GetEmail(){
         return $this->Email;
     }
  
-    public function getPass(){
+    public function GetPass(){
         return $this->Pass;
     }
 
-    public function getRole()
+    public function GetRole()
     {
         return $this->role;
     }
 
-    public function getProfile()
+    public function GetProfile()
     {
         return $this->profile;
     }
 
     //Setters
-    public function setEmail($Email){
+    public function SetEmail($Email){
         $this->Email = $Email;
     }
 
-    public function setPass($Pass){
+    public function SetPass($Pass){
         $this->Pass = $Pass;
     }
 
-    public function setProfile($profile)
+    public function SetProfile($profile)
     {
         $this->profile = $profile;
 
         return $this;
     }
 
-    public function setRole($role)
+    public function SetRole($role)
     {
         $this->role = $role;
 
