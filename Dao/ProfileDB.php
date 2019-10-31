@@ -48,25 +48,6 @@ class ProfileDB
 
             //preguntar si esto esta bien
             $profileId = $this->getLastId();
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>ESTO ES PROFILE ID EN EL ADD DE PROFILEDB";
-            var_dump( $profileId );
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
         }catch(\PDOExeption $ex){
             throw $ex;
         }
@@ -84,6 +65,25 @@ class ProfileDB
             throw $ex;
         }if(!empty($result)){
             return $result[0][0];
+        }else{
+            return false;
+        }
+    }
+
+    public function getProfileById($idProfile){
+        
+        $sql = "SELECT * FROM UserProfiles up WHERE up.idProfile = :idProfile";
+        $values['idProfile'] = $idProfile;
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $result = $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
         }else{
             return false;
         }
