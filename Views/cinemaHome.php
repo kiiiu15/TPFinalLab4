@@ -1,5 +1,8 @@
 
-<?php include(VIEWS."/header.php");?>
+<?php 
+
+$list=array();
+include(VIEWS."/header.php");?>
 <div class="window-margin">
 	<div class="window">
 		<aside class="sidebar">

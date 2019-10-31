@@ -15,7 +15,7 @@ class CinemaController implements IControllers{
         $cinemaDB= new CinemaDB();
         $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
 
-        $cinemaDB->Add($cinema);
+        $cinemaDB->add($cinema);
 
         /*$cinemaRepo=new CinemaDao();
         $id=$cinemaRepo->generateIdCinema();        
@@ -26,12 +26,16 @@ class CinemaController implements IControllers{
 
     public function getAll(){
         $cinemaDB=new CinemaDB();
-        $list=$cinemaDB->RetrieveByActive();
-        include(VIEWS."/cinemaHome.php");
+        $list=$cinemaDB->retrieveByActive();
+        var_dump($list);
+        //include(VIEWS."/cinemaHome.php");
     }
 
     public function Deactivate($idCinema = 0){
         
+        $cinemaDB=new CinemaDB();
+        $cinemaDB->deactivateByID($idCinema);
+
         /*$cinemaRepo = new CinemaDao();
         $cinemaRepo->Deactivate($idCinema);
         */
@@ -40,8 +44,19 @@ class CinemaController implements IControllers{
 
     public function modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
 
-        $cinemaDao = new CinemaDao();
-        $cinemaDao->modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice);
+        $cinemaDB= new CinemaDB();
+        $list=$cinemaDB->getAll();
+        //No se si es demasiado gede 
+        foreach($list as $cine){
+            if($cine->getIdCinema() == $idCinemaToModify){
+                $cineToModify=$cine;
+            }
+        }
+
+        $cinemaDB->modify($cineToModify);
+
+        /*$cinemaDao = new CinemaDao();
+        $cinemaDao->modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice);*/
         
         include(VIEWS."/cinemaHome.php"); 
     }
