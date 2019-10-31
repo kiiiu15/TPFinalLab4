@@ -27,16 +27,16 @@ class UserController implements IControllers
         $role = new Role("admin");
         
         // AGREGAR UN NUEVO USUARIO
-        //$profile = new Profile('aaaa','aaaa','aaaa','aaa'); 
-        //$profileId = $DAOPROFILE->add($profile);
-        //$User = new User("aaa","aaa",$role,$profile);
+        //$profile = new Profile('b','b','b','b'); 
+        //$profileId = $DAOPROFILE->Add($profile);
+        //$User = new User("b","b",$role,$profile);
         //RECORDATORIO IMPORTANTE, VERIFICAR QUE SI NO SE PUDO CREAR EL NUEVO USUARIO VAS A TENER UN
         //PERFIL HECHO SIN USUARIO ASIGNADO
-        //$DAO->add($User,$profileId);
+        //$DAO->Add($User,$profileId);
         
-        //var_dump(  $DAOPROFILE->getProfileById(1)  );
+        //var_dump(  $DAOPROFILE->GetProfileById(1)  );
        
-        
+        var_dump( $DAO->GetAll() );
     }
 
     public function index(){    

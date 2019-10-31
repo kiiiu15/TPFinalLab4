@@ -5,6 +5,7 @@ use \PDO as PDO;
 use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\User as User;
+use model\Profile as Profile;
 
 class UserDB 
 {
@@ -13,9 +14,14 @@ class UserDB
     function __construct() {
     }    
 
-    public function getAll(){
+    public function GetAll(){
 
-        $sql="SELECT * FROM Users";
+        $sql =  "SELECT us.email,us.pass,us.roleName,p.UserName,p.UserLastName,p.Dni,p.TelephoneNumber
+                    FROM
+                        Users AS us
+                    INNER JOIN
+                        UserProfiles AS p
+                    ON us.usersProfileId = p.idProfile";
 
         try{
             $this->connection = Connection ::getInstance();
@@ -25,13 +31,14 @@ class UserDB
         }
         if(!empty($result)){
             return $this->Map($result);
+            //return $result;
         }else{
             return false;
         }
     }
 
     
-    public function add($user,$profileId){
+    public function Add($user,$profileId){
         //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
         $sql = "INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES (:email,:pass,:roleName,:usersProfileId)";
 
@@ -49,7 +56,7 @@ class UserDB
         }
     }
 
-    public function deleteByEmail($email){
+    public function DeleteByEmail($email){
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
@@ -62,7 +69,7 @@ class UserDB
         }
     }
 
-    public function getById($idUser){
+    public function GetById($idUser){
         $sql = "SELECT * FROM Users WHERE Users.idUser = :idUser";
         $values['idUser'] = $idUser;
 
@@ -78,7 +85,8 @@ class UserDB
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
-            return new User($u['email'], $u['pass'], $u['roleName'], $u['usersProfileId']);
+            $profile = new Profile($u['UserName'],$u['UserLastName'],$u['Dni'],$u['TelephoneNumber']);
+            return new User($u['email'], $u['pass'], $u['roleName'], $profile);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
