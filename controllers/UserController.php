@@ -23,20 +23,28 @@ class UserController implements IControllers
 
     public function prueba(){
         $DAO = new UserDB();
+        $DAOPROFILE = new ProfileDB();
 
         $role = new Role("admin");
-        // esto de la id esta mal.......!!!!!!!
-        $profile = new Profile('perfil1','p1','pepe','epep');
-        $User = new User("u1","1u",$profile,$role);
+        
+        $profile = new Profile('JUAN','PEASF','ASEFS','AEF');
+        
+        
+        $profileId = $DAOPROFILE->add($profile);
+        
+        //HASTA ACA BIENE BIEN Y ME LO DETECTA COMO UN INT
+        var_dump($profileId);
+        //ACA SE VUELVE NULL POR ARTE DE MAGIA
+        $User = new User("SSSS","EEEEE",$profileId,$role);
 
         $DAO->add($User);
        
-        $DAOPROFILE = new ProfileDB();
-        $DAOPROFILE->add($profile);
+        
         
         var_dump( $DAOPROFILE->getAll() );
         echo "<br>";
-        //var_dump($DAO->getAll());
+        echo "<br>";
+        var_dump($DAO->getAll());
        
     }
 

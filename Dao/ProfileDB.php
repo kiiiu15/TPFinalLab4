@@ -5,16 +5,15 @@ use \PDO as PDO;
 use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\Profile as Profile;
-use Dao\ProfileDB as ProfileDB; //????? wtf ? 
 
-class ProfileDB{
-
+class ProfileDB 
+{
     private $connection;
 
     function __construct() {
     }    
 
-    public function GetAll(){
+    public function getAll(){
 
         $sql="SELECT * FROM UserProfiles";
 
@@ -32,50 +31,64 @@ class ProfileDB{
     }
 
     
-    public function Add($profile){
-        //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
+    public function add($profile){
         $sql = "INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES (:UserName,:UserlastName,:dni,:telephoneNumber)";
 
-        //$values["id"]              = $profile->getId();
         $values["UserName"]        = $profile->getName();
         $values["UserlastName"]    = $profile->getLastName();
         $values["dni"]             = $profile->getDni();
         $values["telephoneNumber"] = $profile->getTelephoneNumber();
 
+        
+        
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
             $this->connection->ExecuteNonQuery($sql,$values);
+
+            //preguntar si esto esta bien
+            $profileId = $this->getLastId();
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>ESTO ES PROFILE ID EN EL ADD DE PROFILEDB";
+            var_dump( $profileId );
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
+            echo "<br>";
         }catch(\PDOExeption $ex){
             throw $ex;
         }
+        return $profileId;
     }
 
-    public function DeleteProfile($profile){
-        $sql = "DELETE FROM UserProfiles WHERE UserProfiles.dni = :dni";
-        $values['dni'] = $profile->getDni();
+    //supongo que hay una mejor forma de hacerlo....
+    public function getLastId(){
+        $sql = "SELECT MAX(idProfile) AS idProfile FROM UserProfiles";
 
         try{
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOException $ex){
+            $this->connection = Connection ::getInstance();
+            $result = $this->connection->Execute($sql);
+        }catch(\PDOExeption $ex){
             throw $ex;
+        }if(!empty($result)){
+            return $result[0][0]+1;
+        }else{
+            return false;
         }
     }
 
-    public function GetByDni($dni){
-        $sql = "SELECT * FROM UserProfiles WHERE UserProfiles.dni = :dni";
-        $values['dni'] = $dni;
-
-        try{
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
-            return $this->connection->Execute($sql,$values);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-    }
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($p) {

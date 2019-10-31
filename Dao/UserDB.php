@@ -5,18 +5,15 @@ use \PDO as PDO;
 use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\User as User;
-use Dao\ProfileDB as ProfileDB;
 
-class UserDB{
+class UserDB 
+{
     private $connection;
 
     function __construct() {
     }    
 
-    /*
-    funciona bien pero no me gusta como devuelve el resultado 
-    */
-    public function GetAll(){
+    public function getAll(){
 
         $sql="SELECT * FROM Users";
 
@@ -34,22 +31,14 @@ class UserDB{
     }
 
     
-    public function Add($user){
+    public function add($user,$profileId){
         //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
         $sql = "INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES (:email,:pass,:roleName,:usersProfileId)";
 
         $values["email"]           = $user->getEmail();
         $values["pass"]            = $user->getPass();
         $values["roleName"]        = $user->getRole()->getRoleName();
-        //esto esta mal, pero no se bien como resolverlo 
-        //$profile=$user->getProfile();
-        //$values['usersProfileId']=$profile->getName(); //No te funcionaria asi ?  ya que le estas devolviendo un objeto de tipo profile
-        $values["usersProfileId"]  = $user->getProfile()->getName();
-        
-
-        //aca no se si deberia llamar a un ProfileDB que haga su propio add?
-      /*  $DAO = new ProfileDB();
-        $DAO->add($user->getProfile());*/
+        $values["usersProfileId"]  = $profileId;
 
         try{
             $this->connection = Connection::getInstance();
@@ -60,7 +49,7 @@ class UserDB{
         }
     }
 
-    public function DeleteByEmail($email){
+    public function deleteByEmail($email){
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
@@ -73,7 +62,7 @@ class UserDB{
         }
     }
 
-    public function GetById($idUser){
+    public function getById($idUser){
         $sql = "SELECT * FROM Users WHERE Users.idUser = :idUser";
         $values['idUser'] = $idUser;
 
