@@ -3,6 +3,9 @@ namespace controllers;
 
 use controllers\Icontrollers as Icontrollers;
 use controllers\MovieController as MovieController;
+use Dao\MovieDB as MovieDB;
+use model\Movie as Movie;
+use model\Genre as Genre;
 
 
 class HomeController implements Icontrollers {
@@ -38,12 +41,16 @@ class HomeController implements Icontrollers {
 
         /*por ahora vamos al home */
 
-        if(!isset($_SESSION["status"]) || $_SESSION["status"] != "on")
+        $asd = new MovieDB();
+        //$asd->Add());
+        var_dump($asd->Delete(new Movie(1, 'The lion king','en','','2019-07-18','',array(new Genre(1, 'Animacion')))));
+
+        /*if(!isset($_SESSION["status"]) || $_SESSION["status"] != "on")
         {
             require(VIEWS."/login.php");
         }else{
             $this->showMoviesByGenre('*');
-        }
+        }*/
 
     }
 }

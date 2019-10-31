@@ -4,7 +4,6 @@ use \PDO as PDO;
 use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\Movie as Movie;
-use model\Genre as Genre;
 use Dao\GenreDB as GenreDB;
 
 class MovieDB{
@@ -14,13 +13,14 @@ class MovieDB{
     }
 
     public function GetAll(){
-        $sql="SELECT * FROM Movies";
+        $sql="SELECT * FROM Movies ";
         try{
             $this->connection= Connection ::getInstance();
             $result= $this->connection->Execute($sql);
         }catch(\PDOExeption $ex){
             throw $ex;
         }
+
         if(!empty($result)){
             return $this->Map($result);
         }else{
@@ -31,22 +31,15 @@ class MovieDB{
     //FALTA EL LLAMADO A LA API, DE ESO TE ENCARGAS VOS BULZOMI
     public function Add($movie){
         $sql="INSERT INTO Movies (idMovie,tittle,language,overview,releaseDate,poster) VALUES (:idMovie,:tittle,:language,:overview,:releaseDate,:poster)";
+        
         $values['idMovie']     = $movie->getId(); 
-        $values['tittle']       = $movie->getTitle();
+        $values['tittle']      = $movie->getTitle();
         $values['language']    = $movie->getLanguage();
         $values['overview']    = $movie->getOverview();
         $values['releaseDate'] = $movie->getReleaseDate();
-        $values['poster']      = $movie->getPoster();
-        //$values['genres']      = $movie->getGenres();
+        $values['poster']      = explode ('https://image.tmdb.org/t/p/w200', $movie->getPoster()) [1];
 
         $genrePerMovie = $movie->getGenres();
-
-
-
-
-
-
-        
 
         try{
             $this->connection =Connection::getInstance();
@@ -58,16 +51,15 @@ class MovieDB{
 
 
             foreach ($genrePerMovie as $genreMovie){
+
+                $genreDB->Add($genreMovie);
                 $sql2= "INSERT INTO GenresPerMovie (idMovie, idGenre) VALUES (:idMovie,:idGenre)";
                 $values2 ['idMovie'] = $movie->getId();
                 $values2 ['idGenre'] = $genreMovie->getId();
-    
-                
-                   /* $this->connection =Connection::getInstance();
-                    $this->connection->connect();*/
-                    $this->connection->ExecuteNonQuery($sql2,$values2);
 
-                $genreDB->Add($genreMovie);
+                $this->connection->ExecuteNonQuery($sql2,$values2);
+
+                
     
             }
         }catch(\PDOExeption $ex){
@@ -77,27 +69,39 @@ class MovieDB{
 
     }
 
-    public function RetrieveByGenre($genre){
-        $sql="SELECT * FROM Movies WHERE Movies.genres=:genre";
-        $values['genres']=$genre;
+    public function RetrieveByGenre($genreId){
+        $sql="SELECT * FROM Movies INNER JOIN GenresPerMovie ON Movies.idMovie = GenresPerMovie.idMovie INNER JOIN Genres ON GenresPerMovie.idGenre = Genres.idGenre WHERE Genres.idGenre = :idGenre";
+        $values['idGenre']=$genreId;
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+           $result= $this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }
+
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
     
     public function RetrieveByTitle($title){
-        $sql="SELECT * FROM Movies WHERE Movies.title=:title";
+        $sql="SELECT * FROM Movies WHERE Movies.tittle=:title";
         $values['title']=$title;
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }
+
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
     
@@ -107,20 +111,28 @@ class MovieDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $this->connection->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
         }
+
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
     }
 
+    /*Medio que esto no sirve en el sentido de que si ya la usamos esta peli tenemos aunque sea unos minimos datos relevantes */
     public function Delete($movie){
+
         $sql="DELETE FROM Movies WHERE Movies.title=:title";
         $values['title'] = $movie->getTitle();
 
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -129,18 +141,52 @@ class MovieDB{
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($m) {
-            
-
-
-
-
-
-
+            return new Movie ($m['idMovie'],$m['tittle'],$m['language'],$m['overview'], $m['releaseDate'], $m['poster'], $this->getGenresForMovie($m['idMovie']));    
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
 
+
+    /* Esta funcion tiene por finalidad recuperar TODOS los ids de genreos qe tenga asociada la pelicula con id que se reciba por parametro*/
+    private function getGenresIdsForMovie ($idMovie) {
+        $sql = "SELECT idGenre FROM GenresPerMovie WHERE GenresPerMovie.idMovie = :idMovie";
+        $values ["idMovie"] = $idMovie;
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $result = $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+
+        $genresIDs = [];
+        foreach($result as $genreArray){
+            $genresIDs[] = $genreArray["idGenre"]; 
+        }
+
+        return $genresIDs;
+
+    }
+
+    /*En esta funcion usamos la funcion de arriba para crear un arreglo de objetos Genre que estan asignados a un idMovie */
+
+    private function getGenresForMovie($idMovie) {
+        $genresIds = $this->getGenresIdsForMovie($idMovie);
+        $genreDB = new GenreDB();
+        $genresForMovie = array();
+        foreach ($genresIds as $genreId) {
+            $genre = $genreDB->extractGenrebyId($genreId);
+            array_push($genresForMovie, $genre);
+        }
+        return $genresForMovie;
+    }
+
 }
+
+
+
+
+
 
 
 
