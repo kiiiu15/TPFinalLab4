@@ -1,4 +1,5 @@
-<!DOCTYPE html><html class=''>
+<!DOCTYPE html>
+<html>
 <head>
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 <!--<script src=" <?//= STYLE."/a.js"?>"></script>-->
@@ -8,7 +9,8 @@
 
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
 -->
-<link rel="stylesheet" href= <?= STYLE."/home.css" ?> class="cp-pen-styles">
-
+    <link rel="stylesheet" href= "<?= STYLE."/home.css" ?>"  class="cp-pen-styles">
+    <link rel="stylesheet" href= "<?= STYLE."/bootstrap.min.css" ?>" >
+    <link rel="stylesheet" href= "<?= STYLE."/login.css" ?>" >
 </head>
 <body>
