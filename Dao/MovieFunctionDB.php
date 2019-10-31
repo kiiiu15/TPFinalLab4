@@ -39,30 +39,32 @@ class MovieFunctionDB{
         }
     }
     
-    //MOVIES ES EL TITULO DE LA PELICULA, CINEMA ES EL ID DEL CINEMA (ESTAS SERIAN LAS FK DE LA TABLA MOVIE FUNCTIONS)
-    public function Add($moviefunction){
+   //MOVIES ES EL TITULO DE LA PELICULA, CINEMA ES EL ID DEL CINEMA (ESTAS SERIAN LAS FK DE LA TABLA MOVIE FUNCTIONS)
+   public function Add($moviefunction){
         
-        $sql="INSERT INTO MovieFunctions(date,hour,idCinema,idMovie) VALUES (:dayFunction,:hourFunction,:cinema,:movies)";
-        //$values['idFunction']   =$moviefunction->getId();
-        $values['dayFunction']  =$moviefunction->getDay();
-        $values['hourFunction'] =$moviefunction->getHour();
-        $movie =$moviefunction->getMovie(); 
-        $cinema=$moviefunction->getCinema();
-        $values['cinema']      =$cinema->getIdCinema();
-        $values['movies']      =$movie->getId();
-       
-        try{
-            $this->connection=Connection::getInstance();
-            $this->connection->connect();
-           return $this->connection->ExecuteNonQuery($sql,$values);
+    $sql="INSERT INTO MovieFunctions(date,hour,idCinema,idMovie) VALUES (:dayFunction,:hourFunction,:cinema,:movies)";
+    //$values['idFunction']   =$moviefunction->getId();
+    $values['dayFunction']  =$moviefunction->getDay();
+    $values['hourFunction'] =$moviefunction->getHour();
+    $movie =$moviefunction->getMovie(); 
+    $cinema=$moviefunction->getCinema();
+    $values['cinema']     =$cinema->getIdCinema();
+    $values['movies']      =$movie->getId();
 
-        }catch(PDOExeption $ex){
-            throw $ex;
-        }
+    
+   
+    try{
+        $this->connection=Connection::getInstance();
+        $this->connection->connect();
+       return $this->connection->ExecuteNonQuery($sql,$values);
+
+    }catch(PDOExeption $ex){
+        throw $ex;
     }
+}
 
     //HAY QUE ASIGNARLE UN ID A CADA FUNCION 
-    /*public function RetrieveById($id){
+    public function RetrieveById($id){
         $sql="SELECT FROM MovieFunctions WHERE MovieFunctions.idFunction=:id";
         $values['id'] =$id;
         try{
@@ -76,10 +78,10 @@ class MovieFunctionDB{
         }else{
             return false;
         }
-    }*/
-/*
+    }
+    
     public function Modify($moviefunction){
-        $sql="UPDATE MovieFunctions SET MovieFunctions.dayFunction=:dayFunction, MovieFunctions.hourFunction=:hourFunction,MovieFunctions.movies=:movies,MovieFunctions.cinema=:cinema WHERE MovieFunctions.idFunction=:idFunction";
+        $sql="UPDATE MovieFunctions SET MovieFunctions.date=:dayFunction , MovieFunctions.hour=:hourFunction , MovieFunctions.idMovie=:movies , MovieFunctions.idCinema=:cinema WHERE MovieFunctions.idFunction=:idFunction";
         $values['dayFunction']   =$moviefunction->getDay();
         $values['hourFunction']  =$moviefunction->getHour();
         $movie =$moviefunction->getMovie(); 
@@ -90,15 +92,12 @@ class MovieFunctionDB{
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $result=$this->connection->ExecuteNonQuery($sql,$values);
+            return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
-        }if(!empty($result)){
-            return $this->Map($result);
-        }else{
-            return false;
         }
     }
+    /*
 
     public function ChangeCinema($moviefunction) {
         $sql="UPDATE MovieFunctions SET MovieFunctions.cinema=:cinema WHERE MovieFunctions.idFunction=:idFunction";
