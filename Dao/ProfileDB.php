@@ -83,7 +83,7 @@ class ProfileDB
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
-            return $result[0][0]+1;
+            return $result[0][0];
         }else{
             return false;
         }

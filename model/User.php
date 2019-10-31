@@ -9,11 +9,11 @@ class User{
     private $role;
 
     //Constructor
-    public function __construct($Email,$Pass,$profile,$role){
+    public function __construct($Email,$Pass,$role,$profile){
         $this->Email=$Email;
         $this->Pass=$Pass;
-        $this->profile = $profile;
         $this->role = $role;
+        $this->profile = $profile;
     }
 
     //Getters

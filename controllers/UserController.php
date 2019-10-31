@@ -32,12 +32,9 @@ class UserController implements IControllers
         
         $profileId = $DAOPROFILE->add($profile);
         
-        //HASTA ACA BIENE BIEN Y ME LO DETECTA COMO UN INT
-        var_dump($profileId);
-        //ACA SE VUELVE NULL POR ARTE DE MAGIA
-        $User = new User("SSSS","EEEEE",$profileId,$role);
+        $User = new User("sr@bulzomi","123",$role,$profile);
 
-        $DAO->add($User);
+        $DAO->add($User,$profileId);
        
         
         
