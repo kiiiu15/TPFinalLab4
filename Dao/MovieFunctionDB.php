@@ -48,10 +48,8 @@ class MovieFunctionDB{
         $values['hourFunction'] =$moviefunction->getHour();
         $movie =$moviefunction->getMovie(); 
         $cinema=$moviefunction->getCinema();
-        $values['cinema']     =$cinema->getIdCinema();
+        $values['cinema']      =$cinema->getIdCinema();
         $values['movies']      =$movie->getId();
-
-        var_dump($values);
        
         try{
             $this->connection=Connection::getInstance();
@@ -62,6 +60,23 @@ class MovieFunctionDB{
             throw $ex;
         }
     }
+
+    //HAY QUE ASIGNARLE UN ID A CADA FUNCION 
+    /*public function RetrieveById($id){
+        $sql="SELECT FROM MovieFunctions WHERE MovieFunctions.idFunction=:id";
+        $values['id'] =$id;
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->Execute($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
+    }*/
 /*
     public function Modify($moviefunction){
         $sql="UPDATE MovieFunctions SET MovieFunctions.dayFunction=:dayFunction, MovieFunctions.hourFunction=:hourFunction,MovieFunctions.movies=:movies,MovieFunctions.cinema=:cinema WHERE MovieFunctions.idFunction=:idFunction";
