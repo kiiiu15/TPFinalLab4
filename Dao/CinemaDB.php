@@ -30,7 +30,7 @@ class CinemaDB{
     public function Add($cinema){
         $sql= "INSERT INTO Cinemas (idCinema,nameCinema,address,capacity,price,active) VALUES (:idCinema,:nameCinema,:address,:capacity,:price,:active)";
         $values['idCinema']   = $cinema->getIdCinema();
-        $values['nameCinema']       = $cinema->getName();
+        $values['nameCinema'] = $cinema->getName();
         $values['address']    = $cinema->getAddress();
         $values['capacity']   = $cinema->getCapacity();
         $values['price']      = $cinema->getPrice();
@@ -138,9 +138,9 @@ class CinemaDB{
     }
 
     //puede ser activado o desactivado
-    public function RetrieveByActive($active){
+    public function RetrieveByActive(){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.active=:active";
-        $values['active']=$active;
+        $values['active']=true;
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();

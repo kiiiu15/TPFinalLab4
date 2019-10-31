@@ -1,14 +1,3 @@
-<?php
-
-use Dao\CinemaDao as CinemaDao;
-
-$repo = new CinemaDao();
-$list = $repo->GetAll();
-
-$ids = $repo->getIDCinemaActiva ();
-
-?>
-
 
 <?php include(VIEWS."/header.php");?>
 <div class="window-margin">
