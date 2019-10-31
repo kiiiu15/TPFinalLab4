@@ -1,11 +1,13 @@
 <?php
 
 //include(VIEWS. '/header.php');
+
+
 ?>
 
 <div>
 
-    <table >
+    <table border ="1">
         <thead>
             <td>Title </td>
             <td>Language</td>

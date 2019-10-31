@@ -8,56 +8,35 @@ use Dao\CinemaDB as CinemaDB;
 
 class CinemaController implements IControllers{
 
-    public function add ($cinemaName = "" , $adress = "" , $capacity = 0 , $entranceValue = 0 ) {
+    public function Add ($cinemaName = "" , $adress = "" , $capacity = 0 , $entranceValue = 0 ) {
         
         var_dump($cinemaName);
 
         $cinemaDB= new CinemaDB();
         $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
 
-        $cinemaDB->add($cinema);
+        $cinemaDB->Add($cinema);
 
-        /*$cinemaRepo=new CinemaDao();
-        $id=$cinemaRepo->generateIdCinema();        
-        $cinema=new Cinema($id,$cinemaName,$adress,$capacity,$entranceValue,true);
-        $cinemaRepo->Add($cinema);*/
         include(VIEWS."/cinemaHome.php"); 
     }
 
-    public function getAll(){
+    public function GetAll(){
         $cinemaDB=new CinemaDB();
-        $list=$cinemaDB->retrieveByActive();
-        var_dump($list);
-        //include(VIEWS."/cinemaHome.php");
+        $list=$cinemaDB->RetrieveByActive();
+        include(VIEWS."/cinemaHome.php");
     }
 
     public function Deactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
-        $cinemaDB->deactivateByID($idCinema);
-
-        /*$cinemaRepo = new CinemaDao();
-        $cinemaRepo->Deactivate($idCinema);
-        */
+        $cinemaDB->DeactivateByID($idCinema);
         include(VIEWS."/cinemaHome.php"); 
     }
 
-    public function modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
+    public function Modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
 
         $cinemaDB= new CinemaDB();
-        $list=$cinemaDB->getAll();
-        //No se si es demasiado gede 
-        foreach($list as $cine){
-            if($cine->getIdCinema() == $idCinemaToModify){
-                $cineToModify=$cine;
-            }
-        }
-
-        $cinemaDB->modify($cineToModify);
-
-        /*$cinemaDao = new CinemaDao();
-        $cinemaDao->modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice);*/
-        
+        $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , $changedCapacity , $changedPrice, true));
         include(VIEWS."/cinemaHome.php"); 
     }
 

@@ -1,6 +1,5 @@
 <?php
 
-use Dao\MovieDao as MovieDao;
 use controllers\GenreController as GenreController;
 
 $repoGenre = new GenreController (); 
@@ -67,19 +66,22 @@ $genres = $repoGenre->GetAll();
                     <?php
 
 					if (empty($list)) {echo 'There are no movies of this genre at this time. See next week.';}
-					
+					if (!is_array($list) ) {$list = array($list);}
                     foreach ($list as $movie) {
-                      
+					  
+					  
                     ?>
+
+					
                     <li>
-						
-						<button>
-							<a href="Home/showMovie/<?= $movie->getTitle(); ?>">
-								<img  src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" /> 		
-								<p class="title"> <?= $movie->getTitle(); ?></p>			
-							</a>
-						</button>
-						
+						<form action="Home/showMovie" method="Post">
+							<input type="text" hidden="true" name="tittle" value ="<?= $movie->getTitle(); ?>"  >
+							<button>
+									<img  src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" /> 		
+									<p class="title"> <?= $movie->getTitle(); ?></p>			
+								
+							</button type = submit>
+						</form>
 
 						
                     </li>
@@ -98,6 +100,7 @@ $genres = $repoGenre->GetAll();
 		</div> <!-- main -->
 
 	</div> <!-- window -->
-</div> <!-- window margin -->  <!--
+</div> <!-- window margin -->  
 
 <?php include(VIEWS."/footer.php");?>
+

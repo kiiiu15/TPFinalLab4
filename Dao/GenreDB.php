@@ -28,7 +28,7 @@ class GenreDB {
         }
     }
 
-    public function extractGenrebyId($Id){
+    public function ExtractGenrebyId($Id){
         $sql="SELECT *FROM Genres WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $Id;
         try{

@@ -12,7 +12,7 @@ class CinemaDB{
     public function __construct(){
     }
 
-    public function getAll(){
+    public function GetAll(){
         $sql="SELECT *FROM Cinemas";
         try{
             $this->connection= Connection::getInstance();
@@ -21,13 +21,13 @@ class CinemaDB{
             throw $ex;
         }
         if(!empty($result)){
-            return $this->map($result);            
+            return $this->Map($result);            
         }else{
              return false;
         }
     }
 
-    public function add($cinema){
+    public function Add($cinema){
         $sql= "INSERT INTO Cinemas (idCinema,nameCinema,address,capacity,price,active) VALUES (:idCinema,:nameCinema,:address,:capacity,:price,:active)";
         $values['idCinema']   = $cinema->getIdCinema();
         $values['nameCinema'] = $cinema->getName();
@@ -47,7 +47,7 @@ class CinemaDB{
         }
     }
     
-    public function deactivateByID($idCinema){
+    public function DeactivateByID($idCinema){
         $sql="UPDATE Cinemas set Cinemas.active=false WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $idCinema;
 
@@ -59,13 +59,13 @@ class CinemaDB{
             throw $ex;
         }
         if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
-    public function deactivate($cinema){
+    public function Deactivate($cinema){
         $sql="UPDATE Cinemas set Cinemas.active=false WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $cinema->getIdCinema();
 
@@ -77,13 +77,13 @@ class CinemaDB{
             throw $ex;
         }
         if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
-    public function changePrice($cinema){
+    public function ChangePrice($cinema){
         $sql="UPDATE Cinemas set Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
         $values['price'] =$cinema->getPrice();
         try{
@@ -94,13 +94,13 @@ class CinemaDB{
             throw $ex;
         }
         if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
-    public function changeAddress($cinema){
+    public function ChangeAddress($cinema){
         $sql="UPDATE Cinemas set Cinemas.address=:address WHERE Cinemas.idCinema=:idCinema";
         $values['address'] =$cinema->getAddress();
         try{
@@ -110,14 +110,14 @@ class CinemaDB{
         }catch(\PDOException $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
     //No creo que la necesitemos
-    public function delete($cinema){
+    public function Delete($cinema){
         $sql="DELETE FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $cinema->getIdCinema();
 
@@ -128,7 +128,7 @@ class CinemaDB{
         }catch(\PDOException $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
@@ -139,7 +139,7 @@ class CinemaDB{
         
     }*/
 
-    public function retrieveByAddress($address){
+    public function RetrieveByAddress($address){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.address=:address";
         $values['address']=$address;
         try{
@@ -149,14 +149,14 @@ class CinemaDB{
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
     //puede ser activado o desactivado
-    public function retrieveByActive(){
+    public function RetrieveByActive(){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.active=:active";
         $values['active']=true;
         try{
@@ -166,13 +166,13 @@ class CinemaDB{
         }catch(\PDOException $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
-    public function retrieveById($id){
+    public function RetrieveById($id){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.idCinema=:id";
         $values['idCinema']=$id;
 
@@ -183,13 +183,13 @@ class CinemaDB{
         }catch(\PDOException $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
 
-    public function retrieveByName($nameCinema){
+    public function RetrieveByName($nameCinema){
         $sql="SELECT *FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
         $values['nameCinema'] =$nameCinema;
         try{
@@ -199,7 +199,7 @@ class CinemaDB{
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
@@ -210,7 +210,7 @@ class CinemaDB{
         
     }*/
  
-    public function getCinema($cinema){
+    public function GetCinema($cinema){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $cinema->getIdCinema();
 
@@ -221,7 +221,7 @@ class CinemaDB{
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
@@ -235,8 +235,9 @@ class CinemaDB{
     //En la parte de la VIEW, no se le debe permitir modificar el id del cine
     //por ende esta funcion recibe el cine con los datos modificados y conservando el id
     //name,address,capacity,price,active 
-    public function modify($cinema){
-        $sql="UPDATE FROM Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.address=:address,Cinemas.capacity=:capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+    public function Modify($cinema){
+        $sql="UPDATE FROM Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.address=:address,Cinemas.capacity = :capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+        $values['idCinema'] = $cinema->getIdCinema();
         $values['nameCinema']     = $cinema->getName();
         $values['address']  = $cinema->getAddress();
         $values['capacity'] = $cinema->getCapacity();
@@ -245,16 +246,14 @@ class CinemaDB{
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            return = $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
-        }/*if(!empty($result)){
-            return $this->map($result);
-        }*/
+        }
     }
 
     
-    public function getIDCinemaActiva ($active){
+    public function GetIDCinemaActiva ($active){
         $sql="SELECT Cinemas.idCinema FROM Cinemas WHERE Cinemas.active=:active";
         $values['active']=$active;
         try{
@@ -264,13 +263,13 @@ class CinemaDB{
         }catch(\PDOExeption $ex){
             throw $ex;
         }if(!empty($result)){
-            return $this->map($result);
+            return $this->Map($result);
         }else{
             return false;
         }
     }
     
-    protected function map($value) {
+    protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
             return new Cinema($c['idCinema'], $c['nameCinema'], $c['address'], $c['capacity'], $c['price'], $c['active']);

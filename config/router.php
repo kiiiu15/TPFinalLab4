@@ -16,6 +16,7 @@
          * @param Request $request
          */
         public static function route(Request $request) {
+
             
             
             /**

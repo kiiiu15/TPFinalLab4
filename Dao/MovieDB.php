@@ -98,6 +98,7 @@ class MovieDB{
             throw $ex;
         }
 
+
         if(!empty($result)){
             return $this->Map($result);
         }else{
@@ -141,14 +142,14 @@ class MovieDB{
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($m) {
-            return new Movie ($m['idMovie'],$m['tittle'],$m['language'],$m['overview'], $m['releaseDate'], $m['poster'], $this->getGenresForMovie($m['idMovie']));    
+            return new Movie ($m['idMovie'],$m['tittle'],$m['language'],$m['overview'], $m['releaseDate'], $m['poster'], $this->GetGenresForMovie($m['idMovie']));    
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
 
 
     /* Esta funcion tiene por finalidad recuperar TODOS los ids de genreos qe tenga asociada la pelicula con id que se reciba por parametro*/
-    private function getGenresIdsForMovie ($idMovie) {
+    private function GetGenresIdsForMovie ($idMovie) {
         $sql = "SELECT idGenre FROM GenresPerMovie WHERE GenresPerMovie.idMovie = :idMovie";
         $values ["idMovie"] = $idMovie;
         try{
@@ -170,12 +171,12 @@ class MovieDB{
 
     /*En esta funcion usamos la funcion de arriba para crear un arreglo de objetos Genre que estan asignados a un idMovie */
 
-    private function getGenresForMovie($idMovie) {
-        $genresIds = $this->getGenresIdsForMovie($idMovie);
+    private function GetGenresForMovie($idMovie) {
+        $genresIds = $this->GetGenresIdsForMovie($idMovie);
         $genreDB = new GenreDB();
         $genresForMovie = array();
         foreach ($genresIds as $genreId) {
-            $genre = $genreDB->extractGenrebyId($genreId);
+            $genre = $genreDB->ExtractGenrebyId($genreId);
             array_push($genresForMovie, $genre);
         }
         return $genresForMovie;
