@@ -34,7 +34,9 @@ define('VIEWS', ROOT . '/Views');
 
 
 /* FRONT */
-define('STYLE', FRONT_ROOT . '/Views/css');
+define('STYLE', FRONT_ROOT . '/Views/css2');
+define('JS', FRONT_ROOT . '/Views/js');
+define('ICONS', VIEWS . '/icons' );
 //define('ADMIN_FRONT_ROOT', FRONT_ROOT . '/admin');
 //define('CSS_PATH', FRONT_ROOT . '/asset/css');
 //define('IMG_PATH', FRONT_ROOT . '/asset/img');

@@ -43,16 +43,13 @@ class MovieFunctionDB{
    public function Add($moviefunction){
         
     $sql="INSERT INTO MovieFunctions(date,hour,idCinema,idMovie) VALUES (:dayFunction,:hourFunction,:cinema,:movies)";
-    //$values['idFunction']   =$moviefunction->getId();
+    $values['idFunction']   =$moviefunction->getId();
     $values['dayFunction']  =$moviefunction->getDay();
     $values['hourFunction'] =$moviefunction->getHour();
     $movie =$moviefunction->getMovie(); 
     $cinema=$moviefunction->getCinema();
     $values['cinema']     =$cinema->getIdCinema();
-    $values['movies']      =$movie->getId();
-
-    
-   
+    $values['movies']      =$movie->getId(); 
     try{
         $this->connection=Connection::getInstance();
         $this->connection->connect();
@@ -95,6 +92,22 @@ class MovieFunctionDB{
             return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOExeption $ex){
             throw $ex;
+        }
+    }
+
+    public function Delete($moviefunction){
+        $sql="DELETE FROM MovieFunctions WHERE MovieFunctions.idFunction=:idFunction";
+        $values['idFunction'] =$moviefunction->getId();
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOExeception $ex){
+            throw $ex;
+        }if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
         }
     }
     /*
@@ -148,24 +161,9 @@ class MovieFunctionDB{
         }else{
             return false;
         }
-    }
+    }*/
 
-    public function Delete($moviefunction){
-        $sql="DELETE FROM MovieFunctions WHERE MovieFunctions.idFunction=:idFunction";
-        $values['idFunction'] =$moviefunction->getId();
-        try{
-            $this->connection=Connection::getInstance();
-            $this->connection->connect();
-            $result=$this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOExeception $ex){
-            throw $ex;
-        }if(!empty($result)){
-            return $this->Map($result);
-        }else{
-            return false;
-        }
-    }
-
+/*
     public function RetrieveByDate($moviefunction){
         $sql="SELECT FROM MovieFunctions WHERE MovieFunctions.dayFunction=:dayFunction";
         $values['dayFunction'] =$moviefunction->getDay();
