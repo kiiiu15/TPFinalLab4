@@ -72,7 +72,8 @@ class UserController implements IControllers
             if($user->GetPass() == $pass)
             {
                 $this->SetLogIn($user);
-                include(VIEWS."/home.php");
+                //CAMBIAR ESE POSTS
+                include(VIEWS."/posts.php");
             }else{
                 $errorMje = "Error: Contraseña incorrecta";
                 include(VIEWS."/login.php"); 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">  -->
 <!-- <script src=" <?//= STYLE."/a.js"?>"></script> -->
 <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>  -->
@@ -9,6 +11,12 @@
 
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
 <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script> -->
+<!-- Required meta tags -->
+    
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="<?= STYLE."/bootstrap.min.acafaltalaCss" ?>" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    
+
     <link rel="stylesheet" href= "<?= STYLE."/home.css" ?>"  class="cp-pen-styles">
     <link rel="stylesheet" href= "<?= STYLE."/bootstrap.min.css" ?>" >
     <link rel="stylesheet" href= "<?= STYLE."/login.css" ?>" >
