@@ -6,6 +6,7 @@ use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\User as User;
 use model\Profile as Profile;
+use model\Role as Role;
 
 class UserDB 
 {
@@ -111,7 +112,8 @@ class UserDB
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
             $profile = new Profile($u['UserName'],$u['UserLastName'],$u['Dni'],$u['TelephoneNumber']);
-            return new User($u['email'], $u['pass'], $u['roleName'], $profile);
+            $role = new Role($u['roleName']);
+            return new User($u['email'], $u['pass'], $role, $profile);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

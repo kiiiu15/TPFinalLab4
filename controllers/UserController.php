@@ -13,8 +13,8 @@ use Dao\ProfileDB as ProfileDB;
 
 class UserController implements IControllers
 {
-    private $userList;
-    private $userDao;
+    //private $userList;//esto era del json
+    //private $userDao;//esto era del json
     
     public function __construct(){
        // $userDao = new UserDao();
@@ -22,13 +22,13 @@ class UserController implements IControllers
     }
 
     public function prueba(){
-        $DAO = new UserDB();
-        $DAOPROFILE = new ProfileDB();
+        $DaoUser= new UserDB();
+        $DaoProfile = new ProfileDB();
         $role = new Role("admin");
         
         // AGREGAR UN NUEVO USUARIO
         //$profile = new Profile('b','b','b','b'); 
-        //$profileId = $DAOPROFILE->Add($profile);
+        //$profileId = $DaoProfile->Add($profile);
         //$User = new User("b","b",$role,$profile);
         //RECORDATORIO IMPORTANTE, VERIFICAR QUE SI NO SE PUDO CREAR EL NUEVO USUARIO VAS A TENER UN
         //PERFIL HECHO SIN USUARIO ASIGNADO
@@ -36,7 +36,7 @@ class UserController implements IControllers
         
         //var_dump(  $DAOPROFILE->GetProfileById(1)  );
        
-        var_dump( $DAO->GetAll() );
+        var_dump( $DaoUser->GetAll() );
     }
 
     public function index(){    
@@ -45,6 +45,11 @@ class UserController implements IControllers
 
     }
 
+    /**
+     * sirve para saber quien es el usuario "logueado"
+     * ademas si en home no se detecta ningun usuario logeado 
+     * ni el estado "on" deberia redireccionar al login
+     */
     public function setLogIn($user){
         
         $_SESSION["status"] = "on";
@@ -52,10 +57,13 @@ class UserController implements IControllers
         
     }
 
+    /**
+     * comprueba si ya existe un usuario con ese email
+     */
     public function UserExist($email){
-        $Dao = new UserDB();
+        $DaoUser= new UserDB();
         
-        if($Dao->GetByEmail($email)){
+        if($DaoUser->GetByEmail($email)){
             return true;
         }else
         {
@@ -65,11 +73,11 @@ class UserController implements IControllers
 
     public function logIn($email,$pass){
 
-        $Dao = new UserDB();
-        if($this->UserExist($email))
+        $DaoUser= new UserDB();
+        if($this->UserExist($email))//comprueba que exista el usuario
         {
-            $user = $Dao->GetByEmail($email);
-            if($user->GetPass() == $pass)
+            $user = $DaoUser->GetByEmail($email);
+            if($user->GetPass() == $pass)//comprobamos la contraseña
             {
                 $this->SetLogIn($user);
                 //CAMBIAR ESE POSTS
@@ -88,17 +96,18 @@ class UserController implements IControllers
 
         if(!$this->UserExist($email))
         {
+            //POR DEFECTO SIEMPRE SE VAN A CREAR USUARIOS COMO "CLIENT" Y SI SE DESEA QUE SEA ADMIN, OTRO ADMIN DEBERA OTORGARLE ESE PERMISO
             $role = new Role("client");
             $profile = new Profile($UserName,$LastName,$Dni,$TelephoneNumber);
             $user = new User($email,$pass,$role,$profile);
 
-            $Dao = new UserDB();
-            $ProfileDao = new ProfileDB();
-            $profileId = $ProfileDao->Add($profile);
+            $DaoUser= new UserDB();
+            $DaoProfile = new ProfileDB();
+            $profileId = $DaoProfile->Add($profile);
 
            
             if($profileId){
-                if($Dao->Add($user,$profileId)){
+                if($DaoUser->Add($user,$profileId)){
                     $successMje = "Usuario registrado correctamente";
                 }else{
                     $errorMje = "Error de usuario: intentelo de nuevo mas tarde...";
