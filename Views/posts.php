@@ -5,10 +5,10 @@
 
 
     //CAMBIAR ESE 2
-    include('header2.php');
+    include(VIEWS.'/header2.php');
 
     //CAMBIAR ESE 2
-    include('nav2.php'); 
+    include(VIEWS.'/nav2.php'); 
 
 ?>
 
@@ -34,9 +34,22 @@
                         <!-- <option value="disable">Despublicar</option> -->
                     <!-- </select> -->
                     <!-- <button type="submit" class="btn btn-dark ml-3">Enviar</button> -->
-
-                    
                 <!-- </div> -->
+
+
+
+                <div class="form-group mb-4">
+
+                    <label for="">Genero</label>
+                    <select name="" class="form-control ml-3">
+                        <option value="">Genero 1</option>
+                    </select>
+
+                    <label for="">Fecha</label>
+                    <input type="date">
+                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                </div>
+                
                 
 
                 <table class="table">
@@ -53,7 +66,7 @@
                         <?php //foreach($postList as $post) { ?>
                             <tr>
                                 <td><input type="checkbox" name="postschecked[]" value=<?php //$post->getID();?>></td>
-                                <td> <img  src="https://image.tmdb.org/t/p/w200/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg" alt="" class="cover" /> </td>
+                                <td> <img  src="https://image.tmdb.org/t/p/w200/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
                                 <td> TITULO1 </td>
                                 <td> Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play. </td>
                                 <td> genero </td>
@@ -64,6 +77,8 @@
                                 <!-- <td><?php //$post->getDate();?></td> -->
                                 <!-- <td><?php //$post->getText();?></td> -->
                                 <!-- <td> -->
+
+                            
 
                                 <!-- BOTON PARA BORRAR -->
                                     <!-- <a href="Process/delete_post.php?delete=<?php //echo $post->getID(); ?>" class="btn btn-light"> -->
@@ -99,13 +114,18 @@
             <!-- <object type="image/svg+xml" data="<?php //ICONS."/plus.svg"?>" width="16" height="16"></object> -->
     <!-- </button> -->
 
-<!--    <div class="modal fade" id="create-post" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
+    
+<!-- 
+    SI APRETAN LA IMAGEN DEL POSTER DE LA PELICULA SE DESPLIEGA ESTO CON TODA LA INFO DE LA PELICULA,
+    LOS CINES DONDE SE PUEDEN VER Y BASICAMENTE ES EL FORMULARIO DE COMPRA
+ -->
+    <div class="modal fade" id="show-movie" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
-            <form class="modal-content" action="" method="POST">
+            <form class="modal-content" action="" method="GET">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Registrar usuario</h5>
+                    <h5 class="modal-title">ACA VA EL TITULO DE LA PELI</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -113,6 +133,39 @@
 
                 <div class="modal-body">
 
+                <!-- 
+                    EN ESTE DIV SE MOSTRARIAN LOS DISTINTOS CINES QUE EMITEN ESTA PELICULA
+                 -->
+                    <div class="form-group">
+                        <label>CINES</label>
+                        <select name="" class="form-control ml-3">
+                        <?php// foreach() { ?>
+                            <option value=""> primer cine </option>
+                        <?php// } ?>
+                        </select>
+                    </div>
+
+                <!-- 
+                    Y EN ESTE SE MOSTRARIAN LAS FUNCIONES QUE HAY PARA ESE CINE....
+                    ACA NO SE SI ESTO VA A FUNCIONAR, YA Q NO SE SI AL SELECCIONAR UN CINE DETERMINADO
+                    LA LISTA SE VA A ACTUALIZAR
+                 -->
+                    
+                    <div class="form-group">
+                        <label>FUNCIONES</label>
+                        <select name="" class="form-control ml-3">
+                        <?php// foreach() { ?>
+                            <option value=""> primer funcion </option>
+                        <?php// } ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CANTIDAD DE ENTRADAS</label>
+                        <input name="" type="number">
+                    </div>
+
+<!--
                     <div class="form-group">
                         <label>Título</label>
                         <input type="text" class="form-control" name="post[title]" />
@@ -142,16 +195,16 @@
                         <label>Texto</label>
                         <textarea name="post[text]" class="form-control"></textarea>
                     </div>
-
+-->
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark">Publicar</button>
+                    <button type="submit" class="btn btn-dark">Comprar</button>
                 </div>
             </form>
 
         </div>   
-    </div>                               -->
+    </div>                               
 
     <?php include('footer.php');  ?>
