@@ -3,34 +3,24 @@ namespace Controllers;
 
 use Controllers\IControllers as IControllers;
 use model\Genre as Genre;
-use Dao\GenreDao as GenreDao;
+use Dao\GenreDB as GenreDB;
 
 
 class GenreController implements IControllers{
 
     public function add ($id = 0,$name = "") {
         
-        $genreRepo=new GenreDao();     
-        $genre=new Genre($id,$name);
-        $genreRepo->Add($genre);
+        $genreDB= new GenreDB();
+        $genre= new Genre($id,$name);
+        $genreDB->Add($genre);
+
         include(VIEWS."/home.php"); 
     }
 
     public function GetAll(){
-        $genreRepo=new GenreDao();  
-        $genreList=$genreRepo->GetAll();
-        $genreRepo->SaveData();
-        return $genreList;
-    }
-
-    public function GetGenere($nameGenre){
-        $genreRepo=new GenreDao();
-        //Si el genero existe
-        if($genreRepo->GenreExist($nameGenre)){
-            //Una vez enlazemos los generos con las peliculas, aca tendra que hacer una comparacion
-            //y los idGenero dentro de la clase de pelicula comparando con los idgenero de genero
-            //Los guardamos en un array y los retornamos para la vista 
-        }
+        $genreDB= new GenreDB();
+        $genreList= $genreDB->GetAll();
+        include(VIEWS ."/home.php");
     }
 
     public function index(){
@@ -38,21 +28,6 @@ class GenreController implements IControllers{
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>

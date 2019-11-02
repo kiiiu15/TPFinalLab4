@@ -5,10 +5,10 @@
 
 
     //CAMBIAR ESE 2
-    include(VIEWS.'/header2.php');
+    include(VIEWS."/header2.php");
 
     //CAMBIAR ESE 2
-    include(VIEWS.'/nav2.php'); 
+    include(VIEWS."/nav2.php"); 
 
 ?>
 

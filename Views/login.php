@@ -1,4 +1,4 @@
-<?php include(VIEWS."/header.php"); ?>
+<?php include(VIEWS."/header2.php"); ?>
 <body>
     <main class="d-flex align-items-center justify-content-center height-100">
         <div class="content">

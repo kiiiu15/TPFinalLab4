@@ -1,5 +1,5 @@
 <?php 
-namespace Controllers;
+namespace controllers;
 
 use Controllers\IControllers as IControllers;
 use Model\Cinema as Cinema;
@@ -10,8 +10,6 @@ class CinemaController implements IControllers{
 
     public function Add ($cinemaName = "" , $adress = "" , $capacity = 0 , $entranceValue = 0 ) {
         
-        var_dump($cinemaName);
-
         $cinemaDB= new CinemaDB();
         $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
 

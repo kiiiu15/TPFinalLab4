@@ -16,6 +16,34 @@ class MovieController implements IControllers{
         include(VIEWS."/home.php"); 
     }
 
+
+
+    //AUN NO VERIFICADAS !!!!
+
+    public function RetrieveAPI(){
+        $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
+        $movieDB = new MovieDB();
+        if ($apiContent){
+
+            $arrayToDecode  = json_decode($apiContent,true);
+            foreach ($arrayToDecode["results"] as $movie) {
+                if(!$this->ExistMovie($movie["id"])) //Falta crear la validacion
+                {
+                    //Falta la obtencion de generos, creo que esta mal la ultima parte ! 
+                    $movie = new Movie($movie["id"], $movie["title"] , $movie["original_language"] , $movie["overview"],  $movie["release_date"] , $movie["poster_path"],$movieDB->GetGenresForMovie($movie['idMovie']));
+                    $movieDB->Add($movie); 
+                }
+            }
+            
+        }
+
+    }
+
+    public function ExistMovie($idMovie){
+        $movieDB= new MovieDB();
+        //$movieDB->ExistMovie($idMovie); Deberiamos hacer una funcion de validacion en el pdo de movie 
+    }
+
     //Verificar su funcionamiento, las vistas deben pedir
     //datos a la controladora, no directamente al dao
     public function GetAll(){
