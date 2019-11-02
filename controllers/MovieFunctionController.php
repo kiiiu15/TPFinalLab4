@@ -26,7 +26,6 @@ class MovieFunctionController implements IControllers{
         $MovieFunction= new MovieFunction($idFunction,$date,$hour,$cinema,$movie);
 
         $MovieFunctionDB->Add($MovieFunction);
-        echo "ya se nos va";
         //include(VIEWS ."/home.php");
     }
 
@@ -34,7 +33,12 @@ class MovieFunctionController implements IControllers{
         $MovieFunctionDB= new MovieFunctionDB();
 
         $FunctionList=$MovieFunctionDB->GetAll();
-        include(FRONT_ROOT ."/controllers/HomeControllers.php");
+    }
+
+    public function GetBillboard(){
+        $MovieFunctionDB= new MovieFunctionDB();
+
+        $FunctionList= $MovieFunctionDB->RetrieveBillboard();
     }
 
 
@@ -43,8 +47,6 @@ class MovieFunctionController implements IControllers{
         $MovieFunctionDB= new MovieFunctionDB();
         
         $function=$MovieFunctionDB->RetrieveById($idToSearch);
-
-
     }
 
     public function Delete($idFunction){
@@ -62,7 +64,7 @@ class MovieFunctionController implements IControllers{
         $cinemaDB= new CinemaDB();
 
         $MovieFunctionDB->Modify(new MovieFunction( $idFunctionToModify , $movieDB->RetrieveById($idMovie) , $cinemaDB->RetrieveById($idCinema) , $date , $hour));
-
+    
     }
 
 
