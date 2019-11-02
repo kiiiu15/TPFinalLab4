@@ -43,7 +43,6 @@ class MovieFunctionDB{
    public function Add($moviefunction){
         
     $sql="INSERT INTO MovieFunctions(date,hour,idCinema,idMovie) VALUES (:dayFunction,:hourFunction,:cinema,:movies)";
-    $values['idFunction']   =$moviefunction->getId();
     $values['dayFunction']  =$moviefunction->getDay();
     $values['hourFunction'] =$moviefunction->getHour();
     $movie =$moviefunction->getMovie(); 
