@@ -20,7 +20,7 @@ class GenreController implements IControllers{
     public function GetAll(){
         $genreDB= new GenreDB();
         $genreList= $genreDB->GetAll();
-        include(VIEWS ."/home.php");
+       return $genreList;
     }
 
     public function index(){

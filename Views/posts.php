@@ -6,7 +6,7 @@
 
     //CAMBIAR ESE 2
     include(VIEWS."/header2.php");
-
+    $isadmin = true;
     if($isadmin){
         include(VIEWS.'/adminNav.php');
     }else{
@@ -45,7 +45,9 @@
 
                     <label for="">Genero</label>
                     <select name="" class="form-control ml-3">
-                        <option value="">Genero 1</option>
+                        <?php foreach ($genres as $genre) {?>
+                        <option value="<?= $genre->getId();?>"><?= $genre->getName();?></option>
+                        <?php  } ?>
                     </select>
 
                     <label for="">Fecha</label>
@@ -66,13 +68,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php //foreach($postList as $post) { ?>
+                        <?php foreach($list as $post) { ?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value=<?php //$post->getID();?>></td>
-                                <td> <img  src="https://image.tmdb.org/t/p/w200/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
-                                <td> TITULO1 </td>
-                                <td> Maleficent and her goddaughter Aurora begin to question the complex family ties that bind them as they are pulled in different directions by impending nuptials, unexpected allies, and dark new forces at play. </td>
-                                <td> genero </td>
+                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $post->getID();?>"></td>
+                                <td> <img  src="<?php echo $post->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
+                                <td> <?php echo $post->getTitle();?> </td>
+                                <td> <?php echo $post->getOverview();?> </td>
+                                <td> 
+                                <?php $genres = $post->getGenres();
+                                    foreach($genres as $genre) {
+                                        echo $genre->getName() ."<br/>";
+                                    }
+                                ?>
+                                 </td>
                                 <!-- <td><?php //$post->getID();?></td> -->
                                 <!-- <td><?php //$post->getTitle();?></td> -->
                                 <!-- <td><?php //$post->getAuthor();?></td> -->
@@ -91,7 +99,7 @@
                                     <!-- </a> -->
                                 <!-- </td> -->
                             </tr>
-                        <?php //} ?>
+                        <?php } ?>
                     </tbody>
                 </table>
             </form>
@@ -210,4 +218,4 @@
         </div>   
     </div>                               
 
-    <?php include('footer.php');  ?>
+    <?php include(VIEWS.'/footer.php');  ?>
