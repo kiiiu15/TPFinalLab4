@@ -7,8 +7,11 @@
     //CAMBIAR ESE 2
     include(VIEWS."/header2.php");
 
-    //CAMBIAR ESE 2
-    include(VIEWS."/nav2.php"); 
+    if($isadmin){
+        include(VIEWS.'/adminNav.php');
+    }else{
+        include(VIEWS.'/nav2.php'); 
+    }
 
 ?>
 
