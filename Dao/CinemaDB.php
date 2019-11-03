@@ -13,7 +13,7 @@ class CinemaDB{
     }
 
     public function GetAll(){
-        $sql="SELECT *FROM Cinemas";
+        $sql="SELECT * FROM Cinemas";
         try{
             $this->connection= Connection::getInstance();
             $result = $this->connection->Execute($sql);
@@ -135,13 +135,13 @@ class CinemaDB{
     }
 
     //puede ser activado o desactivado
-    public function RetrieveByActive(){
+    public function RetrieveByActive($active){
         $sql="SELECT * FROM Cinemas WHERE Cinemas.active=:active";
-        $values['active']=true;
+        $values['active']=$active;
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
-            $result=$this->connect->Execute($sql,$values);
+            $result=$this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -170,7 +170,7 @@ class CinemaDB{
     }
 
     public function RetrieveByName($nameCinema){
-        $sql="SELECT *FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
+        $sql="SELECT * FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
         $values['nameCinema'] =$nameCinema;
         try{
             $this->connection= Connection::getInstance();
@@ -197,8 +197,8 @@ class CinemaDB{
     //name,address,capacity,price,active 
     public function Modify($cinema){
 
-        
-        $sql="UPDATE FROM Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.adressCinema=:address,Cinemas.capacity = :capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+        var_dump($cinema);
+        $sql="UPDATE  Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.adressCinema=:address,Cinemas.capacity = :capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
         $values['nameCinema']     = $cinema->getName();
         $values['address']  = $cinema->getAddress();
         $values['capacity'] = $cinema->getCapacity();
@@ -216,26 +216,18 @@ class CinemaDB{
 
     
     public function GetIDCinemaActiva (){
-        $sql="SELECT Cinemas.idCinema FROM Cinemas WHERE Cinemas.active=:active";
-        $values['active']=true;
-        try{
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
-            $result=$this->connection->Execute($sql,$value);
-        }catch(\PDOExeption $ex){
-            throw $ex;
+        $cinemas = $this->RetrieveByActive(true);
+        $ids = array();
+        foreach($cinemas as $cinema) {
+            array_push($ids, $cinema->getIdCinema());
         }
-        if(!empty($result)){
-            return $this->Map($result);
-        }else{
-            return false;
-        }
+        return $ids;
     }
     
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
-            return new Cinema($c['idCinema'], $c['nameCinema'], $c['adressCinema'], $c['capacity'], $c['price'], $c['active']);
+            return new Cinema($c['idCinema'], $c['nameCinema'], $c['adressCinema'], $c['capacity'], $c['price'], (($c['active'] == 1) ? true : false));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

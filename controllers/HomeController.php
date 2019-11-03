@@ -17,13 +17,16 @@ use Dao\CinemaDB as CinemaDB;
 class HomeController implements Icontrollers {
 
     public function showMoviesByGenre($genre) {
-        if ($genre == '*'){
+
+        
+        echo 'fin';
+         /*if ($genre == '*'){
             $list = $controllerMovie->GetAll();
         } else {
             $list = $controllerMovie->getMovieForGenre($genre);
-        }
+        }*/
         
-        include(VIEWS."/home.php");
+        //include(VIEWS."/home.php");
     }
 
     public function showMovie($title){
