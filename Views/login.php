@@ -27,7 +27,7 @@
             <?php } ?>
             <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form class="modal-content" action="<?= FRONT_ROOT . '/' ?>User/SignUp" method="POST">
+                    <form class="modal-content" action="<?= FRONT_ROOT . '/User/SignUp' ?>" method="POST">
                         <div class="modal-header">
                             <h5 class="modal-title">Registrar usuario</h5>
                             <button type="button" class="close" data-dismiss="modal">

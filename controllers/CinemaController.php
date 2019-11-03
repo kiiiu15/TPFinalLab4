@@ -19,9 +19,8 @@ class CinemaController implements IControllers{
     }
 
     public function GetAll(){
-        $cinemaDB=new CinemaDB();
-        $list=$cinemaDB->RetrieveByActive();
-        include(VIEWS."/cinemaHome.php");
+        $cinemaDB = new CinemaDB();
+        return $cinemaDB->RetrieveByActive();
     }
 
     public function Deactivate($idCinema = 0){
@@ -39,7 +38,9 @@ class CinemaController implements IControllers{
     }
 
     public function index(){
-        include(VIEWS . "/cinemaHome.php");
+        
+        $cinemaList = $this->GetAll();
+        //include(VIEWS . "/cinemaList.php");
     }
 
 }

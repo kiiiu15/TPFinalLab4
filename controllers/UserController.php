@@ -7,6 +7,7 @@ use model\Role as Role;
 use model\Profile as Profile;
 use Dao\UserDao as UserDao;
 use controllers\HomeController as HomeController;
+use controllers\MovieController as MovieController;
 
 use Dao\UserDB as UserDB;
 use Dao\ProfileDB as ProfileDB;
@@ -49,7 +50,8 @@ class UserController implements IControllers
         if(isset($_SESSION['status']) && isset($_SESSION['loged']))
         {
             $isadmin = $this->IsAdmin();//devuelve true o false
-            include(VIEWS ."/posts.php");
+            
+            require(VIEWS ."/posts.php");
         }else{
             include(VIEWS ."/login.php");
         }
@@ -81,7 +83,7 @@ class UserController implements IControllers
         }
     }
 
-    public function logIn($email,$pass){
+    public function LogIn($email,$pass){
 
         $DaoUser= new UserDB();
         if($this->UserExist($email))//comprueba que exista el usuario
@@ -90,7 +92,10 @@ class UserController implements IControllers
             if($user->GetPass() == $pass)//comprobamos la contraseña
             {
                 $this->SetLogIn($user);
-                //CAMBIAR ESE POSTS
+                
+                $movieC = new MovieController();
+                $movieList = $movieC->GetAll();
+
                 include(VIEWS."/posts.php");
             }else{
                 $errorMje = "Error: Contraseña incorrecta";

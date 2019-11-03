@@ -13,6 +13,7 @@
         include(VIEWS.'/nav2.php'); 
     }
 
+
 ?>
 
     <main class="p-5">
@@ -42,7 +43,6 @@
 
 
                 <div class="form-group mb-4">
-
                     <label for="">Genero</label>
                     <select name="" class="form-control ml-3">
                         <?php foreach ($genres as $genre) {?>
@@ -61,21 +61,21 @@
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th> POSTER </th>
+                            <th>POSTER</th>
                             <th>Título</th>
                             <th>Descripcion</th>
                             <th>Genero</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($list as $post) { ?>
+                        <?php foreach($movieList as $movie) { ?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $post->getID();?>"></td>
-                                <td> <img  src="<?php echo $post->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
-                                <td> <?php echo $post->getTitle();?> </td>
-                                <td> <?php echo $post->getOverview();?> </td>
+                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $movie->getID();?>"></td>
+                                <td> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
+                                <td> <?php echo $movie->getTitle();?> </td>
+                                <td> <?php echo $movie->getOverview();?> </td>
                                 <td> 
-                                <?php $genres = $post->getGenres();
+                                <?php $genres = $movie->getGenres();
                                     foreach($genres as $genre) {
                                         echo $genre->getName() ."<br/>";
                                     }

@@ -73,7 +73,9 @@ class MovieController implements IControllers{
     }
 
     public function index(){
-        include(VIEWS . "/home.php");
+        
+        //echo "gg perry";
+        //include(VIEWS . "/home.php");
     }
 
 }
