@@ -40,9 +40,19 @@ class UserController implements IControllers
     }
 
     public function index(){    
-        
-        include(VIEWS."/login.php");
 
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
+
+        if(isset($_SESSION['status']) && isset($_SESSION['loged']))
+        {
+            $isadmin = $this->IsAdmin();//devuelve true o false
+            include(VIEWS ."/posts.php");
+        }else{
+            include(VIEWS ."/login.php");
+        }
     }
 
     /**
