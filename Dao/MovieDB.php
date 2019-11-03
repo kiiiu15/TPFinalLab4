@@ -44,7 +44,7 @@ class MovieDB{
         try{
             $this->connection =Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
+            echo $this->connection->ExecuteNonQuery($sql,$values);
 
 
             $genreDB = new GenreDB();
@@ -168,7 +168,7 @@ class MovieDB{
 
 
     /* Esta funcion tiene por finalidad recuperar TODOS los ids de genreos qe tenga asociada la pelicula con id que se reciba por parametro*/
-    private function GetGenresIdsForMovie ($idMovie) {
+    public function GetGenresIdsForMovie ($idMovie) {
         $sql = "SELECT idGenre FROM GenresPerMovie WHERE GenresPerMovie.idMovie = :idMovie";
         $values ["idMovie"] = $idMovie;
         try{
@@ -190,11 +190,15 @@ class MovieDB{
 
     /*En esta funcion usamos la funcion de arriba para crear un arreglo de objetos Genre que estan asignados a un idMovie */
 
-    private function GetGenresForMovie($idMovie) {
+    public function GetGenresForMovie($idMovie) {
         $genresIds = $this->GetGenresIdsForMovie($idMovie);
+        return $this->GetObjectGenresForMovie($genresIds);
+    }
+
+    public function GetObjectGenresForMovie ($genreIdsForTheMovie){
         $genreDB = new GenreDB();
         $genresForMovie = array();
-        foreach ($genresIds as $genreId) {
+        foreach ($genreIdsForTheMovie as $genreId) {
             $genre = $genreDB->ExtractGenrebyId($genreId);
             array_push($genresForMovie, $genre);
         }

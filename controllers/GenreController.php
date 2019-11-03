@@ -27,6 +27,18 @@ class GenreController implements IControllers{
         include(VIEWS . "/home.php");
     }
 
+    public function RetrieveAPI(){
+        $genreDB = new GenreDB ();
+        $apiContent = file_get_contents("https://api.themoviedb.org/3/genre/movie/list?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
+        if ($apiContent){
+            $arrayToDecode  = json_decode($apiContent,true); 
+            foreach ($arrayToDecode['genres'] as $genre){
+                $newGenre = new Genre($genre["id"],$genre["name"]);
+                $genreDB->Add($newGenre);
+            }
+        }
+    }
+
 }
 
 

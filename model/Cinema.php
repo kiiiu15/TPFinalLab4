@@ -12,7 +12,7 @@ class Cinema{
     private $active;
 
     //Constructor
-    public function __construct($idCinema ="",$name="",$Address="",$capacity="",$price="",$active=false){
+    public function __construct($idCinema ="",$name="",$Address="",$capacity="",$price="",$active=true){
         $this->setIdCinema($idCinema);
         $this->setName($name);
         $this->setAddress($Address);

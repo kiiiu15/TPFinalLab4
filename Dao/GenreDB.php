@@ -97,6 +97,8 @@ class GenreDB {
 
 
 
+
+
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($g) {
