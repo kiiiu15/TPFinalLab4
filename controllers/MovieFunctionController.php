@@ -32,7 +32,7 @@ class MovieFunctionController implements IControllers{
     public function GetAll(){
         $MovieFunctionDB= new MovieFunctionDB();
 
-        $FunctionList=$MovieFunctionDB->GetAll();
+        return $MovieFunctionDB->GetAll();
     }
 
     public function GetBillboard(){
@@ -69,7 +69,8 @@ class MovieFunctionController implements IControllers{
 
 
     public function index(){
-        include(VIEWS . "/cinemaHome.php");
+        $movieFunctionList = $this->GetAll();
+        include(VIEWS.'/addFunction.php');
     }
 
 }

@@ -8,19 +8,19 @@ use Dao\CinemaDB as CinemaDB;
 
 class CinemaController implements IControllers{
 
-    public function Add ($cinemaName = "" , $adress = "" , $capacity = 0 , $entranceValue = 0 ) {
+    public function Add ($cinemaName, $adress, $capacity, $entranceValue) {
         
         $cinemaDB= new CinemaDB();
         $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
 
         $cinemaDB->Add($cinema);
 
-        include(VIEWS."/cinemaHome.php"); 
+        $this->index();
     }
 
     public function GetAll(){
         $cinemaDB = new CinemaDB();
-        return $cinemaDB->RetrieveByActive();
+        return $cinemaDB->RetrieveByActive(true);
     }
 
     public function Deactivate($idCinema = 0){
@@ -40,7 +40,7 @@ class CinemaController implements IControllers{
     public function index(){
         
         $cinemaList = $this->GetAll();
-        //include(VIEWS . "/cinemaList.php");
+        include(VIEWS . "/cinemaList.php");
     }
 
 }

@@ -13,7 +13,7 @@ class MovieDB{
     }
 
     public function GetAll(){
-        $sql="SELECT * FROM Movies ";
+        $sql="SELECT * FROM Movies";
         try{
             $this->connection= Connection ::getInstance();
             $result= $this->connection->Execute($sql);

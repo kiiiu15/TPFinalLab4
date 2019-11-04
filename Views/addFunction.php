@@ -10,33 +10,16 @@
 
 ?>
 
-<main class="p-5">
+    <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Cines</h1>
+            <h1 class="mb-5">Listado de Funciones</h1>
 
+            <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-function">
+                Agregar Funcion
+            </button> 
 
-            
-
-
-                <!-- LES DEJO ESTO DEL MULTI ACTION POR SI SE LES OCURRE QUE LES PUEDE SERVIR MAS ADELANTE -->
-                <!-- <div class="form-group mb-4"> -->
-                    <!-- <button type="button" class="btn btn-light mr-4" data-toggle="modal" data-target="#create-post"> -->
-                        <!-- <object type="image/svg+xml" data="<?php //ICONS."/plus.svg"?>" width="16" height="16"></object> -->
-                    <!-- </button> -->
-
-                    <!-- <label for="">Accion múltiple</label> -->
-                    <!-- <select name="action" class="form-control ml-3"> -->
-                        <!-- <option value="trash">Eliminar</option> -->
-                        <!-- <option value="enable">Publicar</option> -->
-                        <!-- <option value="disable">Despublicar</option> -->
-                    <!-- </select> -->
-                    <!-- <button type="submit" class="btn btn-dark ml-3">Enviar</button> -->
-                <!-- </div> -->
-
-
-
-                                      <!-- LOS GET NO ESTAN FUNCIONANDO -->
+<!--ACA PODRIAMOS PONER UN SELECT PARA QUE ELIJA EL CINE DEL QUE QUIERE VER QUE FUNCIONES HAY
             <form class="form-inline" action="" method="GET">
                 <div class="form-group mb-4">
                     <label for="">Activo/Inactivo</label>
@@ -45,27 +28,24 @@
                         <option value="false">Inactivo</option>
                     </select>
                     <button type="submit" class="btn btn-dark ml-3">Enviar</button>
-
-                    <!-- 
-                        en realidad este button no tiene nada que ver con el form este, pero si lo ponia afuera quedava re feo :)
-                     -->
-                    <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
-                        Agregar Cine
-                    </button>
+                    
                 </div>
             </form>   
 
-             
-                
+            <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
+                Agregar Cine
+            </button> 
+-->                
             <form class="form-inline" action="" method="POST">
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Nombre</th>
-                            <th>Direccion</th>
-                            <th>Capacidad</th>
-                            <th>Precio</th>
+                            <th>Id Cine</th>
+                            <th>Cine</th>
+                            <th>Fecha</th>
+                            <th>Horario</th>
+                            <th>Pelicula</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,13 +53,14 @@
                         ACA TENEMOS UN PROBLEMA,
                         SI POR ALGUNA RAZON SOLO RECIVE UN UNICO CINE, SE ROMPE EL FOREACH Y NO SE VE NADA 
                      -->
-                        <?php foreach($cinemaList as $cinema) { ?>
+                        <?php foreach($movieFunctionList as $movieFunction) { ?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $cinema->getIdCinema();?>"></td>
-                                <td> <?php echo $cinema->getName();?>    </td>
-                                <td> <?php echo $cinema->getAddress();?> </td>
-                                <td> <?php echo $cinema->getCapacity();?></td>
-                                <td> <?php echo $cinema->getPrice();?>   </td>
+                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $movieFunction->getId();?>"></td>
+                                <td> <?php echo $movieFunction->getCinema()->getIdCinema();?></td>
+                                <td> <?php echo $movieFunction->getCinema()->getName();?>    </td>
+                                <td> <?php echo $movieFunction->getDay();?>                  </td>
+                                <td> <?php echo $movieFunction->getHour();?>                 </td>
+                                <td> <?php echo $movieFunction->getMovie()->getTitle();?>    </td>
                                 
                             </tr>
                         <?php } ?>
@@ -100,14 +81,14 @@
     </main>
 
 
-    <div class="modal fade" id="add-cinema" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
+    <div class="modal fade" id="add-function" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
 <!-- 
     QUIZAS TENGA MAS SENTIDO QUE SE HAGA POR GET PERO NO FUNCIONA BIEN ASI, EL GET SI SE CARGA
     PERO AL METODO LE LLEGAN LOS PARAMETROS VACIOS
  -->
-            <form class="modal-content" action="<?= FRONT_ROOT . '/Cinema/Add' ?>" method="POST">
+            <form class="modal-content" action="<?= FRONT_ROOT . '/MovieFunction/Add' ?>" method="POST">
 
                 <div class="modal-header">
                     <h5 class="modal-title">Crear Cine</h5>
@@ -144,4 +125,4 @@
         </div>   
     </div>                               
 
-    <?php include(VIEWS.'/footer.php');  ?>
+<?php include(VIEWS.'/footer.php');  ?>

@@ -37,27 +37,27 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text" class="form-control" name="email" />
+                                <input required type="text" class="form-control" name="email" />
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="text" class="form-control" name="pass" />
+                                <input required type="text" class="form-control" name="pass" />
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="UserName" />
+                                <input required type="text" class="form-control" name="UserName" />
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" class="form-control" name="LastName" />
+                                <input required type="text" class="form-control" name="LastName" />
                             </div>
                             <div class="form-group">
                                 <label>DNI</label>
-                                <input type="text" class="form-control" name="Dni" />
+                                <input required type="text" class="form-control" name="Dni" />
                             </div>
                             <div class="form-group">
                                 <label>Telephone Number</label>
-                                <input type="text" class="form-control" name="TelephoneNumber" />
+                                <input required type="text" class="form-control" name="TelephoneNumber" />
                             </div>
                         </div>
                         <div class="modal-footer">
