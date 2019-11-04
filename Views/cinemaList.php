@@ -62,6 +62,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
+                            <th>Id Cine</th>
                             <th>Nombre</th>
                             <th>Direccion</th>
                             <th>Capacidad</th>
@@ -76,6 +77,7 @@
                         <?php foreach($cinemaList as $cinema) { ?>
                             <tr>
                                 <td><input type="checkbox" name="postschecked[]" value="<?php echo $cinema->getIdCinema();?>"></td>
+                                <td> <?php echo $cinema->getIdCinema();?>    </td>
                                 <td> <?php echo $cinema->getName();?>    </td>
                                 <td> <?php echo $cinema->getAddress();?> </td>
                                 <td> <?php echo $cinema->getCapacity();?></td>

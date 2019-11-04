@@ -12,8 +12,8 @@ use Dao\MovieFunctionDB as MovieFunctionDB;
 
 class MovieFunctionController implements IControllers{
 
-    public function Add($idFunction = 0,$idMovie = 0, $idCinema = 0, $date = "" , $hour = "" ){
-        
+    public function Add($idMovie = 0, $idCinema = 0, $date = "" , $hour = "" ){
+    
         $MovieFunctionDB= new MovieFunctionDB();
 
         $MovieDB= new MovieDB();
@@ -23,10 +23,11 @@ class MovieFunctionController implements IControllers{
         $movie=$MovieDB->RetrieveById($idMovie);  
         $cinema=$CinemaDB->RetrieveById($idCinema);
 
-        $MovieFunction= new MovieFunction($idFunction,$date,$hour,$cinema,$movie);
+        $MovieFunction= new MovieFunction(0,$date,$hour,$cinema,$movie);
 
         $MovieFunctionDB->Add($MovieFunction);
-        //include(VIEWS ."/home.php");
+        
+        $this->index();
     }
 
     public function GetAll(){

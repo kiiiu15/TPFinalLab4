@@ -22,24 +22,6 @@ class UserController implements IControllers
        // $userList = $userDao->GetAll();
     }
 
-    public function prueba(){
-        $DaoUser= new UserDB();
-        $DaoProfile = new ProfileDB();
-        $role = new Role("admin");
-        
-        // AGREGAR UN NUEVO USUARIO
-        //$profile = new Profile('b','b','b','b'); 
-        //$profileId = $DaoProfile->Add($profile);
-        //$User = new User("b","b",$role,$profile);
-        //RECORDATORIO IMPORTANTE, VERIFICAR QUE SI NO SE PUDO CREAR EL NUEVO USUARIO VAS A TENER UN
-        //PERFIL HECHO SIN USUARIO ASIGNADO
-        //$DAO->Add($User,$profileId);
-        
-        //var_dump(  $DAOPROFILE->GetProfileById(1)  );
-       
-        var_dump( $DaoUser->GetAll() );
-    }
-
     public function index(){    
 
         if(!isset($_SESSION))

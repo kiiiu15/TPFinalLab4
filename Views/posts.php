@@ -57,7 +57,7 @@
                 
                 
 
-                <table class="table">
+                <table class="table" class="catsandstar">
                     <thead class="thead-dark">
                         <tr>
                             <th></th>

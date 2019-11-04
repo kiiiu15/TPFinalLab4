@@ -91,28 +91,35 @@
             <form class="modal-content" action="<?= FRONT_ROOT . '/MovieFunction/Add' ?>" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear Cine</h5>
+                    <h5 class="modal-title">Agregar Funcion</h5>
                     <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
+                        <span>&times;</span> 
                     </button>
                 </div>
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nombre</label>
-                        <input required name="cinemaName" type="text">
+                    <!-- 
+                        mas tarde le agrego la capacidad de que sea por nombre o apretando el chek de 
+                        la lista de movie
+                     -->
+                        <label>Id Pelicula</label>
+                        <input required name="idMovie" type="number">
                     </div>
                     <div class="form-group">
-                        <label>Direccion</label>
-                        <input required name="adress" type="text">
+                    <!-- 
+                        mas tarde la agrego el que puedas meter el nombre
+                     -->
+                        <label>Id Cinema</label>
+                        <input required name="idCinema" type="number">
                     </div>
                     <div class="form-group">
-                        <label>Capacidad</label>
-                        <input required name="capacity" type="text">
+                        <label>Fecha</label>
+                        <input required name="date" type="date">
                     </div>
                     <div class="form-group">
-                        <label>Precio por entrada</label>
-                        <input required name="entranceValue" type="text">
+                        <label>Horario</label>
+                        <input required name="hour" type="time">
                     </div>
                 </div>
 
