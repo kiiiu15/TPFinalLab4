@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Controllers\IControllers as IControllers;
+use Controllers\GenreController as GenreController;
 use model\Movie as Movie;
 use Dao\MovieDB as MovieDB;
 
@@ -54,7 +55,7 @@ class MovieController implements IControllers{
     //Verificar su funcionamiento, las vistas deben pedir
     //datos a la controladora, no directamente al dao
     public function GetAll(){
-        $MovieDB=new MovieDB();
+        $MovieDB = new MovieDB();
         $MovieList=$MovieDB->GetAll();
         return $MovieList;
     }
@@ -73,9 +74,10 @@ class MovieController implements IControllers{
     }
 
     public function index(){
-        
-        //echo "gg perry";
-        //include(VIEWS . "/home.php");
+        $movieList = $this->GetAll();
+        $genreController = new GenreController();
+        $genresList = $genreController->GetAll();
+        include(VIEWS.'/posts.php');
     }
 
 }

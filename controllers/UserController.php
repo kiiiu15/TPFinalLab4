@@ -31,12 +31,16 @@ class UserController implements IControllers
 
         if(isset($_SESSION['status']) && isset($_SESSION['loged']))
         {
-            $isadmin = $this->IsAdmin();//devuelve true o false
-            
-            require(VIEWS ."/posts.php");
+            $home = new HomeController();
+            $home->index();
         }else{
             include(VIEWS ."/login.php");
         }
+    }
+
+    public function IsAdmin(){
+        $ans = $_SESSION['loged']->GetRole()->GetRoleName() == 'admin' ? true : false;
+        return $ans;
     }
 
     /**
@@ -74,11 +78,7 @@ class UserController implements IControllers
             if($user->GetPass() == $pass)//comprobamos la contraseña
             {
                 $this->SetLogIn($user);
-                
-                $movieC = new MovieController();
-                $movieList = $movieC->GetAll();
-
-                include(VIEWS."/posts.php");
+                $this->index();
             }else{
                 $errorMje = "Error: Contraseña incorrecta";
                 include(VIEWS."/login.php"); 

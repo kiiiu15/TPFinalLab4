@@ -24,7 +24,7 @@ class GenreController implements IControllers{
     }
 
     public function index(){
-        include(VIEWS . "/home.php");
+       // include(VIEWS . "/home.php");
     }
 
     public function RetrieveAPI(){

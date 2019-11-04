@@ -22,7 +22,7 @@
             <h1 class="mb-5">Listado de Peliculas</h1>
 
 
-            <form class="form-inline" action="" method="POST">
+            
 
 
                 <!-- LES DEJO ESTO DEL MULTI ACTION POR SI SE LES OCURRE QUE LES PUEDE SERVIR MAS ADELANTE -->
@@ -41,11 +41,11 @@
                 <!-- </div> -->
 
 
-
+            <form class="form-inline" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre'?>" method="POST"> 
                 <div class="form-group mb-4">
                     <label for="">Genero</label>
-                    <select name="" class="form-control ml-3">
-                        <?php foreach ($genres as $genre) {?>
+                    <select name="genreId" class="form-control ml-3">
+                        <?php foreach ($genresList as $genre) {?>
                         <option value="<?= $genre->getId();?>"><?= $genre->getName();?></option>
                         <?php  } ?>
                     </select>
@@ -54,8 +54,9 @@
                     <input type="date">
                     <button type="submit" class="btn btn-dark ml-3">Enviar</button>
                 </div>
+            </form>    
                 
-                
+            <form class="form-inline" action="" method="POST"> 
 
                 <table class="table" class="catsandstar">
                     <thead class="thead-dark">
@@ -73,14 +74,10 @@
                                 <td><input type="checkbox" name="postschecked[]" value="<?php echo $movie->getID();?>"></td>
                                 <td> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
                                 <td> <?php echo $movie->getTitle();?> </td>
-                                <td> <?php echo $movie->getOverview();?> </td>
+                                <td> <?php echo $movie->getOverview();?> 
                                 <td> 
-                                <?php $genres = $movie->getGenres();
-                                    foreach($genres as $genre) {
-                                        echo $genre->getName() ."<br/>";
-                                    }
-                                ?>
-                                 </td>
+                                   <?php var_dump($movie->getGenres()); ?>
+                                </td>
                                 <!-- <td><?php //$post->getID();?></td> -->
                                 <!-- <td><?php //$post->getTitle();?></td> -->
                                 <!-- <td><?php //$post->getAuthor();?></td> -->

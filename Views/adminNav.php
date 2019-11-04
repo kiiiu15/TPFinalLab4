@@ -19,6 +19,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
+            
         </ul>
         <!-- <span class="navbar-text text-white"> -->
             <!-- <strong>(Hola <?php// echo $user->getName(); ?>)</strong> -->

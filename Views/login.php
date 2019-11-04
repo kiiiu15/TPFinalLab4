@@ -2,7 +2,7 @@
 <body>
     <main class="d-flex align-items-center justify-content-center height-100">
         <div class="content">
-            <form action="<?= FRONT_ROOT . '/' ?>User/LogIn" method="POST" class="login-form bg-dark-alpha p-5 text-white">
+            <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
                     <label for="">Usuario</label>
                     <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario">
