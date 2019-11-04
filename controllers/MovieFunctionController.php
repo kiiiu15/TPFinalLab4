@@ -30,6 +30,11 @@ class MovieFunctionController implements IControllers{
         $this->index();
     }
 
+    public function GetMovieByDate($date){
+        $MovieFunctionDB= new MovieFunctionDB();
+        return $MovieFunctionDB->RetrieveByDate($date);
+    }
+
     public function GetAll(){
         $MovieFunctionDB= new MovieFunctionDB();
 

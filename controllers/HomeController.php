@@ -37,6 +37,25 @@ class HomeController implements Icontrollers {
         include(VIEWS ."/showMovie.php");
     }
 
+    public function ShowMovieByDate($date){
+        $userC = new UserController();
+        $movieFC = new MovieFunctionController();
+        $genreC = new GenreController();
+
+        $isAdmin = $userC->IsAdmin();
+        $movieFunctionList = $movieFC->GetMovieByDate($date);
+        $idToSearch = arra();
+        foreach($movieFunctionList as $mf){
+            $idToSearch = $mf['']
+        }
+
+
+        $genresList = $genreC->GetAll();
+        
+        var_dump($movieList);
+        //include(VIEWS.'/posts.php');
+    }
+
     public function index (){
         
         $userC = new UserController(); 
@@ -46,6 +65,8 @@ class HomeController implements Icontrollers {
         $isAdmin = $userC->IsAdmin();
         $movieList = $movieC->GetAll();
         $genresList = $genreC->GetAll();
+
+        //var_dump($movieList);
 
         include(VIEWS.'/posts.php');
     }

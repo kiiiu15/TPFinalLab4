@@ -49,9 +49,13 @@
                         <option value="<?= $genre->getId();?>"><?= $genre->getName();?></option>
                         <?php  } ?>
                     </select>
-
+                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                </div>
+            </form> 
+            <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate'?>" method="POST">     
+                <div>
                     <label for="">Fecha</label>
-                    <input type="date">
+                    <input name="date" type="date">
                     <button type="submit" class="btn btn-dark ml-3">Enviar</button>
                 </div>
             </form>    
