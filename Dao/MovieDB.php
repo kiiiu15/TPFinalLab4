@@ -5,6 +5,7 @@ use \Exception as Exception;
 use Dao\QueryType as QueryType;
 use model\Movie as Movie;
 use Dao\GenreDB as GenreDB;
+use Dao\GenresPerMovieDB as GenresPerMovieDB;
 
 class MovieDB{
     private $connection;
@@ -44,23 +45,14 @@ class MovieDB{
         try{
             $this->connection =Connection::getInstance();
             $this->connection->connect();
-            echo $this->connection->ExecuteNonQuery($sql,$values);
+            $this->connection->ExecuteNonQuery($sql,$values);
 
 
-            $genreDB = new GenreDB();
+            $genrePerMovieDB = new GenresPerMovieDB();
 
 
             foreach ($genrePerMovie as $genreMovie){
-
-                $genreDB->Add($genreMovie);
-                $sql2= "INSERT INTO GenresPerMovie (idMovie, idGenre) VALUES (:idMovie,:idGenre)";
-                $values2 ['idMovie'] = $movie->getId();
-                $values2 ['idGenre'] = $genreMovie->getId();
-
-                $this->connection->ExecuteNonQuery($sql2,$values2);
-
-                
-    
+                $genrePerMovieDB->Add($genreMovie);
             }
         }catch(\PDOExeption $ex){
             throw $ex;

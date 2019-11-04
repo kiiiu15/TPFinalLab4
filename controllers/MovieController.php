@@ -14,7 +14,7 @@ class MovieController implements IControllers{
         $MovieDB=new MovieDB();     
         $movie=new Movie($title,$Language,$overview,$ReleaseDate,$Poster,$genre_ids);
         $MovieDB->Add($movie);
-        include(VIEWS."/home.php"); 
+ 
     }
 
 
@@ -30,17 +30,16 @@ class MovieController implements IControllers{
             $arrayToDecode  = json_decode($apiContent,true);
             
             foreach ($arrayToDecode["results"] as $movie) {
+            
                 if(!$this->ExistMovie($movie["id"])) //Falta crear la validacion
                 {
                     //Falta la obtencion de generos, creo que esta mal la ultima parte ! 
                     $movie = new Movie($movie["id"], $movie["title"] , $movie["original_language"] , $movie["overview"],  $movie["release_date"] , $movie["poster_path"],$movieDB->GetObjectGenresForMovie($movie['genre_ids']));
-                    var_dump($movie);
+
                     $movieDB->Add($movie); 
                 }
-            }
-            
+            }   
         }
-
     }
 
     public function ExistMovie($idMovie){
@@ -55,6 +54,7 @@ class MovieController implements IControllers{
     //Verificar su funcionamiento, las vistas deben pedir
     //datos a la controladora, no directamente al dao
     public function GetAll(){
+        $this->RetrieveAPI();
         $MovieDB = new MovieDB();
         $MovieList=$MovieDB->GetAll();
         return $MovieList;

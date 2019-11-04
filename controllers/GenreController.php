@@ -14,7 +14,7 @@ class GenreController implements IControllers{
         $genre= new Genre($id,$name);
         $genreDB->Add($genre);
 
-        include(VIEWS."/home.php"); 
+        //include(VIEWS."/home.php"); 
     }
 
     public function GetAll(){

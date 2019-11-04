@@ -74,19 +74,12 @@
                                 <td><input type="checkbox" name="postschecked[]" value="<?php echo $movie->getID();?>"></td>
                                 <td> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
                                 <td> <?php echo $movie->getTitle();?> </td>
-                                <td> <?php echo $movie->getOverview();?> 
-                                <td> 
-                                   <?php var_dump($movie->getGenres()); ?>
+                                <td> <?php echo $movie->getOverview();?> </td>
+                                <td> <?php foreach($movie->getGenres() as $genre){
+                                                echo $genre->getName().'<br>'; 
+                                            }?>
                                 </td>
-                                <!-- <td><?php //$post->getID();?></td> -->
-                                <!-- <td><?php //$post->getTitle();?></td> -->
-                                <!-- <td><?php //$post->getAuthor();?></td> -->
-                                <!-- <td><?php //$post->getCategory();?></td> -->
-                                <!-- <td><?php //$post->getDate();?></td> -->
-                                <!-- <td><?php //$post->getText();?></td> -->
-                                <!-- <td> -->
-
-                            
+                                
 
                                 <!-- BOTON PARA BORRAR -->
                                     <!-- <a href="Process/delete_post.php?delete=<?php //echo $post->getID(); ?>" class="btn btn-light"> -->

@@ -39,7 +39,7 @@ class HomeController implements Icontrollers {
 
     public function index (){
         
-        $userC = new UserController();
+        $userC = new UserController(); 
         $movieC = new MovieController();
         $genreC = new GenreController();
 
