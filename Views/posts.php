@@ -13,8 +13,16 @@
         include(VIEWS.'/nav2.php'); 
     }
 
+    if ($movieList == false){
+        $movieList = array();
+        $errorMje = "Los sentimos, en cartelera no se encuentran peliculas de dicho genero.Intenete nuevamente la proxima semana.";
+    }
 
-?>
+    if (!is_array($movieList )){
+        $movieList = array($movieList);
+    }
+    
+    ?>
 
     <main class="p-5">
         <div class="container">

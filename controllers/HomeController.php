@@ -43,17 +43,13 @@ class HomeController implements Icontrollers {
         $genreC = new GenreController();
 
         $isAdmin = $userC->IsAdmin();
-        $movieFunctionList = $movieFC->GetMovieByDate($date);
-        $idToSearch = arra();
-        foreach($movieFunctionList as $mf){
-            $idToSearch = $mf['']
-        }
+        $movieList= $movieFC->GetMovieByDate($date);
+     
 
 
         $genresList = $genreC->GetAll();
         
-        var_dump($movieList);
-        //include(VIEWS.'/posts.php');
+        include(VIEWS.'/posts.php');
     }
 
     public function index (){

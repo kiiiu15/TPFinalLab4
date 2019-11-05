@@ -24,16 +24,89 @@ class MovieFunctionController implements IControllers{
         $cinema=$CinemaDB->RetrieveById($idCinema);
 
         $MovieFunction= new MovieFunction(0,$date,$hour,$cinema,$movie);
-
-        $MovieFunctionDB->Add($MovieFunction);
+        $answer = $this->CheckMovieFunction($MovieFunction);
+        if ($answer === true){
+            $MovieFunctionDB->Add($MovieFunction);
+            $this->index();
+        } else {
+            $this->index($answer);
+        }
+       
         
-        $this->index();
+        
+    }
+
+    public function CheckMovieFunction ($movieFunction) {
+        $answer = true;
+        $movie = $movieFunction->getMovie();
+        $cinema = $movieFunction->getCinema();
+        $MovieFunctionDB = new MoviefunctionDB();
+        $functions = $MovieFunctionDB->RetrieveByDate($movieFunction->getDay());
+        if ($functions == false){
+            $functions = array();
+        }
+
+        if (!is_array($functions)){
+            $functions = array($functions);
+        }
+
+        if (count($functions) > 0) {
+            $grupedFunctions = $this->GroupFunctionsByMovie($functions);
+
+            if(isset($grupedFunctions[$movie->getId()])){
+                $movieFunctions = $grupedFunctions[$movie->getId()];
+
+
+                if (count($movieFunctions) > 0){
+                    $CinemaOfMovieForTheDay = $movieFunctions[0]->getCinema();
+                    var_dump($cinema);
+                    if ($CinemaOfMovieForTheDay->getIdCinema() == $cinema->getIdCinema() ){
+                       
+                        foreach($movieFunctions as $Function){
+                            $fechaMinima = strtotime('+2 hours', $Function->getHour());
+                            /*if (strtotime($movieFunction->getHour()) > (strtotime($Function->getHour()))->Modify('- 2 hours')->Modify('-15 minute') || strtotime($movieFunction->getHour())  <  strtotime(($Function->getHour()))->Modify('+2 hours')->Modify('+15 minute')){
+                                $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                                break;
+                            }*/
+                        }
+                    }else{
+                        echo 'entro al if';
+                        $answer="La Pelicula solo puede ser proyectada en un solo cine por dia, cambie el cine o la fecha";
+                    }
+                }
+
+
+            }      
+        }
+
+        
+       return $answer;
+        
+    }
+
+    public function GroupFunctionsByMovie($functions){
+        $array = array();
+        foreach ($functions as $function){
+            $movie = $function->getMovie();
+            $array[$movie->getId()] [] = $function; 
+        }
+
+        return $array;
     }
 
     public function GetMovieByDate($date){
         $MovieFunctionDB= new MovieFunctionDB();
-        return $MovieFunctionDB->RetrieveByDate($date);
+        $functions = $MovieFunctionDB->RetrieveByDate($date);
+        $movies = array();
+
+        foreach($functions as $function){
+            $movie = $function->getMovie();
+            $movies[$movie->getId()] = $movie;
+        }
+
+        return $movies;
     }
+
 
     public function GetAll(){
         $MovieFunctionDB= new MovieFunctionDB();
@@ -44,7 +117,8 @@ class MovieFunctionController implements IControllers{
     public function GetBillboard(){
         $MovieFunctionDB= new MovieFunctionDB();
 
-        $FunctionList= $MovieFunctionDB->RetrieveBillboard();
+        $movieFunctionList= $MovieFunctionDB->RetrieveBillboard();
+        return $movieFunctionList;
     }
 
 
@@ -74,8 +148,13 @@ class MovieFunctionController implements IControllers{
     }
 
 
-    public function index(){
-        $movieFunctionList = $this->GetAll();
+    public function index($mensaje = null){
+        $errorMje=$mensaje;
+        $cinemaC = new CinemaController();
+        $movieC = new MovieController();
+        $movies = $movieC->GetAll() + $movieC->RetrieveAPI();
+        $activeCinemas = $cinemaC->RetrieveByActive(true);
+        $movieFunctionList = $this->GetBillboard();
         include(VIEWS.'/addFunction.php');
     }
 

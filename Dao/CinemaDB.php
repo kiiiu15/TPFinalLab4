@@ -62,6 +62,21 @@ class CinemaDB{
         
     }
 
+    public function ReactivateByID($idCinema){
+        $sql="UPDATE Cinemas set Cinemas.active=:false WHERE Cinemas.idCinema=:idCinema";
+        $values['false'] = true;
+        $values['idCinema'] = $idCinema;
+
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+           return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        
+    }
+
     public function Deactivate($cinema){
         $sql="UPDATE Cinemas set Cinemas.active= :false WHERE Cinemas.idCinema=:idCinema";
         $values['false'] = false;

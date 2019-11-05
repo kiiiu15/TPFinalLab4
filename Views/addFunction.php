@@ -8,6 +8,24 @@
     include(VIEWS."/header2.php");
     include(VIEWS.'/adminNav.php');
 
+    if ($activeCinemas == false){
+        $activeCinemas = array();
+    }
+
+    if (!is_array($activeCinemas)){
+        $activeCinemas = array($activeCinemas);
+    }
+
+    if ($movies == false){
+        $movies = array();
+    }
+
+    if (!is_array($movies)){
+        $movies = array($movies);
+    }
+
+    
+
 ?>
 
     <main class="p-5">
@@ -103,15 +121,23 @@
                         mas tarde le agrego la capacidad de que sea por nombre o apretando el chek de 
                         la lista de movie
                      -->
-                        <label>Id Pelicula</label>
-                        <input required name="idMovie" type="number">
+                        <label>Pelicula</label>
+                        <select required name="idMovie" id="">
+                        <?php foreach ($movies as $movie){?>
+                            <option value="<?= $movie->getId();?>"><?php echo $movie->getId();?></option>
+                        <?php }?>
+                        </select>
                     </div>
                     <div class="form-group">
                     <!-- 
                         mas tarde la agrego el que puedas meter el nombre
                      -->
-                        <label>Id Cinema</label>
-                        <input required name="idCinema" type="number">
+                        <label>Cinema</label>
+                        <select required  name="idCienma" >
+                            <?php foreach ($activeCinemas as $activeCinema) {?>
+                            <option value="<?= $activeCinema->getIdCinema();?>"><?php echo $activeCinema->getName();?></option>
+                            <?php }?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Fecha</label>

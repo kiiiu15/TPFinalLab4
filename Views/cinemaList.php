@@ -7,6 +7,12 @@
     //CAMBIAR ESE 2
     include(VIEWS."/header2.php");
     include(VIEWS.'/adminNav.php');
+    if ($cinemaList == false){
+        $cinemaList = array();
+    }
+    if (!is_array($cinemaList)){
+        $cinemaList = array($cinemaList);
+    }
 
 ?>
 
@@ -37,12 +43,12 @@
 
 
                                       <!-- LOS GET NO ESTAN FUNCIONANDO -->
-            <form class="form-inline" action="" method="GET">
+            <form class="form-inline" action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
                 <div class="form-group mb-4">
                     <label for="">Activo/Inactivo</label>
                     <select name="active" class="form-control ml-3">
-                        <option value="true">Activo</option>
-                        <option value="false">Inactivo</option>
+                        <option value="<?= true; ?>">Activo</option>
+                        <option value="<?= false; ?>">Inactivo</option>
                     </select>
                     <button type="submit" class="btn btn-dark ml-3">Enviar</button>
 
@@ -53,11 +59,7 @@
                         Agregar Cine
                     </button>
                 </div>
-            </form>   
 
-             
-                
-            <form class="form-inline" action="" method="POST">
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>

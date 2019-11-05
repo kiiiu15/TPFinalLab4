@@ -25,9 +25,11 @@ class MovieController implements IControllers{
         
         $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
         $movieDB = new MovieDB();
+        $newMovies = array();
         if ($apiContent){
 
             $arrayToDecode  = json_decode($apiContent,true);
+           
             
             foreach ($arrayToDecode["results"] as $movie) {
             
@@ -37,9 +39,14 @@ class MovieController implements IControllers{
                     $movie = new Movie($movie["id"], $movie["title"] , $movie["original_language"] , $movie["overview"],  $movie["release_date"] , $movie["poster_path"],$movieDB->GetObjectGenresForMovie($movie['genre_ids']));
 
                     $movieDB->Add($movie); 
+
+                    $newMovies[$movie->getId()] = $movie;
+
                 }
+
             }   
         }
+        return $newMovies;
     }
 
     public function ExistMovie($idMovie){

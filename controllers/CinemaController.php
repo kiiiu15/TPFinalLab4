@@ -26,15 +26,49 @@ class CinemaController implements IControllers{
     public function Deactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
-        $cinemaDB->DeactivateByID($idCinema);
-        include(VIEWS."/cinemaHome.php"); 
+        if (is_array($idCinema)){
+            foreach($idCinema as $id){
+                $cinemaDB->DeactivateByID($id);
+            }
+        }else {
+            $cinemaDB->DeactivateByID($idCinema);
+        }
+        
+        $this->index();
     }
 
+    public function RetrieveByActive($active){
+        $cinemaDB=new CinemaDB();
+        return $cinemaDB->RetrieveByActive($active);
+    }
+
+    public function Reactivate($idCinema = 0){
+        
+        $cinemaDB=new CinemaDB();
+        if (is_array($idCinema)){
+            foreach($idCinema as $id){
+                $cinemaDB->ReactivateByID($id);
+            }
+        }else {
+            $cinemaDB->ReactivateByID($idCinema);
+        }
+        
+        $this->index(); 
+    }
+
+    public function ChangeCinemaState ($newState, $ids = array()){
+        if ($newState == 0){
+            $this->Deactivate($ids);
+        } else{
+            $this->Reactivate($ids);
+        }
+
+    }
     public function Modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
 
         $cinemaDB= new CinemaDB();
         $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , $changedCapacity , $changedPrice, true));
-        include(VIEWS."/cinemaHome.php"); 
+        $this->index();
     }
 
     public function index(){
