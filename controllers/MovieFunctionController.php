@@ -36,6 +36,7 @@ class MovieFunctionController implements IControllers{
         
     }
 
+
     public function CheckMovieFunction ($movieFunction) {
         $answer = true;
         $movie = $movieFunction->getMovie();
@@ -59,18 +60,20 @@ class MovieFunctionController implements IControllers{
 
                 if (count($movieFunctions) > 0){
                     $CinemaOfMovieForTheDay = $movieFunctions[0]->getCinema();
-                    var_dump($cinema);
+                    
                     if ($CinemaOfMovieForTheDay->getIdCinema() == $cinema->getIdCinema() ){
                        
                         foreach($movieFunctions as $Function){
-                            $fechaMinima = strtotime('+2 hours', $Function->getHour());
-                            /*if (strtotime($movieFunction->getHour()) > (strtotime($Function->getHour()))->Modify('- 2 hours')->Modify('-15 minute') || strtotime($movieFunction->getHour())  <  strtotime(($Function->getHour()))->Modify('+2 hours')->Modify('+15 minute')){
+                            $minTime = $this->AddTime($Function->getHour(), -135);
+                            $maxTime = $this->AddTime($Function->getHour(), 135);
+                            
+                            if ($Function->getHour() > $minTime || $Function->getHour() < $maxTime ){
                                 $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
                                 break;
-                            }*/
+                            }
                         }
                     }else{
-                        echo 'entro al if';
+                        
                         $answer="La Pelicula solo puede ser proyectada en un solo cine por dia, cambie el cine o la fecha";
                     }
                 }
@@ -83,6 +86,15 @@ class MovieFunctionController implements IControllers{
        return $answer;
         
     }
+
+    private function AddTime( $hora, $minutos_sumar ) 
+    { 
+       $minutoAnadir=$minutos_sumar;
+       $segundos_horaInicial=strtotime($hora);
+       $segundos_minutoAnadir=$minutoAnadir*60;
+       $nuevaHora=date("H:i:s",$segundos_horaInicial+$segundos_minutoAnadir);
+       return $nuevaHora;
+    } //fin función
 
     public function GroupFunctionsByMovie($functions){
         $array = array();
@@ -121,6 +133,23 @@ class MovieFunctionController implements IControllers{
         return $movieFunctionList;
     }
 
+    public function GetBillboardMovies(){
+        $functions = $this->GetBillboard();
+        if ($functions === false){
+            $functions = array();
+        }
+
+        if (!is_array($functions)){
+            $functions = array($functions);
+        }
+        $movies = array();
+        foreach($functions as $function){
+            $movie = $function->getMovie();
+            $movies[$movie->getId()] = $movie;
+        }
+        return $movies;
+    }
+
 
     //Aun no estan Probadas 
     public function GetById($idToSearch){
@@ -129,12 +158,26 @@ class MovieFunctionController implements IControllers{
         $function=$MovieFunctionDB->RetrieveById($idToSearch);
     }
 
-    public function Delete($idFunction){
+    public function Delete($idFunction = 0){
         $MovieFunctionDB = new MovieFunctionDB();
+        if (is_array($idFunction)){
+            foreach($idFunction as $id){
+                $Function=$MovieFunctionDB->RetrieveById($id);
+                $MovieFunctionDB->Delete($Function);
+            }
+        }else {
+            $Function=$MovieFunctionDB->RetrieveById($idFunction);
+            if ($Function === false){
+                $Function = new MovieFunction();
+            }
+            $MovieFunctionDB->Delete($Function);
+        }
+       
+        $this->index();
 
-        $Function=$MovieFunctionDB->RetrieveById($idFunction);
+        
 
-        $MovieFunctionDB->Delete($Function);
+        
     }
 
     public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){

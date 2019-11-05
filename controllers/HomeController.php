@@ -55,11 +55,11 @@ class HomeController implements Icontrollers {
     public function index (){
         
         $userC = new UserController(); 
-        $movieC = new MovieController();
+        $movieFC = new MovieFunctionController();
         $genreC = new GenreController();
 
         $isAdmin = $userC->IsAdmin();
-        $movieList = $movieC->GetAll();
+        $movieList = $movieFC->GetBillboardMovies();
         $genresList = $genreC->GetAll();
 
         //var_dump($movieList);

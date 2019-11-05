@@ -54,7 +54,8 @@
                 Agregar Cine
             </button> 
 -->                
-            <form class="form-inline" action="" method="POST">
+            <form class="form-inline" action="<?= FRONT_ROOT?>/MovieFunction/Delete" method="POST">
+                <button type="submit" class="btn btn-dark ml-3"  >Borrar Selecion</button> 
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>

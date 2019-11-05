@@ -72,7 +72,7 @@ class MovieFunctionDB{
         }
     }
     
-    public function Modify($moviefunction){
+    public function Modify($moviefunction ){
         $sql="UPDATE MovieFunctions SET MovieFunctions.date=:date , MovieFunctions.hour=:hour , MovieFunctions.idMovie=:movies , MovieFunctions.idCinema=:cinema WHERE MovieFunctions.idFunction=:idFunction";
         $values['date']   =$moviefunction->getDay();
         $values['hour']  =$moviefunction->getHour();
@@ -90,7 +90,7 @@ class MovieFunctionDB{
         }
     }
 
-    public function Delete($moviefunction){
+    public function Delete($moviefunction ){
         $sql="DELETE FROM MovieFunctions WHERE MovieFunctions.idFunction=:idFunction";
         $values['idFunction'] =$moviefunction->getId();
         try{

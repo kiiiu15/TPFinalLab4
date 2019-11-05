@@ -12,7 +12,7 @@ class MovieFunction{
     private $movie;
 
     //Constructor
-    public function __construct($id = 0,$day,$hour,$cinema,$movie){
+    public function __construct($id = 0,$day = '',$hour = '',$cinema = null,$movie = null){
         $this->id=$id;
         $this->day=$day;
         $this->hour=$hour;
