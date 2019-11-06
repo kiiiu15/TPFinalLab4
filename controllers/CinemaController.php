@@ -1,6 +1,7 @@
 <?php 
 namespace controllers;
-
+use \PDO as PDO;
+use \Exception as Exception;
 use Controllers\IControllers as IControllers;
 use Model\Cinema as Cinema;
 use Dao\CinemaDB as CinemaDB;
@@ -12,62 +13,86 @@ class CinemaController implements IControllers{
         
         $cinemaDB= new CinemaDB();
         $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
-
-        $cinemaDB->Add($cinema);
-
+        try{
+            $cinemaDB->Add($cinema);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
         $this->index();
     }
 
     public function GetAll(){
         $cinemaDB = new CinemaDB();
-        return $cinemaDB->RetrieveByActive(true);
+        try{
+            return $cinemaDB->RetrieveByActive(true);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
     }
 
     public function Deactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
-        if (is_array($idCinema)){
-            foreach($idCinema as $id){
-                $cinemaDB->DeactivateByID($id);
+        try{
+            if (is_array($idCinema)){
+                foreach($idCinema as $id){
+                    $cinemaDB->DeactivateByID($id);
+                }
+            }else {
+                $cinemaDB->DeactivateByID($idCinema);
             }
-        }else {
-            $cinemaDB->DeactivateByID($idCinema);
+        }catch(\PDOException $ex){
+            throw $ex;
         }
-        
         $this->index();
     }
 
     public function RetrieveByActive($active){
         $cinemaDB=new CinemaDB();
-        return $cinemaDB->RetrieveByActive($active);
+        try{
+            return $cinemaDB->RetrieveByActive($active);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
     }
 
     public function Reactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
-        if (is_array($idCinema)){
-            foreach($idCinema as $id){
-                $cinemaDB->ReactivateByID($id);
+        try{
+            if (is_array($idCinema)){
+                foreach($idCinema as $id){
+                    $cinemaDB->ReactivateByID($id);
+                }
+            }else {
+                $cinemaDB->ReactivateByID($idCinema);
             }
-        }else {
-            $cinemaDB->ReactivateByID($idCinema);
+        }catch(\PDOException $ex){
+            throw $ex;
         }
-        
         $this->index(); 
     }
 
     public function ChangeCinemaState ($newState, $ids = array()){
-        if ($newState == 0){
-            $this->Deactivate($ids);
-        } else{
-            $this->Reactivate($ids);
+        try{
+            if ($newState == 0){
+                $this->Deactivate($ids);
+            } else{
+                $this->Reactivate($ids);
+            }
+        }catch(\PDOException $ex){
+            throw $ex;
         }
-
     }
     public function Modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
 
         $cinemaDB= new CinemaDB();
-        $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , $changedCapacity , $changedPrice, true));
+        try{
+            $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , $changedCapacity , $changedPrice, true));
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        
         $this->index();
     }
 

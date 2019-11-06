@@ -8,7 +8,8 @@ use model\Profile as Profile;
 use Dao\UserDao as UserDao;
 use controllers\HomeController as HomeController;
 use controllers\MovieController as MovieController;
-
+use \PDO as PDO;
+use \Exception as Exception;
 use Dao\UserDB as UserDB;
 use Dao\ProfileDB as ProfileDB;
 
@@ -62,62 +63,73 @@ class UserController implements IControllers
      */
     public function UserExist($email){
         $DaoUser= new UserDB();
-        
-        if($DaoUser->GetByEmail($email)){
-            return true;
-        }else
-        {
-            return false;
+        try{
+            if($DaoUser->GetByEmail($email)){
+                return true;
+            }else
+            {
+                return false;
+            }
+        }catch(\PDOException $ex){
+            throw $ex;
         }
     }
 
     public function LogIn($email,$pass){
 
         $DaoUser= new UserDB();
-        if($this->UserExist($email))//comprueba que exista el usuario
-        {
-            $user = $DaoUser->GetByEmail($email);
-            if($user->GetPass() == $pass)//comprobamos la contraseña
+        try{
+            if($this->UserExist($email))//comprueba que exista el usuario
             {
-                $this->SetLogIn($user);
-                $this->index();
+                $user = $DaoUser->GetByEmail($email);
+                if($user->GetPass() == $pass)//comprobamos la contraseña
+                {
+                    $this->SetLogIn($user);
+                    $this->index();
+                }else{
+                    $errorMje = "Error: Contraseña incorrecta";
+                    include(VIEWS."/login.php"); 
+                }
             }else{
-                $errorMje = "Error: Contraseña incorrecta";
+                $errorMje = "Error: usuario incorrecto";
                 include(VIEWS."/login.php"); 
             }
-        }else{
-            $errorMje = "Error: usuario incorrecto";
-            include(VIEWS."/login.php"); 
+        }catch(\PDOExeption $ex){
+            throw $ex;
         }
     }
 
     public function SignUp($email,$pass,$UserName,$LastName,$Dni,$TelephoneNumber){
 
-        if(!$this->UserExist($email))
-        {
-            //POR DEFECTO SIEMPRE SE VAN A CREAR USUARIOS COMO "CLIENT" Y SI SE DESEA QUE SEA ADMIN, OTRO ADMIN DEBERA OTORGARLE ESE PERMISO
-            $role = new Role("client");
-            $profile = new Profile($UserName,$LastName,$Dni,$TelephoneNumber);
-            $user = new User($email,$pass,$role,$profile);
+        try{
+            if(!$this->UserExist($email))
+            {
+                //POR DEFECTO SIEMPRE SE VAN A CREAR USUARIOS COMO "CLIENT" Y SI SE DESEA QUE SEA ADMIN, OTRO ADMIN DEBERA OTORGARLE ESE PERMISO
+                $role = new Role("client");
+                $profile = new Profile($UserName,$LastName,$Dni,$TelephoneNumber);
+                $user = new User($email,$pass,$role,$profile);
 
-            $DaoUser= new UserDB();
-            $DaoProfile = new ProfileDB();
-            $profileId = $DaoProfile->Add($profile);
+                $DaoUser= new UserDB();
+                $DaoProfile = new ProfileDB();
+                $profileId = $DaoProfile->Add($profile);
 
-           
-            if($profileId){
-                if($DaoUser->Add($user,$profileId)){
-                    $successMje = "Usuario registrado correctamente";
-                }else{
-                    $errorMje = "Error de usuario: intentelo de nuevo mas tarde...";
-                }
-            }else{
-                $errorMje = "Error de Perfil: intentelo de nuevo mas tarde...";
-            }
             
-        }else{
-            $errorMje = "Ya existe un usuario registrado con esa direccion de correo";
+                if($profileId){
+                    if($DaoUser->Add($user,$profileId)){
+                        $successMje = "Usuario registrado correctamente";
+                    }else{
+                        $errorMje = "Error de usuario: intentelo de nuevo mas tarde...";
+                    }
+                }else{
+                    $errorMje = "Error de Perfil: intentelo de nuevo mas tarde...";
+                }
+                
+            }else{
+                $errorMje = "Ya existe un usuario registrado con esa direccion de correo";
 
+            }
+        }catch(\PDOException $ex){
+            throw $ex;
         }
         require(VIEWS. "/logIn.php");
     }
