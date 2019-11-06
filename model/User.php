@@ -3,13 +3,15 @@ namespace Model;
 
 class User{
 
+    private $id;
     private $Email;
     private $Pass;
     private $profile;
     private $role;
 
     //Constructor
-    public function __construct($Email,$Pass,$role,$profile){
+    public function __construct($id,$Email="",$Pass="",$role = null,$profile = null){
+        $this->id=$id;
         $this->Email=$Email;
         $this->Pass=$Pass;
         $this->role = $role;
@@ -17,6 +19,11 @@ class User{
     }
 
     //Getters
+
+    public function getId(){
+        return $this->id;
+    }
+
     public function GetEmail(){
         return $this->Email;
     }
@@ -56,6 +63,10 @@ class User{
         $this->role = $role;
 
         return $this;
+    }
+
+    public function setId($id){
+        $this->id = $id;
     }
 }
 
