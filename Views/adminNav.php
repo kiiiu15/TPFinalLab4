@@ -19,9 +19,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Movie/RetrieveAPI' ?>">aca</a>
-            </li>
+          
             
         </ul>
         <!-- <span class="navbar-text text-white"> -->

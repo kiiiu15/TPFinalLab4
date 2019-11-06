@@ -25,9 +25,33 @@ class HomeController implements Icontrollers {
         $genreC = new GenreController();
 
         $isAdmin = $userC->IsAdmin();
-        $movieList = $movieC->GetMovieForGenre($genreId);
+        $movieList = $this->GetMovieForGenreFromBillBoard($genreId);
         $genresList = $genreC->GetAll();
+
+        if ($movieList == false){
+            $movieList = array();
+            $errorMje = "Los sentimos, en cartelera no se encuentran peliculas de dicho genero.Intenete nuevamente la proxima semana.";
+        }
+    
+        if (!is_array($movieList )){
+            $movieList = array($movieList);
+        }
         include(VIEWS.'/posts.php');
+    }
+
+    public function GetMovieForGenreFromBillBoard($genreId){
+        $movieFunctionController = new MovieFunctionController();
+        $moviesAtBillBoard = $movieFunctionController->GetBillboardMovies();
+        $movies = array();
+        foreach($moviesAtBillBoard as $movie){
+            $genres = $movie->getGenres();
+            foreach($genres as $genre){
+                if ($genre->getId() == $genreId){
+                    $movies[$movie->getId()] = $movie;
+                }
+            }
+        }
+        return $movies;
     }
 
 
@@ -38,22 +62,29 @@ class HomeController implements Icontrollers {
     }
 
     public function ShowMovieByDate($date){
+        
         $userC = new UserController();
         $movieFC = new MovieFunctionController();
         $genreC = new GenreController();
 
         $isAdmin = $userC->IsAdmin();
         $movieList= $movieFC->GetMovieByDate($date);
-     
-
-
-        $genresList = $genreC->GetAll();
         
+        $genresList = $genreC->GetAll();
+
+       
+
+        if (empty($movieList)){
+            $errorMje = "No hay peliculas programadas para ese dia. Intente con otra fecha";
+        }
+
         include(VIEWS.'/posts.php');
+        
+        
     }
 
-    public function index (){
-        
+    public function index ($mensage = null){
+        $errorMje = $mensage;
         $userC = new UserController(); 
         $movieFC = new MovieFunctionController();
         $genreC = new GenreController();

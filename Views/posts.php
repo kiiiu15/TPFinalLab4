@@ -15,7 +15,7 @@
 
     if ($movieList == false){
         $movieList = array();
-        $errorMje = "Los sentimos, en cartelera no se encuentran peliculas de dicho genero.Intenete nuevamente la proxima semana.";
+        
     }
 
     if (!is_array($movieList )){

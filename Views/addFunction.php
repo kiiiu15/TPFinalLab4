@@ -60,7 +60,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Id Cine</th>
+                            <th>Id Funcion</th>
                             <th>Cine</th>
                             <th>Fecha</th>
                             <th>Horario</th>
@@ -75,7 +75,7 @@
                         <?php foreach($movieFunctionList as $movieFunction) { ?>
                             <tr>
                                 <td><input type="checkbox" name="postschecked[]" value="<?php echo $movieFunction->getId();?>"></td>
-                                <td> <?php echo $movieFunction->getCinema()->getIdCinema();?></td>
+                                <td> <?php echo $movieFunction->getId();?></td>
                                 <td> <?php echo $movieFunction->getCinema()->getName();?>    </td>
                                 <td> <?php echo $movieFunction->getDay();?>                  </td>
                                 <td> <?php echo $movieFunction->getHour();?>                 </td>

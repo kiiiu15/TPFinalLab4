@@ -25,7 +25,7 @@ class MovieFunctionController implements IControllers{
 
         $MovieFunction= new MovieFunction(0,$date,$hour,$cinema,$movie);
         $answer = $this->CheckMovieFunction($MovieFunction);
-        if ($answer === true){
+        if ($answer === ''){
             $MovieFunctionDB->Add($MovieFunction);
             $this->index();
         } else {
@@ -38,7 +38,7 @@ class MovieFunctionController implements IControllers{
 
 
     public function CheckMovieFunction ($movieFunction) {
-        $answer = true;
+        $answer = '';
         $movie = $movieFunction->getMovie();
         $cinema = $movieFunction->getCinema();
         $MovieFunctionDB = new MoviefunctionDB();
@@ -53,28 +53,49 @@ class MovieFunctionController implements IControllers{
 
         if (count($functions) > 0) {
             $grupedFunctions = $this->GroupFunctionsByMovie($functions);
+            $asd = $this->GroupFunctionsByCinema($functions);
+            $functionsForTheDay = array();
+            if (isset( $asd[$cinema->getIdCinema()])){
+                $functionsForTheDay = $asd[$cinema->getIdCinema()];
+            } 
+            
 
-            if(isset($grupedFunctions[$movie->getId()])){
+            foreach($functionsForTheDay as $Function){
+                $minTime = $this->AddTime($Function->getHour(), -135);
+                $maxTime = $this->AddTime($Function->getHour(), 135);
+
+                
+                if ( $movieFunction->getHour() <= $maxTime || $minTime >= $movieFunction->getHour()  ){ 
+                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                    break;
+                }
+
+               
+            }
+
+     
+
+            if(isset($grupedFunctions[$movie->getId()]) ){
                 $movieFunctions = $grupedFunctions[$movie->getId()];
-
 
                 if (count($movieFunctions) > 0){
                     $CinemaOfMovieForTheDay = $movieFunctions[0]->getCinema();
                     
                     if ($CinemaOfMovieForTheDay->getIdCinema() == $cinema->getIdCinema() ){
-                       
                         foreach($movieFunctions as $Function){
                             $minTime = $this->AddTime($Function->getHour(), -135);
                             $maxTime = $this->AddTime($Function->getHour(), 135);
                             
-                            if ($Function->getHour() > $minTime || $Function->getHour() < $maxTime ){
+                            if (  $movieFunction->getHour() <= $maxTime || $minTime >= $movieFunction->getHour()   ){ 
                                 $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
                                 break;
                             }
+            
+                           
                         }
-                    }else{
                         
-                        $answer="La Pelicula solo puede ser proyectada en un solo cine por dia, cambie el cine o la fecha";
+                    } else {
+                        $answer = "Una pelicula solo se puede pasar en un solo cine por dia. Cambia de fecha o pone el mismo cine. ";
                     }
                 }
 
@@ -106,10 +127,27 @@ class MovieFunctionController implements IControllers{
         return $array;
     }
 
+    public function GroupFunctionsByCinema($functions){
+        $array = array();
+        foreach ($functions as $function){
+            $cinema = $function->getCinema();
+            $array[$cinema->getIdCinema()] [] = $function; 
+        }
+
+        return $array;
+    }
+
     public function GetMovieByDate($date){
         $MovieFunctionDB= new MovieFunctionDB();
         $functions = $MovieFunctionDB->RetrieveByDate($date);
         $movies = array();
+        if ($functions === false){
+            $functions = array();
+        }
+
+        if (!is_array($functions)){
+            $functions = array($functions);
+        }
 
         foreach($functions as $function){
             $movie = $function->getMovie();
