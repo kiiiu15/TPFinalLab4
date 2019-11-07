@@ -65,11 +65,17 @@ class MovieFunctionController implements IControllers{
                 $maxTime = $this->AddTime($Function->getHour(), 135);
 
                 
-                if ( $movieFunction->getHour() <= $maxTime || $minTime >= $movieFunction->getHour()  ){ 
-                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                    break;
+                if ($movieFunction->getHour() < $Function->getHour()) {
+                    if (  $movieFunction->getHour() < $maxTime){
+                        $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                        break;
+                    }
+                }else {
+                    if ($minTime < $movieFunction->getHour()){
+                        $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                        break;
+                    }
                 }
-
                
             }
 
@@ -85,11 +91,20 @@ class MovieFunctionController implements IControllers{
                         foreach($movieFunctions as $Function){
                             $minTime = $this->AddTime($Function->getHour(), -135);
                             $maxTime = $this->AddTime($Function->getHour(), 135);
-                            
-                            if (  $movieFunction->getHour() <= $maxTime || $minTime >= $movieFunction->getHour()   ){ 
-                                $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                                break;
+
+                            if ($movieFunction->getHour() < $Function->getHour()) {
+                                if (  $movieFunction->getHour() < $maxTime){
+                                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                                    break;
+                                }
+                            }else {
+                                if ($minTime < $movieFunction->getHour()){
+                                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
+                                    break;
+                                }
                             }
+                            
+                    
             
                            
                         }

@@ -15,7 +15,7 @@ class GenreController implements IControllers{
         $genre= new Genre($id,$name);
         try{
             $genreDB->Add($genre);
-        }catch\PDOException $ex){
+        }catch(\PDOException $ex){
             throw $ex;
         }
 
