@@ -61,6 +61,7 @@ class RoomDB{
         }
     }
 
+    //Trae todas las salas de un mismo cine :D, pronto le daremos un uso
     public function RetrieveByIdCinema($idCinema){
         $sql="SELECT * FROM Rooms WHERE Rooms.idCinema=:idCinema";
         $values['idCinema'] = $idCinema;

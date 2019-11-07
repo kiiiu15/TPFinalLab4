@@ -49,7 +49,7 @@ CREATE TABLE `Cinemas`
 	`nameCinema` VARCHAR(50) NOT NULL,
 	`adressCinema` VARCHAR(100) NOT NULL,
 	`capacity` INT NOT NULL DEFAULT 1,
-	`price` FLOAT(0,0) NOT NULL DEFAULT 1,
+	`price` FLOAT NOT NULL DEFAULT 1,
 	`active` BOOL NOT NULL DEFAULT true,
 	CONSTRAINT `pk_table_cinemas` PRIMARY KEY (`idCinema` ASC)
 )
@@ -132,11 +132,6 @@ ALTER TABLE `GenresPerMovie`
 ALTER TABLE `MovieFunctions` 
  ADD CONSTRAINT `fk_table_movieFunction_rooms`
 	FOREIGN KEY (`idRoom`) REFERENCES `Rooms` (`id`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-ALTER TABLE `MovieFunctions` 
- ADD CONSTRAINT `fk_table_MovieFunctions_table_Cinemas`
-	FOREIGN KEY () REFERENCES  () ON DELETE Restrict ON UPDATE Cascade
 ;
 
 ALTER TABLE `MovieFunctions` 
