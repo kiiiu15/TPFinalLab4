@@ -8,6 +8,14 @@
     include(VIEWS."/header2.php");
     include(VIEWS.'/adminNav.php');
 
+    if ($movieFunctionList == false){
+        $movieFunctionList = array();
+    }
+
+    if (! is_array($movieFunctionList)){
+        $movieFunctionList = array($movieFunctionList);
+    }
+
     if ($activeCinemas == false){
         $activeCinemas = array();
     }
