@@ -2,7 +2,7 @@
 namespace Model;
 
 class CreditCardPayment{
-    private $date;
+    private $date; 
     private $idAuthorization;
     private $total;
 

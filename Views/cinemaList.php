@@ -146,6 +146,27 @@
             </form>
 
         </div>   
-    </div>                               
+    </div>           
+    
+    
+    <form action="" method="post">
+
+
+
+
+
+                    <select name="" id="">funciones</select>
+
+                    <input type="text"> cantidad
+
+                    button 
+
+
+                
+
+
+
+
+    </form>
 
     <?php include(VIEWS.'/footer.php');  ?>

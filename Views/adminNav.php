@@ -11,7 +11,10 @@
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= VIEWS . '/payment' ?>">Payment</a>
+                <!-- 
+                    corregir esto
+                 -->
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Views/payment' ?>">Payment</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   

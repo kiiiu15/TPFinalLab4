@@ -32,10 +32,6 @@ class Room{
         return $this->capacity;
     }
 
-    public function getCapacity(){
-        return $this->capacity;
-    }
-
     public function getCinema(){
         return $this->cinema;
     }

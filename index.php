@@ -4,7 +4,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-/*require_once "Config/Data.php";//aca estan las constantes
+require_once "Config/Data.php";//aca estan las constantes
 require_once "Config/Autoload.php";
 require_once "Config/Request.php";
 require_once "Config/Router.php";
@@ -16,11 +16,9 @@ use Config\Request as Request;
 Autoload::start();
 session_start();
 Router::route(new Request());
-*/
 
 
-
-
+/*
 if(!isset($_SESSION)){
     session_start();
 }
@@ -28,7 +26,9 @@ if(!isset($_SESSION)){
 require("fb-init.php");
 if(isset($_SESSION['access_token'])){
     echo "<br>se cargo el access_token<br>";
-}
+}*/
+
+
 ?>
 
 
@@ -36,6 +36,6 @@ if(isset($_SESSION['access_token'])){
     NO LE PRESTEN ATENCION A ESTO, ES SOLO UNA PRUEBA PARA EL LOGIN DE FACEBOOK
     SI LO LOGRO HACER ANDA LO SACO DE ACA
  -->
-<html>
-<a href="<?php echo $login_url; ?>">log fb</a>
-</html>
+<!-- <html> -->
+<!-- <a href="<?php echo $login_url; ?>">log fb</a> -->
+<!-- </html> -->

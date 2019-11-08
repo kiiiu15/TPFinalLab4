@@ -3,8 +3,12 @@
 use \PDO as PDO;
 use \Exception as Exception;
 use controllers\Icontrollers as Icontrollers;
+use controllers\MovieFunctionController as MovieFunctionController;
+use controllers\UserController as UserController;
 use model\Buy as Buy;
+use model\MovieFunction as MovieFunction;
 use model\User as User;
+use model\Cinema as Cinema;
 use Dao\BuyDB as BuyDB;
 use Dao\UserDB as UserDB;
 
@@ -15,6 +19,37 @@ class BuyController implements Icontrollers{
     private $total;
     private $discount;
     private $user;*/
+
+    public function NewBuy($idFunction,$idUser,$numberOfTickets){
+        $moviefunctionController = new MovieFunctionController();
+        $movieFunction = $moviefunctionController->GetById($idFunction);
+
+        $UserController = new UserController();
+        $user = $UserController->GetById($idUser);
+
+    //moviefunction
+        //id
+        //day
+        //hour
+        //cinema
+        //movie
+
+    //buy
+        //idBuy
+        //date
+        //numberOfTickets
+        //total
+        //discount
+        //user
+        $cinema = new Cinema();
+        $cinema = $movieFunction->getCinema();
+
+        //FALTA HACER LA VALIDACION DEL DESCUETNO
+        $total = $numberOfTickets * $cinema->getPrice();
+
+
+        $buy = new Buy(0,getdate("Y-m-d"),$numberOfTickets,$total,0,$user);
+    }
 
     public function GetAll(){
         $listBuy= array();
@@ -58,6 +93,8 @@ class BuyController implements Icontrollers{
         }
         return $buy;
     }
+
+    
 
     public function index(){
         

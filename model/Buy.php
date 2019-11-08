@@ -3,7 +3,7 @@ namespace Model;
 
 class Buy{
     
-    private $idBuy;
+    private $idBuy; 
     private $date;
     private $numberOfTickets;
     private $total;
