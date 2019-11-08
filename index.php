@@ -37,5 +37,5 @@ if(isset($_SESSION['access_token'])){
     SI LO LOGRO HACER ANDA LO SACO DE ACA
  -->
 <!-- <html> -->
-<!-- <a href="<?php echo $login_url; ?>">log fb</a> -->
+<!-- <a href="<?php// echo $login_url; ?>">log fb</a> -->
 <!-- </html> -->
