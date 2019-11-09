@@ -9,11 +9,7 @@ use Dao\QueryType as QueryType;
 
 class TicketDB{
     private $connection;
-    
-    /*
-    private $idTicket;
-    private $QR;
-    private $Buy;*/
+
 
     public function Add($ticket){
         $sql="INSERT INTO Tickets(qr,idBuy) VALUES(:qr,:idBuy)";
@@ -79,8 +75,8 @@ class TicketDB{
     }
 
     public function Delete($ticket){
-        $sql="DELETE FROM Tickets WHERE Tickets.idTickets=:idTicket";
-        $values['idBuy']=$buy->getIdBuy();
+        $sql="DELETE FROM Tickets WHERE Tickets.idTicket=:idTicket";
+        $values['idTickets']=$ticket->getIdTicket();
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
@@ -89,6 +85,16 @@ class TicketDB{
             throw $ex;
         }
     }
+
+    protected function Map($value) {
+        $buyDB= new BuyDB();
+        $value = is_array($value) ? $value : [];
+        $resp = array_map(function ($b) {
+        return new Ticket($b['idTicket'],$b['qr'],$buyDB->RetrieveById($b['idBuy']));
+        }, $value);
+        return count($resp) > 1 ? $resp : $resp['0'];
+    }
+
 }
 
 ?>
