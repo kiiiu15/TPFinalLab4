@@ -4,6 +4,7 @@ namespace Model;
 class Buy{
     
     private $idBuy; 
+    private $MovieFunction; 
     private $date;
     private $numberOfTickets;
     private $total;

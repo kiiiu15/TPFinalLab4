@@ -199,6 +199,15 @@ class MovieFunctionDB{
         }
     }
 
+    public function GetRemainingCapacity($function){
+        /**
+         * con function tengo el cine, con este tengo la capacidad. 
+         * tengo que recorrer cada buy que contenga el mismo idMovieFunction que function->getId()
+         */
+        $maxCapacity = $function-getCinema()->getCapacity();
+
+    }
+
     //Levanta la cartelera apartir de hoy a 7 dias 
     public function RetrieveBillboard(){
         $sql="SELECT * FROM MovieFunctions WHERE MovieFunctions.date BETWEEN CURDATE() AND CURDATE() +INTERVAL 7 DAY";

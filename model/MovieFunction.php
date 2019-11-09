@@ -9,14 +9,16 @@ class MovieFunction{
     private $day;
     private $hour;
     private $cinema;
+    private $room;
     private $movie;
 
     //Constructor
-    public function __construct($id = 0,$day = '',$hour = '',$cinema = null,$movie = null){
+    public function __construct($id = 0,$day = '',$hour = '',$cinema = null,$room = null,$movie = null){
         $this->id=$id;
         $this->day=$day;
         $this->hour=$hour;
         $this->cinema=$cinema;
+        $this->room = $room;
         $this->movie=$movie;
     }
 
@@ -41,6 +43,12 @@ class MovieFunction{
         return $this->movie;
     }
     
+    public function getRoom()
+    {
+        return $this->room;
+    }
+
+    
     //Setters
     public function setDay($day){
         $this->day = $day;
@@ -60,6 +68,13 @@ class MovieFunction{
 
     public function setMovie($movie){
         $this->movie = $movie;
+    }
+
+    public function setRoom($room)
+    {
+        $this->room = $room;
+
+        return $this;
     }
 }
 

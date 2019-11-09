@@ -13,42 +13,58 @@ use Dao\BuyDB as BuyDB;
 use Dao\UserDB as UserDB;
 
 class BuyController implements Icontrollers{
-    /*private $idBuy;
-    private $date;
-    private $numberOfTickets;
-    private $total;
-    private $discount;
-    private $user;*/
 
-    public function NewBuy($idFunction,$idUser,$numberOfTickets){
-        $moviefunctionController = new MovieFunctionController();
-        $movieFunction = $moviefunctionController->GetById($idFunction);
+    public function NewBuy($idFunction,$numberOfTickets){
 
+        //obtenemos al usuario
         $UserController = new UserController();
-        $user = $UserController->GetById($idUser);
+        $user = $UserController->GetUserLoged();
 
-    //moviefunction
-        //id
-        //day
-        //hour
-        //cinema
-        //movie
+        //si no estuviera logueado no deberia de poder ni acceder a este metodo, pero por las dudas agrego esta validacion
+        if($user){
 
-    //buy
-        //idBuy
-        //date
-        //numberOfTickets
-        //total
-        //discount
-        //user
-        $cinema = new Cinema();
-        $cinema = $movieFunction->getCinema();
+            //obtenemos la funcion para la que decea hacer la compra
+            $moviefunctionController = new MovieFunctionController();
+            $movieFunction = $moviefunctionController->GetById($idFunction);
 
-        //FALTA HACER LA VALIDACION DEL DESCUETNO
-        $total = $numberOfTickets * $cinema->getPrice();
+            //primero que nada tenemos que haya disponibilidad para la cantidad de entradas seleccionadas
+            if($moviefunctionController->GetRemainingCapacity($numberOfTickets) < -1){
 
+                //ACORDARSE DE SETEAR LA NUEVA REMAININGCAPACITY SI ES Q SE REALIZA LA COMPRA....
+                $total = $movieFunction->getCinema()->getPrice() * $numberOfTickets;
 
-        $buy = new Buy(0,getdate("Y-m-d"),$numberOfTickets,$total,0,$user);
+                /**
+                 * verificar descuento
+                 */
+
+                                //supongo que es la fecha de la compra, y no de la funcion
+                $buy = new Buy(0,getdate(),$numberOfTickets,$total,$discount,$user);
+            }else{
+                $errorCapacityMSG = "no hay tantas entradas disponibles";
+                //INCLUIR LA VISTA Y HACER EL SCRIPT DE ALERT....
+            }
+
+            
+            
+
+        //moviefunction
+            //id
+            //day
+            //hour
+            //cinema
+            //movie
+            
+        //buy
+            //idBuy
+            //MovieFunction
+            //date
+            //numberOfTickets
+            //total
+            //discount
+            //user
+        }else{
+            include(VIEWS."/login.php");
+        }
     }
 
     public function GetAll(){

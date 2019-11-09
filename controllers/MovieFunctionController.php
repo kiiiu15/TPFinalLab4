@@ -208,7 +208,7 @@ class MovieFunctionController implements IControllers{
     public function GetById($idToSearch){
         $MovieFunctionDB= new MovieFunctionDB();
         
-        $function=$MovieFunctionDB->RetrieveById($idToSearch);
+        return $MovieFunctionDB->RetrieveById($idToSearch);
     }
 
     public function Delete($idFunction = 0){
@@ -226,12 +226,18 @@ class MovieFunctionController implements IControllers{
             $MovieFunctionDB->Delete($Function);
         }
        
-        $this->index();
-
-        
-
-        
+        $this->index();        
     }
+
+    /** NO COMPROBADA
+     * voy a ir a la bd y comprobar cuantas entradas disponibles hay para esa funcion
+     */
+    public function GetRemainingCapacity($idFunction,$numberOfTickets){
+        $db = new MovieFunctionDB();
+        $movieFunction = $db->GetById();
+        return  $movieFunction->getRoom()->getCapacity() - $numberOfTickets;
+    }
+
 
     public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
         $MovieFunctionDB= new MovieFunctionDB();

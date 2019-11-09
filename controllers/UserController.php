@@ -58,6 +58,17 @@ class UserController implements IControllers
         
     }
 
+    public function GetUserLoged(){
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        if( isset($_SESSION['status']) && isset($_SESSION['loged']) ){
+            return $_SESSION['loged'];
+        }else{
+            return false;
+        }
+    }
+
     /**
      * comprueba si ya existe un usuario con ese email
      */
