@@ -5,13 +5,13 @@ class Ticket{
     
     private $idTicket;
     private $QR;
-    private $idBuy;
+    private $Buy;
     //Aca pondriamos el QR y aun no se si ponerle el id de la compra
 
-    public function __construct($idTicket,$QR,$idBuy){
+    public function __construct($idTicket,$QR,$Buy){
         $this->idTicket=$idTicket;
         $this->QR=$QR;
-        $this->idBuy = $idBuy;
+        $this->Buy = $Buy;
     }
 
     
@@ -25,7 +25,7 @@ class Ticket{
         return $this->QR;
     }
     
-    public function getIdBuy()
+    public function getBuy()
     {
         return $this->idBuy;
     }
@@ -38,9 +38,9 @@ class Ticket{
         $this->QR = $QR;
     }
 
-    public function setIdBuy($idBuy)
+    public function setBuy($Buy)
     {
-        $this->idBuy = $idBuy;
+        $this->Buy = $Buy;
 
         return $this;
     }
