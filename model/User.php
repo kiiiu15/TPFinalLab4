@@ -8,14 +8,16 @@ class User{
     private $Pass;
     private $profile;
     private $role;
+    private $creditCards;
 
     //Constructor
-    public function __construct($id,$Email="",$Pass="",$role = null,$profile = null){
+    public function __construct($id,$Email="",$Pass="",$role = null,$profile = null,$creditCards = array()){
         $this->id=$id;
         $this->Email=$Email;
         $this->Pass=$Pass;
         $this->role = $role;
         $this->profile = $profile;
+        $this->creditCards = $creditCards;
     }
 
     //Getters
@@ -67,6 +69,26 @@ class User{
 
     public function setId($id){
         $this->id = $id;
+    }
+
+    /**
+     * Get the value of creditCards
+     */ 
+    public function getCreditCards()
+    {
+        return $this->creditCards;
+    }
+
+    /**
+     * Set the value of creditCards
+     *
+     * @return  self
+     */ 
+    public function setCreditCards($creditCards)
+    {
+        $this->creditCards = $creditCards;
+
+        return $this;
     }
 }
 
