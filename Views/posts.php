@@ -21,6 +21,7 @@
     if (!is_array($movieList )){
         $movieList = array($movieList);
     }
+
     
     ?>
 
@@ -29,7 +30,11 @@
 
             <h1 class="mb-5">Listado de Peliculas</h1>
 
-
+            <?php
+                if(isset($alertCapacity)){
+                    echo $alertCapacity;          
+                }
+            ?>
             
 
 

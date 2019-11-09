@@ -2,7 +2,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<form action="">
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-4">
@@ -53,18 +53,33 @@
                 </div>
             </div>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span>4200</span> Final Payment</a>
+                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $discount;?></span> Discount</a>
+                </li>
+            </ul>
+            <br>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $total?> </span> Final Payment</a>
                 </li>
             </ul>
             <br/>
-            <a href="http://www.jquery2dotnet.com" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+            <a href="<?= FRONT_ROOT ."/Payment/Validate"?>" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
         </div>
     </div>
 </div>
-
+</form>
 <style>
+form {display: inline-block;
+text-align: center;}
 body { margin-top:20px; }
 .panel-title {display: inline;font-weight: bold;}
 .checkbox.pull-right { margin: 0; }
 .pl-ziro { padding-left: 0px; }
 </style>
+
+<!---
+body { margin-top:20px; }
+.panel-title {display: inline;font-weight: bold;}
+.checkbox.pull-right { margin: 0; }
+.pl-ziro { padding-left: 0px; }
+
+-->

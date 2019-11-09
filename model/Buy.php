@@ -10,15 +10,17 @@ class Buy{
     private $total;
     private $discount;
     private $user;
+    private $state;
 
     //Constructor
-    public function __construct($idBuy,$date,$numberOfTickets,$total,$discount,$user){
+    public function __construct($idBuy = 0,$date = "",$numberOfTickets = 0,$total = 0 ,$discount = 0  ,$user = null,$state = ""){
         $this->idBuy=$idBuy;
         $this->date=$date;       
         $this->numberOfTickets=$numberOfTickets;
         $this->total=$total;
         $this->discount=$discount;
         $this->user=$user;
+        $this->state=$state;
     }
 
     //Getters
@@ -46,6 +48,9 @@ class Buy{
         return $this->user;
     }
 
+    public function getState(){
+        return $this->state;
+    }
 
     //Setters
     public function setIdBuy($idBuy){
@@ -70,6 +75,10 @@ class Buy{
 
     public function setUser($user){
         $this->user = $user;
+    }
+
+    public function setState($state){
+        $this->state = $state;
     }
 }
 

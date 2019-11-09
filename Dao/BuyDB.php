@@ -30,7 +30,7 @@ class BuyDB{
 
     //En el modelo de Buy tenemos que agregar el objeto de tipo usuario
     public function Add($buy){
-        $sql="INSERT INTO Buy(date,numberOfTickets,total,discount,idUser) VALUES(:date,:numberOfTickets,:total,:discount,:idUser)";
+        $sql="INSERT INTO Buy(date,numberOfTickets,total,discount,idUser,state) VALUES(:date,:numberOfTickets,:total,:discount,:idUser,state)";
         $values['date']= $buy->getDate();
         $values['numberOfTickets']= $buy->getNumberOfTickets();
         $values['total']= $buy->getTotal();
@@ -38,6 +38,8 @@ class BuyDB{
         $user= new User();
         $user=$buy->getUser();
         $values['idUser']= $user->getId(); 
+        $values['state'] = $buy->getState();
+
         try{
             $this->connection=Connection::getInstance();
             $this->connection->connect();
@@ -82,6 +84,19 @@ class BuyDB{
         }
     }
 
+    public function ChangeState($idBuy){ //VERIFICAR SI FUNCIONA ASI LA QUERY !!! 
+        $sql="UPDATE Buy WHERE Buy.state=:true WHERE Buy.idBuy = :idBuy";
+        $values['idBuy'] = $idBuy;
+        $values['state'] = true;
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }  
+    }
+
     public function Delete($buy){
         $sql="DELETE FROM Buy WHERE Buy.idBuy=:idBuy";
         $values['idBuy']=$buy->getIdBuy();
@@ -112,22 +127,5 @@ class BuyDB{
 
 
 }
-
-
-/*class Buy    
-    private $idBuy;
-    private $date;
-    private $numberOfTickets;
-    private $total;
-    private $discount;
-class CreditCardPayment{
-    private $date;
-    private $idAuthorization;
-    private $total;
-    */
-
-
-
-
 
 ?>

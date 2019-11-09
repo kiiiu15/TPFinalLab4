@@ -5,6 +5,8 @@ use \Exception as Exception;
 use controllers\Icontrollers as Icontrollers;
 use controllers\MovieFunctionController as MovieFunctionController;
 use controllers\UserController as UserController;
+use controllers\RoomController as RoomController;
+
 use model\Buy as Buy;
 use model\MovieFunction as MovieFunction;
 use model\User as User;
@@ -13,58 +15,57 @@ use Dao\BuyDB as BuyDB;
 use Dao\UserDB as UserDB;
 
 class BuyController implements Icontrollers{
+  
+    /*public function DiscountDay($nameDay) {
+        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $date = $days[date('N', strtotime($nameDay))];
+        return $date;
+    }*/
 
-    public function NewBuy($idFunction,$numberOfTickets){
-
-        //obtenemos al usuario
+    public function ReciveBuy($idFunction,$numberOfTickets){
+        $moviefunctionController = new MovieFunctionController();
+        $function = $moviefunctionController->GetById($idFunction);  //obtengo la funcion
+        
+        
         $UserController = new UserController();
-        $user = $UserController->GetUserLoged();
+        $user = $UserController->GetUserLoged();  //obtengo el usuario
 
-        //si no estuviera logueado no deberia de poder ni acceder a este metodo, pero por las dudas agrego esta validacion
-        if($user){
+        $roomController = new RoomController();
 
-            //obtenemos la funcion para la que decea hacer la compra
-            $moviefunctionController = new MovieFunctionController();
-            $movieFunction = $moviefunctionController->GetById($idFunction);
+        $buyDB = new BuyDB();
+        
+        $room = $function->getRoom(); //obtengo la sala
 
-            //primero que nada tenemos que haya disponibilidad para la cantidad de entradas seleccionadas
-            if($moviefunctionController->GetRemainingCapacity($numberOfTickets) < -1){
-
-                //ACORDARSE DE SETEAR LA NUEVA REMAININGCAPACITY SI ES Q SE REALIZA LA COMPRA....
-                $total = $movieFunction->getCinema()->getPrice() * $numberOfTickets;
-
-                /**
-                 * verificar descuento
-                 */
-
-                                //supongo que es la fecha de la compra, y no de la funcion
-                $buy = new Buy(0,getdate(),$numberOfTickets,$total,$discount,$user);
-            }else{
-                $errorCapacityMSG = "no hay tantas entradas disponibles";
-                //INCLUIR LA VISTA Y HACER EL SCRIPT DE ALERT....
-            }
-
-            
-            
-
-        //moviefunction
-            //id
-            //day
-            //hour
-            //cinema
-            //movie
-            
-        //buy
-            //idBuy
-            //MovieFunction
-            //date
-            //numberOfTickets
-            //total
-            //discount
-            //user
+        if(!$user){
+            include(VIEWS ."/login.php");
         }else{
-            include(VIEWS."/login.php");
+        
+            //validacion sobre la capacidad de la sala
+            if($roomController->GetRemainingCapacity($idFunction,$numberOfTickets) > -1){
+                $date =  date("l");
+                
+                $discount = 0;
+                $total = 0;
+
+                $discount = $room->getPrice() * 0.25;
+                
+                //validacion del dia martes y miercoles     
+                if($date == "Tuesday" || $date == "Wednesday"){
+                    $total = $room->getPrice() - $discount;
+                }else{
+                    $total = $total + $room->getPrice();
+                }
+            
+                $buy = new Buy(0,$function,$date,$numberOfTickets,$total,$discount,$user,false);
+
+                $buyDB->Add($buy);
+            }else{
+                //Hacer que este mensaje aparezca como alerta 
+                $alertCapacity = "We are sorry, there is no capacity in the room. Try in another room ";
+                include(VIEWS ."/posts.php");
+            }
         }
+        include(VIEWS ."/payment.php");
     }
 
     public function GetAll(){
