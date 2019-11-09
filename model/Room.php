@@ -3,7 +3,7 @@
 class Room{
     private $id;
     private $name;
-    private $price;
+    private $price; 
     private $capacity;
     private $cinema;
 

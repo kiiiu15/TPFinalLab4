@@ -75,6 +75,17 @@ class RoomController implements IControllers{
         }
     }
 
+    /** 
+     * no se si es responsabilidad de room pero por ahora la dejo aca
+     */
+    public function GetRemainingCapacity($idFunction,$numberOfTickets){
+        $db = new RoomDB();
+                                //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
+        $RemainingCapacity = $db->GetTotalTicketsByFunction($idFunction);
+
+        return $RemainingCapacity - $numberOfTickets;
+    }
+
     public function index(){
         $roomList = $this->GetAll();
         //include(VIEWS . "/roomList.php");

@@ -6,7 +6,7 @@ namespace Model;
 class MovieFunction{
 
     private $id;
-    private $day;
+    private $day; 
     private $hour;
     private $cinema;
     private $room;

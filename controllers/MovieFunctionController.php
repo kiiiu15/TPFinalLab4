@@ -9,7 +9,6 @@ use Model\MovieFunction as MovieFunction;
 use Dao\CinemaDB as CinemaDB;
 use Dao\MovieDB as MovieDB;
 use Dao\MovieFunctionDB as MovieFunctionDB;
-use Dao\BuyDB as BuyDB;
 
 class MovieFunctionController implements IControllers{
 
@@ -229,18 +228,6 @@ class MovieFunctionController implements IControllers{
        
         $this->index();        
     }
-
-    /** NO COMPROBADA
-     * voy a ir a la bd y comprobar cuantas entradas disponibles hay para esa funcion
-     */
-    public function GetRemainingCapacity($idFunction,$numberOfTickets){
-        $db = new BuyDB();
-                                //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
-        $RemainingCapacity = $db->GetRemainingCapacity($idFunction);
-
-        $total = $movieFunction->getRoom()->getCapacity() - $numberOfTickets;
-    }
-
 
     public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
         $MovieFunctionDB= new MovieFunctionDB();
