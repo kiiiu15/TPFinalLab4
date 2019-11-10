@@ -6,24 +6,24 @@ use Model\Cinema as Cinema;
 use Model\Movie as Movie;
 use Model\MovieFunction as MovieFunction;
 
-use Dao\CinemaDB as CinemaDB;
+use Dao\RoomDB as RoomDB;
 use Dao\MovieDB as MovieDB;
 use Dao\MovieFunctionDB as MovieFunctionDB;
 
 class MovieFunctionController implements IControllers{
 
-    public function Add($idMovie = 0, $idCinema = 0, $date = "" , $hour = "" ){
+    public function Add($idMovie = 0, $idRoom = 0, $date = "" , $hour = "" ){
     
         $MovieFunctionDB= new MovieFunctionDB();
 
         $MovieDB= new MovieDB();
         
-        $CinemaDB= new CinemaDB();
+        $RoomDB= new RoomDB();
 
         $movie=$MovieDB->RetrieveById($idMovie);  
-        $cinema=$CinemaDB->RetrieveById($idCinema);
+        $romm=$RoomDB->RetrieveById($idRoom);
 
-        $MovieFunction= new MovieFunction(0,$date,$hour,$cinema,$movie);
+        $MovieFunction= new MovieFunction(0,$date,$hour,null,$room,$movie);
         $answer = $this->CheckMovieFunction($MovieFunction);
         if ($answer === ''){
             $MovieFunctionDB->Add($MovieFunction);
@@ -39,8 +39,9 @@ class MovieFunctionController implements IControllers{
 
     public function CheckMovieFunction ($movieFunction) {
         $answer = '';
+
         $movie = $movieFunction->getMovie();
-        $cinema = $movieFunction->getCinema();
+        $room = $movieFunction->getRoom();
         $MovieFunctionDB = new MoviefunctionDB();
         $functions = $MovieFunctionDB->RetrieveByDate($movieFunction->getDay());
         if ($functions == false){
@@ -52,6 +53,8 @@ class MovieFunctionController implements IControllers{
         }
 
         if (count($functions) > 0) {
+            
+            $functionAtRoom = $this->GroupFunctionsRoom($functions);
             $grupedFunctions = $this->GroupFunctionsByMovie($functions);
             $asd = $this->GroupFunctionsByCinema($functions);
             $functionsForTheDay = array();
@@ -116,7 +119,7 @@ class MovieFunctionController implements IControllers{
 
 
             }      
-        }
+        }*/
 
         
        return $answer;
@@ -132,6 +135,16 @@ class MovieFunctionController implements IControllers{
        return $nuevaHora;
     } //fin función
 
+
+    public function GroupFunctionsRoom($functions){
+        $array = array();
+        foreach ($functions as $function){
+            $room = $function->getRoom();
+            $array[$room->getId()] [] = $function; 
+        }
+
+        return $array;
+    }
     public function GroupFunctionsByMovie($functions){
         $array = array();
         foreach ($functions as $function){
@@ -145,7 +158,7 @@ class MovieFunctionController implements IControllers{
     public function GroupFunctionsByCinema($functions){
         $array = array();
         foreach ($functions as $function){
-            $cinema = $function->getCinema();
+            $cinema = $function->getRoom()->getCinema();
             $array[$cinema->getIdCinema()] [] = $function; 
         }
 
@@ -233,9 +246,9 @@ class MovieFunctionController implements IControllers{
         $MovieFunctionDB= new MovieFunctionDB();
 
         $movieDB= new MovieDB();
-        $cinemaDB= new CinemaDB();
+        $RoomDB= new RoomDB();
 
-        $MovieFunctionDB->Modify(new MovieFunction( $idFunctionToModify , $movieDB->RetrieveById($idMovie) , $cinemaDB->RetrieveById($idCinema) , $date , $hour));
+        $MovieFunctionDB->Modify(new MovieFunction( $idFunctionToModify , $movieDB->RetrieveById($idMovie) , $RoomDB->RetrieveById($idCinema) , $date , $hour));
     
     }
 

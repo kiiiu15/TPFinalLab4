@@ -124,9 +124,10 @@ class RoomDB{
     }
 
     protected function Map($value) {
-        $cinemaDB = new CinemaDB();
+       
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
+            $cinemaDB = new CinemaDB();
             return new Room($c['id'], $c['name'], $c['price'], $c['capacity'],$cinemaDB->RetrieveById($C['idCinema']));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];

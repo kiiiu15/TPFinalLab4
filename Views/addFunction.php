@@ -132,8 +132,8 @@
                      -->
                         <label>Pelicula</label>
                         <select required name="idMovie" id="">
-                        <?php foreach ($movies as $movie){?>
-                            <option value="<?= $movie->getId();?>"><?php echo $movie->getId();?></option>
+                        <?php foreach ($movies as $movie){ ?>
+                            <option value="<?= $movie->getId();?>"></option>
                         <?php }?>
                         </select>
                     </div>
