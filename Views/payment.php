@@ -62,7 +62,7 @@
                 </li>
             </ul>
             <br/>
-            <a href="<?= FRONT_ROOT ."/Payment/Validate"?>" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+            <a href="<?= FRONT_ROOT ."/Payment/ValidateCreditCard"?>" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
         </div>
     </div>
 </div>

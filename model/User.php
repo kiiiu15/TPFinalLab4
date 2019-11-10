@@ -44,6 +44,9 @@ class User{
         return $this->profile;
     }
 
+    public function getCreditCards(){
+        return $this->creditCards;
+    }
     //Setters
     public function SetEmail($Email){
         $this->Email = $Email;
@@ -71,24 +74,9 @@ class User{
         $this->id = $id;
     }
 
-    /**
-     * Get the value of creditCards
-     */ 
-    public function getCreditCards()
-    {
-        return $this->creditCards;
-    }
-
-    /**
-     * Set the value of creditCards
-     *
-     * @return  self
-     */ 
-    public function setCreditCards($creditCards)
-    {
+ 
+    public function setCreditCards($creditCards){
         $this->creditCards = $creditCards;
-
-        return $this;
     }
 }
 
