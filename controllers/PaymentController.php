@@ -54,8 +54,8 @@ class PaymentController implements Icontrollers{
             $buy = $buyController->RetrieveByUser($user);
 
             $qr = $this->GenerateQR(); //AUN FALTA TERMINARLA 
-
-            $ticketController->Add(0,$qr,$buy);
+            $ticket = new Ticket(0,$qr,$buy);
+            $ticketController->Add($ticket);
 
             $buyController->ChangeState($buy->getIdBuy());
 
