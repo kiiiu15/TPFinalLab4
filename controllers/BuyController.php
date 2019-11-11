@@ -111,6 +111,26 @@ class BuyController implements Icontrollers{
         return $buy;
     }
 
+    public function RetrieveByUser($user){
+        $buyDB = new BuyDB();
+        $buy = new Buy();
+        try{
+            $buy=$buyDB->RetrieveByUser($user);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        return $buy;
+    }
+
+    public function ChangeState($idBuy){
+        $buyDB = new BuyDB();
+        try{
+            $buyDB->ChangeState($idBuy);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
     
 
     public function index(){

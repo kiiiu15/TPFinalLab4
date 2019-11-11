@@ -7,7 +7,7 @@ class CreditCardPayment{
     private $total;
 
     //Constructor
-    public function __construct($date,$idAuthorization,$total){
+    public function __construct($date = "",$idAuthorization = 0,$total = 0){
         $this->date=$date;
         $this->idAuthorization=$idAuthorization;
         $this->total=$total;       

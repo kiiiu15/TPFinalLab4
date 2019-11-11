@@ -8,7 +8,7 @@ class Ticket{
     private $Buy;
     //Aca pondriamos el QR y aun no se si ponerle el id de la compra
 
-    public function __construct($idTicket,$QR,$Buy){
+    public function __construct($idTicket = 0,$QR = "",$Buy = null){
         $this->idTicket=$idTicket;
         $this->QR=$QR;
         $this->Buy = $Buy;
