@@ -9,10 +9,10 @@ use Dao\CinemaDB as CinemaDB;
 
 class CinemaController implements IControllers{
 
-    public function Add ($cinemaName, $adress, $capacity, $entranceValue) {
+    public function Add ($cinemaName, $adress) {
         
         $cinemaDB= new CinemaDB();
-        $cinema=new Cinema(100,$cinemaName,$adress,$capacity,$entranceValue,true);
+        $cinema=new Cinema(100,$cinemaName,$adress,true);
         try{
             $cinemaDB->Add($cinema);
         }catch(\PDOException $ex){
@@ -34,13 +34,10 @@ class CinemaController implements IControllers{
         
         $cinemaDB=new CinemaDB();
         try{
-            if (is_array($idCinema)){
+                $idCinema = $this->TransformToArray($idCinema);
                 foreach($idCinema as $id){
                     $cinemaDB->DeactivateByID($id);
                 }
-            }else {
-                $cinemaDB->DeactivateByID($idCinema);
-            }
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -59,14 +56,14 @@ class CinemaController implements IControllers{
     public function Reactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
+
+        $idCinema = $this->TransformToArray($idCinema);
         try{
-            if (is_array($idCinema)){
+           
                 foreach($idCinema as $id){
                     $cinemaDB->ReactivateByID($id);
                 }
-            }else {
-                $cinemaDB->ReactivateByID($idCinema);
-            }
+            
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -84,16 +81,29 @@ class CinemaController implements IControllers{
             throw $ex;
         }
     }
-    public function Modify($idCinemaToModify,$changedName,$changedAddress,$changedCapacity,$changedPrice){
+    public function Modify($idCinemaToModify,$changedName,$changedAddress){
 
         $cinemaDB= new CinemaDB();
         try{
-            $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , $changedCapacity , $changedPrice, true));
+            $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , true));
         }catch(\PDOException $ex){
             throw $ex;
         }
         
         $this->index();
+    }
+
+    private function TransformToArray($value){
+        if ($value == false){
+            $value = array();
+        }
+
+        if (!is_array($value)){
+            $value = array($value);
+        }
+
+        return $value;
+
     }
 
     public function index(){

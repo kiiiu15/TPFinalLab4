@@ -23,7 +23,7 @@ class MovieFunctionController implements IControllers{
         $movie=$MovieDB->RetrieveById($idMovie);  
         $room=$RoomDB->RetrieveById($idRoom);
 
-        $MovieFunction= new MovieFunction(0,$date,$hour,null,$room,$movie);
+        $MovieFunction= new MovieFunction(0,$date,$hour,$room,$movie);
         $answer = $this->CheckMovieFunction($MovieFunction);
         if ($answer === ''){
             
