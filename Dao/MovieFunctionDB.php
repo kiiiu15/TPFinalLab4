@@ -35,12 +35,12 @@ class MovieFunctionDB{
    //MOVIES ES EL TITULO DE LA PELICULA, CINEMA ES EL ID DEL CINEMA (ESTAS SERIAN LAS FK DE LA TABLA MOVIE FUNCTIONS)
    public function Add($moviefunction){
         
-        $sql="INSERT INTO MovieFunctions(date,hour,idCinema,idMovie) VALUES (:dayFunction,:hourFunction,:cinema,:movies)";
+        $sql="INSERT INTO MovieFunctions(date,hour,idRoom,idMovie) VALUES (:dayFunction,:hourFunction,:room,:movies)";
         $values['dayFunction']  =$moviefunction->getDay();
         $values['hourFunction'] =$moviefunction->getHour();
         $movie =$moviefunction->getMovie(); 
-        $cinema=$moviefunction->getCinema();
-        $values['cinema']     =$cinema->getIdCinema();
+        $room=$moviefunction->getRoom();
+        $values['room']     =$room->getId();
         $values['movies']      =$movie->getId(); 
         try{
             $this->connection=Connection::getInstance();
@@ -77,8 +77,8 @@ class MovieFunctionDB{
         $values['date']   =$moviefunction->getDay();
         $values['hour']  =$moviefunction->getHour();
         $movie =$moviefunction->getMovie(); 
-        $cinema=$moviefunction->getCinema();
-        $values['cinema']     =$cinema->getIdCinema();
+        $cinema=$moviefunction->getRoom();
+        $values['cinema']     =$cinema->getId();
         $values['movies']      =$movie->getId();
         $values['idFunction'] =$moviefunction->getId();
         try{
@@ -245,8 +245,8 @@ class MovieFunctionDB{
 
         $resp = array_map(function ($m) {
             $movieDB = new MovieDB();
-            $cinemaDB = new CinemaDB();
-            return new MovieFunction($m["idFunction"], $m['date'], $m['hour'], $cinemaDB->RetrieveById($m['idCinema']),$movieDB->RetrieveById($m['idMovie']));
+            $roomDB = new RoomDB();
+            return new MovieFunction($m["idFunction"], $m['date'], $m['hour'], null, $roomDB->RetrieveById($m['idRoom']),$movieDB->RetrieveById($m['idMovie']));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

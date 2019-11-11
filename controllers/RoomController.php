@@ -86,6 +86,14 @@ class RoomController implements IControllers{
         return $RemainingCapacity - $numberOfTickets;
     }
 
+    public function RetrieveByActive($active){
+        $roomDB = new RoomDB();
+        try{
+           return $roomDB->RetrieveByActive($active);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
     public function index(){
         $roomList = $this->GetAll();
         //include(VIEWS . "/roomList.php");

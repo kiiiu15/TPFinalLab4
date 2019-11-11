@@ -12,7 +12,7 @@ use Dao\MovieFunctionDB as MovieFunctionDB;
 
 class MovieFunctionController implements IControllers{
 
-    public function Add($idMovie = 0, $idRoom = 0, $date = "" , $hour = "" ){
+    public function Add($idMovie = 0, $idRoom = 1, $date = "" , $hour = "" ){
     
         $MovieFunctionDB= new MovieFunctionDB();
 
@@ -21,14 +21,16 @@ class MovieFunctionController implements IControllers{
         $RoomDB= new RoomDB();
 
         $movie=$MovieDB->RetrieveById($idMovie);  
-        $romm=$RoomDB->RetrieveById($idRoom);
+        $room=$RoomDB->RetrieveById($idRoom);
 
         $MovieFunction= new MovieFunction(0,$date,$hour,null,$room,$movie);
         $answer = $this->CheckMovieFunction($MovieFunction);
         if ($answer === ''){
+            
             $MovieFunctionDB->Add($MovieFunction);
             $this->index();
         } else {
+            
             $this->index($answer);
         }
        
@@ -39,91 +41,139 @@ class MovieFunctionController implements IControllers{
 
     public function CheckMovieFunction ($movieFunction) {
         $answer = '';
+        
+        
+        
 
-        $movie = $movieFunction->getMovie();
-        $room = $movieFunction->getRoom();
+        /*Obtenemos todas las demas funciones para la fecha de la funciion que queremos agregar */
         $MovieFunctionDB = new MoviefunctionDB();
         $functions = $MovieFunctionDB->RetrieveByDate($movieFunction->getDay());
-        if ($functions == false){
-            $functions = array();
-        }
+        
+        /*Este chequeo se realiza debido a que el Map del dao puede retornar tnato un  arreglo como un false como un solo objeto */
+        $functions = $this->TransformToArray($functions);
+        /*Y como vamos a usar funciones de arreglos evitamos que se rompa */
 
-        if (!is_array($functions)){
-            $functions = array($functions);
-        }
-
+        /*Chequeamos que haya funciones con las qie podria haber problemas en el dia de la fecha seleccionados*/
         if (count($functions) > 0) {
-            
-            $functionAtRoom = $this->GroupFunctionsRoom($functions);
-            $grupedFunctions = $this->GroupFunctionsByMovie($functions);
-            $asd = $this->GroupFunctionsByCinema($functions);
-            $functionsForTheDay = array();
-            if (isset( $asd[$cinema->getIdCinema()])){
-                $functionsForTheDay = $asd[$cinema->getIdCinema()];
-            } 
-            
+            /*Verificamos que esa pelicula no se este proyectanbdo en otro cine */
+            $answer = $this->CheckByCinema($movieFunction, $functions);
+            /*Si es asi, verificamos la sala y los horarios de otras funciones para esa misma sala dentro del cine */
+            if($answer === ''){
+                $answer = $this->CheckByRoom($movieFunction, $functions);
 
-            foreach($functionsForTheDay as $Function){
-                $minTime = $this->AddTime($Function->getHour(), -135);
-                $maxTime = $this->AddTime($Function->getHour(), 135);
 
-                
-                if ($movieFunction->getHour() < $Function->getHour()) {
-                    if (  $movieFunction->getHour() < $maxTime){
-                        $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                        break;
-                    }
-                }else {
-                    if ($minTime < $movieFunction->getHour()){
-                        $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                        break;
-                    }
-                }
-               
             }
 
-     
-
-            if(isset($grupedFunctions[$movie->getId()]) ){
-                $movieFunctions = $grupedFunctions[$movie->getId()];
-
-                if (count($movieFunctions) > 0){
-                    $CinemaOfMovieForTheDay = $movieFunctions[0]->getCinema();
-                    
-                    if ($CinemaOfMovieForTheDay->getIdCinema() == $cinema->getIdCinema() ){
-                        foreach($movieFunctions as $Function){
-                            $minTime = $this->AddTime($Function->getHour(), -135);
-                            $maxTime = $this->AddTime($Function->getHour(), 135);
-
-                            if ($movieFunction->getHour() < $Function->getHour()) {
-                                if (  $movieFunction->getHour() < $maxTime){
-                                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                                    break;
-                                }
-                            }else {
-                                if ($minTime < $movieFunction->getHour()){
-                                    $answer = "La hora se pisa con otra funcion en el mismo Cine, por favor cambie la hora";
-                                    break;
-                                }
-                            }
-                            
-                    
+        }
             
-                           
-                        }
-                        
-                    } else {
-                        $answer = "Una pelicula solo se puede pasar en un solo cine por dia. Cambia de fecha o pone el mismo cine. ";
-                    }
-                }
-
-
-            }      
-        }*/
-
+            
         
+        /*Retornamos la respuesta que es vacio si esta todo ok, o un mensaje de error de haber alguno */
        return $answer;
         
+    }
+
+    private function CheckByRoom ($movieFunction, $functions){
+        $answer = '';
+        /*Obtenemos la sala Y el cine  */
+        $room = $movieFunction->getRoom();
+        $cinema = $room->getCinema();
+
+        /*Agrupamos las funciones por cine */
+        $funcionsPerCinema = $this->GroupFunctionsByCinema($functions);
+        /*Definimos un arreglo vacio para las funciones que podrian llegar a generar inconvenientes con la carga de la funcion */
+        $functionsForTheDay = array();
+
+        /*Si el cine de la funcion  tiene funciones para ese dia las extraemos */
+        if (isset( $funcionsPerCinema[$cinema->getIdCinema()])){
+
+            /*Unicamente de las funciones del cine que nos interesa */
+            $functionsForTheDay = $funcionsPerCinema[$cinema->getIdCinema()];
+
+
+
+            /*Agrupamos las funciones del cine por salas */
+
+            $functionsGroupedByRoom = $this->GroupFunctionsRoom($functionsForTheDay);
+
+            /*Si hay funciones en la sala que nos interesa las extraemos */
+
+            if (isset($functionsGroupedByRoom[$room->getId()])){
+                $functionsAtRoom = $functionsGroupedByRoom[$room->getId()];
+
+                $answer = $this->CheckTime($movieFunction, $functionsAtRoom);
+
+                
+            }
+
+
+        } 
+        
+        return $answer;
+    }
+
+    private function CheckByCinema ($movieFunction, $functions){
+        $answer = '';
+        /*Obtenemos la pelicula y el cine de la funcion */
+        $movie = $movieFunction->getMovie();
+        $cinema = $movieFunction->getRoom()->getCinema();
+        /*Agrupamos las funciones por peliculas */
+        $functionsGroupedByMovie = $this->GroupFunctionsByMovie($functions);
+
+        /*Verificamos si hay funciones para pelicula en cuestion y las extraemos*/
+        if(isset($functionsGroupedByMovie[$movie->getId()]) ){
+            $movieFunctions = $functionsGroupedByMovie[$movie->getId()];
+            /*Si hay al menos una funcion le extraemos el cine a la primera ya que a este punto ninguna otra funcion debera poder tener otro cine distinto */
+            if (count($movieFunctions) > 0) {
+                $CinemaOfMovieForTheDay = $movieFunctions[0]->getRoom()->getCinema();
+                /*Comparamos que se este haciendo la agregacion en el mismo cine y si es otro significa que ya esta pelicula se esta proyectando en otro cine */
+                if ($CinemaOfMovieForTheDay->getIdCinema() != $cinema->getIdCinema() ){
+                    $answer = "Una pelicula solo se puede pasar en un solo cine por dia. Cambia de fecha o pone el mismo cine. ";
+                }
+            }
+        }
+            return $answer;
+    }
+
+    private function CheckTime($movieFunction, $functions){
+        $answer = '';
+        foreach ($functions as $function){
+
+            $minTime = $this->AddTime($function->getHour(), -135);
+            $maxTime = $this->AddTime($function->getHour(), 135);
+
+            
+            if ($movieFunction->getHour() > $function->getHour()) {
+
+
+                if (  $movieFunction->getHour() < $maxTime){
+                    
+                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    break;
+                }
+            }else {
+                if ($minTime < $movieFunction->getHour()){
+                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    break;
+                }
+            }
+        }
+
+        return $answer;
+    }
+
+
+    private function TransformToArray($value){
+        if ($value == false){
+            $value = array();
+        }
+
+        if (!is_array($value)){
+            $value = array($value);
+        }
+
+        return $value;
+
     }
 
     private function AddTime( $hora, $minutos_sumar ) 
@@ -255,11 +305,11 @@ class MovieFunctionController implements IControllers{
 
     public function index($mensaje = null){
         $errorMje=$mensaje;
-        $cinemaC = new CinemaController();
+        $roomC = new RoomController();
         $movieC = new MovieController();
         $movies = $movieC->GetAll() + $movieC->RetrieveAPI();
-        $activeCinemas = $cinemaC->RetrieveByActive(true);
-        $movieFunctionList = $this->GetBillboard();
+        $activeRooms = $roomC->RetrieveByActive(true);
+        $movieFunctionList = $this->GetBillboard(); 
         include(VIEWS.'/addFunction.php');
     }
 

@@ -8,6 +8,7 @@
     include(VIEWS."/header2.php");
     include(VIEWS.'/adminNav.php');
 
+    
     if ($movieFunctionList == false){
         $movieFunctionList = array();
     }
@@ -16,12 +17,12 @@
         $movieFunctionList = array($movieFunctionList);
     }
 
-    if ($activeCinemas == false){
-        $activeCinemas = array();
+    if ($activeRooms == false){
+        $activeRooms = array();
     }
 
-    if (!is_array($activeCinemas)){
-        $activeCinemas = array($activeCinemas);
+    if (!is_array($activeRooms)){
+        $activeRooms = array($activeRooms);
     }
 
     if ($movies == false){
@@ -32,6 +33,7 @@
         $movies = array($movies);
     }
 
+        
     
 
 ?>
@@ -70,6 +72,7 @@
                             <th></th>
                             <th>Id Funcion</th>
                             <th>Cine</th>
+                            <th>Sala</th>
                             <th>Fecha</th>
                             <th>Horario</th>
                             <th>Pelicula</th>
@@ -84,7 +87,8 @@
                             <tr>
                                 <td><input type="checkbox" name="postschecked[]" value="<?php echo $movieFunction->getId();?>"></td>
                                 <td> <?php echo $movieFunction->getId();?></td>
-                                <td> <?php echo $movieFunction->getCinema()->getName();?>    </td>
+                                <td> <?php echo $movieFunction->getRoom()->getCinema()->getName();?>    </td>
+                                <td> <?php echo $movieFunction->getRoom()->getName();?>                  </td>
                                 <td> <?php echo $movieFunction->getDay();?>                  </td>
                                 <td> <?php echo $movieFunction->getHour();?>                 </td>
                                 <td> <?php echo $movieFunction->getMovie()->getTitle();?>    </td>
@@ -133,7 +137,7 @@
                         <label>Pelicula</label>
                         <select required name="idMovie" id="">
                         <?php foreach ($movies as $movie){ ?>
-                            <option value="<?= $movie->getId();?>"></option>
+                            <option value="<?= $movie->getId();?>"><?= $movie->getTitle();?></option>
                         <?php }?>
                         </select>
                     </div>
@@ -141,10 +145,10 @@
                     <!-- 
                         mas tarde la agrego el que puedas meter el nombre
                      -->
-                        <label>Cinema</label>
+                        <label>Room</label>
                         <select required  name="idCienma" >
-                            <?php foreach ($activeCinemas as $activeCinema) {?>
-                            <option value="<?= $activeCinema->getIdCinema();?>"><?php echo $activeCinema->getName();?></option>
+                            <?php foreach ($activeRooms as $activeRoom) {?>
+                            <option value="<?= $activeRoom->getId();?>"><?php echo $activeRoom->getName() . " - " . $activeRoom->getCinema()->getName();?></option>
                             <?php }?>
                         </select>
                     </div>

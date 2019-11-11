@@ -26,8 +26,12 @@ class MovieController implements IControllers{
     //AUN NO VERIFICADAS !!!!
 
     public function RetrieveAPI(){
+        try {
+            $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
+        } catch (Exception $e) {
+            $apiContent = array();
+        }
         
-        $apiContent = file_get_contents("https://api.themoviedb.org/3/movie/now_playing?api_key=f78530630a382b20d19bddc505aac95d&language=en-US");
         $movieDB = new MovieDB();
         $newMovies = array();
         try{

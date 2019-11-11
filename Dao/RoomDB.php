@@ -65,7 +65,7 @@ class RoomDB{
         $values['id'] = $idRoom;
         try{
             $this->connection= Connection::getInstance();
-            $result = $this->connection->Execute($sql);
+            $result = $this->connection->Execute($sql, $values);
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -128,12 +128,27 @@ class RoomDB{
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
             $cinemaDB = new CinemaDB();
-            return new Room($c['id'], $c['name'], $c['price'], $c['capacity'],$cinemaDB->RetrieveById($C['idCinema']));
+            return new Room($c['id'], $c['name'], $c['price'], $c['capacity'],$cinemaDB->RetrieveById($c['idCinema']));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
 
-
+    public function RetrieveByActive($active){
+        $sql="SELECT * FROM Rooms INNER JOIN Cinemas ON Rooms.idCinema = Cinemas.idCinema WHERE Cinemas.active=:active";
+        $values['active']=$active;
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
+    }
 
     
 
