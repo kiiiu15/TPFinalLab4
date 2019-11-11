@@ -1,5 +1,6 @@
 <?php namespace controllers;
 
+use phpqrcode\QRcode as QRcode;
 use \PDO as PDO;
 use \Exception as Exception;
 use controllers\Icontrollers as Icontrollers;
@@ -71,6 +72,32 @@ class TicketController implements Icontrollers{
         }
         return $ticket;
     }
+
+    public function GenerateRandomString($length = 4) {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    } 
+
+    public function GenerateQR($randomString){
+        $dir = 'QRS/';
+        if(!file_exists($dir)){
+            mkdir($dir);
+        }else{
+            $filename = $dir .$randomString .'.png';
+            $tamanio = 10;
+            $level = 'M';
+            $frameSize = 3;
+            $content = $randomString;
+
+            QRcode::png($content, $filename, $level , $tamanio , $frameSize);
+        }
+    }
+
 
     public function index(){}
 }
