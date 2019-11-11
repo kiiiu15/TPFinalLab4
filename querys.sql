@@ -48,8 +48,6 @@ CREATE TABLE `Cinemas`
 	`idCinema` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`nameCinema` VARCHAR(50) NOT NULL,
 	`adressCinema` VARCHAR(100) NOT NULL,
-	`capacity` INT NOT NULL DEFAULT 1,
-	`price` FLOAT NOT NULL DEFAULT 1,
 	`active` BOOL NOT NULL DEFAULT true,
 	CONSTRAINT `pk_table_cinemas` PRIMARY KEY (`idCinema` ASC)
 )

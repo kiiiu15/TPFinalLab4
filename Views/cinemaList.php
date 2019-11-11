@@ -129,14 +129,7 @@
                         <label>Direccion</label>
                         <input required name="adress" type="text">
                     </div>
-                    <div class="form-group">
-                        <label>Capacidad</label>
-                        <input required name="capacity" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label>Precio por entrada</label>
-                        <input required name="entranceValue" type="text">
-                    </div>
+                    
                 </div>
 
                 <div class="modal-footer">

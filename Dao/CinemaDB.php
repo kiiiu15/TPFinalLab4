@@ -28,12 +28,10 @@ class CinemaDB{
     }
 
     public function Add($cinema){
-        $sql= "INSERT INTO Cinemas (nameCinema,adressCinema,capacity,price,active) VALUES (:nameCinema,:address,:capacity,:price,:active)";
+        $sql= "INSERT INTO Cinemas (nameCinema,adressCinema,active) VALUES (:nameCinema,:address,:active)";
 
         $values['nameCinema'] = $cinema->getName();
         $values['address']    = $cinema->getAddress();
-        $values['capacity']   = $cinema->getCapacity();
-        $values['price']      = $cinema->getPrice();
         $values['active']     = $cinema->getActive();
 
         try{
@@ -92,18 +90,7 @@ class CinemaDB{
        
     }
 
-    public function ChangePrice($cinema){
-        $sql="UPDATE Cinemas set Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
-        $values['price'] =$cinema->getPrice();
-        try{
-            $this->connection= Connection::getInstance();
-            $this->connection->connect();
-            return $this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-        
-    }
+
 
     public function ChangeAddress($cinema){
         $sql="UPDATE Cinemas set Cinemas.adressCinema=:address WHERE Cinemas.idCinema=:idCinema";
@@ -212,12 +199,10 @@ class CinemaDB{
     //name,address,capacity,price,active 
     public function Modify($cinema){
 
-        var_dump($cinema);
-        $sql="UPDATE  Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.adressCinema=:address,Cinemas.capacity = :capacity,Cinemas.price=:price WHERE Cinemas.idCinema=:idCinema";
+        
+        $sql="UPDATE  Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.adressCinema=:address WHERE Cinemas.idCinema=:idCinema";
         $values['nameCinema']     = $cinema->getName();
         $values['address']  = $cinema->getAddress();
-        $values['capacity'] = $cinema->getCapacity();
-        $values['price']    = $cinema->getPrice();
         $values['idCinema'] = $cinema->getIdCinema();
 
         try{
@@ -242,7 +227,7 @@ class CinemaDB{
     protected function Map($value) {
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($c) {
-            return new Cinema($c['idCinema'], $c['nameCinema'], $c['adressCinema'], $c['capacity'], $c['price'], (($c['active'] == 1) ? true : false));
+            return new Cinema($c['idCinema'], $c['nameCinema'], $c['adressCinema'], (($c['active'] == 1) ? true : false));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
