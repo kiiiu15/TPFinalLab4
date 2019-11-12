@@ -27,7 +27,8 @@ class PaymentController implements Icontrollers{
     }
     
     //Es un prototipo
-    public function ValidateCreditCard($creditcard){
+    public function ValidateCreditCard($cardNumber,$expiryMonth,$expiryYear,$securityCode){
+        $creditcard = new CreditCard("",$cardNumber,$securityCode,$expiryMonth,$expiryYear);
         $userController = new UserController();
         $user = $userController->GetUserLoged();
         $creditcardList = array();
@@ -37,7 +38,11 @@ class PaymentController implements Icontrollers{
         foreach($creditcardList as $creditcardUser){
             if($creditcardUser->getNumber() == $creditcard->getNumber()){
                 if($creditcardUser->getSegurityCode() == $creditcard->getSegurityCode()){
-                    $answer = true;
+                    if($creditcardUser->getExpiryMonth() == $creditcard->getExpiryMonth()){
+                        if($creditcardUser->getExpiryYear() == $creditcard->getExpiryYear()){
+                            $answer = true;
+                        }
+                    }
                 }
             }
         }
@@ -78,7 +83,10 @@ class PaymentController implements Icontrollers{
     }
 
     public function index(){
-
+        //cambiar
+        $discount =0;
+        $total = 400;
+        include(VIEWS."/payment.php");
     }
 
 }

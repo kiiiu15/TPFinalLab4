@@ -2,7 +2,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<form action="">
+<form action="<?= FRONT_ROOT ."/Payment/ValidateCreditCard"?>" method="POST">
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-4">
@@ -24,7 +24,7 @@
                         <label for="cardNumber">
                             CARD NUMBER</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="cardNumber" placeholder="Valid Card Number"
+                            <input type="text" class="form-control" name="cardNumber" id="cardNumber" placeholder="Valid Card Number"
                                 required autofocus />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                         </div>
@@ -35,17 +35,17 @@
                                 <label for="expityMonth">
                                     EXPIRY DATE</label>
                                 <div class="col-xs-6 col-lg-6 pl-ziro">
-                                    <input type="text" class="form-control" id="expityMonth" placeholder="MM" required />
+                                    <input type="text" class="form-control" name="expiryMonth" id="expityMonth" placeholder="MM" required />
                                 </div>
                                 <div class="col-xs-6 col-lg-6 pl-ziro">
-                                    <input type="text" class="form-control" id="expityYear" placeholder="YY" required /></div>
+                                    <input type="text" class="form-control" name="expiryYear" id="expityYear" placeholder="YY" required /></div>
                             </div>
                         </div>
                         <div class="col-xs-5 col-md-5 pull-right">
                             <div class="form-group">
                                 <label for="cvCode">
                                     CV CODE</label>
-                                <input type="password" class="form-control" id="cvCode" placeholder="CV" required />
+                                <input type="password" class="form-control" name="securityCode" id="cvCode" placeholder="CV" required />
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                 </li>
             </ul>
             <br/>
-            <a href="<?= FRONT_ROOT ."/Payment/ValidateCreditCard"?>" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+            <button type="submit" class="btn btn-success btn-lg btn-block" role="button">Pay</button>
         </div>
     </div>
 </div>

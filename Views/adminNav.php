@@ -14,7 +14,7 @@
                 <!-- 
                     corregir esto
                  -->
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Views/payment' ?>">Payment</a>
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Payment' ?>">Payment</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   
@@ -24,6 +24,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= FRONT_ROOT . '/CreditCard' ?>">prueba</a>
             </li>
           
             

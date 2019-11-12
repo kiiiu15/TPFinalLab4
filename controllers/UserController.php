@@ -35,9 +35,9 @@ class UserController implements IControllers
             $home = new HomeController();
             $home->index();
         }else{
-            $home = new HomeController();
-            $home->index();
-            //include(VIEWS ."/login.php");
+            //$home = new HomeController();
+            //$home->index();
+            include(VIEWS ."/login.php");
         }
     }
 
@@ -88,11 +88,13 @@ class UserController implements IControllers
 
     public function LogIn($email,$pass){
 
+        
         $DaoUser= new UserDB();
         try{
             if($this->UserExist($email))//comprueba que exista el usuario
             {
                 $user = $DaoUser->GetByEmail($email);
+                
                 if($user->GetPass() == $pass)//comprobamos la contraseña
                 {
                     $this->SetLogIn($user);

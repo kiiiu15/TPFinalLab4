@@ -7,6 +7,7 @@ use Dao\QueryType as QueryType;
 use model\User as User;
 use model\Profile as Profile;
 use model\Role as Role;
+use Dao\CreditCardDB as CreditCardDB;
 
 class UserDB 
 {
@@ -109,12 +110,18 @@ class UserDB
     }
 
     protected function Map($value) {
+
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
+
+            $ccDB = new CreditCardDB();
+            $list = $ccDB->RetrieveByEmail($u['email']);
+
             $profile = new Profile($u['UserName'],$u['UserLastName'],$u['Dni'],$u['TelephoneNumber']);
             $role = new Role($u['roleName']);
-            return new User($u['email'], $u['pass'], $role, $profile);
+            return new User($u['email'], $u['pass'], $role, $profile, $list );
         }, $value);
+
         return count($resp) > 1 ? $resp : $resp['0'];
     }
 }
