@@ -32,15 +32,6 @@ DROP TABLE IF EXISTS `Genres` CASCADE
 ;
 
 
-
-
-
-
-
-
-
-
-
 /* Create Tables */
 
 CREATE TABLE `Cinemas`
@@ -144,3 +135,5 @@ ALTER TABLE `Rooms`
 
 SET FOREIGN_KEY_CHECKS=1 
 ;
+
+
