@@ -188,6 +188,7 @@ class MovieFunctionController implements IControllers{
 
     public function GroupFunctionsRoom($functions){
         $array = array();
+        $functions = $this->TransformToArray($functions);
         foreach ($functions as $function){
             $room = $function->getRoom();
             $array[$room->getId()] [] = $function; 
@@ -197,6 +198,7 @@ class MovieFunctionController implements IControllers{
     }
     public function GroupFunctionsByMovie($functions){
         $array = array();
+        $functions = $this->TransformToArray($functions);
         foreach ($functions as $function){
             $movie = $function->getMovie();
             $array[$movie->getId()] [] = $function; 
@@ -207,6 +209,7 @@ class MovieFunctionController implements IControllers{
 
     public function GroupFunctionsByCinema($functions){
         $array = array();
+        $functions = $this->TransformToArray($functions);
         foreach ($functions as $function){
             $cinema = $function->getRoom()->getCinema();
             $array[$cinema->getIdCinema()] [] = $function; 
@@ -219,13 +222,7 @@ class MovieFunctionController implements IControllers{
         $MovieFunctionDB= new MovieFunctionDB();
         $functions = $MovieFunctionDB->RetrieveByDate($date);
         $movies = array();
-        if ($functions === false){
-            $functions = array();
-        }
-
-        if (!is_array($functions)){
-            $functions = array($functions);
-        }
+        $functions = $this->TransformToArray($functions);
 
         foreach($functions as $function){
             $movie = $function->getMovie();
@@ -251,13 +248,7 @@ class MovieFunctionController implements IControllers{
 
     public function GetBillboardMovies(){
         $functions = $this->GetBillboard();
-        if ($functions === false){
-            $functions = array();
-        }
-
-        if (!is_array($functions)){
-            $functions = array($functions);
-        }
+        $functions = $this->TransformToArray($functions);
         $movies = array();
         foreach($functions as $function){
             $movie = $function->getMovie();
@@ -276,21 +267,24 @@ class MovieFunctionController implements IControllers{
 
     public function Delete($idFunction = 0){
         $MovieFunctionDB = new MovieFunctionDB();
-        if (is_array($idFunction)){
+            $idFunction = $this->TransformToArray($idFunction);
             foreach($idFunction as $id){
                 $Function=$MovieFunctionDB->RetrieveById($id);
                 $MovieFunctionDB->Delete($Function);
             }
-        }else {
-            $Function=$MovieFunctionDB->RetrieveById($idFunction);
-            if ($Function === false){
-                $Function = new MovieFunction();
-            }
-            $MovieFunctionDB->Delete($Function);
-        }
+        
        
         $this->index();        
     }
+
+    public function GetShowMovieInfo($idMovie) {
+        $functions = $this->GetBillboard();
+        
+        $groupedFunctions = $this->GroupFunctionsByMovie($functions);
+        $movieFunctions = $groupedFunctions[$idMovie];
+        $info = $this->GroupFunctionsByCinema($movieFunctions);
+        return $info;
+;    }
 
     public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
         $MovieFunctionDB= new MovieFunctionDB();

@@ -55,10 +55,11 @@ class HomeController implements Icontrollers {
     }
 
 
-    public function showMovie($title){
-        $movieController = new MovieController();
-        $movieToSearch = $movieController->GetMovieForTitle($title);
-        include(VIEWS ."/showMovie.php");
+    public function showMovie($idMovie){
+        $movieFController = new MovieFunctionController();
+        
+        $movieToSearchFunctions = $movieFController->GetShowMovieInfo($idMovie);
+        $this->index(null, $movieToSearchFunctions);
     }
 
     public function ShowMovieByDate($date){
@@ -83,7 +84,7 @@ class HomeController implements Icontrollers {
         
     }
 
-    public function index ($mensage = null){
+    public function index ($mensage = null, $movieFunctionsToShow= null){
         $errorMje = $mensage;
         $userC = new UserController(); 
         $movieFC = new MovieFunctionController();
@@ -92,7 +93,7 @@ class HomeController implements Icontrollers {
         $isAdmin = $userC->IsAdmin();
         $movieList = $movieFC->GetBillboardMovies();
         $genresList = $genreC->GetAll();
-
+        $selectedMovieFunctions = $movieFunctionsToShow;
         //var_dump($movieList);
 
         include(VIEWS.'/posts.php');

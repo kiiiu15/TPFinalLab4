@@ -67,8 +67,7 @@
                             <th>Id Cine</th>
                             <th>Nombre</th>
                             <th>Direccion</th>
-                            <th>Capacidad</th>
-                            <th>Precio</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -82,9 +81,7 @@
                                 <td> <?php echo $cinema->getIdCinema();?>    </td>
                                 <td> <?php echo $cinema->getName();?>    </td>
                                 <td> <?php echo $cinema->getAddress();?> </td>
-                                <td> <?php echo $cinema->getCapacity();?></td>
-                                <td> <?php echo $cinema->getPrice();?>   </td>
-                                
+                             
                             </tr>
                         <?php } ?>
                     </tbody>

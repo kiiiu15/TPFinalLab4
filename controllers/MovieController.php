@@ -99,6 +99,16 @@ class MovieController implements IControllers{
         return $ListMovieGenre;
     }
 
+    public function GetMovieForId($id){
+        $MovieDB=new MovieDB();
+        try{
+            $movie=$MovieDB->RetrieveById($id);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        return $movie;
+    }
+
     public function GetMovieForTitle($titleMovie){
         $movieDB = new MovieDB();
         try{

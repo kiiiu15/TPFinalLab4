@@ -22,8 +22,15 @@
         $movieList = array($movieList);
     }
 
+
+    //var_dump($selectedMovieFunctions);
     
+    /* echo "<pre>";
+        print_r($selectedMovieFunctions);
+     echo "<pre>";*/
     ?>
+
+
 
     <main class="p-5">
         <div class="container">
@@ -73,12 +80,12 @@
                 </div>
             </form>    
                 
-            <form class="form-inline" action="" method="POST"> 
+            <form class="form-inline" action="<?= FRONT_ROOT?>/Home/showMovie" method="POST"> 
 
                 <table class="table" class="catsandstar">
                     <thead class="thead-dark">
                         <tr>
-                            <th></th>
+                            
                             <th>POSTER</th>
                             <th>Título</th>
                             <th>Descripcion</th>
@@ -88,8 +95,10 @@
                     <tbody>
                         <?php foreach($movieList as $movie) { ?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $movie->getID();?>"></td>
-                                <td> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" data-toggle="modal" data-target="#show-movie"/> </td>
+                                
+                                <td>
+                                        <button type = "sumbit"  name = "asd" value= "<?= $movie->getId();?>"> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" /></button>
+                                </td>
                                 <td> <?php echo $movie->getTitle();?> </td>
                                 <td> <?php echo $movie->getOverview();?> </td>
                                 <td> <?php foreach($movie->getGenres() as $genre){
@@ -135,15 +144,25 @@
     
 <!-- 
     SI APRETAN LA IMAGEN DEL POSTER DE LA PELICULA SE DESPLIEGA ESTO CON TODA LA INFO DE LA PELICULA,
-    LOS CINES DONDE SE PUEDEN VER Y BASICAMENTE ES EL FORMULARIO DE COMPRA
+    LOS CINES DONDE SE PUEDEN VER Y BASICAMENTE ES EL FORMULARIO DE COMPR
  -->
+ <?php 
+                        foreach ($selectedMovieFunctions as $selectedMovieFunction){
+                            foreach($selectedMovieFunction as $function){
+                                $nameMovie = $function->getMovie()->getTitle();
+                                break;
+                            }
+                        } 
+                    ?>
+ 
     <div class="modal fade" id="show-movie" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
             <form class="modal-content" action="" method="GET">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">ACA VA EL TITULO DE LA PELI</h5>
+                
+                    <h5 class="modal-title"><?php echo $nameMovie;?></h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -156,10 +175,17 @@
                  -->
                     <div class="form-group">
                         <label>CINES</label>
-                        <select name="" class="form-control ml-3">
-                        <?php// foreach() { ?>
-                            <option value=""> primer cine </option>
-                        <?php// } ?>
+                        <select id="options" name="" class="form-control ml-3">
+                        <option value="" disabled selected>Seleccione un Cine</option>
+                        <?php 
+                            foreach($selectedMovieFunctions as $cinemaId =>  $selectedMovieFunction) { 
+                                foreach($selectedMovieFunction as  $function){?>
+                                    <option value="<?= $cinemaId;?>"> <?php echo $function->getRoom()->getCinema()->getName();?> </option>
+                        
+                            <?php  }
+                            }
+                        ?>
+
                         </select>
                     </div>
 
@@ -171,9 +197,9 @@
                     
                     <div class="form-group">
                         <label>FUNCIONES</label>
-                        <select name="" class="form-control ml-3">
+                        <select id="choices" name="" class="form-control ml-3">
                         <?php// foreach() { ?>
-                            <option value=""> primer funcion </option>
+                           
                         <?php// } ?>
                         </select>
                     </div>
@@ -226,3 +252,55 @@
     </div>                               
 
     <?php include(VIEWS.'/footer.php');  ?>
+
+    <?php if ($selectedMovieFunctions != null) {  ?>
+    <script type="text/javascript"> 
+        
+        window.onload = function() {
+            
+            $('#show-movie').modal('show');
+            
+
+            $('#options').on('change', function() {
+                
+                // Set selected option as variable
+                var selectValue = $(this).val();
+                
+                // Empty the target field
+                $('#choices').empty();
+                
+                // For each chocie in the selected option
+                for (i = 0; i < lookup[selectValue].length; i++) {
+                    
+                    // Output choice in the target field
+                    $('#choices').append("<option value=''>" + lookup[selectValue][i] + "</option>");
+                    
+                }
+            });
+
+
+            
+        };  
+
+
+
+        var lookup = {
+            <?php foreach ($selectedMovieFunctions as $cinemaId => $selectedMovieFunction){ ?>
+            '<?= $cinemaId;?>'  : 
+            
+                [
+                    <?php foreach($selectedMovieFunction as $function) {?>
+                    '<?php echo "Fecha: " . $function->getDay() . " Sala: " . $function->getRoom()->getName() . " Horario: " . $function->getHour()?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
+                    <?php } ?>
+                ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
+            <?php }?>
+        };
+
+        // When an option is changed, search the above for matching choices
+
+
+
+        
+
+    </script>
+<?php } ?>

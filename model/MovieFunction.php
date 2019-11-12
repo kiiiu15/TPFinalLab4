@@ -8,7 +8,6 @@ class MovieFunction{
     private $id;
     private $day; 
     private $hour;
-    private $cinema;
     private $room;
     private $movie;
 
