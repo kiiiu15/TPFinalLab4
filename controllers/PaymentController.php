@@ -20,6 +20,12 @@ use Dao\UserDB as UserDB;
 class PaymentController implements Icontrollers{
 
 
+    public function Validate($number = "", $security = "", $expirity = "", $expirityY = ""){
+        $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
+        
+        $this->ValidateCreditCard($creditcard);
+    }
+    
     //Es un prototipo
     public function ValidateCreditCard($creditcard){
         $userController = new UserController();
@@ -53,13 +59,14 @@ class PaymentController implements Icontrollers{
 
             $buy = $buyController->RetrieveByUser($user);
 
-            $qr = $this->GenerateQR(); //AUN FALTA TERMINARLA 
+            $qr = $ticketController->GenerateRandomString(4); //AUN FALTA TERMINARLA 
             $ticket = new Ticket(0,$qr,$buy);
             $ticketController->Add($ticket);
 
             $buyController->ChangeState($buy->getIdBuy());
 
             $successMsg = "We thank you for your purchase";
+            $ticketController->GenerateQR($qr);
             include(VIEWS ."/posts.php");
         }catch(\PDOException $ex){
             throw $ex;
@@ -69,9 +76,6 @@ class PaymentController implements Icontrollers{
 
         
     }
-    
-    //AUN FALTA TERMINARLA 
-    public function GenerateQR(){}
 
     public function index(){
 
