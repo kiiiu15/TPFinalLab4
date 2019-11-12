@@ -18,6 +18,12 @@ class CreditCardController implements Icontrollers{
         
     }
 
+    public function Add($company,$number,$securityCode,$expiryMonth,$expiryYear){
+        $creditCard = new CreditCard($company,$number,$securityCode,$expiryMonth,$expiryYear);
+        $db = new CreditCardDB();
+        $db->Add($creditCard);
+    }
+
     public function RetrieveByEmail($email)
     {
         $db = new CreditCardDB();

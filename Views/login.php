@@ -12,11 +12,12 @@
                     <input type="text" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña">
                 </div>
                 <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesión</button>
+                <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
+                    Registrarse
+                </button>
             </form>
                 
-            <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
-                Registrarse
-            </button>
+            
             <?php if(isset($successMje) || isset($errorMje)) { ?>
             <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
                 <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
@@ -62,7 +63,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-dark">Registrar</button>
+                            <button type="submit" class="btn btn-dark" >Registrar</button>
                         </div>
                     </form>
                 </div>

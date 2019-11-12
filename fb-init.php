@@ -15,14 +15,14 @@ $fb = new Facebook\Facebook([
 $helper = $fb->getRedirectLoginHelper();
 $login_url = $helper->getLoginUrl("http://localhost/TPFinalLab4");
 
-//print_r($login_url);
+
 
 try{
     $accessToken = $helper->getAccessToken();
     if(isset($accessToken)){
-        echo "<br>entre al if<br>";
+        
         $_SESSION['access_token'] = (string)$accessToken;
-        include("index.php");
+        
     }
 } catch (Exception $exc){
     
