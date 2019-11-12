@@ -2,7 +2,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<form action="<?= FRONT_ROOT ."/Payment/ValidateCreditCard"?>" method="POST">
+<form action="<?= FRONT_ROOT ."/Payment/Validate"?>" method="POST">
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-4">
@@ -21,7 +21,7 @@
                 <div class="panel-body">
                     <form role="form">
                     <div class="form-group">
-                        <label for="cardNumber">
+                        <label for="cardNumber" >
                             CARD NUMBER</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="cardNumber" id="cardNumber" placeholder="Valid Card Number"
@@ -29,6 +29,10 @@
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                         </div>
                     </div>
+                    <div class="input-group">
+                            <input type="hidden" value="<?= $buy->getId();?>" name="idBuy" />
+                           
+                        </div>
                     <div class="row">
                         <div class="col-xs-7 col-md-7">
                             <div class="form-group">

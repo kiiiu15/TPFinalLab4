@@ -6,6 +6,7 @@ use controllers\Icontrollers as Icontrollers;
 use controllers\MovieFunctionController as MovieFunctionController;
 use controllers\UserController as UserController;
 use controllers\RoomController as RoomController;
+use controllers\HomeController as HomeController;
 
 use model\Buy as Buy;
 use model\MovieFunction as MovieFunction;
@@ -32,7 +33,7 @@ class BuyController implements Icontrollers{
 
         $roomController = new RoomController();
 
-        $buyDB = new BuyDB();
+        $buyDB = new BuyDB(); //this directamente 
         
         $room = $function->getRoom(); //obtengo la sala
 
@@ -43,29 +44,32 @@ class BuyController implements Icontrollers{
             //validacion sobre la capacidad de la sala
             if($roomController->GetRemainingCapacity($idFunction,$numberOfTickets) > -1){
                 $date =  date("l");
-                
+                $today = date("Y-m-d");
+                $id = date("Ymdhms");
                 $discount = 0;
                 $total = 0;
 
-                $discount = $room->getPrice() * 0.25;
+               
                 
                 //validacion del dia martes y miercoles     
                 if($date == "Tuesday" || $date == "Wednesday"){
+                    $discount = $room->getPrice() * 0.25;
                     $total = $room->getPrice() - $discount;
                 }else{
-                    $total = $total + $room->getPrice();
+                    $total =  $room->getPrice();
                 }
-            
-                $buy = new Buy(0,$function,$date,$numberOfTickets,$total,$discount,$user,false);
-
+                //this add 
+                $buy = new Buy($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
                 $buyDB->Add($buy);
+                include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
+                $homeController = new HomeController();
                 $alertCapacity = "We are sorry, there is no capacity in the room. Try in another room ";
-                include(VIEWS ."/posts.php");
+                $homeController->index($alertCapacity);
+                
             }
         }
-        include(VIEWS ."/payment.php");
     }
 
     public function GetAll(){

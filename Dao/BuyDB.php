@@ -68,8 +68,8 @@ class BuyDB{
 
     //Se le pasa un objeto de tipo user y obtengo su id para la busqueda en la base de datos
     public function RetrieveByUser($user){
-        $sql="SELECT * FROM Buy WHERE Buy.idBuy=:idUser";
-        $values['idUser'] =$user->getId();
+        $sql="SELECT * FROM Buy WHERE Buy.emailUser =:emailUser ";
+        $values['emailUser'] =$user->GetEmail();
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();

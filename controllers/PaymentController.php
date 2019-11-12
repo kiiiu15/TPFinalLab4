@@ -9,7 +9,6 @@ use controllers\TicketController as TicketController;
 use controllers\BuyController as BuyController;
 
 
-
 use model\Buy as Buy;
 use model\User as User;
 use model\CreditCard as CreditCard;
@@ -20,15 +19,22 @@ use Dao\UserDB as UserDB;
 class PaymentController implements Icontrollers{
 
 
-    public function Validate($number = "", $security = "", $expirity = "", $expirityY = ""){
+    public function Validate($idBuy, $number = "", $security = "", $expirity = "", $expirityY = ""){
         $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
         
-        $this->ValidateCreditCard($creditcard);
+        $validation = $this->ValidateCreditCard($creditcard);
+
+        if($validation == true){
+            $this->GenerateTicket($idBuy);
+        }else{
+
+            $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
+            include(VIEWS ."/payment.php");
+        }   
     }
     
     //Es un prototipo
-    public function ValidateCreditCard($cardNumber,$expiryMonth,$expiryYear,$securityCode){
-        $creditcard = new CreditCard("",$cardNumber,$securityCode,$expiryMonth,$expiryYear);
+    public function ValidateCreditCard($creditcard){
         $userController = new UserController();
         $user = $userController->GetUserLoged();
         $creditcardList = array();
@@ -46,29 +52,24 @@ class PaymentController implements Icontrollers{
                 }
             }
         }
-        if($answer == true){
-            $this->GenerateTicket();
-        }else{
-            $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
-            include(VIEWS ."/payment.php");
-        }        
+
+        return $answer;
     }
 
-    public function GenerateTicket(){
+    public function GenerateTicket($idBuy){
         $buyController = new BuyController();
         $ticketController = new TicketController();
-        $userController = new UserController();
         
         try{
             $user = $userController->GetUserLoged();
 
-            $buy = $buyController->RetrieveByUser($user);
+            $buy = $buyController->RetrieveById($idBuy);
 
             $qr = $ticketController->GenerateRandomString(4); //AUN FALTA TERMINARLA 
             $ticket = new Ticket(0,$qr,$buy);
             $ticketController->Add($ticket);
 
-            $buyController->ChangeState($buy->getIdBuy());
+            $buyController->ChangeState($idBuy);
 
             $successMsg = "We thank you for your purchase";
             $ticketController->GenerateQR($qr);
