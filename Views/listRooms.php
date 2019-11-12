@@ -1,25 +1,16 @@
 <?php
-    /*ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);*/
+      include(VIEWS."/header2.php");
+      include(VIEWS.'/adminNav.php');
 
-
-    //CAMBIAR ESE 2
-    include(VIEWS."/header2.php");
-    include(VIEWS.'/adminNav.php');
-    if ($cinemaList == false){
-        $cinemaList = array();
-    }
-    if (!is_array($cinemaList)){
-        $cinemaList = array($cinemaList);
-    }
-
+      //$rooms = array();
+      //$activeCinemas = array();
 ?>
+
 
 <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Cines</h1>
+            <h1 class="mb-5">Listado de Salas</h1>
 
 
             
@@ -43,20 +34,16 @@
 
 
                                       <!-- LOS GET NO ESTAN FUNCIONANDO -->
-            <form class="form-inline" action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
+            <form class="form-inline" action="<?= FRONT_ROOT. '/Room/delete' ?>" method="POST">
                 <div class="form-group mb-4">
-                    <label for="">Activo/Inactivo</label>
-                    <select name="active" class="form-control ml-3">
-                        <option value="<?= true; ?>">Activo</option>
-                        <option value="<?= false; ?>">Inactivo</option>
-                    </select>
-                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                    
+                    <button type="submit" class="btn btn-dark ml-3">Desactivar</button>
 
                     <!-- 
                         en realidad este button no tiene nada que ver con el form este, pero si lo ponia afuera quedava re feo :)
                      -->
-                    <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
-                        Agregar Cine
+                    <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-room">
+                        Agregar Sala
                     </button>
                 </div>
 
@@ -64,9 +51,9 @@
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Id Cine</th>
+                            <th>Id Sala</th>
                             <th>Nombre</th>
-                            <th>Direccion</th>
+                            <th>Cine</th>
                             <th>Capacidad</th>
                             <th>Precio</th>
                         </tr>
@@ -76,14 +63,14 @@
                         ACA TENEMOS UN PROBLEMA,
                         SI POR ALGUNA RAZON SOLO RECIVE UN UNICO CINE, SE ROMPE EL FOREACH Y NO SE VE NADA 
                      -->
-                        <?php foreach($cinemaList as $cinema) { ?>
+                        <?php foreach($rooms as $room) { ?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $cinema->getIdCinema();?>"></td>
-                                <td> <?php echo $cinema->getIdCinema();?>    </td>
-                                <td> <?php echo $cinema->getName();?>    </td>
-                                <td> <?php echo $cinema->getAddress();?> </td>
-                                <td> <?php echo $cinema->getCapacity();?></td>
-                                <td> <?php echo $cinema->getPrice();?>   </td>
+                                <td><input type="checkbox" name="postschecked[]" value="<?php echo $room->getId();?>"></td>
+                                <td> <?php echo $room->getId();?>    </td>
+                                <td> <?php echo $room->getName();?>    </td>
+                                <td> <?php echo $room->getCinema()->getName();?> </td>
+                                <td> <?php echo $room->getCapacity();?></td>
+                                <td> <?php echo $room->getPrice();?>   </td>
                                 
                             </tr>
                         <?php } ?>
@@ -104,30 +91,45 @@
     </main>
 
 
-    <div class="modal fade" id="add-cinema" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
+    <div class="modal fade" id="add-room" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
 <!-- 
     QUIZAS TENGA MAS SENTIDO QUE SE HAGA POR GET PERO NO FUNCIONA BIEN ASI, EL GET SI SE CARGA
     PERO AL METODO LE LLEGAN LOS PARAMETROS VACIOS
  -->
-            <form class="modal-content" action="<?= FRONT_ROOT . '/Cinema/Add' ?>" method="POST">
+            <form class="modal-content" action="<?= FRONT_ROOT .'/Room/Add'?>" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear Cine</h5>
+                    <h5 class="modal-title">Crear Sala</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input required name="cinemaName" type="text">
+
+                <div class="form-group">
+                        <label>Cine al que pertenece</label>
+                        <select required name="cinema" id="">
+                            <?php foreach ($activeCinemas as $activeCinema) {?>
+                            <option value="<?=$activeCinema->getIdCinema(); ?>"> <?php echo $activeCinema->getName();?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Direccion</label>
-                        <input required name="adress" type="text">
+                        <label>Nombre</label>
+                        <input required name="roomName" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Capacidad</label>
+                        <input name='capacity'  min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <input name='price' min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
                     
                 </div>

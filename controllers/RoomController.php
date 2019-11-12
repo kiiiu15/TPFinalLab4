@@ -6,20 +6,23 @@ use Controllers\IControllers as IControllers;
 use Model\Room as Room;
 use Model\Cinema as Cinema;
 use Dao\RoomDB as RoomDB;
-use Dao\CinemaDB as CinemaDB;
+use Controllers\CinemaController as CinemaController;
 
 class RoomController implements IControllers{
 
     public function __construct(){}
     
-    public function Add($room){
+    public function Add($idCinema, $name, $capacity, $price){
         $roomDB = new RoomDB();
-
+        $cinemaController = new CinemaController();
+        $room = new Room(0, $name, $price, $capacity,$cinemaController->RetrieveById($idCinema));
         try{
             $roomDB->Add($room);
         }catch(\PDOException $ex){
             throw $ex;
         }
+
+        $this->index();
     }
 
     public function GetAll(){
@@ -57,10 +60,13 @@ class RoomController implements IControllers{
         return $room;
     }
 
-    public function Delete($room){
+    public function Delete($idRoom){
         $roomDB = new RoomDB();
+        $idRoom = $this->TransformToArray($idRoom);
         try{
-            $roomDB->Delete($room);
+            foreach($idRoom as $id){
+                $roomDB->Delete($this->RetrieveById($id));
+            }
         }catch(\PDOException $ex){
             throw $ex;
         }
@@ -94,9 +100,26 @@ class RoomController implements IControllers{
             throw $ex;
         }
     }
+
+    private function TransformToArray($value){
+        if ($value == false){
+            $value = array();
+        }
+
+        if (!is_array($value)){
+            $value = array($value);
+        }
+
+        return $value;
+
+    }
+
     public function index(){
-        $roomList = $this->GetAll();
-        //include(VIEWS . "/roomList.php");
+        $rooms = $this->GetAll();
+        $CinemaController = new CinemaController();
+
+        $activeCinemas = $CinemaController->RetrieveByActive(true);
+        include(VIEWS . "/listRooms.php");
     }
 
 

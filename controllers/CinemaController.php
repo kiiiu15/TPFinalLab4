@@ -53,6 +53,16 @@ class CinemaController implements IControllers{
         }
     }
 
+    public function RetrieveById($id){
+        $cinemaDB=new CinemaDB();
+        try{
+            return $cinemaDB->RetrieveById($id);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+
     public function Reactivate($idCinema = 0){
         
         $cinemaDB=new CinemaDB();
