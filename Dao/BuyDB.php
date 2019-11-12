@@ -114,6 +114,20 @@ class BuyDB{
 
     }*/
 
+    public function getTotalByDate($fromDate,$toDate){
+        $sql = "SELECT SUM(Buy.total) AS total FROM Buy WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate";
+
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
     
     protected function Map($value) {
         $UserDB= new UserDB();
@@ -123,7 +137,6 @@ class BuyDB{
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }
-
 
 
 }

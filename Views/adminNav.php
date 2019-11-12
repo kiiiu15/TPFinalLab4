@@ -31,8 +31,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/CreditCard' ?>">prueba</a>
             </li>
-          
-            
+            <li class="nav-item">
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Buy' ?>">verTotal</a>
+            </li>
         </ul>
         <!-- <span class="navbar-text text-white"> -->
             <!-- <strong>(Hola <?php// echo $user->getName(); ?>)</strong> -->
