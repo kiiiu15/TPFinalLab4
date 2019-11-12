@@ -70,6 +70,8 @@ class RoomController implements IControllers{
         }catch(\PDOException $ex){
             throw $ex;
         }
+
+        $this->index();
     }
 
     public function Modify($room){
@@ -88,6 +90,8 @@ class RoomController implements IControllers{
         $db = new RoomDB();
                                 //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
         $RemainingCapacity = $db->GetTotalTicketsByFunction($idFunction);
+
+        var_dump($RemainingCapacity);
 
         return $RemainingCapacity - $numberOfTickets;
     }

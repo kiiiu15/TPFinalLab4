@@ -30,7 +30,7 @@ class Request {
             * Si el array tiene elementos, el primero lo guardamos en controller, si no, guardamos Home como controller por defecto
             */
            if(empty($ArregloUrl)) {
-                $this->controller = 'User';
+                $this->controller = 'Home';
            } else {
                 $this->controller = ucwords(array_shift($ArregloUrl));
            }

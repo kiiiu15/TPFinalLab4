@@ -31,7 +31,7 @@ class RoomDB{
      * no se si le corresponde a roomBd pero por ahora lo dejo aca
      */
     public function GetTotalTicketsByFunction($idFunction){
-        $sql = "SELECT SUM(Buy.numberOfTickets) AS totalNumberOfTickets FROM Buy WHERE buy.idMovieFunction = :idMovieFunction";
+        $sql = "SELECT SUM(Buy.numberOfTickets)  FROM Buy WHERE buy.idMovieFunction = :idMovieFunction GROUP BY Buy.numberOfTickets";
         $values["idMovieFunction"] = $idFunction;
         try{
             $this->connection = Connection::getInstance();
@@ -44,7 +44,7 @@ class RoomDB{
 
     public function Add($room){
         $sql="INSERT INTO Rooms(name,price,capacity,idCinema) VALUES(:name,:price,:capacity,:idCinema)";
-        $values['name'] = $room->getId();
+        $values['name'] = $room->getName();
         $values['price'] = $room->getPrice();
         $values['capacity'] = $room->getCapacity();
         $cinema = new Cinema();

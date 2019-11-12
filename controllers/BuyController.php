@@ -29,7 +29,7 @@ class BuyController implements Icontrollers{
         
         
         $UserController = new UserController();
-        $user = $UserController->GetUserLoged();  //obtengo el usuario
+        $user = /*$UserController->GetUserLoged()*/true;  //obtengo el usuario
 
         $roomController = new RoomController();
 

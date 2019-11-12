@@ -22,6 +22,10 @@
         $movieList = array($movieList);
     }
 
+    if ($selectedMovieFunctions == false){
+        $selectedMovieFunctions = array();
+    }
+
 
     //var_dump($selectedMovieFunctions);
     
@@ -158,7 +162,7 @@
     <div class="modal fade" id="show-movie" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
-            <form class="modal-content" action="" method="GET">
+            <form class="modal-content" action="<?= FRONT_ROOT?>/Buy/ReciveBuy" method="POST">
 
                 <div class="modal-header">
                 
@@ -182,64 +186,26 @@
                                 foreach($selectedMovieFunction as  $function){?>
                                     <option value="<?= $cinemaId;?>"> <?php echo $function->getRoom()->getCinema()->getName();?> </option>
                         
-                            <?php  }
+                            <?php break; }    
                             }
                         ?>
 
                         </select>
                     </div>
 
-                <!-- 
-                    Y EN ESTE SE MOSTRARIAN LAS FUNCIONES QUE HAY PARA ESE CINE....
-                    ACA NO SE SI ESTO VA A FUNCIONAR, YA Q NO SE SI AL SELECCIONAR UN CINE DETERMINADO
-                    LA LISTA SE VA A ACTUALIZAR
-                 -->
-                    
+
                     <div class="form-group">
                         <label>FUNCIONES</label>
-                        <select id="choices" name="" class="form-control ml-3">
-                        <?php// foreach() { ?>
-                           
-                        <?php// } ?>
-                        </select>
+                            <select id="choices" name="idFunction" class="form-control ml-3">
+                            </select>
                     </div>
 
                     <div class="form-group">
                         <label>CANTIDAD DE ENTRADAS</label>
-                        <input name="" type="number">
+                        <input name="quantity" type="number">
                     </div>
 
-<!--
-                    <div class="form-group">
-                        <label>Título</label>
-                        <input type="text" class="form-control" name="post[title]" />
-                    </div>
 
-                    <div class="form-group">
-                        <label>Autor</label>
-                        <input type="text" disabled value="<?php //echo $user->getName() ?>" class="form-control">
-                        <input type="hidden" name="post[author]" value="<?php// echo $user->getName() ?>" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Categoría</label>
-                        <select name="post[category]" class="form-control ml-3">
-                        <?php// foreach($categoriesList as $category ) { ?>
-                            <option value="<?php// echo $category->getName() ?>"><?php// echo $category->getName() ?></option>
-                        <?php// } ?>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <input type="date" class="form-control" name="post[date]" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>Texto</label>
-                        <textarea name="post[text]" class="form-control"></textarea>
-                    </div>
--->
                 </div>
 
                 <div class="modal-footer">
@@ -273,7 +239,7 @@
                 for (i = 0; i < lookup[selectValue].length; i++) {
                     
                     // Output choice in the target field
-                    $('#choices').append("<option value=''>" + lookup[selectValue][i] + "</option>");
+                    $('#choices').append("<option value='" + values[selectValue][i] + "'>" + lookup[selectValue][i] + "</option>");
                     
                 }
             });
@@ -282,14 +248,26 @@
             
         };  
 
-
+        var values = {
+            <?php foreach ($selectedMovieFunctions as $cinemaId => $selectedMovieFunction){ ?>
+                '<?= $cinemaId;?>'   : 
+            
+            [
+                <?php foreach($selectedMovieFunction as $function) {?>
+                '<?php echo $function->getId();?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
+                <?php } ?>
+            ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
+        <?php }?>
+        };
 
         var lookup = {
+            
             <?php foreach ($selectedMovieFunctions as $cinemaId => $selectedMovieFunction){ ?>
-            '<?= $cinemaId;?>'  : 
+            '<?= $cinemaId;?>'   : 
             
                 [
                     <?php foreach($selectedMovieFunction as $function) {?>
+                    /*values.push(<?= $function->getId();?>);*/
                     '<?php echo "Fecha: " . $function->getDay() . " Sala: " . $function->getRoom()->getName() . " Horario: " . $function->getHour()?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
                     <?php } ?>
                 ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>

@@ -20,6 +20,9 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Room' ?>">Add Rooms</a>   
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Add Function</a>   
             </li>
             <li class="nav-item">
