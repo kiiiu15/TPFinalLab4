@@ -16,8 +16,22 @@ class CreditCardDB{
        
     }
 
-    public function Add(){
+    public function Add($creditCard){
+        $sql = "INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES (:company,:number,:securityCode,:expiryMonth,:expiryYear)";      
         
+        $values["company"]      = $creditCard->getCompany();
+        $values["number"]       = $creditCard->getNumber();
+        $values["securityCode"] = $creditCard->getSecurityCode();
+        $values["expiryMonth"]  = $creditCard->getExpiryMonth();
+        $values["expiryYear"]   = $creditCard->getExpiryYear();
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
     }
 
     public function RetrieveByEmail($email){
