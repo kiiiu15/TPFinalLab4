@@ -114,28 +114,37 @@ class BuyDB{
 
     }*/
 
-    public function getTotalByDate($fromDate,$toDate,$cinema = ""){
-        
-        if($cinema != ""){
-            $sql = "SELECT SUM(Buy.total) AS total FROM 
-            Buy INNER JOIN MovieFunctions 
-            ON Buy.idMovieFunction = MovieFunctions.idFunction
-            INNER JOIN Rooms
-            ON MovieFunctions.idRoom = Rooms.id
-            WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
-            AND Rooms.idCinema = :idCinema";
+    public function getTotalByMovie($fromDate,$toDate,$idMovie){
+        $sql = "SELECT SUM(Buy.total) AS total FROM 
+        Buy INNER JOIN MovieFunctions 
+        ON Buy.idMovieFunction = MovieFunctions.idFunction
+        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
+        AND MovieFunctions.idMovie = :idMovie";
 
-            $values['idCinema'] = $cinema;
-        }else{
-            $sql = "SELECT SUM(Buy.total) AS total FROM 
-            Buy INNER JOIN MovieFunctions 
-            ON Buy.idMovieFunction = MovieFunctions.idFunction
-            INNER JOIN Rooms
-            ON MovieFunctions.idRoom = Rooms.id
-            WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate"; 
+        $values['idMovie'] = $idMovie;
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
         }
+    }
+
+    public function getTotalByCinema($fromDate,$toDate,$cinema){
         
-        
+        $sql = "SELECT SUM(Buy.total) AS total FROM 
+        Buy INNER JOIN MovieFunctions 
+        ON Buy.idMovieFunction = MovieFunctions.idFunction
+        INNER JOIN Rooms
+        ON MovieFunctions.idRoom = Rooms.id
+        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
+        AND Rooms.idCinema = :idCinema";
+
+        $values['idCinema'] = $cinema;
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
@@ -149,23 +158,18 @@ class BuyDB{
         
     }
 
-    /*public function getTotalByDate($fromDate,$toDate,$cinema = ""){
+    public function getTotalByDate($fromDate,$toDate){
         
         $sql = "SELECT SUM(Buy.total) AS total FROM 
         Buy INNER JOIN MovieFunctions 
         ON Buy.idMovieFunction = MovieFunctions.idFunction
         INNER JOIN Rooms
         ON MovieFunctions.idRoom = Rooms.id
-        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
-        AND Rooms.idCinema = :idCinema";
+        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate"; 
+        
 
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
-        if($cinema == ""){
-            $values['idCinema'] = '*'; // parece q esto no funca
-        }else{
-            $values['idCinema'] = $cinema;
-        }
 
         try{
             $this->connection= Connection::getInstance();
@@ -174,7 +178,31 @@ class BuyDB{
         }catch(\PDOException $ex){
             throw $ex;
         }
-    }*/
+    }
+
+    public function getTotalByMovieAndCinema($fromDate,$toDate,$idMovie,$idCinema){
+        $sql = "SELECT SUM(Buy.total) AS total FROM 
+        Buy INNER JOIN MovieFunctions 
+        ON Buy.idMovieFunction = MovieFunctions.idFunction
+        INNER JOIN Rooms
+        ON MovieFunctions.idRoom = Rooms.id
+        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
+        AND Rooms.idCinema = :idCinema
+        AND MovieFunctions.idMovie = :idMovie";
+
+        $values['idMovie'] = $idMovie;
+        $values['idCinema'] = $idCinema;
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
     
     protected function Map($value) {
         $UserDB= new UserDB();

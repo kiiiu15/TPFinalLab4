@@ -43,6 +43,8 @@ class HomeController implements Icontrollers {
     public function Stats(){
         $cinemaController = new CinemaController();
         $cinemaList = $cinemaController->GetAll();
+        $movieController = new MovieController();
+        $movieList = $movieController->GetAll();
         include(VIEWS."/stats.php" );
     }
 

@@ -135,15 +135,43 @@ class BuyController implements Icontrollers{
         }
     }
 
-    public function getTotalByDate($fromDate,$toDate,$cinema = ""){
+    public function getTotalByDate($fromDate,$toDate,$cinema,$movie){
         $db = new BuyDB();
-
-        try{
-            $result = $db->getTotalByDate($fromDate,$toDate,$cinema = "");
-            var_dump($result);
-        }catch(\PDOException $ex){
-            throw $ex;
+        
+        //si no especifica cine ni pelicula se muestra el total de todas las ventas
+        if($cinema == "" && $movie == ""){
+            
+            try{
+                $result = $db->getTotalByDate($fromDate,$toDate);
+                var_dump($result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema != "" && $movie == ""){//solo se selecciono un cine pero no pelicula
+            
+            try{
+                $result = $db->getTotalByCinema($fromDate,$toDate,$cinema);
+                var_dump($result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema == "" && $movie != ""){
+            
+            try{
+                $result = $db->getTotalByMovie($fromDate,$toDate,$movie);
+                var_dump($result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema != "" && $movie != ""){
+            try{
+                $result = $db->getTotalByMovieAndCinema($fromDate,$toDate,$movie,$cinema);
+                var_dump($result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
         }
+        
     }
 
     public function index(){
