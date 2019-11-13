@@ -135,10 +135,11 @@ class BuyController implements Icontrollers{
         }
     }
 
-    public function getTotalByDate($fromDate,$toDate){
+    public function getTotalByDate($fromDate,$toDate,$cinema = ""){
         $db = new BuyDB();
+
         try{
-            $result = $db->getTotalByDate($fromDate,$toDate);
+            $result = $db->getTotalByDate($fromDate,$toDate,$cinema = "");
             var_dump($result);
         }catch(\PDOException $ex){
             throw $ex;
@@ -146,7 +147,7 @@ class BuyController implements Icontrollers{
     }
 
     public function index(){
-        include(VIEWS."/prueba.php" );
+        
     }
 
 

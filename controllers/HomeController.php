@@ -4,6 +4,7 @@ namespace controllers;
 use controllers\Icontrollers as Icontrollers;
 use controllers\UserController as UserController;
 use controllers\MovieController as MovieController;
+use controllers\CinemaController as CinemaController;
 use controllers\MovieFunctionController as MovieFunctionController;
 use controllers\GenreController as GenreController; 
 use Dao\MovieDB as MovieDB;
@@ -37,6 +38,12 @@ class HomeController implements Icontrollers {
             $movieList = array($movieList);
         }
         include(VIEWS.'/posts.php');
+    }
+
+    public function Stats(){
+        $cinemaController = new CinemaController();
+        $cinemaList = $cinemaController->GetAll();
+        include(VIEWS."/stats.php" );
     }
 
     public function GetMovieForGenreFromBillBoard($genreId){
