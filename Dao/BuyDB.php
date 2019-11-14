@@ -203,6 +203,43 @@ class BuyDB{
             throw $ex;
         }
     }
+
+    //lo tome como que busca las fechas de la compra, no de la funcion
+    public function getTotalTicketsSold($fromDate,$toDate){
+                
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total tickets sold' FROM
+        Buy WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true";
+
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+            
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function getTotalTicketsSoldByMovie($fromDate,$toDate,$idMovie){
+                
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total tickets sold' FROM
+        Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction =  Moviefunctions.idFuntion
+        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Moviefunctions.idMovie = :idMovie";
+
+        $values['idMovie'] = $idMovie;
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+            
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
     
     protected function Map($value) {
         $UserDB= new UserDB();
