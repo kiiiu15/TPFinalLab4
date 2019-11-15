@@ -2,6 +2,11 @@
 
 ?>
 
+<label>TOTAL DE BUSQUEDA</label>
+<label><?=$totalSold;?></label>
+<label>TOTAL DE Tickets</label>
+<label><?=$totalTicketsSold;?></label>
+
 <form action="<?= FRONT_ROOT . "/Buy/getTotalByDate" ?>" method="post">
     <h5>check totals by date / cinema / movie</h5>
 
@@ -36,12 +41,12 @@
 </form>
 
 
-<form action="<?= FRONT_ROOT . "/Buy/getTotalByDate" ?>" method="post">
+<form action="<?= FRONT_ROOT . "/Buy/getTotalTicketsSold" ?>" method="post">
     <h5>check total of tickets by date / cinema / movie</h5>
 
-    <label>fecha desde</label>
+    <label>From date</label>
     <input type="date" required name="fromDate">
-    <label>fecha hasta</label>
+    <label>To date</label>
     <input type="date" required name="toDate">
     <label>Cinemas</label>
     <select name="cinema">

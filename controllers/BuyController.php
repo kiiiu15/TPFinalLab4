@@ -137,13 +137,16 @@ class BuyController implements Icontrollers{
 
     public function getTotalByDate($fromDate,$toDate,$cinema,$movie){
         $db = new BuyDB();
-        
+        $homeController = new HomeController();
         //si no especifica cine ni pelicula se muestra el total de todas las ventas
         if($cinema == "" && $movie == ""){
             
             try{
                 $result = $db->getTotalByDate($fromDate,$toDate);
-                var_dump($result);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats($result,-1);
             }catch(\PDOException $ex){
                 throw $ex;
             }
@@ -151,7 +154,10 @@ class BuyController implements Icontrollers{
             
             try{
                 $result = $db->getTotalByCinema($fromDate,$toDate,$cinema);
-                var_dump($result);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats($result,-1);
             }catch(\PDOException $ex){
                 throw $ex;
             }
@@ -159,19 +165,75 @@ class BuyController implements Icontrollers{
             
             try{
                 $result = $db->getTotalByMovie($fromDate,$toDate,$movie);
-                var_dump($result);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats($result,-1);
             }catch(\PDOException $ex){
                 throw $ex;
             }
         }else if ($cinema != "" && $movie != ""){
             try{
                 $result = $db->getTotalByMovieAndCinema($fromDate,$toDate,$movie,$cinema);
-                var_dump($result);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats($result,-1);
             }catch(\PDOException $ex){
                 throw $ex;
             }
         }
         
+    }
+
+    public function getTotalTicketsSold($fromDate,$toDate,$cinema,$movie){
+        $db = new BuyDB();
+        $homeController = new HomeController();
+        //si no especifica cine ni pelicula se muestra el total de todas las ventas
+        if($cinema == "" && $movie == ""){
+            
+            try{
+                $result = $db->getTotalTicketsSold($fromDate,$toDate);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats(-1,$result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema != "" && $movie == ""){//solo se selecciono un cine pero no pelicula
+            
+            try{
+                $result = $db->getTotalTicketsSoldByCinema($fromDate,$toDate,$cinema);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats(-1,$result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema == "" && $movie != ""){
+            
+            try{
+                $result = $db->getTotalTicketsSoldByMovie($fromDate,$toDate,$movie);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats(-1,$result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }else if ($cinema != "" && $movie != ""){
+            try{
+                $result = $db->getTotalTicketsSoldByCinemaAndMovie($fromDate,$toDate,$cinema,$movie);
+                if($result == null){
+                    $result = 0;
+                }
+                $homeController->stats(-1,$result);
+            }catch(\PDOException $ex){
+                throw $ex;
+            }
+        }
     }
 
     public function index(){

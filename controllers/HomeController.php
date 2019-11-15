@@ -40,7 +40,17 @@ class HomeController implements Icontrollers {
         include(VIEWS.'/posts.php');
     }
 
-    public function Stats(){
+    public function Stats($total = -1,$totalTickets = -1){
+        $totalSold = $total;
+        $totalTicketsSold = $totalTickets;
+
+        if($totalSold == -1){
+            $totalSold = "hace el formulario";
+        }
+        if($totalTickets == -1){
+            $totalTickets = "hace el formulario";
+        } 
+
         $cinemaController = new CinemaController();
         $cinemaList = $cinemaController->GetAll();
         $movieController = new MovieController();

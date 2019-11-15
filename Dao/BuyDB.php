@@ -207,7 +207,7 @@ class BuyDB{
     //lo tome como que busca las fechas de la compra, no de la funcion
     public function getTotalTicketsSold($fromDate,$toDate){
                 
-        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total tickets sold' FROM
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
         Buy WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true";
 
         $values['fromDate'] = $fromDate;
@@ -224,11 +224,53 @@ class BuyDB{
 
     public function getTotalTicketsSoldByMovie($fromDate,$toDate,$idMovie){
                 
-        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total tickets sold' FROM
-        Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction =  Moviefunctions.idFuntion
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
+        Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction =  Moviefunctions.idFunction
         WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Moviefunctions.idMovie = :idMovie";
 
         $values['idMovie'] = $idMovie;
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+            
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex; 
+        }
+    }
+
+    public function getTotalTicketsSoldByCinema($fromDate,$toDate,$idCinema){
+                
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
+        Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction = Moviefunctions.idFunction
+        INNER JOIN Rooms ON Moviefunctions.idRoom = Rooms.id
+        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Rooms.idCinema = :idCinema";
+
+        $values['idCinema'] = $idCinema;
+        $values['fromDate'] = $fromDate;
+        $values['toDate'] = $toDate;
+            
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->Execute($sql,$values)[0]['total'];
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function getTotalTicketsSoldByCinemaAndMovie($fromDate,$toDate,$idCinema,$idMovie){
+                
+        $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
+        Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction = Moviefunctions.idFunction
+        INNER JOIN Rooms ON Moviefunctions.idRoom = Rooms.id
+        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Rooms.idCinema = :idCinema 
+        AND Moviefunctions.idMovie = :idMovie";
+
+        $values['idMovie'] = $idMovie;
+        $values['idCinema'] = $idCinema;
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
             

@@ -42,7 +42,13 @@ class UserController implements IControllers
     }
 
     public function IsAdmin(){
-        $ans = /*$_SESSION['loged']->GetRole()->GetRoleName() == 'admin' ? true : false;*/ true;
+       // $ans = /*$_SESSION['loged']->GetRole()->GetRoleName() == 'admin' ? true : false;*/ true;
+        $ans = false;
+        if($this->CheckSession()){
+            if($this->GetUserLoged()->GetRole()->getRoleName() == 'admin'){
+                $ans = true;
+            }
+        }
         return $ans;
     }
 
@@ -56,6 +62,25 @@ class UserController implements IControllers
         $_SESSION["status"] = "on";
         $_SESSION["loged"] = $user;
         
+    }
+
+    public function CheckSession(){
+        $db = new UserDB();
+        $user = $this->GetUserLoged();
+        $ans = false;
+        if($user){
+            if($this->UserExist($user->GetEmail())){
+                $userAux = $db->GetByEmail($user->GetEmail());
+                if($userAux->GetPass() == $user->GetPass()){
+                    $ans = true;
+                }
+            }
+        }
+        if($ans){
+            return $ans;
+        }else{//preguntar si se puede hacer esto jeje
+            include(VIEWS."/login.php");
+        }
     }
 
     public function GetUserLoged(){
