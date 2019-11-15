@@ -3,7 +3,7 @@ namespace Model;
 
 class Profile{
     
-   // private $id;//no se si esto esta bien 
+    private $id;//no se si esto esta bien 
     private $Name;
     private $LastName;
     private $Dni;
@@ -12,8 +12,8 @@ class Profile{
     //private $CreditCard;
 
     //Constructor
-    public function __construct(/*$id,*/$Name,$LastName,$Dni,$TelephoneNumber){
-        //$this->id = $id;
+    public function __construct($id,$Name,$LastName,$Dni,$TelephoneNumber){
+        $this->id = $id;
         $this->Name=$Name;
         $this->LastName=$LastName;
         $this->Dni=$Dni;
@@ -78,6 +78,26 @@ class Profile{
 
         return $this;
     }*/
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }
 
 

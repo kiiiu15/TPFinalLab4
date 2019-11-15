@@ -13,7 +13,19 @@ class CreditCardDB{
     }
 
     public function GetAll(){
-       
+        $sql = "SELECT * FROM CreditCards";
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $result = $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
     }
 
     public function Add($creditCard){
@@ -33,6 +45,43 @@ class CreditCardDB{
             throw $ex;
         }
     }
+
+    public function Modify($oldNumber,$CreditCard){
+        $sql = "UPDATE CreditCards SET CreditCards.company = :company,CreditCards.number = :number,
+        CreditCards.securityCode = :securityCode, CreditCards.expiryMonth = :expiryMonth ,CreditCards.expiryYear = :expiryYear
+        WHERE CreditCards.number = :oldNumber";
+
+        $values['company']      = $CreditCard->getCompany();
+        $values['number']       = $CreditCard->getNumber();
+        $values['securityCode'] = $CreditCard->getSecurityCode();
+        $values['expiryMonth']  = $CreditCard->getExpiryMonth();
+        $values['expiryYear']   = $CreditCard->getExpiryYear();
+        $values['oldNumber']    = $oldNumber;
+        
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+    }
+
+    public function Delete($number){
+        $sql = "DELETE FROM CreditCards WHERE CreditCards.number = :number";
+
+        $values['number'] = $number;
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+    }
+
 
     public function RetrieveByEmail($email){
         $sql = "SELECT * 

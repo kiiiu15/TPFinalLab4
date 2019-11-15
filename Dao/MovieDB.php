@@ -47,9 +47,7 @@ class MovieDB{
             $this->connection->connect();
             $this->connection->ExecuteNonQuery($sql,$values);
 
-
             $genrePerMovieDB = new GenresPerMovieDB();
-
 
             foreach ($genrePerMovie as $genreMovie){
                 $genrePerMovieDB->Add($genreMovie);
@@ -58,6 +56,18 @@ class MovieDB{
             throw $ex;
         }
 
+
+    }
+    public function Modify($Movie){
+        $sql = "UPDATE Movies SET Movies.tittle=:tittle,Movies.Language=:Language,Movies.overview=:overview,
+        Movies.ReleaseDate=:ReleaseDate,Movies.Poster=:Poster
+        WHERE Movies.idMovie = :idMovie";
+
+        $values['tittle'] = $Movie->getTitle();
+        $values['Language'] = $Movie->getLanguage();
+        $values['overview'] = $Movie->getOverview();
+        $values['ReleaseDate'] = $Movie->getReleaseDate();
+        $values['Poster'] = $Movie->getPoster();
 
     }
 
@@ -71,7 +81,6 @@ class MovieDB{
         }catch(\PDOExeption $ex){
             throw $ex;
         }
-
 
         if(!empty($result)){
             return $this->Map($result);
@@ -138,8 +147,8 @@ class MovieDB{
     /*Medio que esto no sirve en el sentido de que si ya la usamos esta peli tenemos aunque sea unos minimos datos relevantes */
     public function Delete($movie){
 
-        $sql="DELETE FROM Movies WHERE Movies.title=:title";
-        $values['title'] = $movie->getTitle();
+        $sql="DELETE FROM Movies WHERE Movies.tittle=:title";
+        $values['tittle'] = $movie->getTitle();
 
         try{
             $this->connection= Connection::getInstance();

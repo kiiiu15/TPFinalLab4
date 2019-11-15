@@ -79,7 +79,7 @@ class GenreDB {
         }
     }
 
-    public function Remove($id){
+    public function Delete($id){
         $sql="DELETE FROM Genres WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $id;
 
@@ -92,6 +92,21 @@ class GenreDB {
             throw $ex;
         }
        
+    }
+
+    public function Modify($genre){
+        $sql = "UPDATE Genres SET Genres.nameGenre = :nameGenre WHERE Genres.idGenre = :idGenre";
+
+        $values['idGenre'] = $genre->getId();
+        $values['nameGenre'] = $genre->getName();
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
+            return $result;
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
     }
 
     protected function Map($value) {

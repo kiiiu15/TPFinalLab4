@@ -57,6 +57,17 @@ class UserDB
         }
     }
 
+    public function Modify($oldEmail,$user){
+        $sql = "UPDATE Users SET Users.email=:email,Users.pass=:pass,Users.roleName=:roleName,Users.usersProfileId=:usersProfileId
+        WHERE Users.email=:oldEmail";
+
+        $values['email']          = $user->GetEmail();
+        $values['pass']           = $user->GetPass();
+        $values['roleName']       = $user->GetRole()->GetRoleName;
+        $values['usersProfileId'] = $user->GetProfile()->getId();
+        $values['oldEmail']       = $oldEmail;
+
+    }
     public function DeleteByEmail($email){
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;

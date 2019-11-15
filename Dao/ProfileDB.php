@@ -88,6 +88,42 @@ class ProfileDB
             return false;
         }
     }
+    
+    public function Modify($profile){
+        $sql = "UPDATE UserProfiles SET UserProfiles.UserName=:UserName,UserProfiles.UserLastName=:UserLastName,
+        UserProfiles.dni=:Dni,UserProfiles.telephoneNumber=:telephoneNumber
+        WHERE UserProfiles.idProfile=:idProfile";
+
+        $values['UserName'] = $profile->getUserName();
+        $values['UserLastName'] = $profile->getUserLastName();
+        $values['Dni'] = $profile->getDni();
+        $values['telephoneNumber'] = $profile->getTelephoneNumber();
+        $values['idProfile'] = $profile->getIdProfile();
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
+            return $result;
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
+
+    public function Delete($profileId){
+        $sql = "DELETE FROM UserProfiles WHERE UserProfiles.idProfile = :idProfile";
+
+        $values['idProfile'] = $profileId;
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            $result=$this->connection->ExecuteNonQuery($sql,$values);
+            return $result;
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
 
     protected function Map($value) {
         $value = is_array($value) ? $value : [];

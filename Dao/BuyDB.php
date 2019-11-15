@@ -84,6 +84,29 @@ class BuyDB{
         }
     }
 
+    public function Modify($buy){
+        $sql="UPDATE Buy SET Buy.idMovieFunction=:idMovieFunction,Buy.date=:date,Buy.numberOfTickets=:numberOfTickets,
+        Buy.total=:total,Buy.discount=:discount,Buy.emailUser=:emailUser,Buy.state=:state WHERE Buy.idBuy=:idBuy";
+
+        $values["idMovieFunction"] = $buy->getIdMovieFunction();
+        $values["date"]            = $buy->getDate();
+        $values["numberOfTickets"] = $buy->getNumberOfTickets();
+        $values["total"]           = $buy->getTotal();
+        $values["discount"]        = $buy->getDiscount();
+        $values["emailUser"]       = $buy->getEmailUser();
+        $values["state"]           = $buy->getState();
+        $values["idBuy"]           = $buy->getIdBuy();
+
+        try{
+            $this->connection = Connection::getInstance();
+            $this->connection->connect();
+            return  $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+
+    }
+
     public function ChangeState($idBuy){ //VERIFICAR SI FUNCIONA ASI LA QUERY !!! 
         $sql="UPDATE Buy WHERE Buy.state=:true WHERE Buy.idBuy = :idBuy";
         $values['idBuy'] = $idBuy;

@@ -25,6 +25,21 @@ class TicketDB{
             throw $ex;
         }
     }
+    public function Modify($ticket){
+        $sql = "UPDATE Tickets SET Tickets.qr=:qr,Tickets.idBuy=:idBuy WHERE Tickets.id = :id";
+
+        $values['qr'] = $ticket->getQR();
+        $values['idBuy'] = $ticket->getBuy()->getIdBuy();
+        $values['id'] = $ticket->getIdTicket();
+        
+        try{
+            $this->connection=Connection::getInstance();
+            $this->connection->connect();
+            return $this->connection->ExecuteNonQuery($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+    }
 
     public function GetAll(){
         $sql="SELECT * FROM Tickets";
