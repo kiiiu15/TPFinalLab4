@@ -53,7 +53,7 @@ class BuyController implements Icontrollers{
                 }
                 $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
                 $buy = $this->RetrieveById($id);
-                
+                var_dump($buy);
                 //include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
@@ -80,10 +80,8 @@ class BuyController implements Icontrollers{
         $buyDB= new  BuyDB();
 
         $buy = new Buy($idBuy,$movieFunction,$date,$numberOfTickets,$total,$discount,$user,$state);
-        
         try{
-            $result = $buyDB->Add($buy);
-            var_dump($result );
+            var_dump($buyDB->Add($buy) );
         }catch(\PDOException $ex){
             throw $ex;
         }
