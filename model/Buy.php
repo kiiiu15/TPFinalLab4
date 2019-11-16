@@ -13,8 +13,9 @@ class Buy{
     private $state;
 
     //Constructor
-    public function __construct($idBuy = 0,$date = "",$numberOfTickets = 0,$total = 0 ,$discount = 0  ,$user = null,$state = ""){
+    public function __construct($idBuy = 0,$MovieFunction = null,$date = "",$numberOfTickets = 0,$total = 0 ,$discount = 0  ,$user = null,$state = ""){
         $this->idBuy=$idBuy;
+        $this->MovieFunction = $MovieFunction;
         $this->date=$date;       
         $this->numberOfTickets=$numberOfTickets;
         $this->total=$total;
@@ -79,6 +80,26 @@ class Buy{
 
     public function setState($state){
         $this->state = $state;
+    }
+
+    /**
+     * Get the value of MovieFunction
+     */ 
+    public function getMovieFunction()
+    {
+        return $this->MovieFunction;
+    }
+
+    /**
+     * Set the value of MovieFunction
+     *
+     * @return  self
+     */ 
+    public function setMovieFunction($MovieFunction)
+    {
+        $this->MovieFunction = $MovieFunction;
+
+        return $this;
     }
 }
 

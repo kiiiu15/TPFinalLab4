@@ -81,7 +81,7 @@ class UserDB
         }
     }
 
-    public function GetById($idUser){
+    /*public function GetById($idUser){
         $sql = "SELECT * FROM Users WHERE Users.idUser = :idUser";
         $values['idUser'] = $idUser;
 
@@ -92,17 +92,10 @@ class UserDB
         }catch(\PDOException $ex){
             throw $ex;
         }
-    }
+    }*/
 
     public function GetByEmail($email){
-        $sql = "SELECT us.email,us.pass,us.roleName,p.UserName,p.UserLastName,p.Dni,p.TelephoneNumber
-                FROM
-                    Users AS us
-                INNER JOIN
-                    UserProfiles AS p
-                ON us.usersProfileId = p.idProfile
-                WHERE 
-                    us.email = :email";
+        $sql = "SELECT * FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
         try{
@@ -121,14 +114,14 @@ class UserDB
     }
 
     protected function Map($value) {
-
+        
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
-
+            
             $ccDB = new CreditCardDB();
             $list = $ccDB->RetrieveByEmail($u['email']);
-
-            $profile = new Profile($u['UserName'],$u['UserLastName'],$u['Dni'],$u['TelephoneNumber']);
+            $profileDB = new ProfileDB();
+            $profile = $profileDB->GetProfileById($u['usersProfileId']);
             $role = new Role($u['roleName']);
             return new User($u['email'], $u['pass'], $role, $profile, $list );
         }, $value);

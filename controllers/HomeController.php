@@ -104,6 +104,7 @@ class HomeController implements Icontrollers {
     }
 
     public function index ($mensage = null, $movieFunctionsToShow= null){
+       
         $errorMje = $mensage;
         $userC = new UserController(); 
         $movieFC = new MovieFunctionController();

@@ -126,9 +126,10 @@ class ProfileDB
     }
 
     protected function Map($value) {
+        
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($p) {
-            return new Profile($p['UserName'], $p['UserlastName'], $p['dni'], $p['telephoneNumber']);
+            return new Profile($p['idProfile'],$p['UserName'], $p['UserlastName'], $p['dni'], $p['telephoneNumber']);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

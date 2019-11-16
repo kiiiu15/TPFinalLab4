@@ -24,23 +24,18 @@ class BuyController implements Icontrollers{
     }*/
 
     public function ReciveBuy($idFunction,$numberOfTickets){
+
         $moviefunctionController = new MovieFunctionController();
         $function = $moviefunctionController->GetById($idFunction);  //obtengo la funcion
-        
-        
         $UserController = new UserController();
-        $user = /*$UserController->GetUserLoged()*/true;  //obtengo el usuario
-
+        $user = $UserController->GetUserLoged();  //obtengo el usuario
         $roomController = new RoomController();
-
-        $buyDB = new BuyDB(); //this directamente 
         
         $room = $function->getRoom(); //obtengo la sala
 
         if(!$user){
             include(VIEWS ."/login.php");
         }else{
-        
             //validacion sobre la capacidad de la sala
             if($roomController->GetRemainingCapacity($idFunction,$numberOfTickets) > -1){
                 $date =  date("l");
@@ -49,8 +44,6 @@ class BuyController implements Icontrollers{
                 $discount = 0;
                 $total = 0;
 
-               
-                
                 //validacion del dia martes y miercoles     
                 if($date == "Tuesday" || $date == "Wednesday"){
                     $discount = $room->getPrice() * 0.25;
@@ -58,10 +51,10 @@ class BuyController implements Icontrollers{
                 }else{
                     $total =  $room->getPrice();
                 }
-                //this add 
-                $buy = new Buy($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
-                $buyDB->Add($buy);
-                include(VIEWS ."/payment.php");
+                $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
+                $buy = $this->RetrieveById($id);
+                
+                //include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
                 $homeController = new HomeController();
@@ -83,13 +76,14 @@ class BuyController implements Icontrollers{
         return $listBuy;
     }
 
-    public function Add($date = "", $numberOfTickets = 0, $total = 0, $discount = 0, $idUser = 0){
+    public function Add($idBuy = "",$movieFunction=null,$date = "", $numberOfTickets = 0, $total = 0, $discount = 0, $user = null,$state = false){
         $buyDB= new  BuyDB();
-        $userDB= new UserDB();
-        $user = $userDB->GetById($idUser);
-        $buy = new Buy(0,$date,$numberOfTickets,$total,$discount,$user);
+
+        $buy = new Buy($idBuy,$movieFunction,$date,$numberOfTickets,$total,$discount,$user,$state);
+        
         try{
-            $buyDB->Add($buy);
+            $result = $buyDB->Add($buy);
+            var_dump($result );
         }catch(\PDOException $ex){
             throw $ex;
         }

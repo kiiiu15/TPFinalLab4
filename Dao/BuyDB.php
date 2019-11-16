@@ -30,21 +30,25 @@ class BuyDB{
 
     //En el modelo de Buy tenemos que agregar el objeto de tipo usuario
     public function Add($buy){
-        $sql="INSERT INTO Buy(date,numberOfTickets,total,discount,idUser,state) VALUES(:date,:numberOfTickets,:total,:discount,:idUser,state)";
-        $values['date']= $buy->getDate();
-        $values['numberOfTickets']= $buy->getNumberOfTickets();
-        $values['total']= $buy->getTotal();
-        $values['discount']= $buy->getDiscount();
-        $user= new User();
-        $user=$buy->getUser();
-        $values['idUser']= $user->getId(); 
-        $values['state'] = $buy->getState();
+        
+        $sql="INSERT INTO Buy (idBuy,idMovieFunction,date,numberOfTickets,total,discount,emailUser,state) VALUES (:idBuy,:idMovieFunction,:date,:numberOfTickets,:total,:discount,:emailUser,:state)";
+
+        $values['idBuy']            = $buy->getIdBuy();
+        $values['idMovieFunction']  = (int)$buy->getMovieFunction()->getId();
+        $values['date']             = $buy->getDate();
+        $values['numberOfTickets']  = (int)$buy->getNumberOfTickets();
+        $values['total']            = (int)$buy->getTotal();
+        $values['discount']         = (int)$buy->getDiscount();
+        $values['emailUser']        = $buy->getUser()->GetEmail();
+        $values['state']            = false;
+
+        var_dump($values);
 
         try{
-            $this->connection=Connection::getInstance();
+            $this->connection = Connection::getInstance();
             $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOException $ex){
+        }catch(\PDOExeption $ex){
             throw $ex;
         }
     }
@@ -310,7 +314,7 @@ class BuyDB{
         $UserDB= new UserDB();
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($b) {
-        return new Buy($b['idBuy'],$b['date'], $b['numberOfTickets'], $b['total'], $b['discount'], $b['price'],$UserDB->GetById($b['idUser']));
+        return new Buy($b['idBuy'],$b['date'], $b['numberOfTickets'], $b['total'], $b['discount'], $b['price'],$UserDB->GetByEmail($b['emailUser']));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

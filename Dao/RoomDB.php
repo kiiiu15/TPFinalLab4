@@ -30,15 +30,38 @@ class RoomDB{
     /**
      * no se si le corresponde a roomBd pero por ahora lo dejo aca
      */
-    public function GetTotalTicketsByFunction($idFunction){
-        $sql = "SELECT SUM(Buy.numberOfTickets)  FROM Buy WHERE buy.idMovieFunction = :idMovieFunction GROUP BY Buy.numberOfTickets";
+    public function GetTotalTicketsByFunction($idFunction){ 
+        $sql = "SELECT SUM(Buy.numberOfTickets) as total FROM Buy WHERE buy.idMovieFunction = :idMovieFunction AND Buy.state = true";
         $values["idMovieFunction"] = $idFunction;
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values);
+            $reuslt = $this->connection->Execute($sql,$values)[0]['total'];
+            if($reuslt == null){
+                return 0;
+            }else{
+                return $reuslt;
+            }
         }catch(\PDOException $ex){
             throw $ex;
+        }
+    }
+
+    public function RetrieveByIdFunction($idFunction){
+        $sql = "SELECT * FROM Rooms WHERE Rooms.idFunction = :idFunction";
+
+        $values['idFunction'] = $idFunction;
+
+        try{
+            $this->connection= Connection::getInstance();
+            $result = $this->connection->Execute($sql, $values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);            
+        }else{
+            return false;
         }
     }
 

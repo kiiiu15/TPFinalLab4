@@ -1,13 +1,13 @@
 <?php
 namespace Model;
 
-class User{
+class User{ 
 
     //private $id;
     private $Email;
     private $Pass; 
-    private $profile;
     private $role;
+    private $profile;
     private $creditCards;
 
     //Constructor

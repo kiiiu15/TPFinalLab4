@@ -88,12 +88,24 @@ class RoomController implements IControllers{
      */
     public function GetRemainingCapacity($idFunction,$numberOfTickets){
         $db = new RoomDB();
+        $moviefunctionController = new MovieFunctionController();
+        $function = $moviefunctionController->GetById($idFunction);
+        $room = $function->getRoom();
                                 //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
-        $RemainingCapacity = $db->GetTotalTicketsByFunction($idFunction);
+        $TotalTicketsByFunction = $db->GetTotalTicketsByFunction($idFunction);
+        
+        $RemainingCapacity = $room->getCapacity() - ($TotalTicketsByFunction + $numberOfTickets);
 
-        var_dump($RemainingCapacity);
+        return $RemainingCapacity;
+    }
 
-        return $RemainingCapacity - $numberOfTickets;
+    public function GetRoomByIdFunction($idFunction){
+        $roomDB = new RoomDB();
+        try{
+           return $roomDB->RetrieveByIdFunction($idFunction);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
     }
 
     public function RetrieveByActive($active){
@@ -119,12 +131,19 @@ class RoomController implements IControllers{
     }
 
     public function index(){
-        $rooms = $this->GetAll();
-        $CinemaController = new CinemaController();
+        $roomList = $this->GetAll();
+        $CinemaController = new CinemaController(); 
 
-        $activeCinemas = $CinemaController->RetrieveByActive(true);
-        include(VIEWS . "/listRooms.php");
+        $CinemaList = $CinemaController->RetrieveByActive(true);
+
+        $rooms=$this->TransformToArray($roomList);
+        $activeCinemas=$this->TransformToArray($CinemaList);
+        
+        
+        //include(VIEWS . "/listRooms.php");
     }
+
+    
 
 
 }
