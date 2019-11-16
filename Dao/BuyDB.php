@@ -28,21 +28,19 @@ class BuyDB{
         }
     }
 
-    //En el modelo de Buy tenemos que agregar el objeto de tipo usuario
     public function Add($buy){
         
-        $sql="INSERT INTO Buy (idBuy,idMovieFunction,date,numberOfTickets,total,discount,emailUser,state) VALUES (:idBuy,:idMovieFunction,:date,:numberOfTickets,:total,:discount,:emailUser,:state)";
+        $sql = "INSERT INTO Buy (idBuy,idMovieFunction,buyDate,numberOfTickets,total,discount,emailUser,buyState) 
+        VALUES (:idBuy,:idMovieFunction,:buyDate,:numberOfTickets,:total,:discount,:emailUser,:buyState)";
 
         $values['idBuy']            = $buy->getIdBuy();
-        $values['idMovieFunction']  = (int)$buy->getMovieFunction()->getId();
-        $values['date']             = $buy->getDate();
-        $values['numberOfTickets']  = (int)$buy->getNumberOfTickets();
-        $values['total']            = (int)$buy->getTotal();
-        $values['discount']         = (int)$buy->getDiscount();
+        $values['idMovieFunction']  = $buy->getMovieFunction()->getId();
+        $values['buyDate']          = $buy->getDate();
+        $values['numberOfTickets']  = $buy->getNumberOfTickets();
+        $values['total']            = $buy->getTotal();
+        $values['discount']         = $buy->getDiscount();
         $values['emailUser']        = $buy->getUser()->GetEmail();
-        $values['state']            = false;
-
-        var_dump($values);
+        $values['buyState']         = false;
 
         try{
             $this->connection = Connection::getInstance();

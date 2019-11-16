@@ -29,7 +29,7 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/CreditCard' ?>">prueba</a>
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Buy/prueba' ?>">prueba</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Home/Stats' ?>">Stats</a>

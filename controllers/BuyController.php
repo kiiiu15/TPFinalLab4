@@ -25,17 +25,19 @@ class BuyController implements Icontrollers{
 
     public function ReciveBuy($idFunction,$numberOfTickets){
 
-        $moviefunctionController = new MovieFunctionController();
-        $function = $moviefunctionController->GetById($idFunction);  //obtengo la funcion
         $UserController = new UserController();
         $user = $UserController->GetUserLoged();  //obtengo el usuario
-        $roomController = new RoomController();
         
-        $room = $function->getRoom(); //obtengo la sala
-
         if(!$user){
             include(VIEWS ."/login.php");
         }else{
+            
+            $moviefunctionController = new MovieFunctionController();
+            $function = $moviefunctionController->GetById($idFunction);  //obtengo la funcion
+
+            $roomController = new RoomController();
+            $room = $function->getRoom(); //obtengo la sala
+
             //validacion sobre la capacidad de la sala
             if($roomController->GetRemainingCapacity($idFunction,$numberOfTickets) > -1){
                 $date =  date("l");
@@ -65,6 +67,17 @@ class BuyController implements Icontrollers{
         }
     }
 
+    public function prueba(){
+        $moviefunctionController = new MovieFunctionController();
+        $function = $moviefunctionController->GetById(22);
+        $UserController = new UserController();
+        $user = $UserController->GetUserLoged();  //obtengo el usuario
+        
+        $buy = new Buy('1',$function,'2019-11-16',2,10,0,$user,false);
+        $db = new BuyDB();
+        $db->Add($buy);
+    }
+
     public function GetAll(){
         $listBuy= array();
         $buyDB= new BuyDB();
@@ -81,7 +94,7 @@ class BuyController implements Icontrollers{
 
         $buy = new Buy($idBuy,$movieFunction,$date,$numberOfTickets,$total,$discount,$user,$state);
         try{
-            var_dump($buyDB->Add($buy) );
+            $buyDB->Add($buy);
         }catch(\PDOException $ex){
             throw $ex;
         }
