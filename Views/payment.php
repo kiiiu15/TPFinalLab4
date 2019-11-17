@@ -22,7 +22,7 @@
                     <form role="form">
                     <div class="form-group">
                     <div class="input-group">
-                            <input type="hidden" value="<?= $buy->getIdBuy();?>" name="idBuy" />
+                            <input type="hidden" value="" name="idBuy" />
                            
                     </div>
                         <label for="cardNumber" >
@@ -58,12 +58,12 @@
                 </div>
             </div>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $discount;?></span> Discount</a>
+                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span></span> Discount</a>
                 </li>
             </ul>
             <br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $total;?> </span> Final Payment</a>
+                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span> </span> Final Payment</a>
                 </li>
             </ul>
             <br/>

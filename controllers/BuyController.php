@@ -25,6 +25,7 @@ class BuyController implements Icontrollers{
 
     public function ReciveBuy($idFunction,$numberOfTickets){
 
+        echo "entra a la funcion";
         $UserController = new UserController();
         $user = $UserController->GetUserLoged();  //obtengo el usuario
         
@@ -40,23 +41,28 @@ class BuyController implements Icontrollers{
 
             //validacion sobre la capacidad de la sala
             if($roomController->GetRemainingCapacity($idFunction,$numberOfTickets) > -1){
+                
+        echo "entra a la VALIDACION";
                 $date =  date("l");
+
                 $today = date("Y-m-d");
                 $id = date("Ymdhms");
                 $discount = 0;
                 $total = 0;
 
                 //validacion del dia martes y miercoles     
-                if($date == "Tuesday" || $date == "Wednesday"){
-                    $discount = $room->getPrice() * 0.25;
-                    $total = $room->getPrice() - $discount;
+                if($date == "Tuesday" || $date == "Wednesday" || $date == "Sunday"){
+                    $discount = ($room->getPrice() * $numberOfTickets) * 0.25;
+                    $total = ($room->getPrice() * $numberOfTickets) - $discount;
                 }else{
-                    $total =  $room->getPrice();
+                    $total =  $room->getPrice() * $numberOfTickets;
                 }
+     
                 $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
                // var_dump($id);
                 $buy = $this->RetrieveById($id);
                 
+        echo "YA AGREGO";
                 include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
@@ -94,6 +100,7 @@ class BuyController implements Icontrollers{
         $buyDB= new  BuyDB();
 
         $buy = new Buy($idBuy,$movieFunction,$date,$numberOfTickets,$total,$discount,$user,$state);
+        var_dump($buy);
         try{
             $buyDB->Add($buy);
         }catch(\PDOException $ex){
