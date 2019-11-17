@@ -6,7 +6,7 @@ use Dao\QueryType as QueryType;
 use Dao\UserDB as UserDB;
 use model\Buy as Buy;
 use model\User as User;
-
+use Dao\MovieFunctionDB as MovieFunctionDB;
 class BuyDB{
     private $connection;
 
@@ -61,6 +61,8 @@ class BuyDB{
         }catch(\PDOException $ex){
             throw $ex;
         }
+
+        
         if(!empty($result)){
             return $this->Map($result);
         }else{
@@ -110,7 +112,7 @@ class BuyDB{
     }
 
     public function ChangeState($idBuy){ //VERIFICAR SI FUNCIONA ASI LA QUERY !!! 
-        $sql="UPDATE Buy WHERE Buy.state=:true WHERE Buy.idBuy = :idBuy";
+        $sql="UPDATE Buy SET Buy.buyState=:state WHERE Buy.idBuy = :idBuy";
         $values['idBuy'] = $idBuy;
         $values['state'] = true;
         try{
@@ -309,10 +311,13 @@ class BuyDB{
     }
     
     protected function Map($value) {
-        $UserDB= new UserDB();
+        
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($b) {
-        return new Buy($b['idBuy'],$b['date'], $b['numberOfTickets'], $b['total'], $b['discount'], $b['price'],$UserDB->GetByEmail($b['emailUser']));
+            $UserDB= new UserDB();
+            $MovieFunctionDB = new MovieFunctionDB();
+
+            return new Buy($b['idBuy'],$MovieFunctionDB->RetrieveById($b['idMovieFunction']),$b['buyDate'], $b['numberOfTickets'], $b['total'], $b['discount'] ,$UserDB->GetByEmail($b['emailUser']), $b['buyState']);
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];
     }

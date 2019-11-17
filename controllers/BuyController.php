@@ -54,9 +54,10 @@ class BuyController implements Icontrollers{
                     $total =  $room->getPrice();
                 }
                 $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
+               // var_dump($id);
                 $buy = $this->RetrieveById($id);
-                var_dump($buy);
-                //include(VIEWS ."/payment.php");
+                
+                include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
                 $homeController = new HomeController();

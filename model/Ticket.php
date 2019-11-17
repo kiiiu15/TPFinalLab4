@@ -27,7 +27,7 @@ class Ticket{
     
     public function getBuy()
     {
-        return $this->idBuy;
+        return $this->Buy;
     }
 
     public function setIdTicket($idTicket){

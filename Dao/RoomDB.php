@@ -31,12 +31,14 @@ class RoomDB{
      * no se si le corresponde a roomBd pero por ahora lo dejo aca
      */
     public function GetTotalTicketsByFunction($idFunction){ 
-        $sql = "SELECT SUM(Buy.numberOfTickets) as total FROM Buy WHERE buy.idMovieFunction = :idMovieFunction AND Buy.state = true";
+        $sql = "SELECT SUM(Buy.numberOfTickets) as total FROM Buy WHERE buy.idMovieFunction = :idMovieFunction AND Buy.buyState = true";
         $values["idMovieFunction"] = $idFunction;
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
             $reuslt = $this->connection->Execute($sql,$values)[0]['total'];
+
+         
             if($reuslt == null){
                 return 0;
             }else{

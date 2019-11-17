@@ -21,6 +21,10 @@
                 <div class="panel-body">
                     <form role="form">
                     <div class="form-group">
+                    <div class="input-group">
+                            <input type="hidden" value="<?= $buy->getIdBuy();?>" name="idBuy" />
+                           
+                    </div>
                         <label for="cardNumber" >
                             CARD NUMBER</label>
                         <div class="input-group">
@@ -29,10 +33,7 @@
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                         </div>
                     </div>
-                    <div class="input-group">
-                            <input type="hidden" value="<?= $buy->getId();?>" name="idBuy" />
-                           
-                        </div>
+                    
                     <div class="row">
                         <div class="col-xs-7 col-md-7">
                             <div class="form-group">
@@ -62,7 +63,7 @@
             </ul>
             <br>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $total?> </span> Final Payment</a>
+                <li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><?=  $total;?> </span> Final Payment</a>
                 </li>
             </ul>
             <br/>

@@ -62,6 +62,15 @@
                         <!-- <option value="disable">Despublicar</option> -->
                     <!-- </select> -->
                     <!-- <button type="submit" class="btn btn-dark ml-3">Enviar</button> -->
+
+                    <?php if(isset($successMje) || isset($errorMje)) { ?>
+                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
+                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } ?>
                 <!-- </div> -->
 
 
@@ -125,14 +134,7 @@
             </form>
 
             <!-- Esto como si no existiera -->
-            <?php if(isset($successMje) || isset($errorMje)) { ?>
-                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
-                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php } ?>
+            
         </div>
     </main>
 
@@ -231,6 +233,29 @@
                 
                 // Set selected option as variable
                 var selectValue = $(this).val();
+
+                $.ajax({
+                    method : 'POST',
+                    url : '/TPFinalLab4/MovieFunction/prueba',
+                    dataType : 'JSON',
+                    data : { selectValue },
+                    beforeSend : function() {
+                        // Esto ocurre al iniciar la peticion
+                    },
+                    error : function() {
+                        // Esto ocurre si falla
+                    },
+                    success : function(dato) {
+                        // Esto ocurre si la peticion al servidor se ejecuto correctamente
+
+                        console.log(dato);
+
+                        $.each(array, function(v, k) {
+
+                        })
+                        // JSON.Parse(dato);
+                    }
+                }); 
                 
                 // Empty the target field
                 $('#choices').empty();

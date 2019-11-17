@@ -103,9 +103,10 @@ class HomeController implements Icontrollers {
         
     }
 
-    public function index ($mensage = null, $movieFunctionsToShow= null){
+    public function index ($mensage = null, $movieFunctionsToShow= null, $mensageSucces = null){
        
         $errorMje = $mensage;
+        $successMje = $mensageSucces;
         $userC = new UserController(); 
         $movieFC = new MovieFunctionController();
         $genreC = new GenreController();
@@ -114,7 +115,7 @@ class HomeController implements Icontrollers {
         $movieList = $movieFC->GetBillboardMovies();
         $genresList = $genreC->GetAll();
         $selectedMovieFunctions = $movieFunctionsToShow;
-        //var_dump($movieList);
+        
 
         include(VIEWS.'/posts.php');
     }

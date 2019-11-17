@@ -5,78 +5,25 @@
 /* ---------------------------------------------------- */
 
 
-CREATE DATABASE moviepass;
-USE moviepass;
-SET FOREIGN_KEY_CHECKS=0 
-;
+CREATE DATABASE MoviePass;
 
-/* Drop Tables */
-DROP TABLE IF EXISTS `MovieFunctions` CASCADE
-;
+USE MoviePass;
 
-DROP TABLE IF EXISTS `Rooms` CASCADE
-;
+CREATE TABLE Cinemas(
+	idCinema SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	nameCinema VARCHAR(50) NOT NULL,
+	adressCinema VARCHAR(100) NOT NULL,
+	active BOOLEAN NOT NULL DEFAULT true,
+	CONSTRAINT pk_table_cinemas PRIMARY KEY (idCinema ASC)
+);
 
-
-DROP TABLE IF EXISTS `GenresPerMovie` CASCADE
-;
-
-DROP TABLE IF EXISTS `Cinemas` CASCADE
-;
-
-DROP TABLE IF EXISTS `Movies` CASCADE
-;
-
-
-DROP TABLE IF EXISTS `Genres` CASCADE
-;
-
-
-/* Create Tables */
-
-CREATE TABLE `Cinemas`
-(
-	`idCinema` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`nameCinema` VARCHAR(50) NOT NULL,
-	`adressCinema` VARCHAR(100) NOT NULL,
-	`active` BOOL NOT NULL DEFAULT true,
-	CONSTRAINT `pk_table_cinemas` PRIMARY KEY (`idCinema` ASC)
-)
-
-;
-
-CREATE TABLE `Genres`
-(
-	`idGenre` SMALLINT UNSIGNED NOT NULL,
-	`nameGenre` VARCHAR(100) NOT NULL DEFAULT 'No Name',
+CREATE TABLE Genres(
+	idGenre SMALLINT UNSIGNED NOT NULL,
+	nameGenre VARCHAR(100) NOT NULL DEFAULT 'No Name' UNIQUE,
 	CONSTRAINT `pk_table_genre` PRIMARY KEY (`idGenre` ASC)
-)
+);
 
-;
-
-CREATE TABLE `GenresPerMovie`
-(
-	`idMovie` INT UNSIGNED NOT NULL,
-	`idGenre` SMALLINT UNSIGNED NOT NULL,
-	CONSTRAINT `pk_table_genres_per_movie` PRIMARY KEY (`idMovie` ASC, `idGenre` ASC)
-)
-
-;
-
-CREATE TABLE `MovieFunctions`
-(
-	`idMovie` INT UNSIGNED NOT NULL,
-	`date` DATE NOT NULL,
-	`hour` TIME NOT NULL,
-	`idFunction` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`idRoom` SMALLINT UNSIGNED NOT NULL,
-	CONSTRAINT `pk_table_MovieFunctions` PRIMARY KEY (`idFunction` ASC)
-)
-
-;
-
-CREATE TABLE `Movies`
-(
+CREATE TABLE Movies(
 	`tittle` VARCHAR(50) NOT NULL DEFAULT 'No tittle',
 	`language` VARCHAR(10) NOT NULL,
 	`overview` VARCHAR(5000) NOT NULL DEFAULT 'No overview',
@@ -84,56 +31,110 @@ CREATE TABLE `Movies`
 	`poster` VARCHAR(50) NOT NULL,
 	`idMovie` INT UNSIGNED NOT NULL,
 	CONSTRAINT `pk_table_movies` PRIMARY KEY (`idMovie` ASC)
-)
-
-;
-
-CREATE TABLE `Rooms`
-(
-	`id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL DEFAULT 'Sin nombre',
-	`price` FLOAT NOT NULL,
-	`capacity` INT NOT NULL,
-	`idCinema` SMALLINT UNSIGNED NOT NULL,
-	CONSTRAINT `pk_table_rooms` PRIMARY KEY (`id` ASC)
-)
-
-;
-
-/* Create Primary Keys, Indexes, Uniques, Checks */
-
-ALTER TABLE `Genres` 
- ADD CONSTRAINT `unique_nameGenre_table_genre` UNIQUE (`nameGenre` ASC)
-;
-
-/* Create Foreign Key Constraints */
-
-ALTER TABLE `GenresPerMovie` 
- ADD CONSTRAINT `fk_table_GenresPerMovie_ table_Genre`
-	FOREIGN KEY (`idGenre`) REFERENCES `Genres` (`idGenre`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-ALTER TABLE `GenresPerMovie` 
- ADD CONSTRAINT `fk_table_GenresPerMovie_table_Movies`
-	FOREIGN KEY (`idMovie`) REFERENCES `Movies` (`idMovie`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-ALTER TABLE `MovieFunctions` 
- ADD CONSTRAINT `fk_table_movieFunction_rooms`
-	FOREIGN KEY (`idRoom`) REFERENCES `Rooms` (`id`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-ALTER TABLE `MovieFunctions` 
- ADD CONSTRAINT `fk_table_MovieFunctions_table_Movies`
-	FOREIGN KEY (`idMovie`) REFERENCES `Movies` (`idMovie`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-ALTER TABLE `Rooms` 
- ADD CONSTRAINT `fk_table_rooms_table_cinemas`
-	FOREIGN KEY (`idCinema`) REFERENCES `Cinemas` (`idCinema`) ON DELETE Restrict ON UPDATE Cascade
-;
-
-SET FOREIGN_KEY_CHECKS=1 
-;
+);
 
 
+CREATE TABLE GenresPerMovie(
+	idMovie INT UNSIGNED NOT NULL,
+	idGenre SMALLINT UNSIGNED NOT NULL,
+	CONSTRAINT pk_table_genres_per_movie PRIMARY KEY (idMovie ASC, idGenre ASC),
+	CONSTRAINT `fk_table_GenresPerMovie_ table_Genre` 	FOREIGN KEY (`idGenre`) REFERENCES `Genres` (`idGenre`) ON DELETE Restrict ON UPDATE Cascade,
+	CONSTRAINT `fk_table_GenresPerMovie_table_Movies` FOREIGN KEY (`idMovie`) REFERENCES `Movies` (`idMovie`) ON DELETE Restrict ON UPDATE Cascade
+);
+
+
+CREATE TABLE Rooms(
+	id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL DEFAULT 'Sin nombre',
+	price FLOAT NOT NULL,
+	capacity INT NOT NULL,
+	idCinema SMALLINT UNSIGNED NOT NULL,
+	CONSTRAINT pk_table_rooms PRIMARY KEY (id ASC),
+	CONSTRAINT `fk_table_rooms_table_cinemas` 	FOREIGN KEY (`idCinema`) REFERENCES `Cinemas` (`idCinema`) ON DELETE Restrict ON UPDATE Cascade
+);
+
+
+CREATE TABLE MovieFunctions(
+	`idFunction` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`date` DATE NOT NULL,
+	`hour` TIME NOT NULL,
+	`idRoom` SMALLINT UNSIGNED NOT NULL,
+	`idMovie` INT UNSIGNED NOT NULL,
+	CONSTRAINT `pk_table_MovieFunctions` PRIMARY KEY (`idFunction` ASC),
+	CONSTRAINT `fk_table_movieFunction_rooms` FOREIGN KEY (`idRoom`) REFERENCES `Rooms` (`id`) ON DELETE Restrict ON UPDATE Cascade,
+	CONSTRAINT fk_Movies FOREIGN KEY (idMovie) REFERENCES Movies (idMovie)
+);
+
+CREATE TABLE Roles(
+	roleName VARCHAR(30),
+    CONSTRAINT pk_table_roles PRIMARY KEY (roleName)
+);
+
+CREATE TABLE UserProfiles(
+	idProfile INT NOT NULL auto_increment,
+    UserName VARCHAR(30),
+    UserlastName VARCHAR(30),
+    dni VARCHAR(8) NOT NULL,
+    telephoneNumber VARCHAR(14) NOT NULL,
+    CONSTRAINT pk_userProfiles PRIMARY KEY(idProfile)
+);
+
+CREATE TABLE Users(
+    email VARCHAR(40) unique,
+    pass VARCHAR(30),
+    roleName VARCHAR(30),
+    usersProfileId INT,
+    CONSTRAINT pk_users PRIMARY KEY(email),
+    CONSTRAINT fk_users_role FOREIGN KEY(roleName) REFERENCES Roles(roleName),
+    CONSTRAINT fk_users_profile FOREIGN KEY(usersProfileId) REFERENCES UserProfiles(idProfile)
+);
+
+CREATE TABLE Buy (
+    idBuy VARCHAR(14) NOT NULL,
+    idMovieFunction SMALLINT UNSIGNED NOT NULL,
+    buyDate DATE NOT NULL,
+    numberOfTickets SMALLINT DEFAULT 1,
+    total SMALLINT NOT NULL,
+    discount FLOAT NOT NULL,
+	emailUser VARCHAR(40) NOT NULL,
+    buyState BOOLEAN NOT NULL,
+
+    CONSTRAINT pk_Buy PRIMARY KEY (idBuy),
+    CONSTRAINT fk_MovieFunction FOREIGN KEY (idMovieFunction) REFERENCES MovieFunctions (idFunction),
+    CONSTRAINT fk_User FOREIGN KEY (emailUser) REFERENCES Users (email)
+);
+
+CREATE TABLE CreditCards(
+	company VARCHAR(40),
+	`number` VARCHAR(16) NOT NULL UNIQUE,
+	securityCode VARCHAR(3) NOT NULL,
+	expiryMonth VARCHAR(2),
+	expiryYear VARCHAR(2),
+
+	CONSTRAINT pk_creditcards PRIMARY KEY (`number`)
+);
+
+CREATE TABLE CreditCardPerUser(
+	emailUser VARCHAR(40),
+	CreditCardNumber VARCHAR(16),
+	CONSTRAINT pk_CreditCardPerUser PRIMARY KEY (emailUser ASC, CreditCardNumber ASC),
+	CONSTRAINT fk_Users FOREIGN KEY (emailUser) REFERENCES Users (email),
+	CONSTRAINT fk_CreditCards FOREIGN KEY (CreditCardNumber) REFERENCES CreditCards (`number`)
+);
+
+INSERT INTO Roles (roleName) VALUES ('admin');
+INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("manu","last","123","321");
+INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("manu","123","admin",1);
+
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","6583458042570138","123","02","19");
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","4444444444444444","123","02","19");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manu","6583458042570138");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manu","4444444444444444");
+
+CREATE TABLE Tickets(
+	`idTicket` INT  NOT NULL AUTO_INCREMENT,
+	`qr` VARCHAR(5),
+	`idBuy` VARCHAR(14) NOT NULL,
+	CONSTRAINT pk_ticket PRIMARY KEY(`idTicket`),
+	CONSTRAINT fk_ticket_buy FOREIGN KEY(`idBuy`) REFERENCES `Buy`(`idBuy`)
+);

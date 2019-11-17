@@ -278,9 +278,11 @@ class MovieFunctionController implements IControllers{
     }
 
     public function GetShowMovieInfo($idMovie) {
+        var_dump($idMovie);
         $functions = $this->GetBillboard();
         
         $groupedFunctions = $this->GroupFunctionsByMovie($functions);
+        var_dump($groupedFunctions);
         $movieFunctions = $groupedFunctions[$idMovie];
         $info = $this->GroupFunctionsByCinema($movieFunctions);
         return $info;
@@ -305,6 +307,11 @@ class MovieFunctionController implements IControllers{
         $activeRooms = $roomC->RetrieveByActive(true);
         $movieFunctionList = $this->GetBillboard(); 
         include(VIEWS.'/addFunction.php');
+    }
+
+    public function prueba($param) {
+        $a = $this->GetShowMovieInfo($param);
+        echo json_encode($a);
     }
 
 }
