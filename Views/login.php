@@ -6,14 +6,7 @@ body {
     background-size:cover;
     background-size:100%;
 } 
-
-h1 {
-    color:white;
-}
 label{
-    color:white;
-}
-option{
     color:white;
 }
 td{

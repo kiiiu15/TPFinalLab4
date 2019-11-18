@@ -29,9 +29,6 @@ h1 {
 label{
     color:white;
 }
-option{
-    color:white;
-}
 td{
     color:white;
 } 

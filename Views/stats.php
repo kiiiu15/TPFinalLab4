@@ -37,7 +37,7 @@ body {
                     <?php 
                     foreach ($cinemaList as $cinema) {
                     ?>    
-                        <option style="color:white;" value="<?= $cinema->getIdCinema() ?>"><?= $cinema->getName() ?></option>
+                        <option value="<?= $cinema->getIdCinema() ?>"><?= $cinema->getName() ?></option>
                     <?php
                     }
                     ?>
@@ -46,11 +46,11 @@ body {
                     </select>
                     <label style="color:white;" >Movies</label>
                     <select style="color:white;"  name="movie" class="form-control ml-3">
-                        <option style="color:white;"  value="">Any</option>
+                        <option value="">Any</option>
                     <?php 
                         foreach ($movieList as $movie) {
                     ?>
-                        <option style="color:white;"  value="<?=$movie->getId();?>"><?=$movie->getTitle();?></option>
+                        <option value="<?=$movie->getId();?>"><?=$movie->getTitle();?></option>
                     <?php
                         }
                     ?>
@@ -75,11 +75,11 @@ body {
                 <div class="form-group">
                     <label style="color:white;" >Cinemas</label>
                     <select name="cinema" class="form-control ml-3">
-                        <option value="" style="color:white;" >Any</option>
+                        <option value="" >Any</option>
                     <?php 
                     foreach ($cinemaList as $cinema) {
                     ?>    
-                        <option style="color:white;"  value="<?= $cinema->getIdCinema() ?>"><?= $cinema->getName() ?></option>
+                        <option value="<?= $cinema->getIdCinema() ?>"><?= $cinema->getName() ?></option>
                     <?php
                     }
                     ?>
@@ -88,11 +88,11 @@ body {
                 <div class="form-group">
                     <label style="color:white;" >Movies</label>
                     <select name="movie" class="form-control ml-3">
-                        <option style="color:white;"  value="">Any</option>
+                        <option value="">Any</option>
                     <?php 
                         foreach ($movieList as $movie) {
                     ?>
-                        <option style="color:white;"  value="<?=$movie->getId();?>"><?=$movie->getTitle();?></option>
+                        <option value="<?=$movie->getId();?>"><?=$movie->getTitle();?></option>
                     <?php
                         }
                     ?>

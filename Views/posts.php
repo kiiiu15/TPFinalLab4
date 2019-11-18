@@ -48,9 +48,6 @@ h1 {
 label{
     color:white;
 }
-option{
-    color:white;
-}
 td{
     color:white;
 } 
@@ -106,7 +103,7 @@ td{
                 </div>
             </form> 
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate'?>" method="POST">     
-                <div>
+                <div class="form-group mb-4">
                     <label for="">Fecha</label>
                     <input name="date" type="date">
                     <button type="submit" class="btn btn-dark ml-3">Enviar</button>
