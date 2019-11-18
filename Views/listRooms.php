@@ -6,6 +6,26 @@
       //$activeCinemas = array();
 ?>
 
+<style>
+body {
+	background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/V7QIfdTcgikqxmxok/cinema-background_vzw7c2tqe__F0000.png");
+    background-size:cover;
+    background-size:100%;
+} 
+
+h1 {
+    color:white;
+}
+label{
+    color:white;
+}
+option{
+    color:white;
+}
+td{
+    color:white;
+} 
+</style>
 
 <main class="p-5">
         <div class="container">

@@ -16,6 +16,27 @@
 
 ?>
 
+<style>
+body {
+	background-image: url("http://www.kabu-load.net/data/out/103/IMG_1086101.jpg");
+    background-size:cover;
+    background-size:100%;
+} 
+
+h1 {
+    color:white;
+}
+label{
+    color:white;
+}
+option{
+    color:white;
+}
+td{
+    color:white;
+} 
+</style>
+
 <main class="p-5">
         <div class="container">
 
