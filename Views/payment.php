@@ -2,7 +2,16 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<div align='center'>
+<style>
+body {
+	background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/V7QIfdTcgikqxmxok/cinema-background_vzw7c2tqe__F0000.png");
+    /*background-repeat:no-repeat;*/
+    background-size:cover;
+    background-size:100%;
+} 
+</style>
+
+<div class="container">
 <form action="<?= FRONT_ROOT ."/Payment/Validate"?>" method="POST">
 <div class="container">
     <div class="row">
