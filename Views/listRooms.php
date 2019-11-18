@@ -28,7 +28,7 @@ td{
 <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Salas</h1>
+            <h1 class="mb-5">List of Rooms</h1>
  
 
             
@@ -55,13 +55,13 @@ td{
             <form class="form-inline" action="<?= FRONT_ROOT. '/Room/delete' ?>" method="POST">
                 <div class="form-group mb-4">
                     
-                    <button type="submit" class="btn btn-dark ml-3">Desactivar</button>
+                    <button type="submit" class="btn btn-dark ml-3">Deactivate</button>
 
                     <!-- 
                         en realidad este button no tiene nada que ver con el form este, pero si lo ponia afuera quedava re feo :)
                      -->
                     <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-room">
-                        Agregar Sala
+                        Add a Room
                     </button>
                 </div>
 
@@ -69,11 +69,11 @@ td{
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Id Sala</th>
-                            <th>Nombre</th>
-                            <th>Cine</th>
-                            <th>Capacidad</th>
-                            <th>Precio</th>
+                            <th>Id Room</th>
+                            <th>Name</th>
+                            <th>Cinema</th>
+                            <th>Capacity</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,7 +115,7 @@ td{
             <form class="modal-content" action="<?= FRONT_ROOT .'/Room/Add'?>" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear Sala</h5>
+                    <h5 class="modal-title">Add a Room</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -124,7 +124,7 @@ td{
                 <div class="modal-body">
 
                 <div class="form-group">
-                        <label style="color:black;">Cine al que pertenece</label>
+                        <label style="color:black;">Cinema to which it belongs</label>
                         <select required name="cinema" id="">
                             <?php foreach ($activeCinemas as $activeCinema) {?>
                             <option style="color:black;" value="<?=$activeCinema->getIdCinema(); ?>"> <?php echo $activeCinema->getName();?></option>
@@ -132,25 +132,25 @@ td{
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="color:black;">Nombre</label>
+                        <label style="color:black;">Name</label>
                         <input style="color:black;" required name="roomName" type="text">
                     </div>
 
                     <div class="form-group">
-                        <label style="color:black;">Capacidad</label>
+                        <label style="color:black;">Capacity</label>
                         <input style="color:black;" name='capacity'  min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
 
                     <div class="form-group">
-                        <label style="color:black;">Precio</label>
+                        <label style="color:black;">Price</label>
                         <input style="color:black;" name='price' min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
                     
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark">Crear</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark">Add</button>
                 </div>
             </form>
 

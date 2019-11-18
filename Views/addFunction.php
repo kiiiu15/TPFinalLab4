@@ -61,10 +61,10 @@ td{
     <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Funciones</h1>
+            <h1 class="mb-5">List of Functions</h1>
 
             <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-function">
-                Agregar Funcion
+                Add a Function
             </button> 
 
 <!--ACA PODRIAMOS PONER UN SELECT PARA QUE ELIJA EL CINE DEL QUE QUIERE VER QUE FUNCIONES HAY
@@ -85,17 +85,17 @@ td{
             </button> 
 -->                
             <form class="form-inline" action="<?= FRONT_ROOT?>/MovieFunction/Delete" method="POST">
-                <button type="submit" class="btn btn-dark ml-3"  >Borrar Selecion</button> 
+                <button type="submit" class="btn btn-dark ml-3"  >Delete Selection</button> 
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Id Funcion</th>
-                            <th>Cine</th>
-                            <th>Sala</th>
-                            <th>Fecha</th>
-                            <th>Horario</th>
-                            <th>Pelicula</th>
+                            <th>Id Function</th>
+                            <th>Cinema</th>
+                            <th>Room</th>
+                            <th>Date</th>
+                            <th>Hour</th>
+                            <th>Movie</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -138,7 +138,7 @@ td{
             <form class="modal-content" action="<?= FRONT_ROOT . '/MovieFunction/Add' ?>" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Agregar Funcion</h5>
+                    <h5 class="modal-title">Add a Function</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span> 
                     </button>
@@ -150,7 +150,7 @@ td{
                         mas tarde le agrego la capacidad de que sea por nombre o apretando el chek de 
                         la lista de movie
                      -->
-                        <label style="color:black;">Pelicula</label>
+                        <label style="color:black;">Movie</label>
                         <select required name="idMovie" id="">
                         <?php foreach ($movies as $movie){ ?>
                             <option style="color:black;" value="<?= $movie->getId();?>"><?= $movie->getTitle();?></option>
@@ -169,18 +169,18 @@ td{
                         </select>
                     </div>
                     <div class="form-group">
-                        <label style="color:black;">Fecha</label>
+                        <label style="color:black;">Date</label>
                         <input required name="date" type="date">
                     </div>
                     <div class="form-group">
-                        <label style="color:black;">Horario</label>
+                        <label style="color:black;">Hour</label>
                         <input required name="hour" type="time">
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark">Crear</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark">Add</button>
                 </div>
             </form>
 

@@ -11,12 +11,6 @@
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
             </li>
             <li class="nav-item">
-                <!-- 
-                    corregir esto
-                 -->
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Payment' ?>">Payment</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   
             </li>
             <li class="nav-item">
@@ -26,13 +20,10 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Add Function</a>   
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Buy/prueba' ?>">prueba</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Home/Stats' ?>">Stats</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
         </ul>
         <!-- <span class="navbar-text text-white"> -->

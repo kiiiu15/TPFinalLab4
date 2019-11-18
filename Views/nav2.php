@@ -11,9 +11,6 @@
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Show List Cinema</a>   
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
         </ul>

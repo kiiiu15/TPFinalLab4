@@ -37,7 +37,7 @@ td{
 <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Cines</h1>
+            <h1 class="mb-5">List of Cinemas</h1>
 
 
             
@@ -63,18 +63,18 @@ td{
                                       <!-- LOS GET NO ESTAN FUNCIONANDO -->
             <form class="form-inline" action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
                 <div class="form-group mb-4">
-                    <label for="">Activo/Inactivo</label>
+                    <label for="">Active/Inactive</label>
                     <select name="active" class="form-control ml-3">
-                        <option value="<?= true; ?>">Activo</option>
-                        <option value="<?= false; ?>">Inactivo</option>
+                        <option value="<?= true; ?>">Active</option>
+                        <option value="<?= false; ?>">Inactive</option>
                     </select>
-                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                    <button type="submit" class="btn btn-dark ml-3">Send</button>
 
                     <!-- 
                         en realidad este button no tiene nada que ver con el form este, pero si lo ponia afuera quedava re feo :)
                      -->
                     <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
-                        Agregar Cine
+                        Add a Cinema
                     </button>
                 </div>
 
@@ -82,9 +82,9 @@ td{
                     <thead class="thead-dark">
                         <tr>
                             <th></th>
-                            <th>Id Cine</th>
-                            <th>Nombre</th>
-                            <th>Direccion</th>
+                            <th>Id Cinema</th>
+                            <th>Name</th>
+                            <th>Adress</th>
                             
                         </tr>
                     </thead>
@@ -129,7 +129,7 @@ td{
             <form class="modal-content" action="<?= FRONT_ROOT . '/Cinema/Add' ?>" method="POST">
 
                 <div class="modal-header">
-                    <h5 class="modal-title">Crear Cine</h5>
+                    <h5 class="modal-title">Add Cinema</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -137,19 +137,19 @@ td{
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label style="color:black;">Nombre</label>
+                        <label style="color:black;">Name</label>
                         <input style="color:black;" required name="cinemaName" type="text">
                     </div>
                     <div class="form-group">
-                        <label style="color:black;">Direccion</label>
+                        <label style="color:black;">Adress</label>
                         <input style="color:black;" required name="adress" type="text">
                     </div>
                     
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark">Crear</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark">Add</button>
                 </div>
             </form>
 

@@ -23,11 +23,11 @@ body {
             <div class="form-group mb-4">
                 <h5 class="modal-title" style="color:white;">check totals by date / cinema / movie</h5> <br>
                 <div class="form-group">
-                    <label style="color:white;">fecha desde</label>
+                    <label style="color:white;"> From date</label>
                     <input style="color:white;" type="date" required name="fromDate"><br>
                 </div>
                 <div class="form-group">
-                    <label style="color:white;">fecha hasta</label>
+                    <label style="color:white;">To date</label>
                     <input style="color:white;" type="date" required name="toDate"><br>
                 </div>
                 <div class="form-group">

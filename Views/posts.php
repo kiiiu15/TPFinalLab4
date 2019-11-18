@@ -56,7 +56,7 @@ td{
     <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">Listado de Peliculas</h1>
+            <h1 class="mb-5">List of Movies</h1>
 
             <?php
                 if(isset($alertCapacity)){
@@ -93,20 +93,20 @@ td{
 
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre'?>" method="POST"> 
                 <div class="form-group mb-4">
-                    <label for="">Genero</label>
+                    <label for="">Genre</label>
                     <select name="genreId" class="form-control ml-3">
                         <?php foreach ($genresList as $genre) {?>
                         <option value="<?= $genre->getId();?>"><?= $genre->getName();?></option>
                         <?php  } ?>
                     </select>
-                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                    <button type="submit" class="btn btn-dark ml-3">Send</button>
                 </div>
             </form> 
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate'?>" method="POST">     
                 <div class="form-group mb-4">
-                    <label for="">Fecha</label>
+                    <label for="">Date</label>
                     <input name="date" type="date">
-                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                    <button type="submit" class="btn btn-dark ml-3">Send</button>
                 </div>
             </form>    
                 
@@ -117,9 +117,9 @@ td{
                         <tr>
                             
                             <th>POSTER</th>
-                            <th>Título</th>
-                            <th>Descripcion</th>
-                            <th>Genero</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Genre</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,9 +197,9 @@ td{
                     EN ESTE DIV SE MOSTRARIAN LOS DISTINTOS CINES QUE EMITEN ESTA PELICULA
                  -->
                     <div class="form-group">
-                        <label>CINES</label>
+                        <label>Cinemas</label>
                         <select id="options" name="" class="form-control ml-3">
-                        <option value="" disabled selected>Seleccione un Cine</option>
+                        <option value="" disabled selected>Select a Cinema</option>
                         <?php 
                             foreach($selectedMovieFunctions as $cinemaId =>  $selectedMovieFunction) { 
                                 foreach($selectedMovieFunction as  $function){?>
@@ -214,13 +214,13 @@ td{
 
 
                     <div class="form-group">
-                        <label>FUNCIONES</label>
+                        <label>Functions</label>
                             <select id="choices" name="idFunction" class="form-control ml-3">
                             </select>
                     </div>
 
                     <div class="form-group">
-                        <label style="color:black;">CANTIDAD DE ENTRADAS</label>
+                        <label style="color:black;">Number Of Tickets</label>
                         <input style="color:black;" name="quantity" type="number">
                     </div>
 
@@ -228,8 +228,8 @@ td{
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-dark">Comprar</button>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark">Buy</button>
                 </div>
             </form>
 
