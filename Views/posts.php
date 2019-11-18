@@ -220,8 +220,8 @@ td{
                     </div>
 
                     <div class="form-group">
-                        <label>CANTIDAD DE ENTRADAS</label>
-                        <input name="quantity" type="number">
+                        <label style="color:black;">CANTIDAD DE ENTRADAS</label>
+                        <input style="color:black;" name="quantity" type="number">
                     </div>
 
 

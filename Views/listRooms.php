@@ -112,10 +112,6 @@ td{
     <div class="modal fade" id="add-room" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
-<!-- 
-    QUIZAS TENGA MAS SENTIDO QUE SE HAGA POR GET PERO NO FUNCIONA BIEN ASI, EL GET SI SE CARGA
-    PERO AL METODO LE LLEGAN LOS PARAMETROS VACIOS
- -->
             <form class="modal-content" action="<?= FRONT_ROOT .'/Room/Add'?>" method="POST">
 
                 <div class="modal-header">
@@ -128,26 +124,26 @@ td{
                 <div class="modal-body">
 
                 <div class="form-group">
-                        <label>Cine al que pertenece</label>
+                        <label style="color:black;">Cine al que pertenece</label>
                         <select required name="cinema" id="">
                             <?php foreach ($activeCinemas as $activeCinema) {?>
-                            <option value="<?=$activeCinema->getIdCinema(); ?>"> <?php echo $activeCinema->getName();?></option>
+                            <option style="color:black;" value="<?=$activeCinema->getIdCinema(); ?>"> <?php echo $activeCinema->getName();?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Nombre</label>
-                        <input required name="roomName" type="text">
+                        <label style="color:black;">Nombre</label>
+                        <input style="color:black;" required name="roomName" type="text">
                     </div>
 
                     <div class="form-group">
-                        <label>Capacidad</label>
-                        <input name='capacity'  min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                        <label style="color:black;">Capacidad</label>
+                        <input style="color:black;" name='capacity'  min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
 
                     <div class="form-group">
-                        <label>Precio</label>
-                        <input name='price' min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                        <label style="color:black;">Precio</label>
+                        <input style="color:black;" name='price' min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
                     
                 </div>

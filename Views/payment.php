@@ -2,6 +2,7 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+<div align='center'>
 <form action="<?= FRONT_ROOT ."/Payment/Validate"?>" method="POST">
 <div class="container">
     <div class="row">
@@ -72,6 +73,7 @@
     </div>
 </div>
 </form>
+</div>
 <style>
 form {display: inline-block;
 text-align: center;}

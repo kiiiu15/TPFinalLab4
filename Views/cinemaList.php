@@ -137,12 +137,12 @@ td{
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nombre</label>
-                        <input required name="cinemaName" type="text">
+                        <label style="color:black;">Nombre</label>
+                        <input style="color:black;" required name="cinemaName" type="text">
                     </div>
                     <div class="form-group">
-                        <label>Direccion</label>
-                        <input required name="adress" type="text">
+                        <label style="color:black;">Direccion</label>
+                        <input style="color:black;" required name="adress" type="text">
                     </div>
                     
                 </div>

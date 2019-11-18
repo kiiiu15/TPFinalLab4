@@ -38,6 +38,26 @@
 
 ?>
 
+<style>
+
+body {
+	background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/V7QIfdTcgikqxmxok/cinema-background_vzw7c2tqe__F0000.png");
+    /*background-repeat:no-repeat;*/
+    background-size:cover;
+    background-size:100%;
+} 
+
+h1 {
+    color:white;
+}
+label{
+    color:white;
+}
+td{
+    color:white;
+} 
+</style>
+
     <main class="p-5">
         <div class="container">
 
@@ -115,10 +135,6 @@
     <div class="modal fade" id="add-function" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
 
-<!-- 
-    QUIZAS TENGA MAS SENTIDO QUE SE HAGA POR GET PERO NO FUNCIONA BIEN ASI, EL GET SI SE CARGA
-    PERO AL METODO LE LLEGAN LOS PARAMETROS VACIOS
- -->
             <form class="modal-content" action="<?= FRONT_ROOT . '/MovieFunction/Add' ?>" method="POST">
 
                 <div class="modal-header">
@@ -134,10 +150,10 @@
                         mas tarde le agrego la capacidad de que sea por nombre o apretando el chek de 
                         la lista de movie
                      -->
-                        <label>Pelicula</label>
+                        <label style="color:black;">Pelicula</label>
                         <select required name="idMovie" id="">
                         <?php foreach ($movies as $movie){ ?>
-                            <option value="<?= $movie->getId();?>"><?= $movie->getTitle();?></option>
+                            <option style="color:black;" value="<?= $movie->getId();?>"><?= $movie->getTitle();?></option>
                         <?php }?>
                         </select>
                     </div>
@@ -145,19 +161,19 @@
                     <!-- 
                         mas tarde la agrego el que puedas meter el nombre
                      -->
-                        <label>Room</label>
+                        <label style="color:black;">Room</label>
                         <select required  name="idCienma" >
                             <?php foreach ($activeRooms as $activeRoom) {?>
-                            <option value="<?= $activeRoom->getId();?>"><?php echo $activeRoom->getName() . " - " . $activeRoom->getCinema()->getName();?></option>
+                            <option style="color:black;" value="<?= $activeRoom->getId();?>"><?php echo $activeRoom->getName() . " - " . $activeRoom->getCinema()->getName();?></option>
                             <?php }?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Fecha</label>
+                        <label style="color:black;">Fecha</label>
                         <input required name="date" type="date">
                     </div>
                     <div class="form-group">
-                        <label>Horario</label>
+                        <label style="color:black;">Horario</label>
                         <input required name="hour" type="time">
                     </div>
                 </div>
