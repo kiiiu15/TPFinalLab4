@@ -155,10 +155,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     public function getTotalByCinema($fromDate,$toDate,$cinema){
@@ -178,10 +184,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
         
     }
 
@@ -201,10 +213,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     public function getTotalByMovieAndCinema($fromDate,$toDate,$idMovie,$idCinema){
@@ -225,10 +243,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     //lo tome como que busca las fechas de la compra, no de la funcion
@@ -243,10 +267,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     public function getTotalTicketsSoldByMovie($fromDate,$toDate,$idMovie){
@@ -262,10 +292,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex; 
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     public function getTotalTicketsSoldByCinema($fromDate,$toDate,$idCinema){
@@ -282,10 +318,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
 
     public function getTotalTicketsSoldByCinemaAndMovie($fromDate,$toDate,$idCinema,$idMovie){
@@ -304,10 +346,16 @@ class BuyDB{
         try{
             $this->connection= Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->Execute($sql,$values)[0]['total'];
+            $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
         }
+        if(!empty($result)){
+            return $result[0]['total'];
+        }else{
+            return 0;
+        }
+
     }
     
     protected function Map($value) {

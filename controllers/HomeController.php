@@ -45,10 +45,10 @@ class HomeController implements Icontrollers {
         $totalTicketsSold = $totalTickets;
 
         if($totalSold == -1){
-            $totalSold = "hace el formulario";
+            $totalSold = "complete the form";
         }
-        if($totalTickets == -1){
-            $totalTickets = "hace el formulario";
+        if($totalTicketsSold == -1){
+            $totalTicketsSold = "complete the form";
         } 
 
         $cinemaController = new CinemaController();
@@ -115,9 +115,9 @@ class HomeController implements Icontrollers {
         $movieList = $movieFC->GetBillboardMovies();
         $genresList = $genreC->GetAll();
         $selectedMovieFunctions = $movieFunctionsToShow;
-        
 
         include(VIEWS.'/posts.php');
+
     }
 }
 
