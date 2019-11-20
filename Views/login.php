@@ -19,18 +19,21 @@ td{
         <div class="content">
             <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
-                    <label for="">Usuario</label>
-                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
+                    <label for="">Email</label>
+                    <input type="email" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
                 </div>
                 <div class="form-group">
-                    <label for="">Contraseña</label>
+                    <label for="">Password</label>
                     <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña" required>
                 </div>
-                <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesión</button>
+                <button class="btn btn-dark btn-block btn-lg" type="submit">Log In</button>
                 <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
-                    Registrarse
+                    Sign Up
                 </button>
             </form>
+            <button type="button" class="btn btn-dark btn-block btn-lg">
+                LogIn Facebook
+            </button>
                 
             
             <?php if(isset($successMje) || isset($errorMje)) { ?>
@@ -77,8 +80,8 @@ td{
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button style="color:black;" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                            <button style="color:black;" type="submit" class="btn btn-dark" >Registrar</button>
+                            <button  type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                            <button  type="submit" class="btn btn-link" >Sign Up</button>
                         </div>
                     </form>
                 </div>

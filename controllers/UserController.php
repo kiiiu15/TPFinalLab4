@@ -142,7 +142,7 @@ class UserController implements IControllers
             {
                 //POR DEFECTO SIEMPRE SE VAN A CREAR USUARIOS COMO "CLIENT" Y SI SE DESEA QUE SEA ADMIN, OTRO ADMIN DEBERA OTORGARLE ESE PERMISO
                 $role = new Role("client");
-                $profile = new Profile($UserName,$LastName,$Dni,$TelephoneNumber);
+                $profile = new Profile(0,$UserName,$LastName,$Dni,$TelephoneNumber);
                 $user = new User($email,$pass,$role,$profile);
 
                 $DaoUser= new UserDB();
