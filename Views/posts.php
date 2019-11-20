@@ -6,32 +6,13 @@
 
     //CAMBIAR ESE 2
     include(VIEWS."/header2.php");
-    $isadmin = true;
-    if($isadmin){
+    
+    if($isAdmin){
         include(VIEWS.'/adminNav.php');
     }else{
         include(VIEWS.'/nav2.php'); 
     }
 
-    if ($movieList == false){
-        $movieList = array();
-        
-    }
-
-    if (!is_array($movieList )){
-        $movieList = array($movieList);
-    }
-
-    if ($selectedMovieFunctions == false){
-        $selectedMovieFunctions = array();
-    }
-
-
-    //var_dump($selectedMovieFunctions);
-    
-    /* echo "<pre>";
-        print_r($selectedMovieFunctions);
-     echo "<pre>";*/
     ?>
 
 <style>
@@ -63,22 +44,6 @@ td{
                     echo $alertCapacity;          
                 }
             ?>
-            
-
-
-                <!-- LES DEJO ESTO DEL MULTI ACTION POR SI SE LES OCURRE QUE LES PUEDE SERVIR MAS ADELANTE -->
-                <!-- <div class="form-group mb-4"> -->
-                    <!-- <button type="button" class="btn btn-light mr-4" data-toggle="modal" data-target="#create-post"> -->
-                        <!-- <object type="image/svg+xml" data="<?php //ICONS."/plus.svg"?>" width="16" height="16"></object> -->
-                    <!-- </button> -->
-
-                    <!-- <label for="">Accion múltiple</label> -->
-                    <!-- <select name="action" class="form-control ml-3"> -->
-                        <!-- <option value="trash">Eliminar</option> -->
-                        <!-- <option value="enable">Publicar</option> -->
-                        <!-- <option value="disable">Despublicar</option> -->
-                    <!-- </select> -->
-                    <!-- <button type="submit" class="btn btn-dark ml-3">Enviar</button> -->
 
                     <?php if(isset($successMje) || isset($errorMje)) { ?>
                 <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
@@ -88,7 +53,6 @@ td{
                     </button>
                 </div>
             <?php } ?>
-                <!-- </div> -->
 
 
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre'?>" method="POST"> 
@@ -137,38 +101,18 @@ td{
                                 </td>
                                 
 
-                                <!-- BOTON PARA BORRAR -->
-                                    <!-- <a href="Process/delete_post.php?delete=<?php //echo $post->getID(); ?>" class="btn btn-light"> -->
-                                        <!-- <object type="image/svg+xml" data="<?php//ICONS."/trash-2.svg"?>" width="16" height="16"> -->
-                                            <!-- Your browser does not support SVG -->
-                                        <!-- </object> -->
-                                    <!-- </a> -->
-                                <!-- </td> -->
+
                             </tr>
                         <?php } ?>
                     </tbody>
                 </table>
             </form>
 
-            <!-- Esto como si no existiera -->
             
         </div>
     </main>
 
-<!-- 
-    ESTE BOTON SERIA EL QUE DESPLIEGA EL MODAL FADE CON ID= CREATE-POST DE ABAJO 
-    CON ESTO PODRIAMOS HACER QUE SE DESPLIEGE LA VISTA CON EL FORMULARIO PARA REALIZAR LA COMPRA DE LA PELICULA ?
-    TIPO Q TE MUESTRE UN SELECT CON LOS DISTINTOS CINES Q LA TRANSMITEN, AHI TE APARECE LAS FECHAS QUE ESTEN DISPONIBLES Y VOS ELEGIS ETC
--->
-    <!-- <button type="button" class="btn btn-light mr-4" data-toggle="modal" data-target="#create-post"> -->
-            <!-- <object type="image/svg+xml" data="<?php //ICONS."/plus.svg"?>" width="16" height="16"></object> -->
-    <!-- </button> -->
 
-    
-<!-- 
-    SI APRETAN LA IMAGEN DEL POSTER DE LA PELICULA SE DESPLIEGA ESTO CON TODA LA INFO DE LA PELICULA,
-    LOS CINES DONDE SE PUEDEN VER Y BASICAMENTE ES EL FORMULARIO DE COMPR
- -->
  <?php 
                         foreach ($selectedMovieFunctions as $selectedMovieFunction){
                             foreach($selectedMovieFunction as $function){
@@ -193,11 +137,9 @@ td{
 
                 <div class="modal-body">
 
-                <!-- 
-                    EN ESTE DIV SE MOSTRARIAN LOS DISTINTOS CINES QUE EMITEN ESTA PELICULA
-                 -->
+               
                     <div class="form-group">
-                        <label>Cinemas</label>
+                        <label style="color:black;">Cinemas</label>
                         <select id="options" name="" class="form-control ml-3">
                         <option value="" disabled selected>Select a Cinema</option>
                         <?php 
@@ -214,14 +156,14 @@ td{
 
 
                     <div class="form-group">
-                        <label>Functions</label>
+                        <label style="color:black;">Functions</label>
                             <select id="choices" name="idFunction" class="form-control ml-3">
                             </select>
                     </div>
 
                     <div class="form-group">
                         <label style="color:black;">Number Of Tickets</label>
-                        <input style="color:black;" name="quantity" min='1' type="number" required>
+                        <input style="color:black;" name="quantity" min='1' type="number" required onkeypress="return false">
                     </div>
 
 
@@ -248,10 +190,10 @@ td{
 
             $('#options').on('change', function() {
                 
-                // Set selected option as variable
+                
                 var selectValue = $(this).val();
 
-                $.ajax({
+               /* $.ajax({
                     method : 'POST',
                     url : '/TPFinalLab4/MovieFunction/prueba',
                     dataType : 'JSON',
@@ -272,7 +214,7 @@ td{
                         })
                         // JSON.Parse(dato);
                     }
-                }); 
+                }); */
                 
                 // Empty the target field
                 $('#choices').empty();
@@ -309,14 +251,13 @@ td{
             
                 [
                     <?php foreach($selectedMovieFunction as $function) {?>
-                    /*values.push(<?= $function->getId();?>);*/
+                    
                     '<?php echo "Fecha: " . $function->getDay() . " Sala: " . $function->getRoom()->getName() . " Horario: " . $function->getHour()?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
                     <?php } ?>
                 ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
             <?php }?>
         };
 
-        // When an option is changed, search the above for matching choices
 
 
 
