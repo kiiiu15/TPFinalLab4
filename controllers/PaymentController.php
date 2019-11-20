@@ -21,20 +21,24 @@ use Dao\UserDB as UserDB;
 class PaymentController implements Icontrollers{
 
 
-    public function Validate($idBuy, $number = "",  $expirity = "", $expirityY = "", $security = ""){
-
+    public function Validate($remember = null,$idBuy, $number = "",  $expirity = "", $expirityY = "", $security = ""){
+      
         
         $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
         
         $validation = $this->ValidateCreditCard($creditcard);
-        $buyC = new BuyController();
-        $buy = $buyC->RetrieveById($idBuy);
-        $discount = $buy->getDiscount();
-        $total = $buy->getTotal();
         if($validation == true){
+              //si llega el remember 
+            if($remember == ""){
+                
+            }
+            $buyC = new BuyController();
+            $buy = $buyC->RetrieveById($idBuy);
+            $discount = $buy->getDiscount();
+            $total = $buy->getTotal();    
             $this->GenerateTicket($idBuy);
         }else{
-            
+            //var_dump($_SESSION['loged']);
 
             $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
             include(VIEWS ."/payment.php");
@@ -61,11 +65,10 @@ class PaymentController implements Icontrollers{
         $creditcardList = array();
         $creditcardList = $user->getCreditCards();
 
-        $creditcardList = $this->TransformToArray($creditcardList);
+        $creditcardList = $this->TransformToArray($creditcardList);     
 
-        
-
-
+        $answer = true;
+        /*
         $answer = false;
 
         foreach($creditcardList as $creditcardUser){
@@ -83,7 +86,7 @@ class PaymentController implements Icontrollers{
                     }
                 }
             }
-        }
+        }*/
 
         return $answer;
     }

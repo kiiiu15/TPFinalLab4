@@ -20,11 +20,11 @@ td{
             <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
                     <label for="">Usuario</label>
-                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario">
+                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="">Contraseña</label>
-                    <input type="text" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña">
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña" required>
                 </div>
                 <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesión</button>
                 <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
@@ -52,33 +52,33 @@ td{
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Email</label>
+                                <label style="color:black;">Email</label>
                                 <input required type="text" class="form-control" name="email" />
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
+                                <label style="color:black;">Password</label>
                                 <input required type="text" class="form-control" name="pass" />
                             </div>
                             <div class="form-group">
-                                <label>Name</label>
+                                <label style="color:black;">Name</label>
                                 <input required type="text" class="form-control" name="UserName" />
                             </div>
                             <div class="form-group">
-                                <label>Last Name</label>
+                                <label style="color:black;">Last Name</label>
                                 <input required type="text" class="form-control" name="LastName" />
                             </div>
                             <div class="form-group">
-                                <label>DNI</label>
+                                <label style="color:black;">DNI</label>
                                 <input required type="text" class="form-control" name="Dni" />
                             </div>
                             <div class="form-group">
-                                <label>Telephone Number</label>
+                                <label style="color:black;">Telephone Number</label>
                                 <input required type="text" class="form-control" name="TelephoneNumber" />
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-dark" >Registrar</button>
+                            <button style="color:black;" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                            <button style="color:black;" type="submit" class="btn btn-dark" >Registrar</button>
                         </div>
                     </form>
                 </div>

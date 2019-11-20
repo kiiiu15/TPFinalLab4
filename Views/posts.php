@@ -221,7 +221,7 @@ td{
 
                     <div class="form-group">
                         <label style="color:black;">Number Of Tickets</label>
-                        <input style="color:black;" name="quantity" type="number">
+                        <input style="color:black;" name="quantity" min='1' type="number" required>
                     </div>
 
 
