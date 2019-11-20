@@ -63,6 +63,15 @@ td{
 
             <h1 class="mb-5">List of Functions</h1>
 
+            <?php if(isset($successMje) || isset($errorMje)) { ?>
+                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
+                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } ?>
+
             <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-function">
                 Add a Function
             </button> 
@@ -83,9 +92,16 @@ td{
             <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
                 Agregar Cine
             </button> 
--->                
+
+            
+-->             
+
+          
             <form class="form-inline" action="<?= FRONT_ROOT?>/MovieFunction/Delete" method="POST">
-                <button type="submit" class="btn btn-dark ml-3"  >Delete Selection</button> 
+                <button type="submit" class="btn btn-dark ml-3"  >Delete Selection</button>
+               
+
+               
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -120,14 +136,7 @@ td{
             </form>
 
             <!-- Esto como si no existiera -->
-            <?php if(isset($successMje) || isset($errorMje)) { ?>
-                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
-                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php } ?>
+           
         </div>
     </main>
 
@@ -170,11 +179,11 @@ td{
                     </div>
                     <div class="form-group">
                         <label style="color:black;">Date</label>
-                        <input required name="date" type="date">
+                        <input required name="date" type="date" min="<?php echo date("Y-m-d");?>">
                     </div>
                     <div class="form-group">
                         <label style="color:black;">Hour</label>
-                        <input required name="hour" type="time">
+                        <input required name="hour" type="time" >
                     </div>
                 </div>
 

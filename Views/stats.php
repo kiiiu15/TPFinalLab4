@@ -3,13 +3,8 @@ include(VIEWS."/header2.php");
 include(VIEWS."/adminNav.php");
 ?>
 
-<style>
-body {
-	background-image: url("https://www.pixelstalk.net/wp-content/uploads/images1/1920x1080-movie-theatre-wallpaper.jpg");
-    background-size:cover;
-    background-size:100%;
-} 
-</style>
+
+
 
 <main class="p-5">
     <div class="container">
@@ -74,7 +69,7 @@ body {
                 </div>
                 <div class="form-group">
                     <label style="color:white;" >Cinemas</label>
-                    <select name="cinema" class="form-control ml-3">
+                    <select name="cinema" class="form-control ml-3" >
                         <option value="" >Any</option>
                     <?php 
                     foreach ($cinemaList as $cinema) {
@@ -87,7 +82,7 @@ body {
                 </div>
                 <div class="form-group">
                     <label style="color:white;" >Movies</label>
-                    <select name="movie" class="form-control ml-3">
+                    <select  name="movie" class="form-control ml-3">
                         <option value="">Any</option>
                     <?php 
                         foreach ($movieList as $movie) {
@@ -104,6 +99,13 @@ body {
 
     </div>
 </main>
+<style>
+body {
+	background-image: url("https://www.pixelstalk.net/wp-content/uploads/images1/1920x1080-movie-theatre-wallpaper.jpg");
+    background-size:cover;
+    background-size:100%;
+} 
+</style>
 
 <?php
 include(VIEWS."/footer.php");

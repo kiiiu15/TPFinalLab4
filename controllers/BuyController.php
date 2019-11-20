@@ -69,7 +69,7 @@ class BuyController implements Icontrollers{
         }
     }
 
-    public function prueba(){
+ /*   public function prueba(){
         $moviefunctionController = new MovieFunctionController();
         $function = $moviefunctionController->GetById(22);
         $UserController = new UserController();
@@ -78,7 +78,7 @@ class BuyController implements Icontrollers{
         $buy = new Buy('1',$function,'2019-11-16',2,10,0,$user,false);
         $db = new BuyDB();
         $db->Add($buy);
-    }
+    }*/
 
     public function GetAll(){
         $listBuy= array();

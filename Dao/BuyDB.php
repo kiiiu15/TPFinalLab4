@@ -204,7 +204,7 @@ class BuyDB{
         ON Buy.idMovieFunction = MovieFunctions.idFunction
         INNER JOIN Rooms
         ON MovieFunctions.idRoom = Rooms.id
-        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate"; 
+        WHERE Buy.Buystate=true AND Buy.buydate BETWEEN :fromDate AND :toDate"; 
         
 
         $values['fromDate'] = $fromDate;
@@ -231,7 +231,7 @@ class BuyDB{
         ON Buy.idMovieFunction = MovieFunctions.idFunction
         INNER JOIN Rooms
         ON MovieFunctions.idRoom = Rooms.id
-        WHERE Buy.state=true AND Buy.date BETWEEN :fromDate AND :toDate 
+        WHERE Buy.buystate=true AND Buy.buydate BETWEEN :fromDate AND :toDate 
         AND Rooms.idCinema = :idCinema
         AND MovieFunctions.idMovie = :idMovie";
 
@@ -259,7 +259,7 @@ class BuyDB{
     public function getTotalTicketsSold($fromDate,$toDate){
                 
         $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
-        Buy WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true";
+        Buy WHERE Buy.buydate BETWEEN :fromDate AND :toDate AND Buy.buystate = true";
 
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
@@ -283,7 +283,7 @@ class BuyDB{
                 
         $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
         Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction =  Moviefunctions.idFunction
-        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Moviefunctions.idMovie = :idMovie";
+        WHERE Buy.buydate BETWEEN :fromDate AND :toDate AND Buy.buystate = true AND Moviefunctions.idMovie = :idMovie";
 
         $values['idMovie'] = $idMovie;
         $values['fromDate'] = $fromDate;
@@ -309,7 +309,7 @@ class BuyDB{
         $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
         Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction = Moviefunctions.idFunction
         INNER JOIN Rooms ON Moviefunctions.idRoom = Rooms.id
-        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Rooms.idCinema = :idCinema";
+        WHERE Buy.buydate BETWEEN :fromDate AND :toDate AND Buy.buystate = true AND Rooms.idCinema = :idCinema";
 
         $values['idCinema'] = $idCinema;
         $values['fromDate'] = $fromDate;
@@ -335,7 +335,7 @@ class BuyDB{
         $sql = "SELECT SUM(Buy.numberOfTickets) AS 'total' FROM
         Buy INNER JOIN Moviefunctions ON Buy.idMovieFunction = Moviefunctions.idFunction
         INNER JOIN Rooms ON Moviefunctions.idRoom = Rooms.id
-        WHERE Buy.date BETWEEN :fromDate AND :toDate AND Buy.state = true AND Rooms.idCinema = :idCinema 
+        WHERE Buy.buydate BETWEEN :fromDate AND :toDate AND Buy.buystate = true AND Rooms.idCinema = :idCinema 
         AND Moviefunctions.idMovie = :idMovie";
 
         $values['idMovie'] = $idMovie;

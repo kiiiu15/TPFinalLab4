@@ -55,11 +55,11 @@ class MovieFunctionController implements IControllers{
 
         /*Chequeamos que haya funciones con las qie podria haber problemas en el dia de la fecha seleccionados*/
         if (count($functions) > 0) {
-            /*Verificamos que esa pelicula no se este proyectanbdo en otro cine */
-            $answer = $this->CheckByCinema($movieFunction, $functions);
+            /*Verificamos que esa pelicula no se este proyectanbdo en otro cine o en otra */
+            $answer = $this->CheckByRoom($movieFunction, $functions);
             /*Si es asi, verificamos la sala y los horarios de otras funciones para esa misma sala dentro del cine */
             if($answer === ''){
-                $answer = $this->CheckByRoom($movieFunction, $functions);
+                $answer = $this->CheckByFunctionsInRoom($movieFunction, $functions);
 
 
             }
@@ -73,7 +73,7 @@ class MovieFunctionController implements IControllers{
         
     }
 
-    private function CheckByRoom ($movieFunction, $functions){
+    private function CheckByFunctionsInRoom ($movieFunction, $functions){
         $answer = '';
         /*Obtenemos la sala Y el cine  */
         $room = $movieFunction->getRoom();
@@ -98,10 +98,18 @@ class MovieFunctionController implements IControllers{
 
             /*Si hay funciones en la sala que nos interesa las extraemos */
 
-            if (isset($functionsGroupedByRoom[$room->getId()])){
+            if (isset($functionsGroupedByRoom[$room->getId()]) ){
                 $functionsAtRoom = $functionsGroupedByRoom[$room->getId()];
 
-                $answer = $this->CheckTime($movieFunction, $functionsAtRoom);
+                $roomForTheDay = $functionsAtRoom[0]->getRoom();
+
+                if ($roomForTheDay->getId() == $room->getId()){
+                    $answer = $this->CheckTime($movieFunction, $functionsAtRoom);
+                } else {
+                    $answer = "Una pelicula solo en un solo cine en una sola sala a la vez. Cambie la sala";
+                }
+
+                
 
                 
             }
@@ -112,11 +120,11 @@ class MovieFunctionController implements IControllers{
         return $answer;
     }
 
-    private function CheckByCinema ($movieFunction, $functions){
+    private function CheckByRoom ($movieFunction, $functions){
         $answer = '';
         /*Obtenemos la pelicula y el cine de la funcion */
         $movie = $movieFunction->getMovie();
-        $cinema = $movieFunction->getRoom()->getCinema();
+        $room = $movieFunction->getRoom();
         /*Agrupamos las funciones por peliculas */
         $functionsGroupedByMovie = $this->GroupFunctionsByMovie($functions);
 
@@ -125,15 +133,17 @@ class MovieFunctionController implements IControllers{
             $movieFunctions = $functionsGroupedByMovie[$movie->getId()];
             /*Si hay al menos una funcion le extraemos el cine a la primera ya que a este punto ninguna otra funcion debera poder tener otro cine distinto */
             if (count($movieFunctions) > 0) {
-                $CinemaOfMovieForTheDay = $movieFunctions[0]->getRoom()->getCinema();
+                $roomOfMovieForTheDay = $movieFunctions[0]->getRoom();
                 /*Comparamos que se este haciendo la agregacion en el mismo cine y si es otro significa que ya esta pelicula se esta proyectando en otro cine */
-                if ($CinemaOfMovieForTheDay->getIdCinema() != $cinema->getIdCinema() ){
-                    $answer = "Una pelicula solo se puede pasar en un solo cine por dia. Cambia de fecha o pone el mismo cine. ";
+                if ($roomOfMovieForTheDay->getId() != $room->getId() ){
+                    $answer = "Una pelicula solo se puede pasar en un sola sala por dia. Cambia de fecha o pone la misma sala.";
                 }
             }
         }
             return $answer;
     }
+
+   
 
     private function CheckTime($movieFunction, $functions){
         $answer = '';
@@ -156,6 +166,11 @@ class MovieFunctionController implements IControllers{
                     $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
                     break;
                 }
+            }
+
+            if ($function->getHour() < '02:15:00' || $function->getHour() > '21:45:00' ){
+                $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                break;
             }
         }
 

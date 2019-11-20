@@ -1,11 +1,8 @@
 <?php
-include(VIEWS."/header2.php");
+include(VIEWS."/header.php");
 include(VIEWS.'/nav2.php');
 ?>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+
 <style>
 body {
 	background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/V7QIfdTcgikqxmxok/cinema-background_vzw7c2tqe__F0000.png");
@@ -36,7 +33,7 @@ body {
                     <form role="form">
                     <div class="form-group">
                     <div class="input-group">
-                            <input type="hidden" value="" name="idBuy" />
+                            <input type="hidden" value="<?= $buy->getIdBuy();?>" name="idBuy" />
                            
                     </div>
                         <label for="cardNumber" >

@@ -34,7 +34,7 @@ class PaymentController implements Icontrollers{
         if($validation == true){
             $this->GenerateTicket($idBuy);
         }else{
-            //var_dump($_SESSION['loged']);
+            
 
             $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
             include(VIEWS ."/payment.php");

@@ -12,7 +12,7 @@ require_once "Config/Router.php";
 use Config\Autoload as Autoload;
 use Config\Router as Router;
 use Config\Request as Request;
-//use daos\daoList\Singleton as Singleton;
+
 Autoload::start();
 session_start();
 Router::route(new Request());
