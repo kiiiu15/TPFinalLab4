@@ -191,27 +191,22 @@ class UserController implements IControllers
     /*Methods for Facebook API*/
 
     public function loginWithFacebook($fbUserData) {
-
-        
         $DaoUser= new UserDB();
         try{
             if($this->UserExist($fbUserData['email']))//comprueba que exista el usuario
             {
                 $user = $DaoUser->GetByEmail($fbUserData['email']);
                 
-                //esto esta mal, no se bien como desencriptar esa password
-                //$unencryptedPassword = $fbUserData['password'];
-                $unencryptedPassword = '123';
-                if($user->GetPass() == $unencryptedPassword)//comprobamos la contraseña
+                if($user)
                 {
                     $this->SetLogIn($user);
                     $this->index();
                 }else{
-                    $errorMje = "Error: Contraseña incorrecta";
+                    $errorMje = "Error: we Can´t access to your facebook acount";
                     include(VIEWS."/login.php"); 
                 }
             }else{
-                $errorMje = "Error: usuario incorrecto";
+                $errorMje = "Error: there are no records of such user in the database";
                 include(VIEWS."/login.php"); 
             }
         }catch(\PDOExeption $ex){
