@@ -76,9 +76,7 @@ class UserController implements IControllers
                 }
             }
         }
-        if($ans){
-            return $ans;
-        }else{//preguntar si se puede hacer esto jeje
+        if(!$ans){
             include(VIEWS."/login.php");
         }
     }

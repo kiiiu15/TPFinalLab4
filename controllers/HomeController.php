@@ -21,23 +21,18 @@ class HomeController implements Icontrollers {
 
     public function showMoviesByGenre($genreId) {
 
-        $userC = new UserController();
         $movieC = new MovieController();
-        $genreC = new GenreController();
 
-        $isAdmin = $userC->IsAdmin();
         $movieList = $this->GetMovieForGenreFromBillBoard($genreId);
-        $genresList = $genreC->GetAll();
-
-        if ($movieList == false){
-            $movieList = array();
-            $errorMje = "Los sentimos, en cartelera no se encuentran peliculas de dicho genero.Intenete nuevamente la proxima semana.";
-        }
     
-        if (!is_array($movieList )){
-            $movieList = array($movieList);
-        }
-        include(VIEWS.'/posts.php');
+
+        $movieList = $this->TransformToArray($movieList);
+
+        if (empty($movieList)){
+            $this->index('No hay peliculas de ese genero programadas. Intente con otro genero', null,null,array());
+        }else {
+            $this->index(null, null,null, $movieList);
+        }        
     }
 
     public function Stats($total = -1,$totalTickets = -1){
@@ -73,6 +68,19 @@ class HomeController implements Icontrollers {
         return $movies;
     }
 
+    private function TransformToArray($value){
+        if ($value == false){
+            $value = array();
+        }
+
+        if (!is_array($value)){
+            $value = array($value);
+        }
+
+        return $value;
+
+    }
+
 
     public function showMovie($idMovie){
         $movieFController = new MovieFunctionController();
@@ -83,37 +91,43 @@ class HomeController implements Icontrollers {
 
     public function ShowMovieByDate($date){
         
-        $userC = new UserController();
         $movieFC = new MovieFunctionController();
-        $genreC = new GenreController();
-
-        $isAdmin = $userC->IsAdmin();
+        
         $movieList= $movieFC->GetMovieByDate($date);
         
-        $genresList = $genreC->GetAll();
+       
 
        
 
         if (empty($movieList)){
-            $errorMje = "No hay peliculas programadas para ese dia. Intente con otra fecha";
+            $this->index("No hay peliculas programadas para ese dia. Intente con otra fecha", null, null, array() );
+        
+        }else {
+            $this->index(null, null, null, $movieList );
+        
         }
 
-        include(VIEWS.'/posts.php');
         
         
     }
 
-    public function index ($mensage = null, $movieFunctionsToShow= null, $mensageSucces = null){
+    public function index ($mensage = null, $movieFunctionsToShow= null, $mensageSucces = null, $movieListPassed = array()){
        
         $errorMje = $mensage;
         $successMje = $mensageSucces;
         $userC = new UserController(); 
-        $movieFC = new MovieFunctionController();
         $genreC = new GenreController();
-
-        $isAdmin = $userC->IsAdmin();
-        $movieList = $movieFC->GetBillboardMovies();
         $genresList = $genreC->GetAll();
+        $isAdmin = $userC->IsAdmin();
+
+        if (empty($movieListPassed)){
+            $movieFC = new MovieFunctionController();
+            $movieList = $movieFC->GetBillboardMovies();
+        } else {
+            $movieList = $movieListPassed;
+        }
+        
+        
         $selectedMovieFunctions = $movieFunctionsToShow;
 
         include(VIEWS.'/posts.php');
