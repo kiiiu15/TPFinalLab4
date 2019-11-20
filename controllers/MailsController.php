@@ -6,18 +6,25 @@ use controllers\UserController as UserController;
 use Dao\UserDB as UserDB;
 use Dao\BuyDB as BuyDB;
 
+use model\PHPMailer as PHPMailer;
+use model\Exceptionn as Exceptionn;
+use model\SMTP as SMTP;
+
 
 class MailsController 
 {
     
-    public function sendPurchaseEmail(Purchase $purchase,$qrsToSend)
+    public function sendPurchaseEmail(/*Purchase $purchase,$qrsToSend*/)
     {
         //BUSCA EL USUARIO LOGEADO !! 
         $user = $_SESSION["loged"];
         $mail = new PHPMailer(true);
-        $buyC = new BuyController();
+        
+        $buy = $_SESSION['buy'];
+        //Traigo el objeto compra segun el usuario logeado
+        /*$buyC = new BuyController();
         $buy = $buyC->RetrieveByUser($user);
-        //
+        */
 
     try {
         $mail->SMTPDebug = 0;                      // Enable verbose debug output
