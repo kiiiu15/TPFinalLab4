@@ -176,6 +176,155 @@ class UserController implements IControllers
         include(VIEWS."/login.php"); 
     }
     
+
+
+
+
+
+
+
+
+
+
+
+
+    /*Methods for Facebook API*/
+
+    public function loginWithFacebook($fbUserData) {
+
+        
+        $DaoUser= new UserDB();
+        try{
+            if($this->UserExist($fbUserData['email']))//comprueba que exista el usuario
+            {
+                $user = $DaoUser->GetByEmail($fbUserData['email']);
+                
+                //esto esta mal, no se bien como desencriptar esa password
+                //$unencryptedPassword = $fbUserData['password'];
+                $unencryptedPassword = '123';
+                if($user->GetPass() == $unencryptedPassword)//comprobamos la contraseña
+                {
+                    $this->SetLogIn($user);
+                    $this->index();
+                }else{
+                    $errorMje = "Error: Contraseña incorrecta";
+                    include(VIEWS."/login.php"); 
+                }
+            }else{
+                $errorMje = "Error: usuario incorrecto";
+                include(VIEWS."/login.php"); 
+            }
+        }catch(\PDOExeption $ex){
+            throw $ex;
+        }
+        
+
+        //var_dump($fbUserData);
+/*
+        if($this->UserExist($this->userDAO->retrieveAll(),$fbUserData["email"]))
+        {
+            $userLoggerFB=$this->userDAO->retrieveOneByEmail($fbUserData["email"]);
+            if($userLoggerFB != null) 
+            {
+                $this->setSession($userLoggerFB);
+                $message = "Welcome "  . $fbUserData["first_name"] . "!";
+                $this->homeController->index($message, 3);
+            }
+        }
+        else
+        {
+            $accountRegisterByFB["id"]=$fbUserData["id"];
+            $accountRegisterByFB["email"]=$fbUserData["email"];
+            $accountRegisterByFB["password"]=$fbUserData["password"];
+            $accountRegisterByFB["confirm_password"]=$fbUserData["password"];
+            $accountRegisterByFB["firstName"]=$fbUserData["first_name"];
+            $accountRegisterByFB["lastName"]=$fbUserData["last_name"];
+            $accountRegisterByFB["photo"]=$fbUserData["picture"];
+            $this->createUserUsingFacebook($accountRegisterByFB);
+        }*/
+    }
+
+ /*   private function verifyIfTheUserEmailBeUsing($accountsList, $userEmail) {
+        $result=false;
+
+        foreach($accountsList as $value)
+        {
+            if($value->getEmail()==$userEmail)
+            {
+                $result=true;
+                break;
+            }       
+        }
+        return $result;
+    }
+
+    private function createUserUsingFacebook($array) {
+        $email = $array["email"];
+        try
+        {
+            $idUserFacebook=$array["id"];
+            $firstName = $array["firstName"];
+            $lastName = $array["lastName"];
+            $email = $array["email"];
+            $photo = $array["photo"];
+
+            //Password hash
+            $options = [
+                'cost' => 12,
+            ];
+            $unencryptedPassword = $array["password"];;
+            $password = password_hash($unencryptedPassword, PASSWORD_BCRYPT, $options);
+            //
+
+            $userRoleDAO = new DAO_UserRole();
+            $userRoleList = $userRoleDAO->retrieveAll();
+            if(!empty($userRoleList)) {
+                foreach($userRoleList as $userRole) {
+                    if($userRole->getDescription() == "user") {
+                        $userRole = $userRole;
+                        break;
+                    }
+                }
+                $user = new M_User();
+                $user->setEmail($email);
+                $user->setPassword($password);
+                $user->setFirstName($firstName);
+                $user->setLastName($lastName);
+                $user->setUserRole($userRole);
+                $user->setIdFacebook($idUserFacebook);
+                
+
+                $this->userDAO->create($user);
+                $this->prepareFBprofileImg($idUserFacebook,$user->getEmail());
+
+                $this->loginUser($email, $unencryptedPassword);
+                //A login is made to, with the email and password, load the user from the database and bring the ID
+            }
+            else {
+                $message = "There was a problem creating the user. Try again";
+                $this->homeController->signup($message, 0);
+            } 
+    }
+    catch(PDOException $e)
+    {
+        $message = "A database error ocurred";
+        $this->homeController->signup($message, 0);
+    }            
+    }
+
+    private function prepareFBprofileImg($idUserFacebook,$email)  {
+        $userSearched=$this->userDAO->retrieveOneByEmail($email);
+        $url="https://graph.facebook.com/".$idUserFacebook."/picture?type=large&redirect=true&width=600&height=600";
+        $data = file_get_contents($url);
+        
+        $this->userDAO->updatePhoto($data,$userSearched->getId());
+    }
+
+
+*/
+
+
+
 }
 
 

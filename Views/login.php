@@ -31,9 +31,11 @@ td{
                     Sign Up
                 </button>
             </form>
-            <button type="button" class="btn btn-dark btn-block btn-lg">
-                LogIn Facebook
-            </button>
+            <?php
+                require_once "FacebookConfig.php";
+                $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+                echo "<br><a href=" . htmlspecialchars($loginUrl) . ">LOGIN FACEBOOOK</a>";
+            ?>
                 
             
             <?php if(isset($successMje) || isset($errorMje)) { ?>

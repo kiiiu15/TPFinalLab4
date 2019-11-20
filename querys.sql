@@ -124,7 +124,18 @@ CREATE TABLE CreditCardPerUser(
 
 INSERT INTO Roles (roleName) VALUES ('admin');
 INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("manu","last","123","321");
-INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("manu","123","admin",1);
+
+
+
+/* esto es para el fb */
+INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("Manuel","Sureda","123","321");
+INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("manumdq97@live.com.ar","123","client",depende);
+
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","111111111111111","123","02","21");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manumdq97@live.com.ar","111111111111111");
+
+
+
 
 INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","6583458042570138","123","02","19");
 INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","4444444444444444","123","02","19");

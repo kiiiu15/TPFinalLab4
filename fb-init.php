@@ -7,15 +7,13 @@ if(!isset($_SESSION)){
 require(ROOT."/vendor/autoload.php");
 
 $fb = new Facebook\Facebook([
-    'app_id' => '513671089475368',
-    'app_secret' => '6711f1640f48f0620d9e5dfe6e6dd15a',
+    'app_id' => '429674224576137',
+    'app_secret' => 'd8c3df0dd28220a92df2ce0df3e921b9',
     'default_graph_version' => 'v2.7'
 ]);
 
 $helper = $fb->getRedirectLoginHelper();
 $login_url = $helper->getLoginUrl("http://localhost/TPFinalLab4");
-
-
 
 try{
     $accessToken = $helper->getAccessToken();

@@ -38,15 +38,12 @@ class ProfileDB
         $values["UserlastName"]    = $profile->GetLastName();
         $values["dni"]             = $profile->GetDni();
         $values["telephoneNumber"] = $profile->GetTelephoneNumber();
-
-        
-        
+      
         try{
             $this->connection = Connection::getInstance();
             $this->connection->connect();
             $this->connection->ExecuteNonQuery($sql,$values);
 
-            //preguntar si esto esta bien
             $profileId = $this->GetLastId();
         }catch(\PDOExeption $ex){
             throw $ex;
