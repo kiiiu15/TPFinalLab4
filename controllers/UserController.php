@@ -77,6 +77,7 @@ class UserController implements IControllers
             }
         }
         if(!$ans){
+            $errorMje = "session expired or log out";
             include(VIEWS."/login.php");
         }
     }
