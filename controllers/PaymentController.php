@@ -8,7 +8,7 @@ use controllers\UserController as UserController;
 use controllers\TicketController as TicketController;
 use controllers\BuyController as BuyController;
 use controllers\HomeController as HomeController;
-
+use controllers\MailsController as MailsController; 
 
 use model\Buy as Buy;
 use model\User as User;
@@ -21,7 +21,7 @@ use Dao\UserDB as UserDB;
 class PaymentController implements Icontrollers{
 
 
-    public function Validate($remember = null,$idBuy, $number = "",  $expirity = "", $expirityY = "", $security = ""){
+    public function Validate($idBuy, $number = "",  $expirity = "", $expirityY = "", $security = ""){
       
         
         $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
@@ -29,11 +29,10 @@ class PaymentController implements Icontrollers{
         $validation = $this->ValidateCreditCard($creditcard);
         if($validation == true){
               //si llega el remember 
-            if($remember == ""){
-                
-            }
+            
             $buyC = new BuyController();
             $buy = $buyC->RetrieveById($idBuy);
+
             $discount = $buy->getDiscount();
             $total = $buy->getTotal();    
             $this->GenerateTicket($idBuy);
@@ -110,6 +109,11 @@ class PaymentController implements Icontrollers{
 
             $successMsg = "We thank you for your purchase";
             $ticketController->GenerateQR($qr);
+
+            $mailController = new MailsController();
+
+            $mailController->sendPurchaseEmail($idBuy);
+
             $homeC->index(null,null,$successMsg);
         }catch(\PDOException $ex){
             throw $ex;

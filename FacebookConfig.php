@@ -12,7 +12,7 @@ define('CURRENT_DIR', str_replace('\\','/',__DIR__ . "/"));
 $base=explode($_SERVER['DOCUMENT_ROOT'],CURRENT_DIR);
 define("FOLDER",$base[1]);
 
-//$callbackUrl="http://localhost/" . FOLDER . "callback.php";
+
 $callbackUrl= "http://localhost/TPFinalLab4/callback.php";
 $fb = new Facebook\Facebook([
 	'app_id' => $app_id, 

@@ -20,7 +20,7 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Add Function</a>   
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Home/Stats' ?>">Stats</a>
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Buy/Stats' ?>">Stats</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>

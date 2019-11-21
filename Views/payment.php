@@ -24,9 +24,10 @@ body {
                     </h3>
                     <div class="checkbox pull-right">
                         <label>
-                            <input type="checkbox" />
+                            
                             Remember
                         </label>
+                        <input  type="checkbox" />
                     </div>
                 </div>
                 <div class="panel-body">
@@ -39,7 +40,7 @@ body {
                         <label for="cardNumber" >
                             CARD NUMBER</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="cardNumber" id="cardNumber" placeholder="Valid Card Number"
+                            <input type="text" class="form-control" name="cardNumber" id="cardNumber" placeholder="Valid Card Number"  maxlength="16" minlength="16"
                                 required autofocus />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                         </div>

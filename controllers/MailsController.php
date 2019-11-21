@@ -14,17 +14,17 @@ use model\SMTP as SMTP;
 class MailsController 
 {
     
-    public function sendPurchaseEmail(/*Purchase $purchase,$qrsToSend*/)
+    public function sendPurchaseEmail($idBuy)
     {
         //BUSCA EL USUARIO LOGEADO !! 
         $user = $_SESSION["loged"];
         $mail = new PHPMailer(true);
         
-        $buy = $_SESSION['buy'];
+        //$buy = $_SESSION['buy'];
         //Traigo el objeto compra segun el usuario logeado
-        /*$buyC = new BuyController();
-        $buy = $buyC->RetrieveByUser($user);
-        */
+        $buyC = new BuyController();
+        $buy= $buyC->RetrieveById($idBuy);
+        
 
     try {
         $mail->SMTPDebug = 0;                      // Enable verbose debug output
@@ -33,7 +33,7 @@ class MailsController
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
         $mail->Username   = 'MoviePass12311@gmail.com';                     // SMTP username
         $mail->Password   = 'phpsucks';                               // SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+        $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
         $mail->Port       = 587;                                    // TCP port to connect to
 
         //Recipients

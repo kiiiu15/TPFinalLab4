@@ -123,6 +123,7 @@ CREATE TABLE CreditCardPerUser(
 );
 
 INSERT INTO Roles (roleName) VALUES ('admin');
+INSERT INTO Roles (roleName) VALUES ('client');
 INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("manu","last","123","321");
 
 

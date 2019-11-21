@@ -7,6 +7,8 @@ use controllers\MovieFunctionController as MovieFunctionController;
 use controllers\UserController as UserController;
 use controllers\RoomController as RoomController;
 use controllers\HomeController as HomeController;
+use controllers\CinemaController as CinemaController;
+use controllers\MovieController as MovieController;
 
 use model\Buy as Buy;
 use model\MovieFunction as MovieFunction;
@@ -17,14 +19,10 @@ use Dao\UserDB as UserDB;
 
 class BuyController implements Icontrollers{
   
-    /*public function DiscountDay($nameDay) {
-        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-        $date = $days[date('N', strtotime($nameDay))];
-        return $date;
-    }*/
+
 
     public function ReciveBuy($idFunction,$numberOfTickets){
-
+        $homeController = new HomeController();
         $UserController = new UserController();
         $user = $UserController->GetUserLoged();  //obtengo el usuario
         
@@ -54,14 +52,18 @@ class BuyController implements Icontrollers{
                 }else{
                     $total =  $room->getPrice() * $numberOfTickets;
                 }
-     
-                $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
-                $buy = $this->RetrieveById($id);
+                try {
+                    $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
+                    $buy = $this->RetrieveById($id);
+                    
+                    include(VIEWS ."/payment.php");
+                } catch (\Throwable $th) {
+                    $homeController->index('There has been a problem with the buy please try again.');
+                }
                 
-                include(VIEWS ."/payment.php");
             }else{
                 //Hacer que este mensaje aparezca como alerta 
-                $homeController = new HomeController();
+               
                 $alertCapacity = "We are sorry, there is no capacity in the room. Try in another room ";
                 $homeController->index($alertCapacity);
                 
@@ -69,16 +71,9 @@ class BuyController implements Icontrollers{
         }
     }
 
- /*   public function prueba(){
-        $moviefunctionController = new MovieFunctionController();
-        $function = $moviefunctionController->GetById(22);
-        $UserController = new UserController();
-        $user = $UserController->GetUserLoged();  //obtengo el usuario
-        
-        $buy = new Buy('1',$function,'2019-11-16',2,10,0,$user,false);
-        $db = new BuyDB();
-        $db->Add($buy);
-    }*/
+
+
+
 
     public function GetAll(){
         $listBuy= array();
@@ -86,7 +81,7 @@ class BuyController implements Icontrollers{
         try{
             $listBuy=$buyDB->GetAll();
         }catch(\PDOException $ex){
-            throw $ex;
+            $listBuy=array();
         }
         return $listBuy;
     }
@@ -98,10 +93,10 @@ class BuyController implements Icontrollers{
         try{
             $buyDB->Add($buy);
         }catch(\PDOException $ex){
-            throw $ex;
+            throw $ex; /**Se eleva la excepcion ya que se esta llamando desdee recieve buy con otro try catch */
         }
     }
-
+    /*
     public function Delete($buy){
         $buyDb= new BuyDB();
         try{
@@ -109,7 +104,7 @@ class BuyController implements Icontrollers{
         }catch(\PDOException $ex){
             throw $ex;
         }
-    }
+    }*/
 
     public function RetrieveById($idBuy){
         $buyDB = new BuyDB();
@@ -122,6 +117,7 @@ class BuyController implements Icontrollers{
         return $buy;
     }
 
+    /*
     public function RetrieveByUser($user){
         $buyDB = new BuyDB();
         $buy = new Buy();
@@ -131,14 +127,14 @@ class BuyController implements Icontrollers{
             throw $ex;
         }
         return $buy;
-    }
+    }*/
 
     public function ChangeState($idBuy){
         $buyDB = new BuyDB();
         try{
             $buyDB->ChangeState($idBuy);
         }catch(\PDOException $ex){
-            throw $ex;
+            throw $ex; /*Se eleva la excepcion ya que se llama desde otra controladora que agarra la excepcion */
         }
     }
 
@@ -153,9 +149,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats($result,-1);
+                $this->Stats($result,-1);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }else if ($cinema != "" && $movie == ""){//solo se selecciono un cine pero no pelicula
             
@@ -164,9 +160,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats($result,-1);
+                $this->Stats($result,-1);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }else if ($cinema == "" && $movie != ""){
             
@@ -175,9 +171,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats($result,-1);
+                $this->Stats($result,-1);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }else if ($cinema != "" && $movie != ""){
             try{
@@ -185,9 +181,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats($result,-1);
+                $this->Stats($result,-1);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }
         
@@ -195,7 +191,6 @@ class BuyController implements Icontrollers{
 
     public function getTotalTicketsSold($fromDate,$toDate,$cinema,$movie){
         $db = new BuyDB();
-        $homeController = new HomeController();
         //si no especifica cine ni pelicula se muestra el total de todas las ventas
         if($cinema == "" && $movie == ""){
             
@@ -204,9 +199,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats(-1,$result);
+                $this->Stats(-1,$result);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }else if ($cinema != "" && $movie == ""){//solo se selecciono un cine pero no pelicula
             
@@ -215,9 +210,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats(-1,$result);
+                $this->Stats(-1,$result);
             }catch(\PDOException $ex){
-                throw $ex;
+               $this->Stats(-1,-1);
             }
         }else if ($cinema == "" && $movie != ""){
             
@@ -226,9 +221,9 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats(-1,$result);
+                $this->Stats(-1,$result);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }else if ($cinema != "" && $movie != ""){
             try{
@@ -236,14 +231,36 @@ class BuyController implements Icontrollers{
                 if($result == null){
                     $result = 0;
                 }
-                $homeController->stats(-1,$result);
+                $this->Stats(-1,$result);
             }catch(\PDOException $ex){
-                throw $ex;
+                $this->Stats(-1,-1);
             }
         }
     }
 
-    public function index(){
+    public function index(){}
+
+    public function Stats($total = -1,$totalTickets = -1, $mesage = null){
+        $totalSold = $total;
+        $totalTicketsSold = $totalTickets;
+        $errorMje = $mesage;
+
+        if($totalSold == -1){
+            $totalSold = "complete the form";
+        }
+        if($totalTicketsSold == -1){
+            $totalTicketsSold = "complete the form";
+        } 
+        try {
+            $cinemaController = new CinemaController();
+            $cinemaList = $cinemaController->GetAll();
+            $movieController = new MovieController();
+            $movieList = $movieController->GetAll();
+            include(VIEWS."/stats.php" );
+        } catch (\PDOException $th) {
+            $errorMje = "Problem retriving stats";
+            include(VIEWS."/stats.php" );
+        }
         
     }
 

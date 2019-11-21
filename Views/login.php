@@ -20,7 +20,7 @@ td{
             <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
+                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
@@ -31,10 +31,10 @@ td{
                     Sign Up
                 </button>
             </form>
-            <?php
-                require_once "FacebookConfig.php";
+            <?php /*
+                require_once (ROOT."/FacebookConfig.php");
                 $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-                echo "<br><a href=" . htmlspecialchars($loginUrl) . ">LOGIN FACEBOOOK</a>";
+                echo "<br><a href=" . htmlspecialchars($loginUrl) . ">LOGIN FACEBOOOK</a>";*/
             ?>
                 
             

@@ -35,23 +35,7 @@ class HomeController implements Icontrollers {
         }        
     }
 
-    public function Stats($total = -1,$totalTickets = -1){
-        $totalSold = $total;
-        $totalTicketsSold = $totalTickets;
 
-        if($totalSold == -1){
-            $totalSold = "complete the form";
-        }
-        if($totalTicketsSold == -1){
-            $totalTicketsSold = "complete the form";
-        } 
-
-        $cinemaController = new CinemaController();
-        $cinemaList = $cinemaController->GetAll();
-        $movieController = new MovieController();
-        $movieList = $movieController->GetAll();
-        include(VIEWS."/stats.php" );
-    }
 
     public function GetMovieForGenreFromBillBoard($genreId){
         $movieFunctionController = new MovieFunctionController();
@@ -129,6 +113,7 @@ class HomeController implements Icontrollers {
         
         
         $selectedMovieFunctions = $movieFunctionsToShow;
+        $selectedMovieFunctions = $this->TransformToArray($selectedMovieFunctions);
 
         include(VIEWS.'/posts.php');
 

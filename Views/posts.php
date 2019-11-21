@@ -1,10 +1,5 @@
 <?php
-    /*ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);*/
-
-
-    //CAMBIAR ESE 2
+    
     include(VIEWS."/header2.php");
     
     if($isAdmin){

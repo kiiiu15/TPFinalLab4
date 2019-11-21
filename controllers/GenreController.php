@@ -19,7 +19,7 @@ class GenreController implements IControllers{
             throw $ex;
         }
 
-        //include(VIEWS."/home.php"); 
+        
     }
 
     public function GetAll(){

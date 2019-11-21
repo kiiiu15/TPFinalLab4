@@ -14,20 +14,29 @@ include(VIEWS."/adminNav.php");
         <label class="mb-5" style="color:white;">TOTAL TICKETS:</label>
         <label style="color:white;"><?=$totalTicketsSold;?></label> <br>
 
+        <?php if(isset($successMje) || isset($errorMje)) { ?>
+                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
+                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } ?>
+
         <form  action="<?= FRONT_ROOT . "/Buy/getTotalByDate" ?>" method="post" style="color:white;">
             <div class="form-group mb-4">
                 <h5 class="modal-title" style="color:white;">check totals by date / cinema / movie</h5> <br>
                 <div class="form-group">
                     <label style="color:white;"> From date</label>
-                    <input style="color:white;" type="date" required name="fromDate"><br>
+                    <input style="color:black;" type="date" required name="fromDate"><br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;">To date</label>
-                    <input style="color:white;" type="date" required name="toDate"><br>
+                    <input style="color:black;" type="date" required name="toDate"><br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;">Cinemas</label>
-                    <select style="color:white;" name="cinema" class="form-control ml-3">
+                    <select style="color:black;" name="cinema" class="form-control ml-3">
                         <option value="">Any</option>
                     <?php 
                     foreach ($cinemaList as $cinema) {
@@ -40,7 +49,7 @@ include(VIEWS."/adminNav.php");
                 <div class="form-group">
                     </select>
                     <label style="color:white;" >Movies</label>
-                    <select style="color:white;"  name="movie" class="form-control ml-3">
+                    <select style="color:black;"  name="movie" class="form-control ml-3">
                         <option value="">Any</option>
                     <?php 
                         foreach ($movieList as $movie) {
