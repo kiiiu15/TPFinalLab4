@@ -104,12 +104,18 @@ class HomeController implements Icontrollers {
         $genresList = $genreC->GetAll();
         $isAdmin = $userC->IsAdmin();
 
-        if (empty($movieListPassed)){
-            $movieFC = new MovieFunctionController();
-            $movieList = $movieFC->GetBillboardMovies();
+        
+        if (!isset($errorMje)){
+            if (empty($movieListPassed)){
+                $movieFC = new MovieFunctionController();
+                $movieList = $movieFC->GetBillboardMovies();
+            } else {
+                $movieList = $movieListPassed;
+            }
         } else {
-            $movieList = $movieListPassed;
+            $movieList = array();
         }
+        
         
         
         $selectedMovieFunctions = $movieFunctionsToShow;

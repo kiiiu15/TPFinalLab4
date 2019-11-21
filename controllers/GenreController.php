@@ -16,7 +16,7 @@ class GenreController implements IControllers{
         try{
             $genreDB->Add($genre);
         }catch(\PDOException $ex){
-            throw $ex;
+            echo "Error ading genre";
         }
 
         
@@ -27,13 +27,13 @@ class GenreController implements IControllers{
         try{
             $genreList= $genreDB->GetAll();
         }catch(\PDOException $ex){
-            throw $ex;
+            $genreList = array();
         }
         return $genreList;
     }
 
     public function index(){
-       // include(VIEWS . "/home.php");
+       
     }
 
     public function RetrieveAPI(){
@@ -48,7 +48,7 @@ class GenreController implements IControllers{
                 }
             }
         }catch(\PDOException $ex){
-            throw $ex;
+            echo "DB connection Error";
         }
     }
 

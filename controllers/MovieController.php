@@ -46,7 +46,7 @@ class MovieController implements IControllers{
                     {
                         //Falta la obtencion de generos, creo que esta mal la ultima parte ! 
                         $movie = new Movie($movie["id"], $movie["title"] , $movie["original_language"] , $movie["overview"],  $movie["release_date"] , $movie["poster_path"],$movieDB->GetObjectGenresForMovie($movie['genre_ids']));
-
+                        
                         $movieDB->Add($movie); 
 
                         $newMovies[$movie->getId()] = $movie;
@@ -55,10 +55,11 @@ class MovieController implements IControllers{
 
                 }   
             }
+            return $newMovies;
         }catch(\PDOException $ex){
-            throw $ex;
+            return array();
         }
-        return $newMovies;
+       
     }
 
     public function ExistMovie($idMovie){
@@ -70,7 +71,7 @@ class MovieController implements IControllers{
                 return true;
             }
         }catch(\PDOException $ex){
-            throw $ex;
+            throw $ex; /*Lo agarra la otra controller que lo llama */
         }
     }
 
@@ -81,11 +82,12 @@ class MovieController implements IControllers{
             $this->RetrieveAPI();
             $MovieDB = new MovieDB();
             $MovieList=$MovieDB->GetAll();
+            return $MovieList;
 
         }catch(\PDOException $ex){
-            throw $ex;
+            return array();
         }
-        return $MovieList;
+        
     }
 
     //Verificar si funca 
@@ -93,30 +95,33 @@ class MovieController implements IControllers{
         $MovieDB=new MovieDB();
         try{
             $ListMovieGenre=$MovieDB->RetrieveByGenre($idGenreToSearch);
+            return $ListMovieGenre;
         }catch(\PDOException $ex){
-            throw $ex;
+            return array();
         }
-        return $ListMovieGenre;
+        
     }
 
     public function GetMovieForId($id){
         $MovieDB=new MovieDB();
         try{
             $movie=$MovieDB->RetrieveById($id);
+            return $movie;
         }catch(\PDOException $ex){
-            throw $ex;
+            return null;
         }
-        return $movie;
+       
     }
 
     public function GetMovieForTitle($titleMovie){
         $movieDB = new MovieDB();
         try{
             $movie = $movieDB->RetrieveByTitle($titleMovie);
+            return $movie;
         }catch(\PDOException $ex){
-            throw $ex;
+            return null;
         }
-        return $movie;
+       
     }
 
     public function index(){

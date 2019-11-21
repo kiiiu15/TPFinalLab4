@@ -21,18 +21,34 @@ class CreditCardController implements Icontrollers{
     public function Add($company,$number,$securityCode,$expiryMonth,$expiryYear){
         $creditCard = new CreditCard($company,$number,$securityCode,$expiryMonth,$expiryYear);
         $db = new CreditCardDB();
-        $db->Add($creditCard);
+        try {
+            $db->Add($creditCard);
+        } catch (\Throwable $th) {
+            echo "Problema al agregar tarjeta";
+        }
+        
     }
 
     public function RetrieveByEmail($email)
     {
         $db = new CreditCardDB();
-        return $db->RetrieveByEmail("manu");
+
+        try {
+            return $db->RetrieveByEmail($email);
+        } catch (\Throwable $th) {
+            return array();
+        }
+        
     }
 
     public function RetrieveByNumber($number){
         $db = new CreditCardDB();
-        return $db->RetrieveByNumber($number);
+        try {
+            return $db->RetrieveByNumber($number);
+        } catch (\Throwable $th) {
+            return null;
+        }
+        
     }
 
 }

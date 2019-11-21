@@ -29,7 +29,7 @@ class MovieDB{
         }
     }
     
-    //FALTA EL LLAMADO A LA API, DE ESO TE ENCARGAS VOS BULZOMI
+
     public function Add($movie){
         $sql="INSERT INTO Movies (idMovie,tittle,language,overview,releaseDate,poster) VALUES (:idMovie,:tittle,:language,:overview,:releaseDate,:poster)";
         
@@ -50,7 +50,7 @@ class MovieDB{
             $genrePerMovieDB = new GenresPerMovieDB();
 
             foreach ($genrePerMovie as $genreMovie){
-                $genrePerMovieDB->Add($genreMovie);
+                $genrePerMovieDB->Add($movie->getId(),$genreMovie);
             }
         }catch(\PDOExeption $ex){
             throw $ex;

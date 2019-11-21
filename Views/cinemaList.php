@@ -39,7 +39,14 @@ td{
 
             <h1 class="mb-5">List of Cinemas</h1>
 
-
+            <?php if(isset($successMje) || isset($errorMje)) { ?>
+                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
+                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php } ?>
             
 
 
@@ -85,6 +92,7 @@ td{
                             <th>Id Cinema</th>
                             <th>Name</th>
                             <th>Adress</th>
+                            <th>State</th>
                             
                         </tr>
                     </thead>
@@ -99,6 +107,7 @@ td{
                                 <td> <?php echo $cinema->getIdCinema();?>    </td>
                                 <td> <?php echo $cinema->getName();?>    </td>
                                 <td> <?php echo $cinema->getAddress();?> </td>
+                                <td><?php echo ($cinema->getActive()) ? "Active" : "Inactive";?></td>
                              
                             </tr>
                         <?php } ?>

@@ -16,7 +16,7 @@ class CinemaController implements IControllers{
         try{
             $cinemaDB->Add($cinema);
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
         $this->index();
     }
@@ -24,9 +24,9 @@ class CinemaController implements IControllers{
     public function GetAll(){
         $cinemaDB = new CinemaDB();
         try{
-            return $cinemaDB->RetrieveByActive(true);
+            return $cinemaDB->GetAll();
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
 
@@ -39,7 +39,7 @@ class CinemaController implements IControllers{
                     $cinemaDB->DeactivateByID($id);
                 }
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
         $this->index();
     }
@@ -49,7 +49,7 @@ class CinemaController implements IControllers{
         try{
             return $cinemaDB->RetrieveByActive($active);
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
 
@@ -58,7 +58,7 @@ class CinemaController implements IControllers{
         try{
             return $cinemaDB->RetrieveById($id);
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
 
@@ -88,7 +88,7 @@ class CinemaController implements IControllers{
                 $this->Reactivate($ids);
             }
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
     public function Modify($idCinemaToModify,$changedName,$changedAddress){
@@ -97,7 +97,7 @@ class CinemaController implements IControllers{
         try{
             $cinemaDB->Modify( new  Cinema($idCinemaToModify , $changedName , $changedAddress , true));
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
         
         $this->index();
@@ -116,8 +116,8 @@ class CinemaController implements IControllers{
 
     }
 
-    public function index(){
-        
+    public function index($msg = null){
+        $errorMje = $msg;
         $cinemaList = $this->GetAll();
         include(VIEWS . "/cinemaList.php");
     }

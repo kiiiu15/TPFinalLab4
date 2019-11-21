@@ -26,7 +26,7 @@ class TicketController implements Icontrollers{
         try{
             $ticketDB->Add($ticket);
         }catch(\PDOException $ex){
-            throw $ex;
+            echo "Error connection";
         }
     }
 
@@ -36,10 +36,11 @@ class TicketController implements Icontrollers{
 
         try{
             $ticketList = $ticketDB->GetAll();
+            return $ticketList;
         }catch(\PDOException $ex){
-            throw $ex;
+            return array();
         }
-        return $ticketList;
+        
     }
 
     public function Delete($ticket){
@@ -47,7 +48,7 @@ class TicketController implements Icontrollers{
         try{
             $ticketDB->Delete($ticket);
         }catch(\PDOException $ex){
-            throw $ex;
+            echo "Error Coneection";
         }
     }
 
@@ -56,10 +57,11 @@ class TicketController implements Icontrollers{
         $ticket = new Ticket();
         try{
             $ticket = $ticketDB->RetrieveById($idTicket);
+            return $ticket;
         }catch(\PDOException $ex){
-            throw $ex;
+            return null;
         }
-        return $ticket;
+        
     }
 
     public function RetrieveByIdBuy($idBuy){
@@ -67,10 +69,11 @@ class TicketController implements Icontrollers{
         $ticket = new Ticket();
         try{
             $ticket = $ticketDB->RetrieveByIdBuy($idBuy);
+            return $ticket;
         }catch(\PDOException $ex){
-            throw $ex;
+            return null;
         }
-        return $ticket;
+        
     }
 
     public function GenerateRandomString($length = 4) {

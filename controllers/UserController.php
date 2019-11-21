@@ -15,12 +15,10 @@ use Dao\ProfileDB as ProfileDB;
 
 class UserController implements IControllers
 {
-    //private $userList;//esto era del json
-    //private $userDao;//esto era del json
+    
     
     public function __construct(){
-       // $userDao = new UserDao();
-       // $userList = $userDao->GetAll();
+       
     }
 
     public function index($message = null){    
@@ -30,7 +28,7 @@ class UserController implements IControllers
             session_start();
         }
 
-        if(isset($_SESSION['status']) && isset($_SESSION['loged']))
+        if($this->CheckSession())
         {
             $home = new HomeController();
             $home->index();
@@ -63,22 +61,30 @@ class UserController implements IControllers
         
     }
 
+    public function CheckSessionForView(){
+        if (!$this->CheckSession()){
+            include_once(VIEWS."/login.php");
+        }
+    }
+
     public function CheckSession(){
         $db = new UserDB();
         $user = $this->GetUserLoged();
         $ans = false;
         if($user){
             if($this->UserExist($user->GetEmail())){
-                $userAux = $db->GetByEmail($user->GetEmail());
-                if($userAux->GetPass() == $user->GetPass()){
-                    $ans = true;
+                try {
+                    $userAux = $db->GetByEmail($user->GetEmail());
+                    if($userAux->GetPass() == $user->GetPass()){
+                        $ans = true;
+                    }
+                } catch (\Throwable $th) {
+                    return false;
                 }
+               
             }
         }
-        if(!$ans){
-            $errorMje = "session expired or log out";
-            include(VIEWS."/login.php");
-        }
+       
         return $ans;
     }
 

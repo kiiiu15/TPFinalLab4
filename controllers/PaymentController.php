@@ -59,12 +59,12 @@ class PaymentController implements Icontrollers{
     
     //Es un prototipo
     public function ValidateCreditCard($creditcard){
-        $userController = new UserController();
+      /*  $userController = new UserController();
         $user = $userController->GetUserLoged();
         $creditcardList = array();
         $creditcardList = $user->getCreditCards();
 
-        $creditcardList = $this->TransformToArray($creditcardList);     
+        $creditcardList = $this->TransformToArray($creditcardList);     */
 
         $answer = true;
         /*

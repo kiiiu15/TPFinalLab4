@@ -36,11 +36,11 @@ class GenresPerMovieDB {
         
     }
 
-    public function Add($genre){
+    public function Add($idMovie,$genre){
             $sql = "INSERT INTO GenresPerMovie (idMovie, idGenre) VALUES (:idMovie,:idGenre)";
             
-            $values ['idMovie'] = $genre->getId();
-            $values ['idGenre'] = $genre->getName();
+            $values ['idMovie'] = $idMovie;
+            $values ['idGenre'] = $genre->getId();
 
         try{
             $this->connection = Connection::getInstance();

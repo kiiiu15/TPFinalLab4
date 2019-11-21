@@ -122,27 +122,6 @@ CREATE TABLE CreditCardPerUser(
 	CONSTRAINT fk_CreditCards FOREIGN KEY (CreditCardNumber) REFERENCES CreditCards (`number`)
 );
 
-INSERT INTO Roles (roleName) VALUES ('admin');
-INSERT INTO Roles (roleName) VALUES ('client');
-INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("manu","last","123","321");
-
-
-
-/* esto es para el fb */
-INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("Manuel","Sureda","123","321");
-INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("manumdq97@live.com.ar","123","client",depende);
-
-INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","111111111111111","123","02","21");
-INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manumdq97@live.com.ar","111111111111111");
-
-
-
-
-INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","6583458042570138","123","02","19");
-INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","4444444444444444","123","02","19");
-INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manu","6583458042570138");
-INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("manu","4444444444444444");
-
 CREATE TABLE Tickets(
 	`idTicket` INT  NOT NULL AUTO_INCREMENT,
 	`qr` VARCHAR(5),
@@ -150,3 +129,25 @@ CREATE TABLE Tickets(
 	CONSTRAINT pk_ticket PRIMARY KEY(`idTicket`),
 	CONSTRAINT fk_ticket_buy FOREIGN KEY(`idBuy`) REFERENCES `Buy`(`idBuy`)
 );
+
+INSERT INTO Roles (roleName) VALUES ('admin');
+INSERT INTO Roles (roleName) VALUES ('client');
+
+
+
+
+/* esto es para el fb */
+INSERT INTO UserProfiles (UserName,UserlastName,dni,telephoneNumber) VALUES ("Manuel","Sureda","123","321");
+INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("admin@admin.com","123","admin",1);
+INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES ("admin2@admin.com","123","client",1);
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","111111111111111","123","02","21");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("admin@admin.com","111111111111111");
+
+
+
+
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","6583458042570138","123","02","19");
+INSERT INTO CreditCards (company,`number`,securityCode,expiryMonth,expiryYear) VALUES ("Visa","4444444444444444","123","02","19");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("admin@admin.com","6583458042570138");
+INSERT INTO CreditCardPerUser (emailUser,CreditCardNumber) VALUES ("admin@admin.com","4444444444444444");
+

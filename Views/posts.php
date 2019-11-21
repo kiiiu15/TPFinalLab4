@@ -64,7 +64,7 @@ td{
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate'?>" method="POST">     
                 <div class="form-group mb-4">
                     <label for="">Date</label>
-                    <input name="date" type="date">
+                    <input name="date" type="date" min="<?php echo date("Y-m-d");?>">
                     <button type="submit" class="btn btn-dark ml-3">Send</button>
                 </div>
             </form>    
