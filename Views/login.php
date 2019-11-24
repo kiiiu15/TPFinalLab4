@@ -21,11 +21,11 @@ td{
             <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario" required>
+                    <input type="text" name="email" class="form-control form-control-lg" placeholder="Email" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constraseña" required>
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
                 </div>
                 <button class="btn btn-dark btn-block btn-lg" type="submit">Log In</button>
                 <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
