@@ -17,6 +17,7 @@ td{
 <body>
     <main class="d-flex align-items-center justify-content-center height-100">
         <div class="content">
+            <h1 style="color:white;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoviePass</h1>
             <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
                     <label for="">Email</label>
@@ -30,13 +31,16 @@ td{
                 <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
                     Sign Up
                 </button>
+                <?php 
+                    require_once (ROOT."/FacebookConfig.php");
+                    $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+                    $str = "<a href=" . htmlspecialchars($loginUrl) . ">Facebook LogIn</a>";
+                ?>
+                <button class="btn btn-dark btn-block btn-lg" type="button"><?=$str?></button>
             </form>
-            <?php /*
-                require_once (ROOT."/FacebookConfig.php");
-                $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-                echo "<br><a href=" . htmlspecialchars($loginUrl) . ">LOGIN FACEBOOOK</a>";*/
-            ?>
-                
+            
+            
+            
             
             <?php if(isset($successMje) || isset($errorMje)) { ?>
             <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
@@ -82,7 +86,7 @@ td{
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button  type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                            <button  type="button" class="btn btn-link" data-dismiss="modal">Cancel</<a>
                             <button  type="submit" class="btn btn-link" >Sign Up</button>
                         </div>
                     </form>
