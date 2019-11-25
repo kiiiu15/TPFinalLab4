@@ -1,7 +1,8 @@
 <?php
 namespace Model;
+use \JsonSerializable as JsonSerializable;
 
-class Genre{
+class Genre implements JsonSerializable{
 
     private $id;
     private $name;
@@ -33,6 +34,14 @@ class Genre{
         }else{
             $this->id = $id;
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            "id" => $this->id ,
+            "name" => $this->name 
+        );
     }
 }
 

@@ -28,11 +28,11 @@ include(VIEWS."/adminNav.php");
                 <h5 class="modal-title" style="color:white;">check totals by date / cinema / movie</h5> <br>
                 <div class="form-group">
                     <label style="color:white;"> From date</label>
-                    <input style="color:black;" type="date" required name="fromDate"><br>
+                    <input style="color:black;" id = "from" type="date" required name="fromDate"><br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;">To date</label>
-                    <input style="color:black;" type="date" required name="toDate"><br>
+                    <input style="color:black;" id="to" type="date"  disabled required name="toDate"><br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;">Cinemas</label>
@@ -70,11 +70,11 @@ include(VIEWS."/adminNav.php");
                 <h5 class="modal-title" style="color:white;" >check total of tickets by date / cinema / movie</h5> <br>
                 <div class="form-group">   
                     <label style="color:white;" >From date</label>
-                    <input type="date" required name="fromDate"> <br>
+                    <input type="date" id="from2" required name="fromDate"> <br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;" >To date</label>
-                    <input type="date" required name="toDate"> <br>
+                    <input type="date" id="to2" required disabled name="toDate"> <br>
                 </div>
                 <div class="form-group">
                     <label style="color:white;" >Cinemas</label>
@@ -119,3 +119,34 @@ body {
 <?php
 include(VIEWS."/footer.php");
 ?>
+
+<script>
+    $('#from').on('change', function() {
+
+        
+                
+                
+        var selectValue = $(this).val();
+       
+        
+        $('#to').attr('min',selectValue);
+        $('#to').prop('disabled', false);
+
+
+    });
+
+
+    $('#from2').on('change', function() {
+
+        
+                
+                
+        var selectValue = $(this).val();
+       
+        
+        $('#to2').attr('min',selectValue);
+        $('#to2').prop('disabled', false);
+
+
+    });
+</script>

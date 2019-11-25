@@ -125,7 +125,7 @@ class PaymentController implements Icontrollers{
     }
 
     public function index(){
-        //cambiar
+        
         $discount =0;
         $total = 400;
         include(VIEWS."/payment.php");

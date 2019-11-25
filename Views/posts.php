@@ -64,14 +64,14 @@ td{
             <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate'?>" method="POST">     
                 <div class="form-group mb-4">
                     <label for="">Date</label>
-                    <input name="date" type="date" min="<?php echo date("Y-m-d");?>">
+                    <input name="date" required type="date" min="<?php echo date("Y-m-d");?>">
                     <button type="submit" class="btn btn-dark ml-3">Send</button>
                 </div>
             </form>    
                 
-            <form class="form-inline" action="<?= FRONT_ROOT?>/Home/showMovie" method="POST"> 
+            
 
-                <table class="table" class="catsandstar">
+                <table id="idMovie" class="table" class="catsandstar">
                     <thead class="thead-dark">
                         <tr>
                             
@@ -86,7 +86,7 @@ td{
                             <tr>
                                 
                                 <td>
-                                        <button type = "sumbit"  name = "asd" value= "<?= $movie->getId();?>"> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" /></button>
+                                        <button  class="event" name = "asd" value= "<?= $movie->getId();?>"> <img  src="<?php echo $movie->getPoster();?>" alt="" class="cover" /></button>
                                 </td>
                                 <td> <?php echo $movie->getTitle();?> </td>
                                 <td> <?php echo $movie->getOverview();?> </td>
@@ -101,21 +101,14 @@ td{
                         <?php } ?>
                     </tbody>
                 </table>
-            </form>
+         
 
             
         </div>
     </main>
 
 
- <?php 
-                        foreach ($selectedMovieFunctions as $selectedMovieFunction){
-                            foreach($selectedMovieFunction as $function){
-                                $nameMovie = $function->getMovie()->getTitle();
-                                break;
-                            }
-                        } 
-                    ?>
+
  
     <div class="modal fade" id="show-movie" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -124,7 +117,7 @@ td{
 
                 <div class="modal-header">
                 
-                    <h5 class="modal-title"><?php echo $nameMovie;?></h5>
+                    <h5 class="modal-title"><?php echo "El puto Titulo";?></h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -135,24 +128,16 @@ td{
                
                     <div class="form-group">
                         <label style="color:black;">Cinemas</label>
-                        <select id="options" name="" class="form-control ml-3">
-                        <option value="" disabled selected>Select a Cinema</option>
-                        <?php 
-                            foreach($selectedMovieFunctions as $cinemaId =>  $selectedMovieFunction) { 
-                                foreach($selectedMovieFunction as  $function){?>
-                                    <option value="<?= $cinemaId;?>"> <?php echo $function->getRoom()->getCinema()->getName();?> </option>
-                        
-                            <?php break; }    
-                            }
-                        ?>
-
+                        <select  required id="options" name="" class="form-control ml-3">
+                            <option value="" disabled selected>Select a Cinema</option>
+                            
                         </select>
                     </div>
 
 
                     <div class="form-group">
                         <label style="color:black;">Functions</label>
-                            <select id="choices" name="idFunction" class="form-control ml-3">
+                            <select id="choices" required name="idFunction" class="form-control ml-3">
                             </select>
                     </div>
 
@@ -175,20 +160,24 @@ td{
 
     <?php include(VIEWS.'/footer.php');  ?>
 
-    <?php if ($selectedMovieFunctions != null) {  ?>
+
     <script type="text/javascript"> 
         
         window.onload = function() {
             
-            $('#show-movie').modal('show');
+            
+        };  
+
+
+        
             
 
-            $('#options').on('change', function() {
+        $('#idMovie .event').on('click', function() {
                 
                 
                 var selectValue = $(this).val();
 
-               /* $.ajax({
+                $.ajax({
                     method : 'POST',
                     url : '/TPFinalLab4/MovieFunction/prueba',
                     dataType : 'JSON',
@@ -202,61 +191,87 @@ td{
                     success : function(dato) {
                         // Esto ocurre si la peticion al servidor se ejecuto correctamente
 
-                        console.log(dato);
+                        
 
-                        $.each(array, function(v, k) {
+                        var jsonContent = JSON.stringify(dato);
+                        
+                        var array = JSON.parse(jsonContent);
+
+
+                        var cinemas = [];
+
+                        var cinemasId = [];
+
+                        var options = {};
+
+                        var optionsId = {};
+
+                        
+
+                        $.each(array, function(k, v) {
+                            cinemasId.push(k);
+
+                            cinemas.push(v[0].room.cinema.name);
+
+                            var aux = [];
+                            var ids = [];
+                            
+
+                            $.each(v , function (k2 , v2) {
+                                
+
+                                ids.push(v2.id);
+                                aux.push("Fecha: " + v2.day + " Sala: " + v2.room.name + " Horario: " + v2.hour);
+
+                            } )
+
+
+                            optionsId[k] = ids;
+
+                            options[k] = aux;
+
 
                         })
-                        // JSON.Parse(dato);
+
+                        $('#options').empty();
+
+                        $('#options').append("<option value='' disabled selected>Select a Cinema</option>");
+
+                        for (i = 0; i < cinemas.length; i++) {
+                    
+                            
+                            $('#options').append("<option value='" + cinemasId[i] + "'>" + cinemas[i] + "</option>");
+                            
+                        }
+
+                        $('#options').on('change', function() {
+                
+                
+                            var selectValue = $(this).val();
+
+                            $('#choices').empty();
+                
+                            // For each chocie in the selected option
+                            for (i = 0; i < options[selectValue].length; i++) {
+                                
+                                // Output choice in the target field
+                                $('#choices').append("<option value='" + optionsId[selectValue][i] + "'>" + options[selectValue][i] + "</option>");
+                                
+                            }
+
+                        });
+
                     }
-                }); */
-                
-                // Empty the target field
-                $('#choices').empty();
-                
-                // For each chocie in the selected option
-                for (i = 0; i < lookup[selectValue].length; i++) {
-                    
-                    // Output choice in the target field
-                    $('#choices').append("<option value='" + values[selectValue][i] + "'>" + lookup[selectValue][i] + "</option>");
-                    
-                }
+                });
+                $('#show-movie').modal('show');
             });
 
-
             
-        };  
-
-        var values = {
-            <?php foreach ($selectedMovieFunctions as $cinemaId => $selectedMovieFunction){ ?>
-                '<?= $cinemaId;?>'   : 
-            
-            [
-                <?php foreach($selectedMovieFunction as $function) {?>
-                '<?php echo $function->getId();?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
-                <?php } ?>
-            ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
-        <?php }?>
-        };
-
-        var lookup = {
-            
-            <?php foreach ($selectedMovieFunctions as $cinemaId => $selectedMovieFunction){ ?>
-            '<?= $cinemaId;?>'   : 
-            
-                [
-                    <?php foreach($selectedMovieFunction as $function) {?>
-                    
-                    '<?php echo "Fecha: " . $function->getDay() . " Sala: " . $function->getRoom()->getName() . " Horario: " . $function->getHour()?>' <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
-                    <?php } ?>
-                ] <?php if (count($selectedMovieFunction) > 1) {echo ",";} ?>
-            <?php }?>
-        };
 
 
+       
 
 
         
 
     </script>
-<?php } ?>

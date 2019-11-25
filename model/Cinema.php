@@ -1,7 +1,9 @@
 <?php  
 namespace Model;
 
-class Cinema{
+use \JsonSerializable as JsonSerializable;
+
+class Cinema implements JsonSerializable {
     
     //Atributos cine, Posiblemente tengamos que agregar algun atributo mas 
     private $idCinema;
@@ -52,6 +54,16 @@ class Cinema{
     
     public function setActive($active){
         $this->active = $active;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            "idCinema" => $this->idCinema ,
+            "name" => $this->name ,
+            "Address" => $this->Address ,
+            "active" => $this->active 
+        );
     }
 }
 

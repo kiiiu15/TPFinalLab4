@@ -1,6 +1,8 @@
-<?php namespace model;
+<?php namespace Model;
 
-class Room{
+use \JsonSerializable as JsonSerializable;
+
+class Room implements JsonSerializable {
     private $id;
     private $name;
     private $price; 
@@ -58,6 +60,18 @@ class Room{
     public function setCinema($cinema){
         $this->cinema = $cinema;
     }
+
+    public function jsonSerialize()
+    {
+        return array(
+            "id" => $this->id ,
+            "name" => $this->name ,
+            "price" => $this->price ,
+            "capacity" => $this->capacity ,
+            "cinema" => $this->cinema 
+        );
+    }
+
 }
 
 

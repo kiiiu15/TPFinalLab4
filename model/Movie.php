@@ -1,7 +1,9 @@
 <?php
 namespace Model;
 
-class Movie{
+use \JsonSerializable as JsonSerializable;
+
+class Movie implements JsonSerializable{
     
     private $id;
     private $title;
@@ -89,6 +91,20 @@ class Movie{
 
     public function setId($id){
         $this->id = $id;
+    }
+
+
+    public function jsonSerialize()
+    {
+        return array(
+            "id" => $this->id ,
+            "title" => $this->title ,
+            "Language" => $this->Language ,
+            "overview" => $this->overview ,
+            "ReleaseDate" => $this->ReleaseDate ,
+            "Poster" => $this->Poster ,
+            "genres" => $this->genres
+        );
     }
 }
 

@@ -175,10 +175,18 @@ class MovieFunctionController implements IControllers{
                 }
             }
 
-            if ($function->getHour() < '02:15:00' || $function->getHour() > '21:45:00' ){
-                $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
-                break;
+            if ($movieFunction->getHour() < '02:15:00' ){
+                if ($function->getHour() < '02:15:00'){
+                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    break;
+                }
+            } elseif ( $movieFunction->getHour() > '21:45:00' ){
+                if ( $function->getHour() > '21:45:00' ){
+                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    break;
+                }
             }
+            
         }
 
         return $answer;
@@ -324,12 +332,31 @@ class MovieFunctionController implements IControllers{
 
     public function GetShowMovieInfo($idMovie) {
         $functions = $this->GetBillboard();
+        $functions = $this->TransformToArray($functions);
         
         $groupedFunctions = $this->GroupFunctionsByMovie($functions);
-        $movieFunctions = $groupedFunctions[$idMovie];
-        $info = $this->GroupFunctionsByCinema($movieFunctions);
+        
+        if (isset($groupedFunctions[$idMovie])){
+            $movieFunctions = $groupedFunctions[$idMovie];
+            $info = $this->GroupFunctionsByCinema($movieFunctions);
+        } else {
+            $info = array();
+        }
+        
         return $info;
     }
+
+    public function prueba($param) {
+
+    
+        $a = $this->GetShowMovieInfo($param);
+        
+        $json =  json_encode($a, JSON_PRETTY_PRINT);
+
+        
+        echo $json;
+    }
+
 
   /*  public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
         $MovieFunctionDB= new MovieFunctionDB();
@@ -353,10 +380,6 @@ class MovieFunctionController implements IControllers{
         include(VIEWS.'/addFunction.php');
     }
 
- /*   public function prueba($param) {
-        $a = $this->GetShowMovieInfo($param);
-        echo json_encode($a);
-    }*/
 
 }
 

@@ -1,9 +1,11 @@
 <?php
 namespace Model;
 
+use \JsonSerializable as JsonSerializable;
 
 
-class MovieFunction{
+
+class MovieFunction implements JsonSerializable{
 
     private $id;
     private $day; 
@@ -69,6 +71,17 @@ class MovieFunction{
         return $this;
     }
 
+
+    public function jsonSerialize()
+    {
+        return array(
+            "id" => $this->id ,
+            "day" => $this->day ,
+            "hour" => $this->hour ,
+            "room" => $this->room ,
+            "movie" => $this->movie
+        );
+    }
     
 }
 
