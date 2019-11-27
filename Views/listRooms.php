@@ -133,17 +133,17 @@ td{
                     </div>
                     <div class="form-group">
                         <label style="color:black;">Name</label>
-                        <input style="color:black;" required name="roomName" type="text">
+                        <input style="color:black;" maxlength="50" required name="roomName" type="text">
                     </div>
 
                     <div class="form-group">
                         <label style="color:black;">Capacity</label>
-                        <input style="color:black;" name='capacity'  min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                        <input style="color:black;" name='capacity'  min='0' max='32767' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
 
                     <div class="form-group">
                         <label style="color:black;">Price</label>
-                        <input style="color:black;" name='price' min='0' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                        <input style="color:black;" name='price' min='0' max='32767' type="number" required onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
                     </div>
                     
                 </div>

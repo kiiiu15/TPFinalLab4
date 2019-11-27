@@ -29,7 +29,7 @@ class HomeController implements Icontrollers {
         $movieList = $this->TransformToArray($movieList);
 
         if (empty($movieList)){
-            $this->index('No hay peliculas de ese genero programadas. Intente con otro genero', null,null,array());
+            $this->index('There are no movies of this genre scheduled. Try another genre', null,null,array());
         }else {
             $this->index(null, null,null, $movieList);
         }        
@@ -84,7 +84,7 @@ class HomeController implements Icontrollers {
        
 
         if (empty($movieList)){
-            $this->index("No hay peliculas programadas para ese dia. Intente con otra fecha", null, null, array() );
+            $this->index("There are no movies scheduled for that day. Try another date", null, null, array() );
         
         }else {
             $this->index(null, null, null, $movieList );
