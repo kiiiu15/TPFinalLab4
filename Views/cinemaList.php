@@ -139,7 +139,7 @@ td{
 
                 <div class="modal-header">
                     <h5 class="modal-title">Add Cinema</h5>
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button type="button" class="close" data-dismiss="modal" >
                         <span>&times;</span>
                     </button>
                 </div>
@@ -147,11 +147,11 @@ td{
                 <div class="modal-body">
                     <div class="form-group">
                         <label style="color:black;">Name</label>
-                        <input style="color:black;" required name="cinemaName" type="text">
+                        <input style="color:black;" required name="cinemaName" type="text" maxlength="50">
                     </div>
                     <div class="form-group">
                         <label style="color:black;">Adress</label>
-                        <input style="color:black;" required name="adress" type="text">
+                        <input style="color:black;" required name="adress" type="text" maxlength="100">
                     </div>
                     
                 </div>
