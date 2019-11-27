@@ -74,7 +74,7 @@ class MovieFunctionController implements IControllers{
             /*Retornamos la respuesta que es vacio si esta todo ok, o un mensaje de error de haber alguno */
            return $answer;
         } catch (\Throwable $th) {
-            return 'Error connection';
+            return 'Connection error';
         }
 
         
@@ -113,17 +113,10 @@ class MovieFunctionController implements IControllers{
                 if ($roomForTheDay->getId() == $room->getId()){
                     $answer = $this->CheckTime($movieFunction, $functionsAtRoom);
                 } else {
-                    $answer = "Una pelicula solo en un solo cine en una sola sala a la vez. Cambie la sala";
+                    $answer = "A movie can be watch just on one specific room of an specific cinema per day";
                 }
-
-                
-
-                
             }
-
-
         } 
-        
         return $answer;
     }
 
@@ -143,7 +136,7 @@ class MovieFunctionController implements IControllers{
                 $roomOfMovieForTheDay = $movieFunctions[0]->getRoom();
                 /*Comparamos que se este haciendo la agregacion en el mismo cine y si es otro significa que ya esta pelicula se esta proyectando en otro cine */
                 if ($roomOfMovieForTheDay->getId() != $room->getId() ){
-                    $answer = "Una pelicula solo se puede pasar en un sola sala por dia. Cambia de fecha o pone la misma sala.";
+                    $answer = "A movie can only be played in one room per day. Change date or choose the same room.";
                 }
             }
         }
@@ -165,24 +158,24 @@ class MovieFunctionController implements IControllers{
 
                 if (  $movieFunction->getHour() < $maxTime){
                     
-                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    $answer = "The time is set with another function in the same Cinema room, please change the time or the room";
                     break;
                 }
             }else {
                 if ($minTime < $movieFunction->getHour()){
-                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    $answer = "The time is set with another function in the same Cinema room, please change the time or the room";
                     break;
                 }
             }
 
             if ($movieFunction->getHour() < '02:15:00' ){
                 if ($function->getHour() < '02:15:00'){
-                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    $answer = "The time is set with another function in the same Cinema room, please change the time or the room";
                     break;
                 }
             } elseif ( $movieFunction->getHour() > '21:45:00' ){
                 if ( $function->getHour() > '21:45:00' ){
-                    $answer = "La hora se pisa con otra funcion en el misma sala del Cine, por favor cambie la hora o la sala";
+                    $answer = "The time is set with another function in the same Cinema room, please change the time or the room";
                     break;
                 }
             }
