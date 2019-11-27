@@ -117,7 +117,7 @@ td{
 
                 <div class="modal-header">
                 
-                    <h5 class="modal-title"><?php echo "El puto Titulo";?></h5>
+                    <h5 id ="title" class="modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>
@@ -176,6 +176,28 @@ td{
                 
                 
                 var selectValue = $(this).val();
+
+                $.ajax({
+                    method : 'POST',
+                    url : '/TPFinalLab4/Movie/prueba',
+                    dataType : 'JSON',
+                    data : { selectValue },
+                    beforeSend : function() {
+                        // Esto ocurre al iniciar la peticion
+                    },
+                    error : function() {
+                        // Esto ocurre si falla
+                    },
+                    success : function(dato) {
+                        // Esto ocurre si la peticion al servidor se ejecuto correctamente
+                        var jsonContent = JSON.stringify(dato);
+                        
+                        var peli = JSON.parse(jsonContent);
+
+                        $('#title').text(peli.title);
+
+                    }
+                });
 
                 $.ajax({
                     method : 'POST',

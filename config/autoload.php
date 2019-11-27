@@ -6,8 +6,10 @@ class Autoload {
         spl_autoload_register(function($classPath)
         {
             $class = dirname(__DIR__) ."/" . str_replace("\\", "/", $classPath)  . ".php";
+            if (file_exists($class)){
+                include_once($class);
+            }
             
-            include_once($class);
         });
     }
 }

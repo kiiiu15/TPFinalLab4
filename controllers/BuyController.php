@@ -46,12 +46,18 @@ class BuyController implements Icontrollers{
                 $total = 0;
 
                 //validacion del dia martes y miercoles     
-                if($date == "Tuesday" || $date == "Wednesday"){
-                    $discount = ($room->getPrice() * $numberOfTickets) * 0.25;
-                    $total = ($room->getPrice() * $numberOfTickets) - $discount;
-                }else{
-                    $total =  $room->getPrice() * $numberOfTickets;
-                }
+                
+                    if($date == "Tuesday" || $date == "Wednesday"){
+                        if ($numberOfTickets >= 2){
+                            $discount = ($room->getPrice() * $numberOfTickets) * 0.25;
+                        }
+                            $total = ($room->getPrice() * $numberOfTickets) - $discount;
+                        
+                    }else{
+                        $total =  $room->getPrice() * $numberOfTickets;
+                    }
+                
+                
                 try {
                     $this->Add($id,$function,$today,$numberOfTickets,$total,$discount,$user,false);
                     $buy = $this->RetrieveById($id);
@@ -263,6 +269,8 @@ class BuyController implements Icontrollers{
         }
         
     }
+
+
 
 
 }

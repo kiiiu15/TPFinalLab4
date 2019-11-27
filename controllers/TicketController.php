@@ -101,6 +101,11 @@ class TicketController implements Icontrollers{
         }
     }
 
+  /*  public function SeeBuyedTickets ($orderBy = null){
+        if 
+    }*/
+
+
 
     public function index(){}
 }

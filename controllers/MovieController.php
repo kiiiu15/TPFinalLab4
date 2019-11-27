@@ -131,6 +131,18 @@ class MovieController implements IControllers{
         include(VIEWS.'/posts.php');
     }
 
+
+    public function prueba($param) {
+
+    
+        $a = $this->GetMovieForId($param);
+        
+        $json =  json_encode($a, JSON_PRETTY_PRINT);
+
+        
+        echo $json;
+    }
+
 }
 
 ?>
