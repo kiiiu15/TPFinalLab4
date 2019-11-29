@@ -29,16 +29,12 @@ td{
 } 
 </style>
 
+
     <main class="p-5">
         <div class="container">
 
             <h1 class="mb-5">List of Movies</h1>
 
-            <?php
-                if(isset($alertCapacity)){
-                    echo $alertCapacity;          
-                }
-            ?>
 
                     <?php if(isset($successMje) || isset($errorMje)) { ?>
                 <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">

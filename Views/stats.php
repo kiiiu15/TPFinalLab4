@@ -124,13 +124,13 @@ include(VIEWS."/footer.php");
     $('#from').on('change', function() {
 
         
-                
+          
                 
         var selectValue = $(this).val();
-       
         
         $('#to').attr('min',selectValue);
         $('#to').prop('disabled', false);
+        
 
 
     });
@@ -145,8 +145,10 @@ include(VIEWS."/footer.php");
        
         
         $('#to2').attr('min',selectValue);
-        $('#to2').prop('disabled', false);
 
+        $('#to2').prop('disabled', false);
+        
+        
 
     });
 </script>

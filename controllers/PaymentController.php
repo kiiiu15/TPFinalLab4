@@ -21,27 +21,40 @@ use Dao\UserDB as UserDB;
 class PaymentController implements Icontrollers{
 
 
-    public function Validate($idBuy, $number = "",  $expirity = "", $expirityY = "", $security = ""){
-      
+    public function Validate($idBuy=0, $number = "",  $expirity = "", $expirityY = "", $security = ""){
         
-        $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
-        
-        $validation = $this->ValidateCreditCard($creditcard);
-        if($validation == true){
-              //si llega el remember 
-            
+        if ($idBuy == 0){
+            header("location:".FRONT_ROOT);
+        } else {
+            $creditcard = new CreditCard("Banco Provincia",$number,$security,$expirity,$expirityY);
+
             $buyC = new BuyController();
             $buy = $buyC->RetrieveById($idBuy);
 
-            $discount = $buy->getDiscount();
-            $total = $buy->getTotal();    
-            $this->GenerateTicket($idBuy);
-        }else{
-            //var_dump($_SESSION['loged']);
-
-            $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
-            include(VIEWS ."/payment.php");
-        }   
+            if (!$buy->getState()){
+                $validation = $this->ValidateCreditCard($creditcard);
+                if($validation == true){
+                    //si llega el remember 
+                    
+                    
+        
+                    $discount = $buy->getDiscount();
+                    $total = $buy->getTotal();    
+                    $this->GenerateTicket($idBuy);
+                }else{
+                    //var_dump($_SESSION['loged']);
+        
+                    $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
+                    $this->index($alertCreditCard, $buy);
+                }   
+            } else {
+                header("location:".FRONT_ROOT);
+            }
+            
+            
+        }
+        
+       
     }
 
     private function TransformToArray($value){
@@ -124,10 +137,14 @@ class PaymentController implements Icontrollers{
         
     }
 
-    public function index(){
-        
+    public function index($alertCreditCard = null, $buyP = null){
+
+        $errorMje = $alertCreditCard;
+        if ($buyP != null){
+            $buy = $buyP;
+        }
         $discount =0;
-        $total = 400;
+        $total = 0;
         include(VIEWS."/payment.php");
     }
 

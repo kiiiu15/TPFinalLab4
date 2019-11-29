@@ -89,6 +89,23 @@ class TicketDB{
         }
     }
 
+     public function RetrieveByUser($user){
+        $sql="SELECT * FROM Tickets INNER JOIN Buy ON Buy.idBuy = Tickets.idBuy WHERE Buy.emailUser = :emailUser";
+        $values['emailUser'] =$user;
+        try{
+            $this->connection= Connection::getInstance();
+            $this->connection->connect();
+            $result = $this->connection->Execute($sql,$values);
+        }catch(\PDOException $ex){
+            throw $ex;
+        }
+        if(!empty($result)){
+            return $this->Map($result);
+        }else{
+            return false;
+        }
+    }
+
     public function Delete($ticket){
         $sql="DELETE FROM Tickets WHERE Tickets.idTicket=:idTicket";
         $values['idTickets']=$ticket->getIdTicket();
@@ -102,9 +119,10 @@ class TicketDB{
     }
 
     protected function Map($value) {
-        $buyDB= new BuyDB();
+       
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($b) {
+            $buyDB= new BuyDB();
         return new Ticket($b['idTicket'],$b['qr'],$buyDB->RetrieveById($b['idBuy']));
         }, $value);
         return count($resp) > 1 ? $resp : $resp['0'];

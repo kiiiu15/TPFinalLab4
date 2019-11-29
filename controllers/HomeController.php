@@ -105,17 +105,14 @@ class HomeController implements Icontrollers {
         $isAdmin = $userC->IsAdmin();
 
         
-        if (!isset($errorMje)){
+       
             if (empty($movieListPassed)){
                 $movieFC = new MovieFunctionController();
                 $movieList = $movieFC->GetBillboardMovies();
             } else {
                 $movieList = $movieListPassed;
             }
-        } else {
-            $movieList = array();
-        }
-        
+       
         
         
         $selectedMovieFunctions = $movieFunctionsToShow;

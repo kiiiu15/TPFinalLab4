@@ -9,6 +9,7 @@ use controllers\RoomController as RoomController;
 use controllers\HomeController as HomeController;
 use controllers\CinemaController as CinemaController;
 use controllers\MovieController as MovieController;
+use controllers\TicketController as TicketController;
 
 use model\Buy as Buy;
 use model\MovieFunction as MovieFunction;
@@ -21,7 +22,12 @@ class BuyController implements Icontrollers{
   
 
 
-    public function ReciveBuy($idFunction,$numberOfTickets){
+    public function ReciveBuy($idFunction = 0,$numberOfTickets = 0){
+        $_POST=null;
+
+        if ($idFunction == 0 || $numberOfTickets <= 0 ){
+            header("location:".FRONT_ROOT);
+        }
         $homeController = new HomeController();
         $UserController = new UserController();
         $user = $UserController->GetUserLoged();  //obtengo el usuario
@@ -70,7 +76,7 @@ class BuyController implements Icontrollers{
             }else{
                 //Hacer que este mensaje aparezca como alerta 
                
-                $alertCapacity = "We are sorry, there is no capacity in the room. Try in another room ";
+                $alertCapacity = "We are sorry, there is not enought capacity in the room. Try in another room or function. ";
                 $homeController->index($alertCapacity);
                 
             }
@@ -265,12 +271,28 @@ class BuyController implements Icontrollers{
         }
         
     }
+    
+    private function TransformToArray($value){
+        if ($value == false){
+            $value = array();
+        }
+
+        if (!is_array($value)){
+            $value = array($value);
+        }
+
+        return $value;
+
+    }
 
     public function index($msg = null){
         $errorMje = $msg;
+        $ticketsC = new TicketController();
         $UserController = new UserController();
         $user = $UserController->GetUserLoged();
-        $listBuy = $this->RetrieveByUser($user);
+
+        $ticketsPurchased = $ticketsC->RetrieveByUser($user->getEmail());
+        $ticketsPurchased = $this->TransformToArray($ticketsPurchased);
         include(VIEWS . "/buyList.php");
     }
 

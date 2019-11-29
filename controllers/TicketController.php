@@ -76,6 +76,15 @@ class TicketController implements Icontrollers{
         
     }
 
+    public function RetrieveByUser($user){
+        $ticketDB = new TicketDB();
+        try {
+            return $ticketDB->RetrieveByUser($user);
+        } catch (\Throwable $th) {
+            return array();
+        }
+    }
+
     public function GenerateRandomString($length = 4) {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -101,10 +110,7 @@ class TicketController implements Icontrollers{
         }
     }
 
-  /*  public function SeeBuyedTickets ($orderBy = null){
-        if 
-    }*/
-
+  
 
 
     public function index(){}

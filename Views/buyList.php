@@ -3,13 +3,7 @@
     include(VIEWS."/header2.php");
     include(VIEWS.'/nav2.php');
     
-    //EL ARRAY DE LAS COMPRAS
-    if ($listBuy == false){
-        $listBuy = array();
-    }
-    if (!is_array($listBuy)){
-        $listBuy = array($listBuy);
-    }
+    
 
 ?>
 
@@ -34,7 +28,7 @@ td{
 <main class="p-5">
         <div class="container">
 
-            <h1 class="mb-5">List of Buy</h1>
+            <h1 class="mb-5">List of Buys</h1>
 
             <?php if(isset($successMje) || isset($errorMje)) { ?>
                 <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
@@ -45,32 +39,37 @@ td{
                 </div>
             <?php } ?>
             
+            
         
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                            <th></th>
+                            
                             <th>Cinema</th>
                             <th>Room</th>
                             <th>Movie</th>
                             <th>Date</th>
-                            <th>Total</th>
-                            <th>Discount</th>
-                            <th>User</th>
+                            <th>Number of Tickets </th>
+                            <th>QR</th>
+                            
+                            
+                           
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($listBuy as $buy) { ?>
-                            <?php if($buy->getState() == true){?>
+                        <?php foreach($ticketsPurchased as $ticket) { ?>
+                            <?php if($ticket->getBuy()->getState() == true){?>
                             <tr>
-                                <td><input type="checkbox" name="postschecked[]" value=""></td>
-                                <td> <?php echo $buy->getMovieFunction()->getRoom()->getCinema()->getName();?>    </td>
-                                <td> <?php echo $buy->getMovieFunction()->getRoom()->getName();?>    </td>
-                                <td> <?php echo $buy->getMovieFunction()->getMovie()->getTitle();?> </td>
-                                <td> <?php echo  $buy->getDate();?></td>
-                                <td> <?php echo  $buy->getTotal();?></td>
-                                <td> <?php echo  $buy->getDiscount();?></td>
-                                <td> <?php echo  $buy->getUser()->GetEmail();?></td>
+                               
+                                <td> <?php echo $ticket->getBuy()->getMovieFunction()->getRoom()->getCinema()->getName();?>    </td>
+                                <td> <?php echo $ticket->getBuy()->getMovieFunction()->getRoom()->getName();?>    </td>
+                                <td> <?php echo $ticket->getBuy()->getMovieFunction()->getMovie()->getTitle();?> </td>
+                                <td> <?php echo  $ticket->getBuy()->getDate();?></td>
+                                <td> <?php echo  $ticket->getBuy()->getNumberOfTickets();?></td>
+                                <td> <img  src="<?php echo FRONT_ROOT."/QRS/".$ticket->getQR().".png";?>"></td>
+                                
+                                
+                               
                              
                             </tr>
                         <?php } 
@@ -80,15 +79,7 @@ td{
                 </table>
             </form>
 
-            <!-- Esto como si no existiera -->
-            <?php if(isset($successMje) || isset($errorMje)) { ?>
-                <div class="alert <?php if(isset($successMje)) echo 'alert-success'; else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
-                    <strong><?php if(isset($successMje)) echo $successMje; else echo $errorMje; ?></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php } ?>
+          
         </div>
     </main>
 

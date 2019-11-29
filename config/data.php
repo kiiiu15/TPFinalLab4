@@ -37,6 +37,8 @@ define('VIEWS', ROOT . '/Views');
 define('STYLE', FRONT_ROOT . '/Views/css2');
 define('JS', FRONT_ROOT . '/Views/js');
 define('ICONS', VIEWS . '/icons' );
+
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 //define('ADMIN_FRONT_ROOT', FRONT_ROOT . '/admin');
 //define('CSS_PATH', FRONT_ROOT . '/asset/css');
 //define('IMG_PATH', FRONT_ROOT . '/asset/img');
