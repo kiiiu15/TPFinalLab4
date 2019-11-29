@@ -14,7 +14,7 @@ use model\SMTP as SMTP;
 class MailsController 
 {
     
-    public function sendPurchaseEmail($idBuy)
+    public function sendPurchaseEmail($qr)
     {
         //BUSCA EL USUARIO LOGEADO !! 
         
@@ -22,22 +22,29 @@ class MailsController
         $user = $userC->GetUserLoged();
         $mail = new PHPMailer(true);
         
-        //$buy = $_SESSION['buy'];
+        $buy = $_SESSION['buy'];
         //Traigo el objeto compra segun el usuario logeado
-        $buyC = new BuyController();
+        //$buyC = new BuyController();
         
         
 
         try {
-            $buy= $buyC->RetrieveById($idBuy);
-            $mail->SMTPDebug = 0;                      // Enable verbose debug output
-            $mail->isSMTP();                                            // Send using SMTP
+            //$buy= $buyC->RetrieveById($idBuy);
+            $mail->SMTPDebug = 0;
+            $mail->Mailer = "smtp";                      // Enable verbose debug output
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );                                        // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
             $mail->Username   = 'MoviePass12311@gmail.com';                     // SMTP username
             $mail->Password   = 'phpsucks';                               // SMTP password
             $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-            $mail->Port       = 587;                                    // TCP port to connect to
+            $mail->Port       = 465;                                    // TCP port to connect to
 
             //Recipients
             $mail->setFrom('MoviePass12311@gmail.com', 'MoviePass Purchase');
@@ -54,7 +61,7 @@ class MailsController
                 $photo=$item->getFileName();
                 $mail->AddEmbeddedImage("QR/temp/$photo","qr");
             }*/
-            
+            $root = "<img src='C:\wamp64\www\TPFinalLab4\QRS\'".$qr;
             $mail->Body    = '<BODY BGCOLOR="White">
                 <body>
                 <div Style="align:center;">
@@ -62,6 +69,7 @@ class MailsController
                 <pre>
                 <p>'."Date:". $buy->getDate() ."</p>
                 <p>TicketsAmount: " .$buy->getNumberOfTickets()."</p>
+                <p>This is your QR CODE: " .$root."</p>
                 <p>Discount: " . $buy->getDiscount()."</p>
                 <p>TOTAL: " .$buy->getTotal()."</p>".'
                 </pre>

@@ -9,6 +9,8 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
+            </li> <li class="nav-item">
+                <a class="nav-link" href="<?= FRONT_ROOT ?>/Views/payment">Payment</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   
