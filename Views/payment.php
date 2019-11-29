@@ -1,7 +1,6 @@
 <?php
-include(VIEWS."/header2.php");
+include(VIEWS."/header.php");
 include(VIEWS.'/nav2.php');
-$buy = $_SESSION['buy'];
 ?>
 
 <style>
@@ -87,6 +86,8 @@ body {
 </form>
 </div>
 <style>
+form {display: inline-block;
+text-align: center;}
 body { margin-top:20px; }
 .panel-title {display: inline;font-weight: bold;}
 .checkbox.pull-right { margin: 0; }
