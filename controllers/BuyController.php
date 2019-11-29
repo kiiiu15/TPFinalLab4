@@ -77,10 +77,6 @@ class BuyController implements Icontrollers{
         }
     }
 
-
-
-
-
     public function GetAll(){
         $listBuy= array();
         $buyDB= new BuyDB();
@@ -99,7 +95,7 @@ class BuyController implements Icontrollers{
         try{
             $buyDB->Add($buy);
         }catch(\PDOException $ex){
-            throw $ex; /**Se eleva la excepcion ya que se esta llamando desdee recieve buy con otro try catch */
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
     /*
@@ -118,29 +114,29 @@ class BuyController implements Icontrollers{
         try{
             $buy=$buyDB->RetrieveById($idBuy);
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
         return $buy;
     }
 
-    /*
+    
     public function RetrieveByUser($user){
         $buyDB = new BuyDB();
-        $buy = new Buy();
+        $Arraybuy = array();
         try{
-            $buy=$buyDB->RetrieveByUser($user);
+            $Arraybuy=$buyDB->RetrieveByUser($user);
         }catch(\PDOException $ex){
-            throw $ex;
+            $this->index('There was an erro whit the connection, please try again');
         }
-        return $buy;
-    }*/
+        return $Arraybuy;
+    }
 
     public function ChangeState($idBuy){
         $buyDB = new BuyDB();
         try{
             $buyDB->ChangeState($idBuy);
         }catch(\PDOException $ex){
-            throw $ex; /*Se eleva la excepcion ya que se llama desde otra controladora que agarra la excepcion */
+            $this->index('There was an erro whit the connection, please try again');
         }
     }
 
@@ -244,7 +240,7 @@ class BuyController implements Icontrollers{
         }
     }
 
-    public function index(){}
+   
 
     public function Stats($total = -1,$totalTickets = -1, $mesage = null){
         $totalSold = $total;
@@ -270,6 +266,13 @@ class BuyController implements Icontrollers{
         
     }
 
+    public function index($msg = null){
+        $errorMje = $msg;
+        $UserController = new UserController();
+        $user = $UserController->GetUserLoged();
+        $listBuy = $this->RetrieveByUser($user);
+        include(VIEWS . "/buyList.php");
+    }
 
 
 
