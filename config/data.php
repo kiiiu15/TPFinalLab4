@@ -34,7 +34,7 @@ define('VIEWS', ROOT . '/Views');
 
 
 /* FRONT */
-define('STYLE', FRONT_ROOT . '/Views/css2');
+define('STYLE', FRONT_ROOT . '/Views/css');
 define('JS', FRONT_ROOT . '/Views/js');
 define('ICONS', VIEWS . '/icons' );
 
