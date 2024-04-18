@@ -24,58 +24,13 @@
         <button class="btn btn-dark btn-block btn-lg" type="button"><?= $str ?></button>
     </form>
 
-    <?php if (isset($successMje) || isset($errorMje)) { ?>
-        <div class="alert <?php if (isset($successMje)) echo 'alert-success';
-                            else echo 'alert-danger'; ?> alert-dismissible fade show mt-3" role="alert">
-            <strong><?php if (isset($successMje)) echo $successMje;
-                    else echo $errorMje; ?></strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php } ?>
-    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form class="modal-content" action="<?= FRONT_ROOT . '/User/SignUp' ?>" method="POST">
-                <div class="modal-header">
-                    <h5 class="modal-title">Registrar usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label style="color:black;">Email</label>
-                        <input required type="text" class="form-control" name="email" />
-                    </div>
-                    <div class="form-group">
-                        <label style="color:black;">Password</label>
-                        <input required type="text" class="form-control" name="pass" />
-                    </div>
-                    <div class="form-group">
-                        <label style="color:black;">Name</label>
-                        <input required type="text" class="form-control" name="UserName" />
-                    </div>
-                    <div class="form-group">
-                        <label style="color:black;">Last Name</label>
-                        <input required type="text" class="form-control" name="LastName" />
-                    </div>
-                    <div class="form-group">
-                        <label style="color:black;">DNI</label>
-                        <input required type="text" class="form-control" name="Dni" />
-                    </div>
-                    <div class="form-group">
-                        <label style="color:black;">Telephone Number</label>
-                        <input required type="text" class="form-control" name="TelephoneNumber" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</<a>
-                        <button type="submit" class="btn btn-link">Sign Up</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <?php
+    if (isset($successMje) || isset($errorMje)) {
+        require_once(VIEWS . "/components/login/loginOperationResultAlert.php");
+    }
+    ?>
+
+    <?php require_once(VIEWS . "/components/login/registerFormModal.php"); ?>
 
 </main>
 
