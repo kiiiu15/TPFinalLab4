@@ -118,7 +118,7 @@ class HomeController implements Icontrollers {
         $selectedMovieFunctions = $movieFunctionsToShow;
         $selectedMovieFunctions = $this->TransformToArray($selectedMovieFunctions);
 
-        include(VIEWS.'/posts.php');
+        include(VIEWS.'/home.php');
 
     }
 }
