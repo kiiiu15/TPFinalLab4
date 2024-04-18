@@ -10,33 +10,9 @@ if ($isAdmin) {
 
 ?>
 
-<style>
-    body {
-        background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/V7QIfdTcgikqxmxok/cinema-background_vzw7c2tqe__F0000.png");
-        /*background-repeat:no-repeat;*/
-        background-size: cover;
-        background-size: 100%;
-    }
-
-    h1 {
-        color: white;
-    }
-
-    label {
-        color: white;
-    }
-
-    td {
-        color: white;
-    }
-</style>
-
-
-<main class="p-5">
-    <div class="container">
-
+<main class="p-md-5">
+    <div class="container-fluid container-md">
         <h1 class="mb-5">List of Movies</h1>
-
 
         <?php if (isset($successMje) || isset($errorMje)) { ?>
             <div class="alert <?php if (isset($successMje)) echo 'alert-success';
@@ -49,25 +25,27 @@ if ($isAdmin) {
             </div>
         <?php } ?>
 
+        <div class="d-flex flex-column flex-md-row  mb-3 bg-light p-3 rounded">
+            <form class="form-inline mx-2 " action="<?= FRONT_ROOT . '/Home/showMoviesByGenre' ?>" method="POST">
+                <div class="form-row">
+                    <label class="col-form-label" for="genreId">Genre</label>
+                    <select name="genreId" class="form-control">
+                        <?php foreach ($genresList as $genre) { ?>
+                            <option value="<?= $genre->getId(); ?>"><?= $genre->getName(); ?></option>
+                        <?php  } ?>
+                    </select>
+                    <button type="submit" class="btn btn-dark">Send</button>
+                </div>
+            </form>
+            <form class="form-inline mx-2" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate' ?>" method="POST">
+                <div class="form-row">
+                    <label class="col-form-label"  for="data">Date</label>
+                    <input class="form-control" name="date" required type="date" min="<?= date("Y-m-d"); ?>">
+                    <button type="submit" class="btn btn-dark">Send</button>
+                </div>
+            </form>
 
-        <form class="form-inline" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre' ?>" method="POST">
-            <div class="form-group mb-4">
-                <label for="">Genre</label>
-                <select name="genreId" class="form-control ml-3">
-                    <?php foreach ($genresList as $genre) { ?>
-                        <option value="<?= $genre->getId(); ?>"><?= $genre->getName(); ?></option>
-                    <?php  } ?>
-                </select>
-                <button type="submit" class="btn btn-dark ml-3">Send</button>
-            </div>
-        </form>
-        <form class="form-inline" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate' ?>" method="POST">
-            <div class="form-group mb-4">
-                <label for="">Date</label>
-                <input name="date" required type="date" min="<?php echo date("Y-m-d"); ?>">
-                <button type="submit" class="btn btn-dark ml-3">Send</button>
-            </div>
-        </form>
+        </div>
 
 
 
