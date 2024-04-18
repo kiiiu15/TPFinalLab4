@@ -34,8 +34,8 @@ define('VIEWS', ROOT . '/Views');
 
 
 /* FRONT */
-define('STYLE', FRONT_ROOT . '/Views/css');
-define('JS', FRONT_ROOT . '/Views/js');
+define('STYLE', FRONT_ROOT . '/public/css');
+define('JS', FRONT_ROOT . '/public/js');
 define('ICONS', VIEWS . '/icons' );
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
