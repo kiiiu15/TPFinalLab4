@@ -87,7 +87,7 @@ CREATE TABLE Buy (
     numberOfTickets SMALLINT DEFAULT 1,
     total SMALLINT not null,
     discount float not null,
-		emailUser VARCHAR(40) not null,
+	emailUser VARCHAR(40) not null,
     buyState boolean not null,
 
     CONSTRAINT pk_Buy PRIMARY key (idBuy),
