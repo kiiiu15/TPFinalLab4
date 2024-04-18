@@ -1,29 +1,18 @@
+html, body {
+    height: 100%;
+}
+
 body {
-    background-color: gray !important;
+    background-image: url("../../public/img/popcorn.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+main {
+    min-height: 100%;
 }
 
 object {
     pointer-events: none;
 }
-
-.login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-.login-form {
-    width: 400px;
-    max-width: 80%;
-    padding: 50px;
-    border: 1px solid #DDD;
-    border-radius: 10px;
-}
-
-.login-form .actions {
-    display: flex;
-    justify-content: space-between;
-}
-
-
