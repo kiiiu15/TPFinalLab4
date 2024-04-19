@@ -1,7 +1,7 @@
 <?php
 
 include(VIEWS . "/header.php");
-include(VIEWS . '/nav2.php');
+include(VIEWS . '/nav.php');
 
 
 

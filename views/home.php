@@ -5,7 +5,7 @@ include(VIEWS . "/header.php");
 if ($isAdmin) {
     include(VIEWS . '/adminNav.php');
 } else {
-    include(VIEWS . '/nav2.php');
+    include(VIEWS . '/nav.php');
 }
 
 ?>
@@ -39,7 +39,7 @@ if ($isAdmin) {
             </form>
             <form class="form-inline mx-2" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate' ?>" method="POST">
                 <div class="form-row">
-                    <label class="col-form-label"  for="data">Date</label>
+                    <label class="col-form-label" for="data">Date</label>
                     <input class="form-control" name="date" required type="date" min="<?= date("Y-m-d"); ?>">
                     <button type="submit" class="btn btn-dark">Send</button>
                 </div>
