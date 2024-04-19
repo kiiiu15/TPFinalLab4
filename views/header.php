@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?= STYLE."/styles.css"?>">
     <link rel="stylesheet" href="<?= STYLE."/bootstrap.min.css"?>"  crossorigin="anonymous">
+    <link rel="stylesheet" href="<?= STYLE."/styles.css"?>">
     <title>MoviePass</title>
   </head>
   <body>

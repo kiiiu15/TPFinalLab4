@@ -2,7 +2,7 @@
 
 <main class="container d-flex flex-column justify-content-center align-items-lg-center">
 
-    <h1>MoviePass</h1>
+    <h1 class="text-white">MoviePass</h1>
     <form action="<?= FRONT_ROOT . '/User/LogIn' ?>" method="POST" class="bg-secondary rounded p-4 text-white">
         <div class="form-group">
             <label for="email" class="form-label">Email</label>

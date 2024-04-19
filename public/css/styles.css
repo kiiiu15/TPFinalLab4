@@ -1,16 +1,10 @@
-html, body {
+html, body, main {
     height: 100%;
 }
 
 body {
-    background-image: url("../../public/img/popcorn.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    
-}
-
-main {
-    min-height: 100%;
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,30,121,1) 0%, rgba(0,212,255,1) 100%);
 }
 
 object {
