@@ -48,6 +48,7 @@ if ($isAdmin) {
                     <th>Title</th>
                     <th>Description</th>
                     <th>Genre</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -55,13 +56,16 @@ if ($isAdmin) {
                     <tr>
 
                         <td>
-                            <button class="event btn" name="asd" value="<?= $movie->getId(); ?>"> <img src="<?php echo $movie->getPoster(); ?>" alt="" class=" cover" /></button>
+                           <img src="<?php echo $movie->getPoster(); ?>" alt="" class="img-fluid cover" />
                         </td>
                         <td> <?php echo $movie->getTitle(); ?> </td>
                         <td> <?php echo $movie->getOverview(); ?> </td>
                         <td> <?php foreach ($movie->getGenres() as $genre) {
                                     echo $genre->getName() . '<br>';
                                 } ?>
+                        </td>
+                        <td>
+                            <button class="event btn btn-success" value="<?= $movie->getId(); ?>">Buy</button>
                         </td>
 
 

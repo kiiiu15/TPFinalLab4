@@ -1,121 +1,84 @@
 <script type="text/javascript">
-    $('#idMovie .event').on('click', function() {
+    $$btnBuy = document.querySelectorAll('#idMovie .event');
 
+    $$btnBuy.forEach(e => e.addEventListener('click', function(e) {
+        const $options = document.querySelector('#options');
+        const $choices = document.querySelector('#choices');
+        const $title = document.querySelector('#title');
 
-        var selectValue = $(this).val();
+        $choices.innerHTML = "";
 
-        $.ajax({
-            method: 'POST',
-            url: '/TPFinalLab4/Movie/prueba',
-            dataType: 'JSON',
-            data: {
-                selectValue
-            },
-            beforeSend: function() {
-                // Esto ocurre al iniciar la peticion
-            },
-            error: function() {
-                // Esto ocurre si falla
-            },
-            success: function(dato) {
-                // Esto ocurre si la peticion al servidor se ejecuto correctamente
-                var jsonContent = JSON.stringify(dato);
+        getMovieDataById(e.target.value)
+            .then(movieData => {
+                $title.innerHTML = movieData.title;
+            });
 
-                var peli = JSON.parse(jsonContent);
+        getMovieFunctions(e.target.value)
+            .then(functionsPerCinema => {
 
-                $('#title').text(peli.title);
+                const cinemas = [];
+                const options = {};
 
-            }
-        });
+                Object.entries(functionsPerCinema).forEach(function([cinemaId, movieFunctions]) {
 
-        $.ajax({
-            method: 'POST',
-            url: '/TPFinalLab4/MovieFunction/prueba',
-            dataType: 'JSON',
-            data: {
-                selectValue
-            },
-            beforeSend: function() {
-                // Esto ocurre al iniciar la peticion
-            },
-            error: function() {
-                // Esto ocurre si falla
-            },
-            success: function(dato) {
-                // Esto ocurre si la peticion al servidor se ejecuto correctamente
+                    cinemas.push({
+                        id: cinemaId,
+                        name: movieFunctions[0].room.cinema.name
+                    });
 
-
-
-                var jsonContent = JSON.stringify(dato);
-
-                var array = JSON.parse(jsonContent);
-
-
-                var cinemas = [];
-
-                var cinemasId = [];
-
-                var options = {};
-
-                var optionsId = {};
-
-
-
-                $.each(array, function(k, v) {
-                    cinemasId.push(k);
-
-                    cinemas.push(v[0].room.cinema.name);
-
-                    var aux = [];
-                    var ids = [];
-
-
-                    $.each(v, function(k2, v2) {
-
-
-                        ids.push(v2.id);
-                        aux.push("Fecha: " + v2.day + " Sala: " + v2.room.name + " Horario: " + v2.hour);
-
+                    const movieOptions = movieFunctions.map(function(movieFunction) {
+                        return {
+                            id: movieFunction.id,
+                            label: "Fecha: " + movieFunction.day + " Sala: " + movieFunction.room.name + " Horario: " + movieFunction.hour
+                        }
                     })
 
+                    options[cinemaId] = movieOptions;
+                });
 
-                    optionsId[k] = ids;
+                $options.innerHTML = "";
 
-                    options[k] = aux;
-
-
-                })
-
-                $('#options').empty();
-
-                $('#options').append("<option value='' disabled selected>Select a Cinema</option>");
+                $options.innerHTML += `<option value="" disabled selected>Select a Cinema</option>`;
 
                 for (i = 0; i < cinemas.length; i++) {
-
-
-                    $('#options').append("<option value='" + cinemasId[i] + "'>" + cinemas[i] + "</option>");
-
+                    $options.innerHTML += `<option value="${cinemas[i].id}"> ${cinemas[i].name} </option>`;
                 }
 
-                $('#options').on('change', function() {
+                $options.addEventListener('change', function() {
 
-
-                    var selectValue = $(this).val();
-
-                    $('#choices').empty();
+                    var selectValue = $options.value;
+                    $choices.innerHTML = "";
 
                     // For each chocie in the selected option
                     for (i = 0; i < options[selectValue].length; i++) {
-
                         // Output choice in the target field
-                        $('#choices').append("<option value='" + optionsId[selectValue][i] + "'>" + options[selectValue][i] + "</option>");
-
+                        $choices.innerHTML += `<option value="${options[selectValue][i].id}">${options[selectValue][i].label}</option>`;
                     }
 
                 });
 
-            }
-        });
+            })
+
+        async function getMovieDataById(idMovie) {
+            const formData = new FormData();
+            formData.append("selectValue", idMovie);
+
+            return fetch("/TPFinalLab4/Movie/prueba", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+        }
+
+        async function getMovieFunctions(idMovie) {
+            const formData = new FormData();
+            formData.append("selectValue", idMovie);
+            return fetch("/TPFinalLab4/MovieFunction/prueba", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(res => res.json())
+        }
         $('#show-movie').modal('show');
-    });
+    }));
 </script>
