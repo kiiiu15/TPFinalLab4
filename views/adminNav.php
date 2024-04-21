@@ -11,7 +11,7 @@
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
             </li> 
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Add Cinema</a>   
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Cinemas</a>   
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Room' ?>">Add Rooms</a>   
@@ -26,8 +26,5 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
         </ul>
-        <!-- <span class="navbar-text text-white"> -->
-            <!-- <strong>(Hola <?php// echo $user->getName(); ?>)</strong> -->
-        <!-- </span> -->
     </div>
 </nav>
