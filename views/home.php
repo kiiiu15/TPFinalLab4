@@ -47,9 +47,7 @@ if ($isAdmin) {
 
         </div>
 
-
-
-        <table id="idMovie" class="table" class="catsandstar">
+        <table id="idMovie" class="table table-striped table-light" class="catsandstar">
             <thead class="thead-dark">
                 <tr>
 
