@@ -1,7 +1,4 @@
 <?php
-
-
-
     $alertType = isset($successMje) ? 'alert-success' : 'alert-danger';
     $message = isset($successMje) ? $successMje : $errorMje;
 ?>
