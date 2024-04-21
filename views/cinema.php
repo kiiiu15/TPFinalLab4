@@ -1,10 +1,5 @@
 <?php
-/*ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);*/
 
-
-//CAMBIAR ESE 2
 include(VIEWS . "/header.php");
 include(VIEWS . '/adminNav.php');
 if ($cinemaList == false) {
@@ -15,26 +10,6 @@ if (!is_array($cinemaList)) {
 }
 
 ?>
-
-<style>
-    body {
-        background-image: url("http://www.kabu-load.net/data/out/103/IMG_1086101.jpg");
-        background-size: cover;
-        background-size: 100%;
-    }
-
-    h1 {
-        color: white;
-    }
-
-    label {
-        color: white;
-    }
-
-    td {
-        color: white;
-    }
-</style>
 
 <main class="p-5">
     <div class="container">
@@ -73,24 +48,24 @@ if (!is_array($cinemaList)) {
 
 
         <!-- LOS GET NO ESTAN FUNCIONANDO -->
-        <form class="form-inline" action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
-            <div class="form-group mb-4">
+        <form class="" action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
+            <div class=" form-inline form-group mb-4 bg-light p-3 rounded">
                 <label for="">Active/Inactive</label>
-                <select name="active" class="form-control ml-3">
+                <select name="active" class="form-control">
                     <option value="<?= true; ?>">Active</option>
                     <option value="<?= false; ?>">Inactive</option>
                 </select>
-                <button type="submit" class="btn btn-dark ml-3">Send</button>
+                <button type="submit" class="btn btn-dark">Send</button>
 
                 <!-- 
                         en realidad este button no tiene nada que ver con el form este, pero si lo ponia afuera quedava re feo :)
                      -->
-                <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
+                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#add-cinema">
                     Add a Cinema
                 </button>
             </div>
 
-            <table class="table">
+            <table class="table table-light table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th></th>
