@@ -62,7 +62,7 @@ if ($isAdmin) {
                     <tr>
 
                         <td>
-                            <button class="event" name="asd" value="<?= $movie->getId(); ?>"> <img src="<?php echo $movie->getPoster(); ?>" alt="" class="cover" /></button>
+                            <button class="event btn" name="asd" value="<?= $movie->getId(); ?>"> <img src="<?php echo $movie->getPoster(); ?>" alt="" class=" cover" /></button>
                         </td>
                         <td> <?php echo $movie->getTitle(); ?> </td>
                         <td> <?php echo $movie->getOverview(); ?> </td>
@@ -92,8 +92,7 @@ if ($isAdmin) {
         <form class="modal-content" action="<?= FRONT_ROOT ?>/Buy/ReciveBuy" method="POST">
 
             <div class="modal-header">
-
-                <h5 id="title" class="modal-title"></h5>
+                <p id="title" class="modal-title h5"></p>
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
@@ -103,8 +102,8 @@ if ($isAdmin) {
 
 
                 <div class="form-group">
-                    <label style="color:black;">Cinemas</label>
-                    <select required id="options" name="" class="form-control ml-3">
+                    <label>Cinemas</label>
+                    <select required id="options" name="" class="form-control">
                         <option value="" disabled selected>Select a Cinema</option>
 
                     </select>
@@ -112,14 +111,14 @@ if ($isAdmin) {
 
 
                 <div class="form-group">
-                    <label style="color:black;">Functions</label>
-                    <select id="choices" required name="idFunction" class="form-control ml-3">
+                    <label>Functions</label>
+                    <select id="choices" required name="idFunction" class="form-control">
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label style="color:black;">Number Of Tickets</label>
-                    <input style="color:black;" name="quantity" min='1' type="number" required onkeypress="return false">
+                    <label >Number Of Tickets</label>
+                    <input class="form-control" name="quantity" min='1' type="number" required>
                 </div>
 
 
