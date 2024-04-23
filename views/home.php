@@ -18,23 +18,27 @@ if ($isAdmin) {
             require_once(VIEWS . "/components/home/alert.php");
         } ?>
 
-        <div class="d-flex flex-column flex-md-row  mb-3 bg-light p-3 rounded">
-            <form class="form-inline mx-2 " action="<?= FRONT_ROOT . '/Home/showMoviesByGenre' ?>" method="POST">
-                <div class="form-row">
-                    <label class="col-form-label" for="genreId">Genre</label>
-                    <select name="genreId" class="form-control">
+        <div class="d-flex flex-column align-items-stretch flex-sm-row justify-content-between mb-3 bg-light py-3 px-2 px-md-3 rounded">
+            <form class="form-inline flex-column align-items-stretch flex-sm-row" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre' ?>" method="POST">
+                <div class="form-group">
+                    <label class="mb-0" for="genreId">Genre</label>
+                    <select name="genreId" class="form-control mx-sm-1">
                         <?php foreach ($genresList as $genre) { ?>
                             <option value="<?= $genre->getId(); ?>"><?= $genre->getName(); ?></option>
                         <?php  } ?>
                     </select>
-                    <button type="submit" class="btn btn-dark">Send</button>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark btn-block">Send</button>
                 </div>
             </form>
-            <form class="form-inline mx-2" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate' ?>" method="POST">
-                <div class="form-row">
-                    <label class="col-form-label" for="data">Date</label>
-                    <input class="form-control" name="date" required type="date" min="<?= date("Y-m-d"); ?>">
-                    <button type="submit" class="btn btn-dark">Send</button>
+            <form class="form-inline flex-column align-items-stretch flex-sm-row" action="<?= FRONT_ROOT . '/Home/ShowMovieByDate' ?>" method="POST">
+                <div class="form-group">
+                    <label class="mb-0" for="data">Date</label>
+                    <input class="form-control mx-sm-1 " name="date" required type="date" min="<?= date("Y-m-d"); ?>">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark btn-block">Send</button>
                 </div>
             </form>
 
@@ -56,7 +60,7 @@ if ($isAdmin) {
                     <tr>
 
                         <td>
-                           <img src="<?php echo $movie->getPoster(); ?>" alt="" class="img-fluid cover" />
+                            <img src="<?php echo $movie->getPoster(); ?>" alt="" class="img-fluid cover" />
                         </td>
                         <td> <?php echo $movie->getTitle(); ?> </td>
                         <td> <?php echo $movie->getOverview(); ?> </td>
