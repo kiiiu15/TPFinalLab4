@@ -370,7 +370,7 @@ class MovieFunctionController implements IControllers{
         $activeRooms = $roomC->RetrieveByActive(true);
         $movieFunctionList = $this->GetBillboard(); 
         
-        include(VIEWS.'/addFunction.php');
+        include(VIEWS.'/function.php');
     }
 
 
