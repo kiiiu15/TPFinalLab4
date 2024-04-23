@@ -17,7 +17,7 @@
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Room' ?>">Rooms</a>   
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Add Function</a>   
+                <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Functions</a>   
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Buy/Stats' ?>">Stats</a>
