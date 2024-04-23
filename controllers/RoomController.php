@@ -151,7 +151,7 @@ class RoomController implements IControllers{
         $activeCinemas=$this->TransformToArray($CinemaList);
         
         
-        include(VIEWS . "/listRooms.php");
+        include(VIEWS . "/rooms.php");
     }
 
     
