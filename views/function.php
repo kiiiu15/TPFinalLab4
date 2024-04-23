@@ -38,24 +38,22 @@ if (!is_array($movies)) {
 
 
         <!--ACA PODRIAMOS PONER UN SELECT PARA QUE ELIJA EL CINE DEL QUE QUIERE VER QUE FUNCIONES HAY
-<form class="form-inline" action="" method="GET">
-    <div class="form-group mb-4">
-        <label for="">Activo/Inactivo</label>
-        <select name="active" class="form-control ml-3">
-            <option value="true">Activo</option>
-            <option value="false">Inactivo</option>
-        </select>
-        <button type="submit" class="btn btn-dark ml-3">Enviar</button>
-        
-    </div>
-</form>   
+            <form class="form-inline" action="" method="GET">
+                <div class="form-group mb-4">
+                    <label for="">Activo/Inactivo</label>
+                    <select name="active" class="form-control ml-3">
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                    <button type="submit" class="btn btn-dark ml-3">Enviar</button>
+                    
+                </div>
+            </form>   
 
-<button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
-    Agregar Cine
-</button> 
-
-
--->
+            <button type="button" class="btn btn-dark ml-3" data-toggle="modal" data-target="#add-cinema">
+                Agregar Cine
+            </button> 
+        -->
 
 
         <div class="bg-light p-3 rounded form-inline flex-column-reverse align-items-stretch flex-sm-row justify-content-sm-between">
