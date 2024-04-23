@@ -8,13 +8,13 @@
         
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
+                <a class="nav-link" href="<?= FRONT_ROOT ?>">Billboard</a>
             </li> 
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/Cinema' ?>">Cinemas</a>   
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT . '/Room' ?>">Add Rooms</a>   
+                <a class="nav-link" href="<?= FRONT_ROOT . '/Room' ?>">Rooms</a>   
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/MovieFunction' ?>">Add Function</a>   
