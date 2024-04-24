@@ -8,17 +8,14 @@
         
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT ?>">Show List Movies</a>
+                <a class="nav-link" href="<?= FRONT_ROOT ?>">Billboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT ?>/Buy/index">Show BuyList</a>
+                <a class="nav-link" href="<?= FRONT_ROOT ?>/Buy/index">My Purchase</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
             </li>
         </ul>
-        <!-- <span class="navbar-text text-white"> -->
-            <!-- <strong>(Hola <?php// echo $user->getName(); ?>)</strong> -->
-        <!-- </span> -->
     </div>
 </nav>
