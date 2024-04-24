@@ -116,18 +116,24 @@ include(VIEWS . "/adminNav.php");
 <?php include(VIEWS . "/footer.php"); ?>
 
 <script>
-    $('#from').on('change', function() {
-        var selectValue = $(this).val();
 
-        $('#to').attr('min', selectValue);
-        $('#to').prop('disabled', false);
+    const $fromDateInput = document.querySelector("#from");
+    const $toDateInput = document.querySelector("#to");
+    const $fromDateInput2 = document.querySelector("#from2");
+    const $toDateInput2 = document.querySelector("#to2");
 
+
+    $fromDateInput.addEventListener("change", function (e){
+        const selectedValue = e.target.value;
+
+        $toDateInput.min = selectedValue;
+        $toDateInput.disabled = false;
     });
 
-    $('#from2').on('change', function() {
-        var selectValue = $(this).val();
+    $fromDateInput2.addEventListener("change", function (e){
+        const selectedValue = e.target.value;
 
-        $('#to2').attr('min', selectValue);
-        $('#to2').prop('disabled', false);
+        $toDateInput2.min = selectedValue;
+        $toDateInput2.disabled = false;
     });
 </script>
