@@ -3,19 +3,19 @@ include(VIEWS . "/header.php");
 include(VIEWS . "/adminNav.php");
 ?>
 
-<main class="p-5">
-    <div class="container">
+<main class="p-2 p-lg-5">
+    <div class="container-fluid container-lg">
 
 
         <?php if (isset($successMje) || isset($errorMje)) {
             require_once(VIEWS . "components/stats/alert.php");
         } ?>
 
-        <div class="d-flex justify-content-around bg-light p-3 rounded">
+        <div class="d-flex flex-column align-items-stretch flex-lg-row  justify-content-lg-around bg-light p-3 rounded">
             <form action="<?= FRONT_ROOT . "/Buy/getTotalByDate" ?>" method="POST">
-                <p class="h5">Check totals by date / cinema / movie</p>
+                <p class="h5">Check totals purchases by date / cinema / movie</p>
                 <div class="form-group">
-                    <div class="d-flex">
+                    <div class="d-flex flex-column align-items-stretch flex-lg-row  justify-content-lg-around">
                         <div class="form-group">
                             <label> From date</label>
                             <input id="from" type="date" required name="fromDate" class="form-control">
@@ -43,7 +43,7 @@ include(VIEWS . "/adminNav.php");
                             <?php } ?>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success">Get Total</button>
+                    <button type="submit" class="btn btn-success btn-block">Get Total</button>
                 </div>
                 <div class="form-group justify-content-between">
                     <label>TOTAL BUY</label>
@@ -63,7 +63,7 @@ include(VIEWS . "/adminNav.php");
 
                 <p class="h5">Check total of tickets by date / cinema / movie</p>
                 <div class="form-group ">
-                    <div class="d-flex">
+                    <div class="d-flex flex-column align-items-stretch flex-lg-row  justify-content-lg-around">
                         <div class="form-group">
                             <label>From date</label>
                             <input type="date" id="from2" required name="fromDate" class="form-control">
@@ -95,7 +95,7 @@ include(VIEWS . "/adminNav.php");
                             ?>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success">Get Total</button>
+                    <button type="submit" class="btn btn-success btn-block">Get Total</button>
                 </div>
                 <div class="form-group justify-content-between">
                     <label>TOTAL TICKETS</label>
