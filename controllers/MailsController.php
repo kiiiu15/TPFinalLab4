@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace controllers;
 
 use controllers\BuyController as BuyController;
@@ -11,25 +12,24 @@ use model\Exceptionn as Exceptionn;
 use model\SMTP as SMTP;
 
 
-class MailsController 
+class MailsController
 {
-    
-    public function sendPurchaseEmail($qr)
+
+    public function sendPurchaseEmail($idBuy, $qr)
     {
         //BUSCA EL USUARIO LOGEADO !! 
-        
+
         $userC = new UserController();
         $user = $userC->GetUserLoged();
         $mail = new PHPMailer(true);
-        
-        $buy = $_SESSION['buy'];
+
+        //$buy = $_SESSION['buy'];
         //Traigo el objeto compra segun el usuario logeado
-        //$buyC = new BuyController();
-        
-        
+        $buyC = new BuyController();
+
 
         try {
-            //$buy= $buyC->RetrieveById($idBuy);
+            $buy= $buyC->RetrieveById($idBuy);
             $mail->SMTPDebug = 0;
             $mail->Mailer = "smtp";                      // Enable verbose debug output
             $mail->SMTPOptions = array(
@@ -50,28 +50,28 @@ class MailsController
             $mail->setFrom('MoviePass12311@gmail.com', 'MoviePass Purchase');
             $emailToSend = $user->getEmail();
             $mail->addAddress($emailToSend, 'User');     // Add a recipient
-    // Content
+            // Content
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Thanks you for the purchase';
-        
-                // $mail->addAttachment("../QR/temp/$photo");         // Add attachments
+
+            // $mail->addAttachment("../QR/temp/$photo");         // Add attachments
             //  $mail->addAttachment("../QR/temp/$photo", 'new.jpg');    // Optional name
-        
-        /*     foreach ($qrsToSend as $item){
+
+            /*     foreach ($qrsToSend as $item){
                 $photo=$item->getFileName();
                 $mail->AddEmbeddedImage("QR/temp/$photo","qr");
             }*/
-            $root = "<img src='C:\wamp64\www\TPFinalLab4\QRS\'".$qr;
+            $root = "<img src='C:\wamp64\www\TPFinalLab4\QRS\'" . $qr;
             $mail->Body    = '<BODY BGCOLOR="White">
                 <body>
                 <div Style="align:center;">
                 <p> PURCHASE INFORMATION  </p>
                 <pre>
-                <p>'."Date:". $buy->getDate() ."</p>
-                <p>TicketsAmount: " .$buy->getNumberOfTickets()."</p>
-                <p>This is your QR CODE: " .$root."</p>
-                <p>Discount: " . $buy->getDiscount()."</p>
-                <p>TOTAL: " .$buy->getTotal()."</p>".'
+                <p>' . "Date:" . $buy->getDate() . "</p>
+                <p>TicketsAmount: " . $buy->getNumberOfTickets() . "</p>
+                <p>This is your QR CODE: " . $root . "</p>
+                <p>Discount: " . $buy->getDiscount() . "</p>
+                <p>TOTAL: " . $buy->getTotal() . "</p>" . '
                 </pre>
                 <p>
                 </p>
@@ -95,26 +95,9 @@ class MailsController
                 </body>';
 
 
-                $mail->send();
-            
+            $mail->send();
         } catch (Exceptionn $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
