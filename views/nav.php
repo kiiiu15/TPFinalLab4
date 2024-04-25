@@ -11,7 +11,7 @@
                 <a class="nav-link" href="<?= FRONT_ROOT ?>">Billboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= FRONT_ROOT ?>/Buy/index">My Purchase</a>
+                <a class="nav-link" href="<?= FRONT_ROOT ?>/Buy/index">My Purchases</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= FRONT_ROOT . '/User/LogOut' ?>">Logout</a>
