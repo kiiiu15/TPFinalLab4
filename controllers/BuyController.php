@@ -293,7 +293,7 @@ class BuyController implements Icontrollers{
 
         $ticketsPurchased = $ticketsC->RetrieveByUser($user->getEmail());
         $ticketsPurchased = $this->TransformToArray($ticketsPurchased);
-        include(VIEWS . "/buyList.php");
+        include(VIEWS . "/purchase.php");
     }
 
 
