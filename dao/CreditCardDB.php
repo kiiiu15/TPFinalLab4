@@ -2,26 +2,16 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use model\CreditCard as CreditCard;
 
-class CreditCardDB
+class CreditCardDB extends AbstractDB
 {
-    private $connection;
-
-    public function __construct()
-    {
-    }
-
     public function GetAll()
     {
         $sql = "SELECT * FROM CreditCards";
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
-            $result = $this->connection->Execute($sql, $values);
+            $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
         }
@@ -43,8 +33,7 @@ class CreditCardDB
         $values["expiryYear"]   = $creditCard->getExpiryYear();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -66,8 +55,7 @@ class CreditCardDB
 
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -81,8 +69,7 @@ class CreditCardDB
         $values['number'] = $number;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -102,8 +89,7 @@ class CreditCardDB
         $values['emailUser'] = $email;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -121,8 +107,7 @@ class CreditCardDB
         $values['numberCreditCard'] = $number;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;

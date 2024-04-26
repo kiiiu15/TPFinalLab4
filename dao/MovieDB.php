@@ -2,26 +2,18 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+
+use Dao\AbstractDB as AbstractDB;
 use model\Movie as Movie;
 use Dao\GenreDB as GenreDB;
 use Dao\GenresPerMovieDB as GenresPerMovieDB;
 
-class MovieDB
+class MovieDB extends AbstractDB
 {
-    private $connection;
-
-    public function __construct()
-    {
-    }
-
     public function GetAll()
     {
         $sql = "SELECT * FROM Movies";
         try {
-            $this->connection = Connection::getInstance();
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -49,8 +41,7 @@ class MovieDB
         $genrePerMovie = $movie->getGenres();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $this->connection->ExecuteNonQuery($sql, $values);
 
             $genrePerMovieDB = new GenresPerMovieDB();
@@ -80,8 +71,7 @@ class MovieDB
         $sql = "SELECT * FROM Movies WHERE Movies.idMovie=:idMovie";
         $values['idMovie'] = $idMovie;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -99,8 +89,7 @@ class MovieDB
         $sql = "SELECT * FROM Movies INNER JOIN GenresPerMovie ON Movies.idMovie = GenresPerMovie.idMovie INNER JOIN Genres ON GenresPerMovie.idGenre = Genres.idGenre WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $genreId;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -118,8 +107,7 @@ class MovieDB
         $sql = "SELECT * FROM Movies WHERE Movies.tittle=:title";
         $values['title'] = $title;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -138,8 +126,7 @@ class MovieDB
         $sql = "SELECT * FROM Movies WHERE Movies.releaseDate=:releaseDate";
         $values['releaseDate'] = $releaseDate;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -160,8 +147,7 @@ class MovieDB
         $values['tittle'] = $movie->getTitle();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -184,8 +170,7 @@ class MovieDB
         $sql = "SELECT idGenre FROM GenresPerMovie WHERE GenresPerMovie.idMovie = :idMovie";
         $values["idMovie"] = $idMovie;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;

@@ -1,14 +1,12 @@
 <?php namespace Dao;
 
+use Dao\AbstractDB as AbstractDB;
 use model\Ticket as Ticket;
 use model\Buy as Buy;
 use Dao\BuyDB as BuyDB;
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
 
-class TicketDB{
-    private $connection;
+
+class TicketDB extends AbstractDB {
 
 
     public function Add($ticket){
@@ -18,8 +16,6 @@ class TicketDB{
         $buy = $ticket->getBuy();
         $values['idBuy']= $buy->getIdBuy();
         try{
-            $this->connection=Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -33,8 +29,6 @@ class TicketDB{
         $values['id'] = $ticket->getIdTicket();
         
         try{
-            $this->connection=Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -44,7 +38,6 @@ class TicketDB{
     public function GetAll(){
         $sql="SELECT * FROM Tickets";
         try{
-            $this->connection= Connection::getInstance();
             $result= $this->connection->Execute($sql);
         }catch(\PDOException $ex){
             throw $ex;
@@ -59,8 +52,6 @@ class TicketDB{
         $sql="SELECT * FROM Tickets WHERE Tickets.idTicket=:idTicket";
         $values['idTicket'] =$idTicket;
         try{
-            $this->connection= Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -76,8 +67,6 @@ class TicketDB{
         $sql="SELECT * FROM Tickets WHERE Tickets.idBuy=:idBuy";
         $values['idBuy'] =$idBuy;
         try{
-            $this->connection= Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -93,8 +82,6 @@ class TicketDB{
         $sql="SELECT * FROM Tickets INNER JOIN Buy ON Buy.idBuy = Tickets.idBuy WHERE Buy.emailUser = :emailUser";
         $values['emailUser'] =$user;
         try{
-            $this->connection= Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -110,8 +97,6 @@ class TicketDB{
         $sql="DELETE FROM Tickets WHERE Tickets.idTicket=:idTicket";
         $values['idTickets']=$ticket->getIdTicket();
         try{
-            $this->connection= Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;

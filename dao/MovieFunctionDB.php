@@ -2,29 +2,20 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use model\MovieFunction as MovieFunction;
 use model\Movie as Movie;
 use model\Cinema as Cinema;
 use Dao\MovieDB as MovieDB;
 use Dao\CinemaDB as CinemaDB;
 
-class MovieFunctionDB
+class MovieFunctionDB extends AbstractDB
 {
-
-    private $connection;
-
-    public function __construct()
-    {
-    }
-
     public function GetAll()
     {
         $sql = "SELECT * FROM MovieFunctions";
         try {
-            $this->connection = Connection::getInstance();
+
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -49,8 +40,7 @@ class MovieFunctionDB
         $values['room']     = $room->getId();
         $values['movies']      = $movie->getId();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -63,8 +53,7 @@ class MovieFunctionDB
         $sql = "SELECT * FROM MovieFunctions WHERE MovieFunctions.idFunction=:id";
         $values['id'] = $id;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -89,8 +78,7 @@ class MovieFunctionDB
         $values['movies']      = $movie->getId();
         $values['idFunction'] = $moviefunction->getId();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -102,10 +90,9 @@ class MovieFunctionDB
         $sql = "DELETE FROM MovieFunctions WHERE MovieFunctions.idFunction=:idFunction";
         $values['idFunction'] = $moviefunction->getId();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOExeception $ex) {
+        } catch (\PDOException $ex) {
             throw $ex;
         }
     }
@@ -122,8 +109,7 @@ class MovieFunctionDB
         $values['date'] = $date;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -134,37 +120,16 @@ class MovieFunctionDB
             return false;
         }
     }
-    /*
 
-
-    public function RetrieveByMovie($movie){
-        $sql="SELECT * FROM MovieFunctions WHERE MovieFunctions.idMovie=:movie";
-        $values['movie'] =$movie->getId();
-        try{
-            $this->connection=Connection::getInstance();
-            $this->connection->connect();
-            $result=$this->connection->Execute($sql,$values);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-        
-        if(!empty($result)){
-            return $this->Map($result);
-        }else{
-            return false;
-        }
-    }
-*/
 
     //Levanta la cartelera apartir de hoy a 7 dias 
     public function RetrieveBillboard()
     {
         $sql = "SELECT * FROM MovieFunctions WHERE MovieFunctions.date BETWEEN CURDATE() AND CURDATE() +INTERVAL 7 DAY";
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql);
-        } catch (\PDOExeception $ex) {
+        } catch (\PDOException $ex) {
             throw $ex;
         }
 

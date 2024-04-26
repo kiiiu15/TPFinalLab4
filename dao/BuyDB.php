@@ -2,27 +2,19 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use Dao\UserDB as UserDB;
+use Dao\MovieFunctionDB as MovieFunctionDB;
 use model\Buy as Buy;
 use model\User as User;
-use Dao\MovieFunctionDB as MovieFunctionDB;
 
-class BuyDB
+class BuyDB extends AbstractDB
 {
-    private $connection;
-
-    public function __construct()
-    {
-    }
 
     public function GetAll()
     {
         $sql = "SELECT * FROM Buy";
         try {
-            $this->connection = Connection::getInstance();
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -50,8 +42,6 @@ class BuyDB
         $values['buyState']         = false;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -63,8 +53,6 @@ class BuyDB
         $sql = "SELECT * FROM Buy WHERE Buy.idBuy=:idBuy";
         $values['idBuy'] = $idBuy;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -84,8 +72,6 @@ class BuyDB
         $sql = "SELECT * FROM Buy WHERE Buy.emailUser =:emailUser ";
         $values['emailUser'] = $user->GetEmail();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -112,8 +98,6 @@ class BuyDB
         $values["idBuy"]           = $buy->getIdBuy();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             return  $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -126,8 +110,6 @@ class BuyDB
         $values['idBuy'] = $idBuy;
         $values['state'] = true;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -139,18 +121,11 @@ class BuyDB
         $sql = "DELETE FROM Buy WHERE Buy.idBuy=:idBuy";
         $values['idBuy'] = $buy->getIdBuy();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
         }
     }
-
-    /*
-    public function RetrieveByMaxCollect(){
-
-    }*/
 
     public function getTotalByMovie($fromDate, $toDate, $idMovie)
     {
@@ -165,8 +140,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -194,8 +167,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -222,8 +193,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -252,8 +221,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -276,8 +243,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -301,8 +266,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -327,8 +290,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -355,8 +316,6 @@ class BuyDB
         $values['toDate'] = $toDate;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;

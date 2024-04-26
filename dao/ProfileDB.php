@@ -2,18 +2,11 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use model\Profile as Profile;
 
-class ProfileDB
+class ProfileDB extends AbstractDB
 {
-    private $connection;
-
-    function __construct()
-    {
-    }
 
     public function GetAll()
     {
@@ -21,7 +14,7 @@ class ProfileDB
         $sql = "SELECT * FROM UserProfiles";
 
         try {
-            $this->connection = Connection::getInstance();
+
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -44,8 +37,7 @@ class ProfileDB
         $values["telephoneNumber"] = $profile->GetTelephoneNumber();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $this->connection->ExecuteNonQuery($sql, $values);
 
             $profileId = $this->GetLastId();
@@ -61,7 +53,7 @@ class ProfileDB
         $sql = "SELECT MAX(idProfile) AS idProfile FROM UserProfiles";
 
         try {
-            $this->connection = Connection::getInstance();
+
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -80,8 +72,7 @@ class ProfileDB
         $values['idProfile'] = $idProfile;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -106,8 +97,7 @@ class ProfileDB
         $values['idProfile'] = $profile->getIdProfile();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->ExecuteNonQuery($sql, $values);
             return $result;
         } catch (\PDOException $ex) {
@@ -122,8 +112,7 @@ class ProfileDB
         $values['idProfile'] = $profileId;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->ExecuteNonQuery($sql, $values);
             return $result;
         } catch (\PDOException $ex) {

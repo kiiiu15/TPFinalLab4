@@ -2,25 +2,16 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use model\Cinema as Cinema;
 
-class CinemaDB
+class CinemaDB extends AbstractDB
 {
-
-    private $connection;
-
-    public function __construct()
-    {
-    }
 
     public function GetAll()
     {
         $sql = "SELECT * FROM Cinemas";
         try {
-            $this->connection = Connection::getInstance();
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -41,8 +32,6 @@ class CinemaDB
         $values['active']     = $cinema->getActive();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
             $result = $this->connection->ExecuteNonQuery($sql, $values);
             return $result;
         } catch (\PDOException $ex) {
@@ -57,8 +46,7 @@ class CinemaDB
         $values['idCinema'] = $idCinema;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -72,8 +60,7 @@ class CinemaDB
         $values['idCinema'] = $idCinema;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -87,8 +74,7 @@ class CinemaDB
         $values['idCinema'] = $cinema->getIdCinema();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -102,8 +88,7 @@ class CinemaDB
         $sql = "UPDATE Cinemas set Cinemas.adressCinema=:address WHERE Cinemas.idCinema=:idCinema";
         $values['address'] = $cinema->getAddress();
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -117,8 +102,7 @@ class CinemaDB
         $values['idCinema'] = $cinema->getIdCinema();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -132,8 +116,7 @@ class CinemaDB
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.adressCinema=:address";
         $values['address'] = $address;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -151,8 +134,7 @@ class CinemaDB
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.active=:active";
         $values['active'] = $active;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -170,8 +152,7 @@ class CinemaDB
         $values['id'] = $id;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -188,8 +169,7 @@ class CinemaDB
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
         $values['nameCinema'] = $nameCinema;
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -221,8 +201,7 @@ class CinemaDB
         $values['idCinema'] = $cinema->getIdCinema();
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return  $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;

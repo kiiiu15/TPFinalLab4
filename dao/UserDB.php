@@ -2,21 +2,14 @@
 
 namespace Dao;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Dao\QueryType as QueryType;
+use Dao\AbstractDB as AbstractDB;
 use model\User as User;
 use model\Profile as Profile;
 use model\Role as Role;
 use Dao\CreditCardDB as CreditCardDB;
 
-class UserDB
+class UserDB extends AbstractDB
 {
-    private $connection;
-
-    function __construct()
-    {
-    }
 
     public function GetAll()
     {
@@ -29,7 +22,7 @@ class UserDB
                     ON us.usersProfileId = p.idProfile";
 
         try {
-            $this->connection = Connection::getInstance();
+
             $result = $this->connection->Execute($sql);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -53,8 +46,7 @@ class UserDB
         $values["usersProfileId"]  = $profileId;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -78,8 +70,7 @@ class UserDB
         $values['email'] = $email;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $this->connection->ExecuteNonQuery($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
@@ -91,8 +82,7 @@ class UserDB
         $values['idUser'] = $idUser;
 
         try{
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             return $this->connection->Execute($sql,$values);
         }catch(\PDOException $ex){
             throw $ex;
@@ -105,8 +95,7 @@ class UserDB
         $values['email'] = $email;
 
         try {
-            $this->connection = Connection::getInstance();
-            $this->connection->connect();
+
             $result = $this->connection->Execute($sql, $values);
         } catch (\PDOException $ex) {
             throw $ex;
