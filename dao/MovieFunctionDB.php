@@ -52,7 +52,7 @@ class MovieFunctionDB
             $this->connection = Connection::getInstance();
             $this->connection->connect();
             return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (PDOException $ex) {
+        } catch (\PDOException $ex) {
             throw $ex;
         }
     }
