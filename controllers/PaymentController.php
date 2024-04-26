@@ -138,6 +138,6 @@ class PaymentController implements Icontrollers
         }
         $discount = 0;
         $total = 0;
-        include(VIEWS . "/payment.php");
+        include(PAGES . "/payment.php");
     }
 }

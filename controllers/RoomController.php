@@ -1,4 +1,6 @@
-<?php namespace controllers;
+<?php
+
+namespace controllers;
 
 use \PDO as PDO;
 use \Exception as Exception;
@@ -8,78 +10,79 @@ use Model\Cinema as Cinema;
 use Dao\RoomDB as RoomDB;
 use Controllers\CinemaController as CinemaController;
 
-class RoomController implements IControllers{
+class RoomController implements IControllers
+{
 
-    public function __construct(){}
-    
-    public function Add($idCinema, $name, $capacity, $price){
-        $roomDB = new RoomDB();
-        $cinemaController = new CinemaController();
-        $room = new Room(0, $name, $price, $capacity,$cinemaController->RetrieveById($idCinema));
-        try{
-            $roomDB->Add($room);
-            $this->index();
-        }catch(\PDOException $ex){
-            $this->index("Error conetion DB");
-        }
-
-        
+    public function __construct()
+    {
     }
 
-    public function GetAll(){
+    public function Add($idCinema, $name, $capacity, $price)
+    {
+        $roomDB = new RoomDB();
+        $cinemaController = new CinemaController();
+        $room = new Room(0, $name, $price, $capacity, $cinemaController->RetrieveById($idCinema));
+        try {
+            $roomDB->Add($room);
+            $this->index();
+        } catch (\PDOException $ex) {
+            $this->index("Error conetion DB");
+        }
+    }
+
+    public function GetAll()
+    {
         $roomDB = new RoomDB();
         $roomList = array();
 
-        try{
+        try {
             $roomList = $roomDB->GetAll();
             return $roomList;
-        }catch(\PDOException $ex){
+        } catch (\PDOException $ex) {
             return array();
         }
-        
     }
 
-    public function RetrieveById($idRoom){
+    public function RetrieveById($idRoom)
+    {
         $roomDB = new RoomDB();
         $room = new Room();
 
-        try{
+        try {
             $room = $roomDB->RetrieveById($idRoom);
             return $room;
-        }catch(\PDOException $ex){
+        } catch (\PDOException $ex) {
             return null;
         }
-       
     }
-    public function RetrieveByIdCinema($idCinema){
+    public function RetrieveByIdCinema($idCinema)
+    {
         $roomDB = new RoomDB();
         $room = new Room();
 
-        try{
+        try {
             $room = $roomDB->RetrieveByIdCinema($idCinema);
             return $room;
-        }catch(\PDOException $ex){
+        } catch (\PDOException $ex) {
             return array();
         }
-        
     }
 
-    public function Delete($idRoom){
+    public function Delete($idRoom)
+    {
         $roomDB = new RoomDB();
         $idRoom = $this->TransformToArray($idRoom);
-        try{
-            foreach($idRoom as $id){
+        try {
+            foreach ($idRoom as $id) {
                 $roomDB->Delete($this->RetrieveById($id));
                 $this->index();
             }
-        }catch(\PDOException $ex){
+        } catch (\PDOException $ex) {
             $this->index("Error DB vonecction");
         }
-
-        
     }
 
-  /*  public function Modify($room){
+    /*  public function Modify($room){
         $roomDB = new RoomDB();
         try{
             $roomDB->Modify($room);
@@ -91,70 +94,69 @@ class RoomController implements IControllers{
     /** 
      * no se si es responsabilidad de room pero por ahora la dejo aca
      */
-    public function GetRemainingCapacity($idFunction,$numberOfTickets){
+    public function GetRemainingCapacity($idFunction, $numberOfTickets)
+    {
         $db = new RoomDB();
         try {
-                $moviefunctionController = new MovieFunctionController();
+            $moviefunctionController = new MovieFunctionController();
             $function = $moviefunctionController->GetById($idFunction);
             $room = $function->getRoom();
-                                    //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
+            //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
             $TotalTicketsByFunction = $db->GetTotalTicketsByFunction($idFunction);
-            
+
             $RemainingCapacity = $room->getCapacity() - ($TotalTicketsByFunction + $numberOfTickets);
 
             return $RemainingCapacity;
         } catch (\Throwable $th) {
             return 0;
         }
-       
     }
 
-    public function GetRoomByIdFunction($idFunction){
+    public function GetRoomByIdFunction($idFunction)
+    {
         $roomDB = new RoomDB();
-        try{
-           return $roomDB->RetrieveByIdFunction($idFunction);
-        }catch(\PDOException $ex){
+        try {
+            return $roomDB->RetrieveByIdFunction($idFunction);
+        } catch (\PDOException $ex) {
             return null;
         }
     }
 
-    public function RetrieveByActive($active){
+    public function RetrieveByActive($active)
+    {
         $roomDB = new RoomDB();
-        try{
-           return $roomDB->RetrieveByActive($active);
-        }catch(\PDOException $ex){
+        try {
+            return $roomDB->RetrieveByActive($active);
+        } catch (\PDOException $ex) {
             return null;
         }
     }
 
-    private function TransformToArray($value){
-        if ($value == false){
+    private function TransformToArray($value)
+    {
+        if ($value == false) {
             $value = array();
         }
 
-        if (!is_array($value)){
+        if (!is_array($value)) {
             $value = array($value);
         }
 
         return $value;
-
     }
 
-    public function index($mesage = null){
+    public function index($mesage = null)
+    {
         $errorMje = $mesage;
         $roomList = $this->GetAll();
-        $CinemaController = new CinemaController(); 
+        $CinemaController = new CinemaController();
 
         $CinemaList = $CinemaController->RetrieveByActive(true);
 
-        $rooms=$this->TransformToArray($roomList);
-        $activeCinemas=$this->TransformToArray($CinemaList);
-        
-        
-        include(VIEWS . "/rooms.php");
+        $rooms = $this->TransformToArray($roomList);
+        $activeCinemas = $this->TransformToArray($CinemaList);
+
+
+        include(PAGES . "/rooms.php");
     }
-
-    
-
-
 }

@@ -130,6 +130,6 @@ class CinemaController implements IControllers
     {
         $errorMje = $msg;
         $cinemaList = $this->GetAll();
-        include(VIEWS . "/cinema.php");
+        include(PAGES . "/cinema.php");
     }
 }

@@ -31,6 +31,7 @@ if(1 === 1) {
 define('VIEWS', ROOT . '/views');
 define('COMPONENTS', VIEWS . '/components');
 define('PARTIALS', VIEWS . '/partials');
+define('PAGES', VIEWS . '/pages');
 //define('ADMIN_VIEWS', ROOT . '/views/admin'); todabia no quedo claro como va a quedar esto
 //define('IMG_UPLOADS', ROOT . '/asset/uploads/img');
 
