@@ -1,6 +1,6 @@
 <?php
 include(PARTIALS . "/header.php");
-include(VIEWS . "/adminNav.php");
+include(PARTIALS . "/adminNav.php");
 include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>
 
