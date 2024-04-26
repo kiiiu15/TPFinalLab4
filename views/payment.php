@@ -1,6 +1,6 @@
 <?php
-include(VIEWS . "/header.php");
-include(VIEWS . '/nav.php');
+include(PARTIALS . "/header.php");
+include(PARTIALS . '/nav.php');
 ?>
 <main class="p-3 p-md-5">
     <div class="container-fluid container-md">

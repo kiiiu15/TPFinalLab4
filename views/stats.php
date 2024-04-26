@@ -1,5 +1,5 @@
 <?php
-include(VIEWS . "/header.php");
+include(PARTIALS . "/header.php");
 include(VIEWS . "/adminNav.php");
 include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>

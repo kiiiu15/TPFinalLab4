@@ -1,6 +1,6 @@
 <?php
-include(VIEWS . "/header.php");
-include(VIEWS . '/adminNav.php');
+include(PARTIALS . "/header.php");
+include(PARTIALS . '/adminNav.php');
 include_once(COMPONENTS . "/utils/renderAlert.php");
 
 
@@ -100,4 +100,4 @@ if (!is_array($movies)) {
 </main>
 
 <?php include(VIEWS . '/components/function/modal.php');  ?>
-<?php include(VIEWS . '/footer.php');  ?>
+<?php include(PARTIALS . '/footer.php');  ?>

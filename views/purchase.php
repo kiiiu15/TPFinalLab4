@@ -1,6 +1,6 @@
 <?php
-include(VIEWS . "/header.php");
-include(VIEWS . '/nav.php');
+include(PARTIALS . "/header.php");
+include(PARTIALS . '/nav.php');
 include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>
 
@@ -44,5 +44,5 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
 </main>
 
 <?php include(VIEWS . '/components/purchase/modal.php');  ?>
-<?php include(VIEWS . '/footer.php');  ?>
+<?php include(PARTIALS . '/footer.php');  ?>
 <?php include(VIEWS . '/components/purchase/modalScript.php');  ?>

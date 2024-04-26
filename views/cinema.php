@@ -1,7 +1,7 @@
 <?php
 
-include(VIEWS . "/header.php");
-include(VIEWS . '/adminNav.php');
+include(PARTIALS . "/header.php");
+include(PARTIALS . '/adminNav.php');
 include_once(COMPONENTS . "/utils/renderAlert.php");
 
 if ($cinemaList == false) {
@@ -70,4 +70,4 @@ if (!is_array($cinemaList)) {
 
 <?php require_once(VIEWS . "/components/cinema/modal.php"); ?>
 
-<?php include(VIEWS . '/footer.php');  ?>
+<?php include(PARTIALS . '/footer.php');  ?>

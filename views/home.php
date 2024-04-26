@@ -1,11 +1,11 @@
 <?php
 
-include(VIEWS . "/header.php");
+include(PARTIALS . "/header.php");
 
 if ($isAdmin) {
-    include(VIEWS . '/adminNav.php');
+    include(PARTIALS . '/adminNav.php');
 } else {
-    include(VIEWS . '/nav.php');
+    include(PARTIALS . '/nav.php');
 }
 
 include_once(COMPONENTS . "/utils/renderAlert.php");
@@ -88,6 +88,6 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
 <?php require_once(VIEWS . "/components/home/modal.php"); ?>
 
 
-<?php include(VIEWS . '/footer.php');  ?>
+<?php include(PARTIALS . '/footer.php');  ?>
 
 <?php require_once(VIEWS . "/components/home/modalScript.php"); ?>
