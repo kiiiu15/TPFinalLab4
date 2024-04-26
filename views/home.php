@@ -8,15 +8,15 @@ if ($isAdmin) {
     include(VIEWS . '/nav.php');
 }
 
+include_once(COMPONENTS . "/utils/renderAlert.php");
+
 ?>
 
 <main class="p-md-5">
     <div class="container-fluid container-md">
         <h1 class="mb-5">List of Movies</h1>
 
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "/components/home/alert.php");
-        } ?>
+        <?php render_alert_util($successMje, $errorMje); ?>
 
         <div class="d-flex flex-column align-items-stretch flex-sm-row justify-content-between mb-3 bg-light py-3 px-2 px-md-3 rounded">
             <form class="form-inline flex-column align-items-stretch flex-sm-row" action="<?= FRONT_ROOT . '/Home/showMoviesByGenre' ?>" method="POST">

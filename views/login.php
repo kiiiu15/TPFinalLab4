@@ -1,4 +1,7 @@
-<?php include(VIEWS . "/header.php"); ?>
+<?php
+include(VIEWS . "/header.php");
+include_once(COMPONENTS . "/utils/renderAlert.php");
+?>
 
 <main class="container d-flex flex-column justify-content-center align-items-lg-center">
 
@@ -24,11 +27,7 @@
         <button class="btn btn-dark btn-block btn-lg" type="button"><?= $str ?></button>
     </form>
 
-    <?php
-    if (isset($successMje) || isset($errorMje)) {
-        require_once(VIEWS . "/components/login/loginOperationResultAlert.php");
-    }
-    ?>
+    <?php render_alert_util($successMje, $errorMje); ?>
 
     <?php require_once(VIEWS . "/components/login/registerFormModal.php"); ?>
 

@@ -1,6 +1,7 @@
 <?php
 include(VIEWS . "/header.php");
 include(VIEWS . '/nav.php');
+include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>
 
 <main class="p-md-5">
@@ -8,10 +9,7 @@ include(VIEWS . '/nav.php');
 
         <h1 class="mb-5">List of Buys</h1>
 
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "/components/purchase/alert.php");
-        } ?>
-
+        <?php render_alert_util($successMje, $errorMje); ?>
 
         <div class="table-responsive">
             <table class="table table-light table-striped">

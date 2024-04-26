@@ -2,6 +2,8 @@
 
 include(VIEWS . "/header.php");
 include(VIEWS . '/adminNav.php');
+include_once(COMPONENTS . "/utils/renderAlert.php");
+
 if ($cinemaList == false) {
     $cinemaList = array();
 }
@@ -16,9 +18,7 @@ if (!is_array($cinemaList)) {
 
         <h1 class="mb-5">List of Cinemas</h1>
 
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "/components/cinema/alert.php");
-        } ?>
+        <?php render_alert_util($successMje, $errorMje); ?>
 
         <form action="<?= FRONT_ROOT ?>/Cinema/ChangeCinemaState" method="POST">
             <div class="bg-light p-3 rounded d-flex flex-column flex-sm-row justify-content-sm-between">

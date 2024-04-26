@@ -1,15 +1,13 @@
 <?php
 include(VIEWS . "/header.php");
 include(VIEWS . "/adminNav.php");
+include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>
 
 <main class="p-2 p-lg-5">
     <div class="container-fluid container-lg">
 
-
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "components/stats/alert.php");
-        } ?>
+        <?php render_alert_util($successMje, $errorMje); ?>
 
         <div class="d-flex flex-column align-items-stretch flex-lg-row  justify-content-lg-around bg-light p-3 rounded">
             <form action="<?= FRONT_ROOT . "/Buy/getTotalByDate" ?>" method="POST">
@@ -116,21 +114,20 @@ include(VIEWS . "/adminNav.php");
 <?php include(VIEWS . "/footer.php"); ?>
 
 <script>
-
     const $fromDateInput = document.querySelector("#from");
     const $toDateInput = document.querySelector("#to");
     const $fromDateInput2 = document.querySelector("#from2");
     const $toDateInput2 = document.querySelector("#to2");
 
 
-    $fromDateInput.addEventListener("change", function (e){
+    $fromDateInput.addEventListener("change", function(e) {
         const selectedValue = e.target.value;
 
         $toDateInput.min = selectedValue;
         $toDateInput.disabled = false;
     });
 
-    $fromDateInput2.addEventListener("change", function (e){
+    $fromDateInput2.addEventListener("change", function(e) {
         const selectedValue = e.target.value;
 
         $toDateInput2.min = selectedValue;

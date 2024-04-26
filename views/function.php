@@ -1,6 +1,7 @@
 <?php
 include(VIEWS . "/header.php");
 include(VIEWS . '/adminNav.php');
+include_once(COMPONENTS . "/utils/renderAlert.php");
 
 
 if ($movieFunctionList == false) {
@@ -32,9 +33,7 @@ if (!is_array($movies)) {
 
         <h1 class="mb-5">List of Functions</h1>
 
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "/components/function/alert.php");
-        } ?>
+        <?php render_alert_util($successMje, $errorMje); ?>
 
 
         <!--ACA PODRIAMOS PONER UN SELECT PARA QUE ELIJA EL CINE DEL QUE QUIERE VER QUE FUNCIONES HAY

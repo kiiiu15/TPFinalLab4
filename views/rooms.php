@@ -1,9 +1,7 @@
 <?php
 include(VIEWS . "/header.php");
 include(VIEWS . '/adminNav.php');
-
-//$rooms = array();
-//$activeCinemas = array();
+include_once(COMPONENTS . "/utils/renderAlert.php");
 ?>
 
 <main class="p-md-5">
@@ -53,9 +51,7 @@ include(VIEWS . '/adminNav.php');
             </div>
         </form>
 
-        <?php if (isset($successMje) || isset($errorMje)) {
-            require_once(VIEWS . "/components/room/alert.php");
-        } ?>
+        <?php render_alert_util($successMje, $errorMje); ?>
     </div>
 </main>
 
