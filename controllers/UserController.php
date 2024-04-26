@@ -141,7 +141,7 @@ class UserController implements IControllers
                 $errorMje = "Error: usuario incorrecto";
                 include(PAGES . "/login.php");
             }
-        } catch (\PDOExeption $ex) {
+        } catch (\PDOException $ex) {
             $errorMje = "Error: trouble verifying user";
             include(PAGES . "/login.php");
         }
@@ -220,7 +220,7 @@ class UserController implements IControllers
                 $errorMje = "Error: there are no records of such user in the database";
                 include(PAGES . "/login.php");
             }
-        } catch (\PDOExeption $ex) {
+        } catch (\PDOException $ex) {
             $errorMje = "Error with Facebook login. Try Again";
             include(PAGES . "/login.php");
         }

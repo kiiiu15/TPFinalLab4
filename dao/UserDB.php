@@ -1,6 +1,7 @@
 <?php
 
 namespace Dao;
+
 use \PDO as PDO;
 use \Exception as Exception;
 use Dao\QueryType as QueryType;
@@ -9,14 +10,16 @@ use model\Profile as Profile;
 use model\Role as Role;
 use Dao\CreditCardDB as CreditCardDB;
 
-class UserDB 
+class UserDB
 {
     private $connection;
 
-    function __construct() {
-    }    
+    function __construct()
+    {
+    }
 
-    public function GetAll(){
+    public function GetAll()
+    {
 
         $sql =  "SELECT us.email,us.pass,us.roleName,p.UserName,p.UserLastName,p.Dni,p.TelephoneNumber
                     FROM
@@ -25,21 +28,22 @@ class UserDB
                         UserProfiles AS p
                     ON us.usersProfileId = p.idProfile";
 
-        try{
-            $this->connection = Connection ::getInstance();
+        try {
+            $this->connection = Connection::getInstance();
             $result = $this->connection->Execute($sql);
-        }catch(\PDOExeption $ex){
+        } catch (\PDOException $ex) {
             throw $ex;
         }
-        if(!empty($result)){
+        if (!empty($result)) {
             return $this->Map($result);
-        }else{
+        } else {
             return false;
         }
     }
 
-    
-    public function Add($user,$profileId){
+
+    public function Add($user, $profileId)
+    {
         //se tiene que llamar pass en lugar de password, por que sino tira error, parece que es una palabra reservada
         $sql = "INSERT INTO Users (email,pass,roleName,usersProfileId) VALUES (:email,:pass,:roleName,:usersProfileId)";
 
@@ -48,16 +52,17 @@ class UserDB
         $values["roleName"]        = $user->GetRole()->GetRoleName();
         $values["usersProfileId"]  = $profileId;
 
-        try{
+        try {
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            return $this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOExeption $ex){
+            return $this->connection->ExecuteNonQuery($sql, $values);
+        } catch (\PDOException $ex) {
             throw $ex;
         }
     }
 
-    public function Modify($oldEmail,$user){
+    public function Modify($oldEmail, $user)
+    {
         $sql = "UPDATE Users SET Users.email=:email,Users.pass=:pass,Users.roleName=:roleName,Users.usersProfileId=:usersProfileId
         WHERE Users.email=:oldEmail";
 
@@ -66,17 +71,17 @@ class UserDB
         $values['roleName']       = $user->GetRole()->GetRoleName;
         $values['usersProfileId'] = $user->GetProfile()->getId();
         $values['oldEmail']       = $oldEmail;
-
     }
-    public function DeleteByEmail($email){
+    public function DeleteByEmail($email)
+    {
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
-        try{
+        try {
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $this->connection->ExecuteNonQuery($sql,$values);
-        }catch(\PDOException $ex){
+            $this->connection->ExecuteNonQuery($sql, $values);
+        } catch (\PDOException $ex) {
             throw $ex;
         }
     }
@@ -94,40 +99,39 @@ class UserDB
         }
     }*/
 
-    public function GetByEmail($email){
+    public function GetByEmail($email)
+    {
         $sql = "SELECT * FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
-        try{
+        try {
             $this->connection = Connection::getInstance();
             $this->connection->connect();
-            $result = $this->connection->Execute($sql,$values);
-        }catch(\PDOException $ex){
+            $result = $this->connection->Execute($sql, $values);
+        } catch (\PDOException $ex) {
             throw $ex;
         }
-        if(!empty($result)){
+        if (!empty($result)) {
             return $this->Map($result);
-        }else{
+        } else {
             return false;
         }
-
     }
 
-    protected function Map($value) {
-        
+    protected function Map($value)
+    {
+
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
-            
+
             $ccDB = new CreditCardDB();
             $list = $ccDB->RetrieveByEmail($u['email']);
             $profileDB = new ProfileDB();
             $profile = $profileDB->GetProfileById($u['usersProfileId']);
             $role = new Role($u['roleName']);
-            return new User($u['email'], $u['pass'], $role, $profile, $list );
+            return new User($u['email'], $u['pass'], $role, $profile, $list);
         }, $value);
 
         return count($resp) > 1 ? $resp : $resp['0'];
     }
 }
-
-?>
