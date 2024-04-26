@@ -33,4 +33,4 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
 
 </main>
 
-<?php include(VIEWS . "/footer.php"); ?>
+<?php include(PARTIALS . "/footer.php"); ?>

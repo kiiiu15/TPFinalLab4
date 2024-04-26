@@ -111,7 +111,7 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
         </div>
     </div>
 </main>
-<?php include(VIEWS . "/footer.php"); ?>
+<?php include(PARTIALS . "/footer.php"); ?>
 
 <script>
     const $fromDateInput = document.querySelector("#from");

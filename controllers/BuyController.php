@@ -272,10 +272,10 @@ class BuyController implements Icontrollers
             $cinemaList = $cinemaController->GetAll();
             $movieController = new MovieController();
             $movieList = $movieController->GetAll();
-            include(VIEWS . "/stats.php");
+            include(PAGES . "/stats.php");
         } catch (\PDOException $th) {
             $errorMje = "Problem retriving stats";
-            include(VIEWS . "/stats.php");
+            include(PAGES . "/stats.php");
         }
     }
 

@@ -65,7 +65,7 @@ class UserController implements IControllers
     public function CheckSessionForView()
     {
         if (!$this->CheckSession()) {
-            include_once(VIEWS . "/login.php");
+            include_once(PAGES . "/login.php");
         }
     }
 
@@ -135,15 +135,15 @@ class UserController implements IControllers
                     $this->index();
                 } else {
                     $errorMje = "Error: Contraseña incorrecta";
-                    include(VIEWS . "/login.php");
+                    include(PAGES . "/login.php");
                 }
             } else {
                 $errorMje = "Error: usuario incorrecto";
-                include(VIEWS . "/login.php");
+                include(PAGES . "/login.php");
             }
         } catch (\PDOExeption $ex) {
             $errorMje = "Error: trouble verifying user";
-            include(VIEWS . "/login.php");
+            include(PAGES . "/login.php");
         }
     }
 
@@ -174,7 +174,7 @@ class UserController implements IControllers
             } else {
                 $errorMje = "Ya existe un usuario registrado con esa direccion de correo";
             }
-            include(VIEWS . "/login.php");
+            include(PAGES . "/login.php");
         } catch (\PDOException $ex) {
             $this->index('Error siging up');
         }
@@ -184,7 +184,7 @@ class UserController implements IControllers
     {
         //no estoy del todo seguro si esto esta bien
         session_destroy();
-        include(VIEWS . "/login.php");
+        include(PAGES . "/login.php");
     }
 
 
@@ -214,15 +214,15 @@ class UserController implements IControllers
                     $this->index();
                 } else {
                     $errorMje = "Error: we Can´t access to your facebook acount";
-                    include(VIEWS . "/login.php");
+                    include(PAGES . "/login.php");
                 }
             } else {
                 $errorMje = "Error: there are no records of such user in the database";
-                include(VIEWS . "/login.php");
+                include(PAGES . "/login.php");
             }
         } catch (\PDOExeption $ex) {
             $errorMje = "Error with Facebook login. Try Again";
-            include(VIEWS . "/login.php");
+            include(PAGES . "/login.php");
         }
     }
 }
