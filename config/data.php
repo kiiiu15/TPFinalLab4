@@ -28,7 +28,8 @@ if(1 === 1) {
 
 
 /* BACK */
-define('VIEWS', ROOT . '/Views');
+define('VIEWS', ROOT . '/views');
+define('COMPONENTS', VIEWS . '/components');
 //define('ADMIN_VIEWS', ROOT . '/views/admin'); todabia no quedo claro como va a quedar esto
 //define('IMG_UPLOADS', ROOT . '/asset/uploads/img');
 
