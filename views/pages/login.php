@@ -19,12 +19,6 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
         <button type="button" class="btn btn-dark btn-block btn-lg" data-toggle="modal" data-target="#register">
             Sign Up
         </button>
-        <?php
-        require_once(ROOT . "/FacebookConfig.php");
-        $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-        $str = "<a href=" . htmlspecialchars($loginUrl) . ">Facebook LogIn</a>";
-        ?>
-        <button class="btn btn-dark btn-block btn-lg" type="button"><?= $str ?></button>
     </form>
 
     <?php render_alert_util($successMje, $errorMje); ?>
