@@ -71,9 +71,6 @@ include_once(COMPONENTS . "/utils/renderAlert.php");
                         <td>
                             <button class="event btn btn-success" value="<?= $movie->getId(); ?>">Buy</button>
                         </td>
-
-
-
                     </tr>
                 <?php } ?>
             </tbody>
