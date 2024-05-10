@@ -6,7 +6,6 @@ use Dao\AbstractDB as AbstractDB;
 use Dao\UserDB as UserDB;
 use Dao\MovieFunctionDB as MovieFunctionDB;
 use model\Buy as Buy;
-use model\User as User;
 
 class BuyDB extends AbstractDB
 {
@@ -14,16 +13,7 @@ class BuyDB extends AbstractDB
     public function GetAll()
     {
         $sql = "SELECT * FROM Buy";
-        try {
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
     public function Add($buy)
@@ -41,29 +31,15 @@ class BuyDB extends AbstractDB
         $values['emailUser']        = $buy->getUser()->GetEmail();
         $values['buyState']         = false;
 
-        try {
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function RetrieveById($idBuy)
     {
         $sql = "SELECT * FROM Buy WHERE Buy.idBuy=:idBuy";
         $values['idBuy'] = $idBuy;
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
 
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     //Se le pasa un objeto de tipo user y obtengo su id para la busqueda en la base de datos
@@ -71,16 +47,8 @@ class BuyDB extends AbstractDB
     {
         $sql = "SELECT * FROM Buy WHERE Buy.emailUser =:emailUser ";
         $values['emailUser'] = $user->GetEmail();
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+
+        return $this->Execute($sql, $values);
     }
 
     public function Modify($buy)
@@ -97,34 +65,24 @@ class BuyDB extends AbstractDB
         $values["state"]           = $buy->getState();
         $values["idBuy"]           = $buy->getIdBuy();
 
-        try {
-            return  $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function ChangeState($idBuy)
-    { //VERIFICAR SI FUNCIONA ASI LA QUERY !!! 
+    {
         $sql = "UPDATE Buy SET Buy.buyState=:state WHERE Buy.idBuy = :idBuy";
         $values['idBuy'] = $idBuy;
         $values['state'] = true;
-        try {
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($buy)
     {
         $sql = "DELETE FROM Buy WHERE Buy.idBuy=:idBuy";
         $values['idBuy'] = $buy->getIdBuy();
-        try {
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function getTotalByMovie($fromDate, $toDate, $idMovie)
@@ -139,12 +97,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -166,12 +121,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -188,16 +140,12 @@ class BuyDB extends AbstractDB
         ON MovieFunctions.idRoom = Rooms.id
         WHERE Buy.Buystate=true AND Buy.buydate BETWEEN :fromDate AND :toDate";
 
-
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -220,12 +168,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -242,12 +187,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -265,12 +207,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -289,12 +228,9 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;
@@ -315,12 +251,10 @@ class BuyDB extends AbstractDB
         $values['fromDate'] = $fromDate;
         $values['toDate'] = $toDate;
 
-        try {
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
+
+        $result = $this->Execute($sql, $values, null, false);
+
+        if ($result) {
             return $result[0]['total'];
         } else {
             return 0;

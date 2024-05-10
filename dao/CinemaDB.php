@@ -11,16 +11,7 @@ class CinemaDB extends AbstractDB
     public function GetAll()
     {
         $sql = "SELECT * FROM Cinemas";
-        try {
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
     public function Add($cinema)
@@ -31,12 +22,7 @@ class CinemaDB extends AbstractDB
         $values['address']    = $cinema->getAddress();
         $values['active']     = $cinema->getActive();
 
-        try {
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function DeactivateByID($idCinema)
@@ -45,12 +31,7 @@ class CinemaDB extends AbstractDB
         $values['false'] = false;
         $values['idCinema'] = $idCinema;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function ReactivateByID($idCinema)
@@ -59,12 +40,7 @@ class CinemaDB extends AbstractDB
         $values['false'] = true;
         $values['idCinema'] = $idCinema;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Deactivate($cinema)
@@ -73,12 +49,7 @@ class CinemaDB extends AbstractDB
         $values['false'] = false;
         $values['idCinema'] = $cinema->getIdCinema();
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
 
@@ -87,26 +58,16 @@ class CinemaDB extends AbstractDB
     {
         $sql = "UPDATE Cinemas set Cinemas.adressCinema=:address WHERE Cinemas.idCinema=:idCinema";
         $values['address'] = $cinema->getAddress();
-        try {
 
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
-    //No creo que la necesitemos
     public function Delete($cinema)
     {
         $sql = "DELETE FROM Cinemas WHERE Cinemas.idCinema=:idCinema";
         $values['idCinema'] = $cinema->getIdCinema();
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
 
@@ -115,17 +76,8 @@ class CinemaDB extends AbstractDB
     {
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.adressCinema=:address";
         $values['address'] = $address;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     //puede ser activado o desactivado
@@ -133,17 +85,8 @@ class CinemaDB extends AbstractDB
     {
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.active=:active";
         $values['active'] = $active;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveById($id)
@@ -151,61 +94,27 @@ class CinemaDB extends AbstractDB
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.idCinema=:id";
         $values['id'] = $id;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveByName($nameCinema)
     {
         $sql = "SELECT * FROM Cinemas WHERE Cinemas.nameCinema=:nameCinema";
         $values['nameCinema'] = $nameCinema;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
-
-
-    //Se va a utilizar un auto_increment para los ids
-    /*public function generateIdCinema(){
-        
-    }*/
-
-    //En la parte de la VIEW, no se le debe permitir modificar el id del cine
-    //por ende esta funcion recibe el cine con los datos modificados y conservando el id
-    //name,address,capacity,price,active 
     public function Modify($cinema)
     {
 
-
         $sql = "UPDATE  Cinemas SET Cinemas.nameCinema=:nameCinema,Cinemas.adressCinema=:address WHERE Cinemas.idCinema=:idCinema";
+
         $values['nameCinema']     = $cinema->getName();
         $values['address']  = $cinema->getAddress();
         $values['idCinema'] = $cinema->getIdCinema();
 
-        try {
-
-            return  $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return  $this->ExecuteNonQuery($sql, $values);
     }
 
 

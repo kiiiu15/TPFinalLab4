@@ -10,20 +10,9 @@ class ProfileDB extends AbstractDB
 
     public function GetAll()
     {
-
         $sql = "SELECT * FROM UserProfiles";
 
-        try {
-
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
 
@@ -36,14 +25,10 @@ class ProfileDB extends AbstractDB
         $values["dni"]             = $profile->GetDni();
         $values["telephoneNumber"] = $profile->GetTelephoneNumber();
 
-        try {
+        $this->ExecuteNonQuery($sql, $values);
 
-            $this->connection->ExecuteNonQuery($sql, $values);
+        $profileId = $this->GetLastId();
 
-            $profileId = $this->GetLastId();
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
         return $profileId;
     }
 
@@ -52,17 +37,12 @@ class ProfileDB extends AbstractDB
     {
         $sql = "SELECT MAX(idProfile) AS idProfile FROM UserProfiles";
 
-        try {
+        $result = $this->Execute($sql);
 
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $result[0][0];
-        } else {
+        if (!$result) {
             return false;
         }
+        return $result[0][0];
     }
 
     public function GetProfileById($idProfile)
@@ -71,17 +51,7 @@ class ProfileDB extends AbstractDB
         $sql = "SELECT * FROM UserProfiles up WHERE up.idProfile = :idProfile";
         $values['idProfile'] = $idProfile;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function Modify($profile)
@@ -96,13 +66,7 @@ class ProfileDB extends AbstractDB
         $values['telephoneNumber'] = $profile->getTelephoneNumber();
         $values['idProfile'] = $profile->getIdProfile();
 
-        try {
-
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($profileId)
@@ -111,18 +75,11 @@ class ProfileDB extends AbstractDB
 
         $values['idProfile'] = $profileId;
 
-        try {
-
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     protected function Map($value)
     {
-
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($p) {
             return new Profile($p['idProfile'], $p['UserName'], $p['UserlastName'], $p['dni'], $p['telephoneNumber']);

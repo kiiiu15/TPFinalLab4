@@ -13,15 +13,19 @@ abstract class AbstractDB
     }
 
 
-    public function Execute($query, $parameters = array(), $queryType = QueryType::Query)
+    public function Execute($query, $parameters = array(), $queryType = QueryType::Query, $shouldMap = true)
     {
 
         try {
-            $this->connection->Execute($query, $parameters, $queryType);
+            $result = $this->connection->Execute($query, $parameters, $queryType);
+
             if (empty($result)) {
                 return false;
+            } else if ($shouldMap) {
+                return $this->Map($result);
+            } else {
+                return $result;
             }
-            return $this->Map($result);
         } catch (\PDOException $ex) {
             return false;
         }
@@ -30,11 +34,7 @@ abstract class AbstractDB
     public function ExecuteNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
     {
         try {
-            $this->connection->ExecuteNonQuery($query, $parameters, $queryType);
-            if (empty($result)) {
-                return false;
-            }
-            return $this->Map($result);
+            return $this->connection->ExecuteNonQuery($query, $parameters, $queryType);
         } catch (\PDOException $ex) {
             return false;
         }

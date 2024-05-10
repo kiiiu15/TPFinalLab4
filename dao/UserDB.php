@@ -21,17 +21,8 @@ class UserDB extends AbstractDB
                         UserProfiles AS p
                     ON us.usersProfileId = p.idProfile";
 
-        try {
 
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
 
@@ -45,12 +36,7 @@ class UserDB extends AbstractDB
         $values["roleName"]        = $user->GetRole()->GetRoleName();
         $values["usersProfileId"]  = $profileId;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Modify($oldEmail, $user)
@@ -64,52 +50,25 @@ class UserDB extends AbstractDB
         $values['usersProfileId'] = $user->GetProfile()->getId();
         $values['oldEmail']       = $oldEmail;
     }
+
     public function DeleteByEmail($email)
     {
         $sql = "DELETE FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
-        try {
-
-            $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
-
-    /*public function GetById($idUser){
-        $sql = "SELECT * FROM Users WHERE Users.idUser = :idUser";
-        $values['idUser'] = $idUser;
-
-        try{
-
-            return $this->connection->Execute($sql,$values);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-    }*/
 
     public function GetByEmail($email)
     {
         $sql = "SELECT * FROM Users WHERE Users.email = :email";
         $values['email'] = $email;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     protected function Map($value)
     {
-
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($u) {
 

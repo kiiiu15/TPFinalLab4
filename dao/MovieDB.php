@@ -13,17 +13,8 @@ class MovieDB extends AbstractDB
     public function GetAll()
     {
         $sql = "SELECT * FROM Movies";
-        try {
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
 
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
 
@@ -40,17 +31,12 @@ class MovieDB extends AbstractDB
 
         $genrePerMovie = $movie->getGenres();
 
-        try {
+        $this->ExecuteNonQuery($sql, $values);
 
-            $this->connection->ExecuteNonQuery($sql, $values);
+        $genrePerMovieDB = new GenresPerMovieDB();
 
-            $genrePerMovieDB = new GenresPerMovieDB();
-
-            foreach ($genrePerMovie as $genreMovie) {
-                $genrePerMovieDB->Add($movie->getId(), $genreMovie);
-            }
-        } catch (\PDOException $ex) {
-            throw $ex;
+        foreach ($genrePerMovie as $genreMovie) {
+            $genrePerMovieDB->Add($movie->getId(), $genreMovie);
         }
     }
     public function Modify($Movie)
@@ -70,98 +56,42 @@ class MovieDB extends AbstractDB
     {
         $sql = "SELECT * FROM Movies WHERE Movies.idMovie=:idMovie";
         $values['idMovie'] = $idMovie;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveByGenre($genreId)
     {
         $sql = "SELECT * FROM Movies INNER JOIN GenresPerMovie ON Movies.idMovie = GenresPerMovie.idMovie INNER JOIN Genres ON GenresPerMovie.idGenre = Genres.idGenre WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $genreId;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveByTitle($title)
     {
         $sql = "SELECT * FROM Movies WHERE Movies.tittle=:title";
         $values['title'] = $title;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveByReleaseDate($releaseDate)
     {
         $sql = "SELECT * FROM Movies WHERE Movies.releaseDate=:releaseDate";
         $values['releaseDate'] = $releaseDate;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
-    /*Medio que esto no sirve en el sentido de que si ya la usamos esta peli tenemos aunque sea unos minimos datos relevantes */
     public function Delete($movie)
     {
-
         $sql = "DELETE FROM Movies WHERE Movies.tittle=:title";
         $values['tittle'] = $movie->getTitle();
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
-    protected function Map($value)
-    {
-        $value = is_array($value) ? $value : [];
-        $resp = array_map(function ($m) {
-            return new Movie($m['idMovie'], $m['tittle'], $m['language'], $m['overview'], $m['releaseDate'], $m['poster'], $this->GetGenresForMovie($m['idMovie']));
-        }, $value);
-        return count($resp) > 1 ? $resp : $resp['0'];
-    }
 
 
     /* Esta funcion tiene por finalidad recuperar TODOS los ids de genreos qe tenga asociada la pelicula con id que se reciba por parametro*/
@@ -169,13 +99,9 @@ class MovieDB extends AbstractDB
     {
         $sql = "SELECT idGenre FROM GenresPerMovie WHERE GenresPerMovie.idMovie = :idMovie";
         $values["idMovie"] = $idMovie;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
+        $result = $this->connection->Execute($sql, $values);
+      
         $genresIDs = [];
         foreach ($result as $genreArray) {
             $genresIDs[] = $genreArray["idGenre"];
@@ -183,8 +109,6 @@ class MovieDB extends AbstractDB
 
         return $genresIDs;
     }
-
-    /*En esta funcion usamos la funcion de arriba para crear un arreglo de objetos Genre que estan asignados a un idMovie */
 
     public function GetGenresForMovie($idMovie)
     {
@@ -201,5 +125,14 @@ class MovieDB extends AbstractDB
             array_push($genresForMovie, $genre);
         }
         return $genresForMovie;
+    }
+
+    protected function Map($value)
+    {
+        $value = is_array($value) ? $value : [];
+        $resp = array_map(function ($m) {
+            return new Movie($m['idMovie'], $m['tittle'], $m['language'], $m['overview'], $m['releaseDate'], $m['poster'], $this->GetGenresForMovie($m['idMovie']));
+        }, $value);
+        return count($resp) > 1 ? $resp : $resp['0'];
     }
 }

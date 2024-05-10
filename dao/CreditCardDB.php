@@ -10,16 +10,8 @@ class CreditCardDB extends AbstractDB
     public function GetAll()
     {
         $sql = "SELECT * FROM CreditCards";
-        try {
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+
+        return $this->Execute($sql);
     }
 
     public function Add($creditCard)
@@ -32,12 +24,7 @@ class CreditCardDB extends AbstractDB
         $values["expiryMonth"]  = $creditCard->getExpiryMonth();
         $values["expiryYear"]   = $creditCard->getExpiryYear();
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Modify($oldNumber, $CreditCard)
@@ -53,27 +40,15 @@ class CreditCardDB extends AbstractDB
         $values['expiryYear']   = $CreditCard->getExpiryYear();
         $values['oldNumber']    = $oldNumber;
 
-
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($number)
     {
         $sql = "DELETE FROM CreditCards WHERE CreditCards.number = :number";
-
         $values['number'] = $number;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
 
@@ -88,17 +63,7 @@ class CreditCardDB extends AbstractDB
                 WHERE CCPU.emailUser = :emailUser";
         $values['emailUser'] = $email;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function RetrieveByNumber($number)
@@ -106,17 +71,7 @@ class CreditCardDB extends AbstractDB
         $sql = "SELECT * FROM CreditCards WHERE CreditCards.number = :numberCreditCard";
         $values['numberCreditCard'] = $number;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     protected function Map($value)

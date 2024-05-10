@@ -4,7 +4,6 @@ namespace Dao;
 
 
 use Dao\AbstractDB as AbstractDB;
-use model\Genre as Genre;
 
 class GenresPerMovieDB extends AbstractDB
 {
@@ -13,23 +12,9 @@ class GenresPerMovieDB extends AbstractDB
     {
         $sql = "SELECT * FROM GenresPerMovie";
 
-        try {
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
-
-
-    public function GenreExist($nameToSearch)
-    {
-    }
 
     public function Add($idMovie, $genre)
     {
@@ -38,12 +23,7 @@ class GenresPerMovieDB extends AbstractDB
         $values['idMovie'] = $idMovie;
         $values['idGenre'] = $genre->getId();
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Modify($oldIdMovie, $oldIdGenre, $newMovie, $newGenre)
@@ -56,12 +36,7 @@ class GenresPerMovieDB extends AbstractDB
         $values['oldIdMovie'] = $oldIdMovie;
         $values['oldIdGenre'] = $oldIdGenre;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($idMovie, $idGenre)
@@ -71,17 +46,12 @@ class GenresPerMovieDB extends AbstractDB
         $values['idMovie'] = $idMovie;
         $values['idGenre'] = $idGenre;
 
-        try {
-
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     protected function Map($value)
     {
-       /* $db = new GenreDB();
+        /* $db = new GenreDB();
         return $db->Map($value);
         $value = is_array($value) ? $value : [];
         $resp = array_map(function ($g) {

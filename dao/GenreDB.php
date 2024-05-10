@@ -12,49 +12,24 @@ class GenreDB extends AbstractDB
     public function GetAll()
     {
         $sql = "SELECT * FROM Genres";
-        try {
 
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
     public function ExtractGenrebyId($Id)
     {
         $sql = "SELECT *FROM Genres WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $Id;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function GenreExist($nameToSearch)
     {
         $sql = "SELECT  IFNULL(COUNT(Genres.nameGenre), 0 ) as Cantidad FROM Genres WHERE Genres.nameGenre = :nameGenre GROUP BY Genres.nameGenre";
         $values['nameGenre'] = $nameToSearch;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-
+        $result = $this->Execute($sql, $values);
 
         if (isset($result) && !empty($result) && $result[0]["Cantidad"] > 0) {
             return true;
@@ -69,13 +44,7 @@ class GenreDB extends AbstractDB
         $values['idGenre'] = $genre->getId();
         $values['nameGenre'] = $genre->getName();
 
-        try {
-
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($id)
@@ -83,14 +52,7 @@ class GenreDB extends AbstractDB
         $sql = "DELETE FROM Genres WHERE Genres.idGenre = :idGenre";
         $values['idGenre'] = $id;
 
-        try {
-
-            $this->connection->connect();
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Modify($genre)
@@ -99,14 +61,8 @@ class GenreDB extends AbstractDB
 
         $values['idGenre'] = $genre->getId();
         $values['nameGenre'] = $genre->getName();
-        try {
 
-            $this->connection->connect();
-            $result = $this->connection->ExecuteNonQuery($sql, $values);
-            return $result;
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     protected function Map($value)

@@ -4,28 +4,15 @@ namespace Dao;
 
 use Dao\AbstractDB as AbstractDB;
 use model\MovieFunction as MovieFunction;
-use model\Movie as Movie;
-use model\Cinema as Cinema;
 use Dao\MovieDB as MovieDB;
-use Dao\CinemaDB as CinemaDB;
 
 class MovieFunctionDB extends AbstractDB
 {
     public function GetAll()
     {
         $sql = "SELECT * FROM MovieFunctions";
-        try {
 
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
     //MOVIES ES EL TITULO DE LA PELICULA, CINEMA ES EL ID DEL CINEMA (ESTAS SERIAN LAS FK DE LA TABLA MOVIE FUNCTIONS)
@@ -39,12 +26,8 @@ class MovieFunctionDB extends AbstractDB
         $room = $moviefunction->getRoom();
         $values['room']     = $room->getId();
         $values['movies']      = $movie->getId();
-        try {
 
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
 
@@ -52,19 +35,8 @@ class MovieFunctionDB extends AbstractDB
     {
         $sql = "SELECT * FROM MovieFunctions WHERE MovieFunctions.idFunction=:id";
         $values['id'] = $id;
-        try {
 
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
     public function Modify($moviefunction)
@@ -77,48 +49,24 @@ class MovieFunctionDB extends AbstractDB
         $values['idRoom']     = $room->getId();
         $values['movies']      = $movie->getId();
         $values['idFunction'] = $moviefunction->getId();
-        try {
 
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
 
     public function Delete($moviefunction)
     {
         $sql = "DELETE FROM MovieFunctions WHERE MovieFunctions.idFunction=:idFunction";
         $values['idFunction'] = $moviefunction->getId();
-        try {
 
-            return $this->connection->ExecuteNonQuery($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
+        return $this->ExecuteNonQuery($sql, $values);
     }
-
-
-
-
-
-
 
     public function RetrieveByDate($date)
     {
         $sql = "SELECT * FROM MovieFunctions WHERE MovieFunctions.date=:date";
         $values['date'] = $date;
 
-        try {
-
-            $result = $this->connection->Execute($sql, $values);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql, $values);
     }
 
 
@@ -126,18 +74,8 @@ class MovieFunctionDB extends AbstractDB
     public function RetrieveBillboard()
     {
         $sql = "SELECT * FROM MovieFunctions WHERE MovieFunctions.date BETWEEN CURDATE() AND CURDATE() +INTERVAL 7 DAY";
-        try {
 
-            $result = $this->connection->Execute($sql);
-        } catch (\PDOException $ex) {
-            throw $ex;
-        }
-
-        if (!empty($result)) {
-            return $this->Map($result);
-        } else {
-            return false;
-        }
+        return $this->Execute($sql);
     }
 
     public function RetrieveBillboardMovies()
@@ -168,11 +106,10 @@ class MovieFunctionDB extends AbstractDB
 
         return $value;
     }
-    //agregar los pdo de movie y cinema para agregar al moviefunction los objetos de movie y cinema
+
     protected function Map($value)
     {
         $value = is_array($value) ? $value : [];
-
 
         $resp = array_map(function ($m) {
             $movieDB = new MovieDB();
