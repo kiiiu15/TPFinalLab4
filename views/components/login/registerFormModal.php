@@ -1,5 +1,5 @@
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <form class="modal-content" action="<?= FRONT_ROOT . '/User/SignUp' ?>" method="POST">
             <div class="modal-header">
                 <p class="modal-title h5">Registrar usuario</p>
