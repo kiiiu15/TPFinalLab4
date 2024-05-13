@@ -24,7 +24,6 @@ class UserController implements IControllers
 
     public function index($message = null)
     {
-
         if (!isset($_SESSION)) {
             session_start();
         }
@@ -40,7 +39,6 @@ class UserController implements IControllers
 
     public function IsAdmin()
     {
-
         $ans = false;
         if ($this->CheckSession()) {
             if ($this->GetUserLoged()->GetRole()->getRoleName() == 'admin') {
@@ -57,9 +55,14 @@ class UserController implements IControllers
      */
     public function setLogIn($user)
     {
-
         $_SESSION["status"] = "on";
         $_SESSION["loged"] = $user;
+    }
+
+    public function unSetLogIn()
+    {
+        unset($_SESSION["status"]);
+        unset($_SESSION["loged"]);
     }
 
     public function CheckSessionForView()
@@ -121,8 +124,6 @@ class UserController implements IControllers
 
     public function LogIn($email, $pass)
     {
-
-
         $DaoUser = new UserDB();
         try {
             if ($this->UserExist($email)) //comprueba que exista el usuario
@@ -132,7 +133,7 @@ class UserController implements IControllers
                 if ($user->GetPass() == $pass) //comprobamos la contraseña
                 {
                     $this->SetLogIn($user);
-                    $this->index();
+                    header("Location: " . FRONT_ROOT);
                 } else {
                     $errorMje = "Error: Contraseña incorrecta";
                     include(PAGES . "/login.php");
@@ -182,9 +183,8 @@ class UserController implements IControllers
 
     public function LogOut()
     {
-        //no estoy del todo seguro si esto esta bien
-        session_destroy();
-        include(PAGES . "/login.php");
+        $this->unSetLogIn();
+        header("Location: " . FRONT_ROOT);
     }
 
 
