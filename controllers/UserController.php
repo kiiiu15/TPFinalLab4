@@ -15,13 +15,11 @@ class UserController implements IControllers
 
     private UserDB $DaoUser;
     private ProfileDB $DaoProfile;
-    private HomeController $homeController;
 
     public function __construct()
     {
         $this->DaoUser = new UserDB();
         $this->DaoProfile = new ProfileDB();
-        $this->homeController = new HomeController();
     }
 
     public function index(string $successMje = null, string $errorMje = null)
@@ -31,7 +29,8 @@ class UserController implements IControllers
         }
 
         if ($this->CheckSession()) {
-            $this->homeController->index();
+            $homeController = new HomeController();
+            $homeController->index();
         } else {
             include(PAGES . "/login.php");
         }
