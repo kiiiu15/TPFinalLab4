@@ -6,46 +6,46 @@ use Controllers\IControllers as IControllers;
 use model\User as User;
 use model\Role as Role;
 use model\Profile as Profile;
-use Dao\UserDao as UserDao;
 use controllers\HomeController as HomeController;
-use controllers\MovieController as MovieController;
-use \PDO as PDO;
-use \Exception as Exception;
 use Dao\UserDB as UserDB;
 use Dao\ProfileDB as ProfileDB;
 
 class UserController implements IControllers
 {
 
+    private UserDB $DaoUser;
+    private ProfileDB $DaoProfile;
+    private HomeController $homeController;
 
     public function __construct()
     {
+        $this->DaoUser = new UserDB();
+        $this->DaoProfile = new ProfileDB();
+        $this->homeController = new HomeController();
     }
 
-    public function index($message = null)
+    public function index(string $successMje = null, string $errorMje = null)
     {
         if (!isset($_SESSION)) {
             session_start();
         }
 
         if ($this->CheckSession()) {
-            $home = new HomeController();
-            $home->index();
+            $this->homeController->index();
         } else {
-            $errorMje = $message;
             include(PAGES . "/login.php");
         }
     }
 
     public function IsAdmin()
     {
-        $ans = false;
+        $answer = false;
         if ($this->CheckSession()) {
             if ($this->GetUserLoged()->GetRole()->getRoleName() == 'admin') {
-                $ans = true;
+                $answer = true;
             }
         }
-        return $ans;
+        return $answer;
     }
 
     /**
@@ -56,13 +56,13 @@ class UserController implements IControllers
     public function setLogIn($user)
     {
         $_SESSION["status"] = "on";
-        $_SESSION["loged"] = $user;
+        $_SESSION["logged"] = $user;
     }
 
     public function unSetLogIn()
     {
         unset($_SESSION["status"]);
-        unset($_SESSION["loged"]);
+        unset($_SESSION["logged"]);
     }
 
     public function CheckSessionForView()
@@ -74,15 +74,14 @@ class UserController implements IControllers
 
     public function CheckSession()
     {
-        $db = new UserDB();
         $user = $this->GetUserLoged();
-        $ans = false;
+        $isLoggedIn = false;
         if ($user) {
             if ($this->UserExist($user->GetEmail())) {
                 try {
-                    $userAux = $db->GetByEmail($user->GetEmail());
+                    $userAux = $this->DaoUser->GetByEmail($user->GetEmail());
                     if ($userAux->GetPass() == $user->GetPass()) {
-                        $ans = true;
+                        $isLoggedIn = true;
                     }
                 } catch (\Throwable $th) {
                     return false;
@@ -90,7 +89,7 @@ class UserController implements IControllers
             }
         }
 
-        return $ans;
+        return $isLoggedIn;
     }
 
     public function GetUserLoged()
@@ -98,8 +97,8 @@ class UserController implements IControllers
         if (!isset($_SESSION)) {
             session_start();
         }
-        if (isset($_SESSION['status']) && isset($_SESSION['loged'])) {
-            return $_SESSION['loged'];
+        if (isset($_SESSION['status']) && isset($_SESSION['logged'])) {
+            return $_SESSION['logged'];
         } else {
             return false;
         }
@@ -110,25 +109,24 @@ class UserController implements IControllers
      */
     public function UserExist($email)
     {
-        $DaoUser = new UserDB();
         try {
-            if ($DaoUser->GetByEmail($email)) {
+            if ($this->DaoUser->GetByEmail($email)) {
                 return true;
             } else {
                 return false;
             }
         } catch (\PDOException $ex) {
-            $this->index('Error of connection: Try again');
+            $this->index(null, 'Error of connection: Try again');
         }
     }
 
     public function LogIn($email, $pass)
     {
-        $DaoUser = new UserDB();
+        $errorMje = null;
         try {
             if ($this->UserExist($email)) //comprueba que exista el usuario
             {
-                $user = $DaoUser->GetByEmail($email);
+                $user = $this->DaoUser->GetByEmail($email);
 
                 if ($user->GetPass() == $pass) //comprobamos la contraseña
                 {
@@ -136,35 +134,31 @@ class UserController implements IControllers
                     header("Location: " . FRONT_ROOT);
                 } else {
                     $errorMje = "Error: Contraseña incorrecta";
-                    include(PAGES . "/login.php");
                 }
             } else {
                 $errorMje = "Error: usuario incorrecto";
-                include(PAGES . "/login.php");
             }
         } catch (\PDOException $ex) {
             $errorMje = "Error: trouble verifying user";
-            include(PAGES . "/login.php");
         }
+
+        $this->index(null, $errorMje);
     }
 
     public function SignUp($email, $pass, $UserName, $LastName, $Dni, $TelephoneNumber)
     {
-
+        $successMje = null;
+        $errorMje = null;
         try {
             if (!$this->UserExist($email)) {
                 //POR DEFECTO SIEMPRE SE VAN A CREAR USUARIOS COMO "CLIENT" Y SI SE DESEA QUE SEA ADMIN, OTRO ADMIN DEBERA OTORGARLE ESE PERMISO
                 $role = new Role("client");
                 $profile = new Profile(0, $UserName, $LastName, $Dni, $TelephoneNumber);
                 $user = new User($email, $pass, $role, $profile);
-
-                $DaoUser = new UserDB();
-                $DaoProfile = new ProfileDB();
-                $profileId = $DaoProfile->Add($profile);
-
+                $profileId = $this->DaoProfile->Add($profile);
 
                 if ($profileId) {
-                    if ($DaoUser->Add($user, $profileId)) {
+                    if ($this->DaoUser->Add($user, $profileId)) {
                         $successMje = "Usuario registrado correctamente";
                     } else {
                         $errorMje = "Error de usuario: intentelo de nuevo mas tarde...";
@@ -175,54 +169,16 @@ class UserController implements IControllers
             } else {
                 $errorMje = "Ya existe un usuario registrado con esa direccion de correo";
             }
-            include(PAGES . "/login.php");
         } catch (\PDOException $ex) {
-            $this->index('Error siging up');
+            $errorMje = 'Error signing up';
         }
+
+        $this->index($successMje, $errorMje);
     }
 
     public function LogOut()
     {
         $this->unSetLogIn();
         header("Location: " . FRONT_ROOT);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*Methods for Facebook API*/
-
-    public function loginWithFacebook($fbUserData)
-    {
-        $DaoUser = new UserDB();
-        try {
-            if ($this->UserExist($fbUserData['email'])) //comprueba que exista el usuario
-            {
-                $user = $DaoUser->GetByEmail($fbUserData['email']);
-
-                if ($user) {
-                    $this->SetLogIn($user);
-                    $this->index();
-                } else {
-                    $errorMje = "Error: we Can´t access to your facebook acount";
-                    include(PAGES . "/login.php");
-                }
-            } else {
-                $errorMje = "Error: there are no records of such user in the database";
-                include(PAGES . "/login.php");
-            }
-        } catch (\PDOException $ex) {
-            $errorMje = "Error with Facebook login. Try Again";
-            include(PAGES . "/login.php");
-        }
     }
 }
