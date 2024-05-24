@@ -67,6 +67,19 @@ class UserDB extends AbstractDB
         return $this->Execute($sql, $values);
     }
 
+    public function UserExist($email)
+    {
+
+        $sql = "SELECT COUNT(*) AS user_exists FROM users WHERE email = :email";
+        $values['email'] = $email;
+        try {
+           $result = $this->Execute($sql, $values, null, false);
+           return $result[0]["user_exists"] > 0;
+        } catch (\PDOException $ex) {
+            return false;
+        }
+    }
+
     protected function Map($value)
     {
         $value = is_array($value) ? $value : [];
