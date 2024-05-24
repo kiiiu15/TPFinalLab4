@@ -27,9 +27,6 @@ class UserController implements IControllers
 
     public function index(string $successMje = null, string $errorMje = null)
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
 
         if ($this->SessionManager->CheckSession()) {
             $homeController = new HomeController();
