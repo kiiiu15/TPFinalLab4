@@ -3,7 +3,7 @@
 namespace controllers;
 
 use controllers\BuyController as BuyController;
-use controllers\UserController as UserController;
+use Controllers\SessionManager as SessionManager;
 use Dao\UserDB as UserDB;
 use Dao\BuyDB as BuyDB;
 
@@ -19,8 +19,8 @@ class MailsController
     {
         //BUSCA EL USUARIO LOGEADO !! 
 
-        $userC = new UserController();
-        $user = $userC->GetUserLoged();
+        $sessionManager = SessionManager::getInstance();
+        $user = $sessionManager->GetUserLoged();
         $mail = new PHPMailer(true);
 
         //$buy = $_SESSION['buy'];

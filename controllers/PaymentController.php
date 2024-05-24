@@ -6,12 +6,12 @@ use \PDO as PDO;
 use \Exception as Exception;
 use controllers\Icontrollers as Icontrollers;
 use controllers\MovieFunctionController as MovieFunctionController;
-use controllers\UserController as UserController;
+use controllers\sessionManger as sessionManger;
 use controllers\TicketController as TicketController;
 use controllers\BuyController as BuyController;
 use controllers\HomeController as HomeController;
 use controllers\MailsController as MailsController;
-
+use Controllers\SessionManager as SessionManager;
 use model\Buy as Buy;
 use model\User as User;
 use model\CreditCard as CreditCard;
@@ -67,8 +67,8 @@ class PaymentController implements Icontrollers
     //Es un prototipo
     public function ValidateCreditCard($creditcard)
     {
-        /*  $userController = new UserController();
-        $user = $userController->GetUserLoged();
+        /*  $sessionManger = new sessionManger();
+        $user = $sessionManger->GetUserLoged();
         $creditcardList = array();
         $creditcardList = $user->getCreditCards();
 
@@ -102,11 +102,11 @@ class PaymentController implements Icontrollers
     {
         $buyController = new BuyController();
         $ticketController = new TicketController();
-        $userController = new UserController();
+        $sessionManger = SessionManager::getInstance();
         $homeC = new HomeController();
 
         try {
-            $user = $userController->GetUserLoged();
+            $user = $sessionManger->GetUserLoged();
 
             $buy = $buyController->RetrieveById($idBuy);
 

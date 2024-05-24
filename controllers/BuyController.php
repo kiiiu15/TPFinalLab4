@@ -11,6 +11,7 @@ use controllers\RoomController as RoomController;
 use controllers\HomeController as HomeController;
 use controllers\CinemaController as CinemaController;
 use controllers\MovieController as MovieController;
+use Controllers\SessionManager as SessionManager;
 use controllers\TicketController as TicketController;
 
 use model\Buy as Buy;
@@ -33,8 +34,8 @@ class BuyController implements Icontrollers
             header("location:" . FRONT_ROOT);
         }
         $homeController = new HomeController();
-        $UserController = new UserController();
-        $user = $UserController->GetUserLoged();  //obtengo el usuario
+        $sessionManager = SessionManager::getInstance();
+        $user = $sessionManager->GetUserLoged();  //obtengo el usuario
 
         if (!$user) {
             include(PAGES . "/login.php");
@@ -296,8 +297,8 @@ class BuyController implements Icontrollers
     {
         $errorMje = $msg;
         $ticketsC = new TicketController();
-        $UserController = new UserController();
-        $user = $UserController->GetUserLoged();
+        $sessionManager = SessionManager::getInstance();
+        $user = $sessionManager->GetUserLoged();
 
         $ticketsPurchased = $ticketsC->RetrieveByUser($user->getEmail());
         $ticketsPurchased = $this->TransformToArray($ticketsPurchased);

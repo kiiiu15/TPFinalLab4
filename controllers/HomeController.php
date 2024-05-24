@@ -3,17 +3,26 @@
 namespace controllers;
 
 use controllers\Icontrollers as Icontrollers;
-use controllers\UserController as UserController;
-use controllers\MovieController as MovieController;
+use controllers\SessionManager as SessionManager;
 use controllers\MovieFunctionController as MovieFunctionController;
 use controllers\GenreController as GenreController;
 
 class HomeController implements Icontrollers
 {
 
+    private MovieFunctionController $movieFunctionController;
+    private SessionManager $sessionManager;
+    private GenreController $genreController;
+
+    public function __construct()
+    {
+        $this->movieFunctionController = new MovieFunctionController();
+        $this->sessionManager = SessionManager::getInstance();
+        $this->genreController = new GenreController();
+    }
+
     public function showMoviesByGenre($genreId)
     {
-        $movieC = new MovieController();
         $movieList = $this->GetMovieForGenreFromBillBoard($genreId);
         $movieList = $this->TransformToArray($movieList);
 
@@ -28,8 +37,7 @@ class HomeController implements Icontrollers
 
     public function GetMovieForGenreFromBillBoard($genreId)
     {
-        $movieFunctionController = new MovieFunctionController();
-        $moviesAtBillBoard = $movieFunctionController->GetBillboardMovies();
+        $moviesAtBillBoard = $this->movieFunctionController->GetBillboardMovies();
         $movies = array();
         foreach ($moviesAtBillBoard as $movie) {
             $genres = $movie->getGenres();
@@ -58,15 +66,13 @@ class HomeController implements Icontrollers
 
     public function showMovie($idMovie)
     {
-        $movieFController = new MovieFunctionController();
-        $movieToSearchFunctions = $movieFController->GetShowMovieInfo($idMovie);
+        $movieToSearchFunctions = $this->movieFunctionController->GetShowMovieInfo($idMovie);
         $this->index(null, $movieToSearchFunctions);
     }
 
     public function ShowMovieByDate($date)
     {
-        $movieFC = new MovieFunctionController();
-        $movieList = $movieFC->GetMovieByDate($date);
+        $movieList = $this->movieFunctionController->GetMovieByDate($date);
 
         if (empty($movieList)) {
             $this->index("There are no movies scheduled for that day. Try another date", null, null, array());
@@ -75,18 +81,13 @@ class HomeController implements Icontrollers
         }
     }
 
-    public function index($mensage = null, $movieFunctionsToShow = null, $mensageSucces = null, $movieListPassed = array())
+    public function index($errorMje = null, $movieFunctionsToShow = null, $successMje = null, $movieListPassed = array())
     {
-        $errorMje = $mensage;
-        $successMje = $mensageSucces;
-        $userC = new UserController();
-        $genreC = new GenreController();
-        $genresList = $genreC->GetAll();
-        $isAdmin = $userC->IsAdmin();
+        $genresList = $this->genreController->GetAll();
+        $isAdmin = $this->sessionManager->IsAdmin();
 
         if (empty($movieListPassed)) {
-            $movieFC = new MovieFunctionController();
-            $movieList = $movieFC->GetBillboardMovies();
+            $movieList = $this->movieFunctionController->GetBillboardMovies();
         } else {
             $movieList = $movieListPassed;
         }
