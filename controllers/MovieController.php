@@ -83,7 +83,6 @@ class MovieController implements IControllers
     public function GetAll()
     {
         try {
-            $this->RetrieveAPI();
             $MovieDB = new MovieDB();
             $MovieList = $MovieDB->GetAll();
             return $MovieList;

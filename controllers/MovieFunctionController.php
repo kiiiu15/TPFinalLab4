@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use Controllers\GenreController;
 use controllers\IControllers as IControllers;
 use controllers\UserController as UserController;
 use Model\Cinema as Cinema;
@@ -352,6 +353,28 @@ class MovieFunctionController implements IControllers
     }
 
 
+    public function fetchAndUpdateFromApi(){
+
+        try {
+            
+            $genreController = new GenreController();
+            $genreController->RetrieveAPI();
+    
+            $movieController = new MovieController();
+            $movieController->RetrieveAPI();
+    
+            $response = json_encode(["ok" => true], JSON_PRETTY_PRINT);
+    
+            echo $response;
+        } catch (\Throwable $th) {
+            $response = json_encode(["ok" => false], JSON_PRETTY_PRINT);
+    
+            echo $response;
+        }
+
+    }
+
+
     /*  public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
         $MovieFunctionDB= new MovieFunctionDB();
 
@@ -368,7 +391,7 @@ class MovieFunctionController implements IControllers
         $errorMje = $mensaje;
         $roomC = new RoomController();
         $movieC = new MovieController();
-        $movies = $movieC->GetAll() + $movieC->RetrieveAPI();
+        $movies = $movieC->GetAll();
         $activeRooms = $roomC->RetrieveByActive(true);
         $movieFunctionList = $this->GetBillboard();
 

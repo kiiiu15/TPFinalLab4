@@ -18,6 +18,11 @@
                             <option value="<?= $movie->getId(); ?>"><?= $movie->getTitle(); ?></option>
                         <?php } ?>
                     </select>
+
+                </div>
+                <div class="form-group">
+                    <button type="button" id="refreshBtn" class="btn btn-sm btn-dark">Refrescar</button>
+                    <span class="mx-1 badge" id="refershSpan"></span>
                 </div>
                 <div class="form-group">
                     <label>Room</label>
@@ -45,3 +50,39 @@
 
     </div>
 </div>
+
+<script>
+    const $refreshBtn = document.querySelector("#refreshBtn");
+    const $refershSpan = document.querySelector("#refershSpan");
+
+    $refreshBtn.addEventListener("click", function() {
+        $refreshBtn.disabled = true;
+        fetch("<?= FRONT_ROOT . "/MovieFunction/fetchAndUpdateFromApi" ?>")
+            .then(res => res.json())
+            .catch(error => {
+                ok: false
+            })
+            .then(res => {
+                if (res.ok === true) {
+                    $refershSpan.innerHTML = "Actualizado!"
+                    $refershSpan.classList.add("badge-success");
+                } else {
+                    $refershSpan.innerHTML = "Error al Actualizar!"
+                    $refershSpan.classList.add("badge-danger");
+                }
+
+                $refershSpan.classList.remove("d-none");
+
+
+                setTimeout(function() {
+
+                    $refershSpan.classList.remove("badge-success");
+                    $refershSpan.classList.remove("badge-danger");
+                    $refershSpan.classList.add("d-none");
+                }, 3000);
+            })
+            .finally(() => {
+                $refreshBtn.disabled = false;
+            });
+    })
+</script>
