@@ -2,44 +2,40 @@
 
 namespace controllers;
 
-use \PDO as PDO;
-use \Exception as Exception;
 use controllers\Icontrollers as Icontrollers;
-use controllers\MovieFunctionController as MovieFunctionController;
-use controllers\sessionManger as sessionManger;
-use controllers\TicketController as TicketController;
-use controllers\BuyController as BuyController;
-use controllers\HomeController as HomeController;
-use controllers\MailsController as MailsController;
-use Controllers\SessionManager as SessionManager;
-use model\Buy as Buy;
-use model\User as User;
 use model\CreditCard as CreditCard;
 use model\Ticket as Ticket;
-
-use Dao\BuyDB as BuyDB;
-use Dao\UserDB as UserDB;
+use controllers\BuyController as BuyController;
+use controllers\TicketController as TicketController;
+use controllers\SessionManager as SessionManager;
+use controllers\HomeController as HomeController;
 
 class PaymentController implements Icontrollers
 {
+    private $buyController;
+    private $ticketController;
+    private $sessionManager;
+    private $homeController;
 
-
-    public function Validate($idBuy = 0, $number = "",  $expirity = "", $expirityY = "", $security = "")
+    public function __construct()
     {
+        $this->buyController = new BuyController();
+        $this->ticketController = new TicketController();
+        $this->sessionManager = SessionManager::getInstance();
+        $this->homeController = new HomeController();
+    }
 
+    public function Validate($idBuy = 0, $number = "", $expirity = "", $expirityY = "", $security = "")
+    {
         if ($idBuy == 0) {
             header("location:" . FRONT_ROOT);
         } else {
             $creditcard = new CreditCard("Banco Provincia", $number, $security, $expirity, $expirityY);
-
-            $buyC = new BuyController();
-            $buy = $buyC->RetrieveById($idBuy);
+            $buy = $this->buyController->RetrieveById($idBuy);
 
             if (!$buy->getState()) {
                 $validation = $this->ValidateCreditCard($creditcard);
                 if ($validation == true) {
-                    $discount = $buy->getDiscount();
-                    $total = $buy->getTotal();
                     $this->GenerateTicket($idBuy);
                 } else {
                     $alertCreditCard = "Sorry, there was an error with some credit card field. Verify if the data is correct";
@@ -64,66 +60,31 @@ class PaymentController implements Icontrollers
         return $value;
     }
 
-    //Es un prototipo
     public function ValidateCreditCard($creditcard)
     {
-        /*  $sessionManger = new sessionManger();
-        $user = $sessionManger->GetUserLoged();
-        $creditcardList = array();
-        $creditcardList = $user->getCreditCards();
-
-        $creditcardList = $this->TransformToArray($creditcardList);     */
-
         $answer = true;
-        /*
-        $answer = false;
-
-        foreach($creditcardList as $creditcardUser){
-
-            if($creditcardUser->getNumber() == $creditcard->getNumber()){
-                
-                if($creditcardUser->getSegurityCode() == $creditcard->getSegurityCode()){
-                    
-                    if($creditcardUser->getExpiryMonth() == $creditcard->getExpiryMonth()){
-                      
-                        if($creditcardUser->getExpiryYear() == $creditcard->getExpiryYear()){
-                            
-                            $answer = true;
-                        }
-                    }
-                }
-            }
-        }*/
-
         return $answer;
     }
 
     public function GenerateTicket($idBuy)
     {
-        $buyController = new BuyController();
-        $ticketController = new TicketController();
-        $sessionManger = SessionManager::getInstance();
-        $homeC = new HomeController();
-
         try {
-            $user = $sessionManger->GetUserLoged();
+            $user = $this->sessionManager->GetUserLoged();
+            $buy = $this->buyController->RetrieveById($idBuy);
 
-            $buy = $buyController->RetrieveById($idBuy);
-
-            $qr = $ticketController->GenerateRandomString(4); //AUN FALTA TERMINARLA 
+            $qr = $this->ticketController->GenerateRandomString(4);
             $ticket = new Ticket(0, $qr, $buy);
-            $ticketController->Add($ticket);
+            $this->ticketController->Add($ticket);
 
-            $buyController->ChangeState($idBuy);
+            $this->buyController->ChangeState($idBuy);
 
             $successMsg = "We thank you for your purchase";
-            $ticketController->GenerateQR($qr);
+            $this->ticketController->GenerateQR($qr);
 
             /*$mailController = new MailsController();
-
             $mailController->sendPurchaseEmail($idBuy, $qr);*/
 
-            $homeC->index(null, null, $successMsg);
+            $this->homeController->index(null, null, $successMsg);
         } catch (\PDOException $ex) {
             throw $ex;
         }
@@ -131,7 +92,6 @@ class PaymentController implements Icontrollers
 
     public function index($alertCreditCard = null, $buyP = null)
     {
-
         $errorMje = $alertCreditCard;
         if ($buyP != null) {
             $buy = $buyP;
@@ -141,3 +101,4 @@ class PaymentController implements Icontrollers
         include(PAGES . "/payment.php");
     }
 }
+
