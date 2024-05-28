@@ -1,56 +1,50 @@
-<?php namespace controllers;
+<?php
 
-use \PDO as PDO;
-use \Exception as Exception;
-use controllers\Icontrollers as Icontrollers;
-use model\CreditCard as CreditCard;
-use Dao\CreditCardDB as CreditCardDB;
+namespace controllers;
 
+use Dao\CreditCardDB;
+use model\CreditCard;
 
-use controllers\UserController as UserController;
+class CreditCardController implements Icontrollers
+{
+    private $creditCardDB;
 
-class CreditCardController implements Icontrollers{
-
-
-    public function __construct(){
+    public function __construct()
+    {
+        $this->creditCardDB = new CreditCardDB();
     }
-    public function index(){
+
+    public function index()
+    {
+        // Method implementation
+    }
+
+    public function Add($company, $number, $securityCode, $expiryMonth, $expiryYear)
+    {
+        $creditCard = new CreditCard($company, $number, $securityCode, $expiryMonth, $expiryYear);
         
-    }
-
-    public function Add($company,$number,$securityCode,$expiryMonth,$expiryYear){
-        $creditCard = new CreditCard($company,$number,$securityCode,$expiryMonth,$expiryYear);
-        $db = new CreditCardDB();
         try {
-            $db->Add($creditCard);
+            $this->creditCardDB->Add($creditCard);
         } catch (\Throwable $th) {
-            echo "Problema al agregar tarjeta";
+            echo "Error adding credit card";
         }
-        
     }
 
     public function RetrieveByEmail($email)
     {
-        $db = new CreditCardDB();
-
         try {
-            return $db->RetrieveByEmail($email);
+            return $this->creditCardDB->RetrieveByEmail($email);
         } catch (\Throwable $th) {
             return array();
         }
-        
     }
 
-    public function RetrieveByNumber($number){
-        $db = new CreditCardDB();
+    public function RetrieveByNumber($number)
+    {
         try {
-            return $db->RetrieveByNumber($number);
+            return $this->creditCardDB->RetrieveByNumber($number);
         } catch (\Throwable $th) {
             return null;
         }
-        
     }
-
 }
-
-?>
