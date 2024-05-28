@@ -2,85 +2,76 @@
 
 namespace controllers;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use Controllers\IControllers as IControllers;
-use Model\Cinema as Cinema;
-use Dao\CinemaDB as CinemaDB;
-
+use Dao\CinemaDB;
+use Model\Cinema;
 
 class CinemaController implements IControllers
 {
+    private $cinemaDB;
 
-    public function Add($cinemaName, $adress)
+    public function __construct()
     {
+        $this->cinemaDB = new CinemaDB();
+    }
 
-        $cinemaDB = new CinemaDB();
-        $cinema = new Cinema(100, $cinemaName, $adress, true);
+    public function Add($cinemaName, $address)
+    {
+        $cinema = new Cinema(100, $cinemaName, $address, true);
+        
         try {
-            $cinemaDB->Add($cinema);
+            $this->cinemaDB->Add($cinema);
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
         $this->index();
     }
 
     public function GetAll()
     {
-        $cinemaDB = new CinemaDB();
         try {
-            return $cinemaDB->GetAll();
+            return $this->cinemaDB->GetAll();
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
     }
 
     public function Deactivate($idCinema = 0)
     {
-
-        $cinemaDB = new CinemaDB();
         try {
             $idCinema = $this->TransformToArray($idCinema);
             foreach ($idCinema as $id) {
-                $cinemaDB->DeactivateByID($id);
+                $this->cinemaDB->DeactivateByID($id);
             }
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
         $this->index();
     }
 
     public function RetrieveByActive($active)
     {
-        $cinemaDB = new CinemaDB();
         try {
-            return $cinemaDB->RetrieveByActive($active);
+            return $this->cinemaDB->RetrieveByActive($active);
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
     }
 
     public function RetrieveById($id)
     {
-        $cinemaDB = new CinemaDB();
         try {
-            return $cinemaDB->RetrieveById($id);
+            return $this->cinemaDB->RetrieveById($id);
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
     }
 
-
     public function Reactivate($idCinema = 0)
     {
-
-        $cinemaDB = new CinemaDB();
-
         $idCinema = $this->TransformToArray($idCinema);
         try {
-
             foreach ($idCinema as $id) {
-                $cinemaDB->ReactivateByID($id);
+                $this->cinemaDB->ReactivateByID($id);
             }
         } catch (\PDOException $ex) {
             throw $ex;
@@ -97,17 +88,16 @@ class CinemaController implements IControllers
                 $this->Deactivate($ids);
             }
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
     }
+
     public function Modify($idCinemaToModify, $changedName, $changedAddress)
     {
-
-        $cinemaDB = new CinemaDB();
         try {
-            $cinemaDB->Modify(new  Cinema($idCinemaToModify, $changedName, $changedAddress, true));
+            $this->cinemaDB->Modify(new Cinema($idCinemaToModify, $changedName, $changedAddress, true));
         } catch (\PDOException $ex) {
-            $this->index('There was an erro whit the connection, please try again');
+            $this->index('There was an error with the connection, please try again');
         }
 
         $this->index();
@@ -133,3 +123,4 @@ class CinemaController implements IControllers
         include(PAGES . "/cinema.php");
     }
 }
+
