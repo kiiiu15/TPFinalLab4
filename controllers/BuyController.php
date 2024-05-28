@@ -2,29 +2,20 @@
 
 namespace controllers;
 
-use \PDO as PDO;
-use \Exception as Exception;
-use controllers\Icontrollers as Icontrollers;
-use controllers\MovieFunctionController as MovieFunctionController;
-use controllers\UserController as UserController;
-use controllers\RoomController as RoomController;
-use controllers\HomeController as HomeController;
-use controllers\CinemaController as CinemaController;
-use controllers\MovieController as MovieController;
-use Controllers\SessionManager as SessionManager;
-use controllers\TicketController as TicketController;
-
-use model\Buy as Buy;
-use model\MovieFunction as MovieFunction;
-use model\User as User;
-use model\Cinema as Cinema;
 use Dao\BuyDB as BuyDB;
-use Dao\UserDB as UserDB;
+use Model\Buy as Buy;
+use controllers\MovieFunctionController as MovieFunctionController;
+use controllers\HomeController as HomeController;
+use Controllers\SessionManager as SessionManager;
 
 class BuyController implements Icontrollers
 {
+    private $buyDB;
 
-
+    public function __construct()
+    {
+        $this->buyDB = new BuyDB();
+    }
 
     public function ReciveBuy($idFunction = 0, $numberOfTickets = 0)
     {
@@ -88,9 +79,8 @@ class BuyController implements Icontrollers
     public function GetAll()
     {
         $listBuy = array();
-        $buyDB = new BuyDB();
         try {
-            $listBuy = $buyDB->GetAll();
+            $listBuy = $this->buyDB->GetAll();
         } catch (\PDOException $ex) {
             $listBuy = array();
         }
@@ -99,44 +89,30 @@ class BuyController implements Icontrollers
 
     public function Add($idBuy = "", $movieFunction = null, $date = "", $numberOfTickets = 0, $total = 0, $discount = 0, $user = null, $state = false)
     {
-        $buyDB = new  BuyDB();
-
         $buy = new Buy($idBuy, $movieFunction, $date, $numberOfTickets, $total, $discount, $user, $state);
         try {
-            $buyDB->Add($buy);
+            $this->buyDB->Add($buy);
         } catch (\PDOException $ex) {
             $this->index('There was an erro whit the connection, please try again');
         }
     }
-    /*
-    public function Delete($buy){
-        $buyDb= new BuyDB();
-        try{
-            $buyDB->Delete($buy);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-    }*/
 
     public function RetrieveById($idBuy)
     {
-        $buyDB = new BuyDB();
         $buy = new Buy();
         try {
-            $buy = $buyDB->RetrieveById($idBuy);
+            $buy = $this->buyDB->RetrieveById($idBuy);
         } catch (\PDOException $ex) {
             $this->index('There was an erro whit the connection, please try again');
         }
         return $buy;
     }
 
-
     public function RetrieveByUser($user)
     {
-        $buyDB = new BuyDB();
         $Arraybuy = array();
         try {
-            $Arraybuy = $buyDB->RetrieveByUser($user);
+            $Arraybuy = $this->buyDB->RetrieveByUser($user);
         } catch (\PDOException $ex) {
             $this->index('There was an erro whit the connection, please try again');
         }
@@ -145,9 +121,8 @@ class BuyController implements Icontrollers
 
     public function ChangeState($idBuy)
     {
-        $buyDB = new BuyDB();
         try {
-            $buyDB->ChangeState($idBuy);
+            $this->buyDB->ChangeState($idBuy);
         } catch (\PDOException $ex) {
             $this->index('There was an erro whit the connection, please try again');
         }
@@ -155,13 +130,12 @@ class BuyController implements Icontrollers
 
     public function getTotalByDate($fromDate, $toDate, $cinema, $movie)
     {
-        $db = new BuyDB();
         $homeController = new HomeController();
         //si no especifica cine ni pelicula se muestra el total de todas las ventas
         if ($cinema == "" && $movie == "") {
 
             try {
-                $result = $db->getTotalByDate($fromDate, $toDate);
+                $result = $this->buyDB->getTotalByDate($fromDate, $toDate);
                 if ($result == null) {
                     $result = 0;
                 }
@@ -172,7 +146,7 @@ class BuyController implements Icontrollers
         } else if ($cinema != "" && $movie == "") { //solo se selecciono un cine pero no pelicula
 
             try {
-                $result = $db->getTotalByCinema($fromDate, $toDate, $cinema);
+                $result = $this->buyDB->getTotalByCinema($fromDate, $toDate, $cinema);
                 if ($result == null) {
                     $result = 0;
                 }
@@ -183,7 +157,7 @@ class BuyController implements Icontrollers
         } else if ($cinema == "" && $movie != "") {
 
             try {
-                $result = $db->getTotalByMovie($fromDate, $toDate, $movie);
+                $result = $this->buyDB->getTotalByMovie($fromDate, $toDate, $movie);
                 if ($result == null) {
                     $result = 0;
                 }
@@ -193,7 +167,7 @@ class BuyController implements Icontrollers
             }
         } else if ($cinema != "" && $movie != "") {
             try {
-                $result = $db->getTotalByMovieAndCinema($fromDate, $toDate, $movie, $cinema);
+                $result = $this->buyDB->getTotalByMovieAndCinema($fromDate, $toDate, $movie, $cinema);
                 if ($result == null) {
                     $result = 0;
                 }
@@ -253,8 +227,6 @@ class BuyController implements Icontrollers
             }
         }
     }
-
-
 
     public function Stats($total = -1, $totalTickets = -1, $mesage = null)
     {
