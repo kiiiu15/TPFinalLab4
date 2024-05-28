@@ -2,75 +2,55 @@
 
 namespace controllers;
 
-use Controllers\GenreController;
 use controllers\IControllers as IControllers;
-use controllers\UserController as UserController;
-use Model\Cinema as Cinema;
-use Model\Movie as Movie;
-use Model\MovieFunction as MovieFunction;
-
-
-use Dao\RoomDB as RoomDB;
-use Dao\MovieDB as MovieDB;
-use Dao\MovieFunctionDB as MovieFunctionDB;
+use model\MovieFunction as MovieFunction;
+use dao\RoomDB as RoomDB;
+use dao\MovieDB as MovieDB;
+use dao\MovieFunctionDB as MovieFunctionDB;
 
 class MovieFunctionController implements IControllers
 {
+    private $movieFunctionDB;
+    private $movieDB;
+    private $roomDB;
+
+    public function __construct()
+    {
+        $this->movieFunctionDB = new MovieFunctionDB();
+        $this->movieDB = new MovieDB();
+        $this->roomDB = new RoomDB();
+    }
 
     public function Add($idMovie = 0, $idRoom = 1, $date = "", $hour = "")
     {
+        $movie = $this->movieDB->RetrieveById($idMovie);
+        $room = $this->roomDB->RetrieveById($idRoom);
 
-        $MovieFunctionDB = new MovieFunctionDB();
-
-        $MovieDB = new MovieDB();
-
-        $RoomDB = new RoomDB();
-
-        $movie = $MovieDB->RetrieveById($idMovie);
-        $room = $RoomDB->RetrieveById($idRoom);
-
-        $MovieFunction = new MovieFunction(0, $date, $hour, $room, $movie);
-        $answer = $this->CheckMovieFunction($MovieFunction);
+        $movieFunction = new MovieFunction(0, $date, $hour, $room, $movie);
+        $answer = $this->CheckMovieFunction($movieFunction);
         if ($answer === '') {
-
-            $MovieFunctionDB->Add($MovieFunction);
+            $this->movieFunctionDB->Add($movieFunction);
             $this->index();
         } else {
-
             $this->index($answer);
         }
     }
-
 
     public function CheckMovieFunction($movieFunction)
     {
         $answer = '';
 
-
-
-
-        /*Obtenemos todas las demas funciones para la fecha de la funciion que queremos agregar */
-        $MovieFunctionDB = new MoviefunctionDB();
         try {
-            $functions = $MovieFunctionDB->RetrieveByDate($movieFunction->getDay());
-
-            /*Este chequeo se realiza debido a que el Map del dao puede retornar tnato un  arreglo como un false como un solo objeto */
+            $functions = $this->movieFunctionDB->RetrieveByDate($movieFunction->getDay());
             $functions = $this->TransformToArray($functions);
-            /*Y como vamos a usar funciones de arreglos evitamos que se rompa */
 
-            /*Chequeamos que haya funciones con las qie podria haber problemas en el dia de la fecha seleccionados*/
             if (count($functions) > 0) {
-                /*Verificamos que esa pelicula no se este proyectanbdo en otro cine o en otra */
                 $answer = $this->CheckByRoom($movieFunction, $functions);
-                /*Si es asi, verificamos la sala y los horarios de otras funciones para esa misma sala dentro del cine */
                 if ($answer === '') {
                     $answer = $this->CheckByFunctionsInRoom($movieFunction, $functions);
                 }
             }
 
-
-
-            /*Retornamos la respuesta que es vacio si esta todo ok, o un mensaje de error de haber alguno */
             return $answer;
         } catch (\Throwable $th) {
             return 'Connection error';
@@ -80,28 +60,15 @@ class MovieFunctionController implements IControllers
     private function CheckByFunctionsInRoom($movieFunction, $functions)
     {
         $answer = '';
-        /*Obtenemos la sala Y el cine  */
         $room = $movieFunction->getRoom();
         $cinema = $room->getCinema();
 
-        /*Agrupamos las funciones por cine */
-        $funcionsPerCinema = $this->GroupFunctionsByCinema($functions);
-        /*Definimos un arreglo vacio para las funciones que podrian llegar a generar inconvenientes con la carga de la funcion */
+        $functionsPerCinema = $this->GroupFunctionsByCinema($functions);
         $functionsForTheDay = array();
 
-        /*Si el cine de la funcion  tiene funciones para ese dia las extraemos */
-        if (isset($funcionsPerCinema[$cinema->getIdCinema()])) {
-
-            /*Unicamente de las funciones del cine que nos interesa */
-            $functionsForTheDay = $funcionsPerCinema[$cinema->getIdCinema()];
-
-
-
-            /*Agrupamos las funciones del cine por salas */
-
+        if (isset($functionsPerCinema[$cinema->getIdCinema()])) {
+            $functionsForTheDay = $functionsPerCinema[$cinema->getIdCinema()];
             $functionsGroupedByRoom = $this->GroupFunctionsRoom($functionsForTheDay);
-
-            /*Si hay funciones en la sala que nos interesa las extraemos */
 
             if (isset($functionsGroupedByRoom[$room->getId()])) {
                 $functionsAtRoom = $functionsGroupedByRoom[$room->getId()];
@@ -121,19 +88,16 @@ class MovieFunctionController implements IControllers
     private function CheckByRoom($movieFunction, $functions)
     {
         $answer = '';
-        /*Obtenemos la pelicula y el cine de la funcion */
         $movie = $movieFunction->getMovie();
         $room = $movieFunction->getRoom();
-        /*Agrupamos las funciones por peliculas */
         $functionsGroupedByMovie = $this->GroupFunctionsByMovie($functions);
 
-        /*Verificamos si hay funciones para pelicula en cuestion y las extraemos*/
         if (isset($functionsGroupedByMovie[$movie->getId()])) {
             $movieFunctions = $functionsGroupedByMovie[$movie->getId()];
-            /*Si hay al menos una funcion le extraemos el cine a la primera ya que a este punto ninguna otra funcion debera poder tener otro cine distinto */
+
             if (count($movieFunctions) > 0) {
                 $roomOfMovieForTheDay = $movieFunctions[0]->getRoom();
-                /*Comparamos que se este haciendo la agregacion en el mismo cine y si es otro significa que ya esta pelicula se esta proyectando en otro cine */
+
                 if ($roomOfMovieForTheDay->getId() != $room->getId()) {
                     $answer = "A movie can only be played in one room per day. Change date or choose the same room.";
                 }
@@ -142,22 +106,15 @@ class MovieFunctionController implements IControllers
         return $answer;
     }
 
-
-
     private function CheckTime($movieFunction, $functions)
     {
         $answer = '';
         foreach ($functions as $function) {
-
             $minTime = $this->AddTime($function->getHour(), -135);
             $maxTime = $this->AddTime($function->getHour(), 135);
 
-
             if ($movieFunction->getHour() > $function->getHour()) {
-
-
                 if ($movieFunction->getHour() < $maxTime) {
-
                     $answer = "The time is set with another function in the same Cinema room, please change the time or the room";
                     break;
                 }
@@ -184,7 +141,6 @@ class MovieFunctionController implements IControllers
         return $answer;
     }
 
-
     private function TransformToArray($value)
     {
         if ($value == false) {
@@ -205,8 +161,7 @@ class MovieFunctionController implements IControllers
         $segundos_minutoAnadir = $minutoAnadir * 60;
         $nuevaHora = date("H:i:s", $segundos_horaInicial + $segundos_minutoAnadir);
         return $nuevaHora;
-    } //fin función
-
+    }
 
     public function GroupFunctionsRoom($functions)
     {
@@ -219,6 +174,7 @@ class MovieFunctionController implements IControllers
 
         return $array;
     }
+
     public function GroupFunctionsByMovie($functions)
     {
         $array = array();
@@ -245,9 +201,8 @@ class MovieFunctionController implements IControllers
 
     public function GetMovieByDate($date)
     {
-        $MovieFunctionDB = new MovieFunctionDB();
         try {
-            $functions = $MovieFunctionDB->RetrieveByDate($date);
+            $functions = $this->movieFunctionDB->RetrieveByDate($date);
             $movies = array();
             $functions = $this->TransformToArray($functions);
 
@@ -261,12 +216,10 @@ class MovieFunctionController implements IControllers
         }
     }
 
-
     public function GetAll()
     {
-        $MovieFunctionDB = new MovieFunctionDB();
         try {
-            return $MovieFunctionDB->GetAll();
+            return $this->movieFunctionDB->GetAll();
         } catch (\Throwable $th) {
             return array();
         }
@@ -274,10 +227,8 @@ class MovieFunctionController implements IControllers
 
     public function GetBillboard()
     {
-        $MovieFunctionDB = new MovieFunctionDB();
         try {
-            $movieFunctionList = $MovieFunctionDB->RetrieveBillboard();
-            return $movieFunctionList;
+            return $this->movieFunctionDB->RetrieveBillboard();
         } catch (\Throwable $th) {
             return array();
         }
@@ -295,13 +246,10 @@ class MovieFunctionController implements IControllers
         return $movies;
     }
 
-
-    //Aun no estan Probadas 
     public function GetById($idToSearch)
     {
-        $MovieFunctionDB = new MovieFunctionDB();
         try {
-            return $MovieFunctionDB->RetrieveById($idToSearch);
+            return $this->movieFunctionDB->RetrieveById($idToSearch);
         } catch (\Throwable $th) {
             return array();
         }
@@ -309,13 +257,11 @@ class MovieFunctionController implements IControllers
 
     public function Delete($idFunction = 0)
     {
-
-        $MovieFunctionDB = new MovieFunctionDB();
         try {
             $idFunction = $this->TransformToArray($idFunction);
             foreach ($idFunction as $id) {
-                $Function = $MovieFunctionDB->RetrieveById($id);
-                $MovieFunctionDB->Delete($Function);
+                $function = $this->movieFunctionDB->RetrieveById($id);
+                $this->movieFunctionDB->Delete($function);
             }
             $this->index();
         } catch (\Throwable $th) {
@@ -342,49 +288,27 @@ class MovieFunctionController implements IControllers
 
     public function prueba($param)
     {
-
-
         $a = $this->GetShowMovieInfo($param);
-
-        $json =  json_encode($a, JSON_PRETTY_PRINT);
-
-
+        $json = json_encode($a, JSON_PRETTY_PRINT);
         echo $json;
     }
 
-
-    public function fetchAndUpdateFromApi(){
-
+    public function fetchAndUpdateFromApi()
+    {
         try {
-            
             $genreController = new GenreController();
             $genreController->RetrieveAPI();
-    
+
             $movieController = new MovieController();
             $movieController->RetrieveAPI();
-    
+
             $response = json_encode(["ok" => true], JSON_PRETTY_PRINT);
-    
             echo $response;
         } catch (\Throwable $th) {
             $response = json_encode(["ok" => false], JSON_PRETTY_PRINT);
-    
             echo $response;
         }
-
     }
-
-
-    /*  public function Modify($idFunctionToModify ,$idMovie ,$idCinema ,$date ,$hour){
-        $MovieFunctionDB= new MovieFunctionDB();
-
-        $movieDB= new MovieDB();
-        $RoomDB= new RoomDB();
-
-        $MovieFunctionDB->Modify(new MovieFunction( $idFunctionToModify , $movieDB->RetrieveById($idMovie) , $RoomDB->RetrieveById($idCinema) , $date , $hour));
-    
-    }*/
-
 
     public function index($mensaje = null)
     {
