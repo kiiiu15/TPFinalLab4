@@ -2,41 +2,37 @@
 
 namespace controllers;
 
-use \PDO as PDO;
-use \Exception as Exception;
 use Controllers\IControllers as IControllers;
 use Model\Room as Room;
-use Model\Cinema as Cinema;
 use Dao\RoomDB as RoomDB;
 use Controllers\CinemaController as CinemaController;
 
 class RoomController implements IControllers
 {
+    private $roomDB;
+    private $cinemaController;
 
     public function __construct()
     {
+        $this->roomDB = new RoomDB();
+        $this->cinemaController = new CinemaController();
     }
 
     public function Add($idCinema, $name, $capacity, $price)
     {
-        $roomDB = new RoomDB();
-        $cinemaController = new CinemaController();
-        $room = new Room(0, $name, $price, $capacity, $cinemaController->RetrieveById($idCinema));
+        $room = new Room(0, $name, $price, $capacity, $this->cinemaController->RetrieveById($idCinema));
         try {
-            $roomDB->Add($room);
+            $this->roomDB->Add($room);
             $this->index();
         } catch (\PDOException $ex) {
-            $this->index("Error conetion DB");
+            $this->index("Error connection DB");
         }
     }
 
     public function GetAll()
     {
-        $roomDB = new RoomDB();
-        $roomList = array();
-
         try {
-            $roomList = $roomDB->GetAll();
+            $roomList = $this->roomDB->GetAll();
             return $roomList;
         } catch (\PDOException $ex) {
             return array();
@@ -45,23 +41,18 @@ class RoomController implements IControllers
 
     public function RetrieveById($idRoom)
     {
-        $roomDB = new RoomDB();
-        $room = new Room();
-
         try {
-            $room = $roomDB->RetrieveById($idRoom);
+            $room = $this->roomDB->RetrieveById($idRoom);
             return $room;
         } catch (\PDOException $ex) {
             return null;
         }
     }
+
     public function RetrieveByIdCinema($idCinema)
     {
-        $roomDB = new RoomDB();
-        $room = new Room();
-
         try {
-            $room = $roomDB->RetrieveByIdCinema($idCinema);
+            $room = $this->roomDB->RetrieveByIdCinema($idCinema);
             return $room;
         } catch (\PDOException $ex) {
             return array();
@@ -70,39 +61,27 @@ class RoomController implements IControllers
 
     public function Delete($idRoom)
     {
-        $roomDB = new RoomDB();
         $idRoom = $this->TransformToArray($idRoom);
         try {
             foreach ($idRoom as $id) {
-                $roomDB->Delete($this->RetrieveById($id));
+                $this->roomDB->Delete($this->RetrieveById($id));
                 $this->index();
             }
         } catch (\PDOException $ex) {
-            $this->index("Error DB vonecction");
+            $this->index("Error DB connection");
         }
     }
-
-    /*  public function Modify($room){
-        $roomDB = new RoomDB();
-        try{
-            $roomDB->Modify($room);
-        }catch(\PDOException $ex){
-            throw $ex;
-        }
-    }*/
 
     /** 
      * no se si es responsabilidad de room pero por ahora la dejo aca
      */
     public function GetRemainingCapacity($idFunction, $numberOfTickets)
     {
-        $db = new RoomDB();
         try {
-            $moviefunctionController = new MovieFunctionController();
-            $function = $moviefunctionController->GetById($idFunction);
+            $movieFunctionController = new MovieFunctionController();
+            $function = $movieFunctionController->GetById($idFunction);
             $room = $function->getRoom();
-            //va a buscar todas las buy que tengan esa idFunction y devolver sumar su number of tikets
-            $TotalTicketsByFunction = $db->GetTotalTicketsByFunction($idFunction);
+            $TotalTicketsByFunction = $this->roomDB->GetTotalTicketsByFunction($idFunction);
 
             $RemainingCapacity = $room->getCapacity() - ($TotalTicketsByFunction + $numberOfTickets);
 
@@ -114,9 +93,8 @@ class RoomController implements IControllers
 
     public function GetRoomByIdFunction($idFunction)
     {
-        $roomDB = new RoomDB();
         try {
-            return $roomDB->RetrieveByIdFunction($idFunction);
+            return $this->roomDB->RetrieveByIdFunction($idFunction);
         } catch (\PDOException $ex) {
             return null;
         }
@@ -124,9 +102,8 @@ class RoomController implements IControllers
 
     public function RetrieveByActive($active)
     {
-        $roomDB = new RoomDB();
         try {
-            return $roomDB->RetrieveByActive($active);
+            return $this->roomDB->RetrieveByActive($active);
         } catch (\PDOException $ex) {
             return null;
         }
@@ -145,17 +122,14 @@ class RoomController implements IControllers
         return $value;
     }
 
-    public function index($mesage = null)
+    public function index($message = null)
     {
-        $errorMje = $mesage;
+        $errorMje = $message;
         $roomList = $this->GetAll();
-        $CinemaController = new CinemaController();
-
-        $CinemaList = $CinemaController->RetrieveByActive(true);
+        $CinemaList = $this->cinemaController->RetrieveByActive(true);
 
         $rooms = $this->TransformToArray($roomList);
         $activeCinemas = $this->TransformToArray($CinemaList);
-
 
         include(PAGES . "/rooms.php");
     }
