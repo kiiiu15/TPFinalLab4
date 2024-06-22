@@ -55,7 +55,7 @@ class Buy{
 
     //Setters
     public function setIdBuy($idBuy){
-        $this->idbuy = $idBuy;
+        $this->idBuy = $idBuy;
     }
 
     public function setDate($date){
