@@ -27,7 +27,7 @@ class Movie implements JsonSerializable{
         $this->Language=$Language;
         $this->overview=$overview;
         $this->ReleaseDate=$ReleaseDate;
-        $this->Poster= "https://image.tmdb.org/t/p/w200" . $Poster;
+        $this->Poster= MOVIE_POSTER_URL_PREFIX . $Poster;
         $this->genres=$genres;
     }
 

@@ -69,7 +69,7 @@ class SessionManager
     {
         $answer = false;
         if ($this->CheckSession()) {
-            if ($this->GetUserLoged()->GetRole()->getRoleName() == 'admin') {
+            if ($this->GetUserLoged()->GetRole()->getRoleName() == ADMIN_ROLE) {
                 $answer = true;
             }
         }
